@@ -1,4 +1,4 @@
-name: Migrate legacy media into the site
+name: Migrate and optimize legacy media
 
 on:
   push:
