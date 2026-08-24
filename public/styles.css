@@ -39,7 +39,7 @@ footer{background:#090516;color:white;padding:70px clamp(24px,7vw,118px) 30px;di
 
 /* Video-game-led homepage */
 .game-hero{grid-template-columns:minmax(0,.9fr) minmax(520px,1.1fr)}
-.game-hero h1{font-size:clamp(3.6rem,6.4vw,7.5rem)}
+.game-hero h1{font-size:clamp(3.4rem,5.5vw,6.8rem)}
 .game-hero-art{min-height:600px}
 .game-frame{position:relative;z-index:3;width:min(820px,100%);padding:12px;background:#fff;border:3px solid #fff;border-radius:24px;transform:rotate(1.5deg);box-shadow:0 34px 80px #0009}
 .game-frame:before{content:"";position:absolute;inset:10px;border:2px solid #ffffff99;border-radius:13px;z-index:2;pointer-events:none}
