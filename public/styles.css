@@ -35,3 +35,43 @@ footer{background:#090516;color:white;padding:70px clamp(24px,7vw,118px) 30px;di
 @media(max-width:800px){
   .character-break img{min-height:0;aspect-ratio:16/10;padding:18px}
 }
+
+
+/* Video-game-led homepage */
+.game-hero{grid-template-columns:minmax(0,.9fr) minmax(520px,1.1fr)}
+.game-hero h1{font-size:clamp(3.6rem,6.4vw,7.5rem)}
+.game-hero-art{min-height:600px}
+.game-frame{position:relative;z-index:3;width:min(820px,100%);padding:12px;background:#fff;border:3px solid #fff;border-radius:24px;transform:rotate(1.5deg);box-shadow:0 34px 80px #0009}
+.game-frame:before{content:"";position:absolute;inset:10px;border:2px solid #ffffff99;border-radius:13px;z-index:2;pointer-events:none}
+.game-frame img{width:100%;aspect-ratio:16/9;object-fit:cover;border-radius:14px;filter:none;animation:none}
+.frame-tag{position:absolute;left:28px;top:28px;padding:8px 12px;border-radius:99px;background:var(--orange);color:#fff;font:10px var(--display);letter-spacing:.12em;z-index:4}
+.game-hero .floating-badge{right:-2%;bottom:2%}
+.game-showcase{background:var(--ink);color:#fff;padding-block:120px}
+.game-showcase-head{display:grid;grid-template-columns:1.2fr .8fr;gap:8vw;align-items:end;margin-bottom:65px}
+.game-showcase h2{font-size:clamp(3.6rem,7vw,8rem);max-width:900px}
+.game-showcase-head>div:last-child{font-size:19px;color:#d4c8eb}
+.game-shot-grid{display:grid;grid-template-columns:1.2fr .8fr;grid-template-rows:1fr 1fr;gap:18px}
+.game-shot{position:relative;margin:0;min-height:320px;border-radius:26px;overflow:hidden;background:#241549;border:1px solid #ffffff24}
+.game-shot-wide{grid-row:span 2;min-height:660px}
+.game-shot img{width:100%;height:100%;object-fit:cover;transition:transform .6s ease}
+.game-shot:hover img{transform:scale(1.035)}
+.game-shot figcaption{position:absolute;left:0;right:0;bottom:0;padding:70px 28px 26px;background:linear-gradient(transparent,#0d061eea)}
+.game-shot figcaption b{display:block;font:clamp(1.4rem,2.4vw,2.4rem)/1 var(--display);text-transform:uppercase}
+.game-shot figcaption span{display:block;color:#d9d0ed;margin-top:8px}
+.dev-strip{display:grid;grid-template-columns:auto 1fr auto;gap:28px;align-items:center;margin-top:24px;padding:24px 28px;border:1px solid #ffffff2e;border-radius:18px;background:#ffffff0b}
+.dev-strip>span{padding:8px 12px;border-radius:99px;background:var(--pink);font:10px var(--display);letter-spacing:.12em}
+.dev-strip p{margin:0;color:#d4c8eb}
+@media(max-width:1000px){
+ .game-hero{grid-template-columns:1fr}
+ .game-hero-art{min-height:420px}
+ .game-showcase-head{grid-template-columns:1fr}
+}
+@media(max-width:800px){
+ .game-hero-art{min-height:300px}
+ .game-frame{padding:7px;border-radius:16px}
+ .frame-tag{left:16px;top:16px}
+ .game-shot-grid{grid-template-columns:1fr;grid-template-rows:auto}
+ .game-shot,.game-shot-wide{grid-row:auto;min-height:300px;aspect-ratio:16/10}
+ .dev-strip{grid-template-columns:1fr}
+ .game-showcase{padding-block:75px}
+}
