@@ -5,6 +5,7 @@ on:
     paths:
       - ".github/workflows/migrate-legacy-media.yml"
       - "scripts/migrate_legacy_media.py"
+      - "scripts/optimize_media.py"
   workflow_dispatch:
 
 permissions:
