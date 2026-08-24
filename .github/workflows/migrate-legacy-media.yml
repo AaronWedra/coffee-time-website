@@ -1,0 +1,32 @@
+name: Migrate legacy media into the site
+
+on:
+  push:
+    paths:
+      - ".github/workflows/migrate-legacy-media.yml"
+      - "scripts/migrate_legacy_media.py"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  migrate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Download legacy images and rewrite page references
+        run: python scripts/migrate_legacy_media.py
+      - name: Commit migrated media
+        run: |
+          if git diff --quiet && [ -z "$(git status --porcelain)" ]; then
+            echo "No media changes needed."
+            exit 0
+          fi
+          git config user.name "Coffee Time site bot"
+          git config user.email "actions@users.noreply.github.com"
+          git add public
+          git commit -m "Migrate legacy Coffee Time media into the site"
+          git push
