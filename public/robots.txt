@@ -1,3 +1,2 @@
 User-agent: *
-Allow: /
-Sitemap: https://coffee-time-preview.smartzgraphics.workers.dev/sitemap.xml
+Disallow: /
