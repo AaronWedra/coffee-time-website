@@ -17,8 +17,12 @@ jobs:
       - uses: actions/checkout@v4
         with:
           fetch-depth: 0
+      - name: Install image tools
+        run: python -m pip install --quiet pillow
       - name: Download legacy images and rewrite page references
         run: python scripts/migrate_legacy_media.py
+      - name: Optimize large images for the web
+        run: python scripts/optimize_media.py
       - name: Commit migrated media
         run: |
           if git diff --quiet && [ -z "$(git status --porcelain)" ]; then
