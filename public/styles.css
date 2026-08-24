@@ -75,3 +75,17 @@ footer{background:#090516;color:white;padding:70px clamp(24px,7vw,118px) 30px;di
  .dev-strip{grid-template-columns:1fr}
  .game-showcase{padding-block:75px}
 }
+
+
+.game-cast{background-color:#3f237d;color:#fff;background-image:linear-gradient(#3f237de8,#3f237df2),url('/media/game/texture-rocks.png');background-size:auto,420px;display:grid;grid-template-columns:.72fr 1.28fr;gap:6vw;align-items:center}
+.cast-copy h2{font-size:clamp(3rem,5vw,6rem)}
+.cast-copy>p:not(.kicker){color:#ded4f1;font-size:19px}
+.cast-stage{display:grid;grid-template-columns:repeat(4,1fr);align-items:end;gap:12px;min-height:560px}
+.cast-stage figure{margin:0;position:relative;text-align:center}
+.cast-stage img{width:100%;height:380px;object-fit:contain;filter:drop-shadow(0 25px 20px #0007);transition:transform .3s}
+.cast-stage figure:hover img{transform:translateY(-12px)}
+.cast-stage figcaption{font:11px var(--display);text-transform:uppercase;letter-spacing:.08em;margin-top:10px}
+.cast-stage .pups{grid-column:span 4}
+.cast-stage .pups img{height:130px}
+@media(max-width:900px){.game-cast{grid-template-columns:1fr}.cast-stage{min-height:0}.cast-stage img{height:280px}}
+@media(max-width:600px){.cast-stage{grid-template-columns:1fr 1fr}.cast-stage .pups{grid-column:span 2}.cast-stage img{height:220px}}
