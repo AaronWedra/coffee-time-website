@@ -6,6 +6,7 @@ This repository is the permanent source for the rebuilt **Coffee Time Adventures
 
 - The existing Wix website remains live and unchanged.
 - Cloudflare preview Worker: `coffee-time-preview`
+- GitHub automatic deployments connected on August 24, 2026.
 - The first deployable website foundation is stored here.
 - Original Wix content and media will be migrated in stages and reviewed on the preview URL before the domain is connected.
 
