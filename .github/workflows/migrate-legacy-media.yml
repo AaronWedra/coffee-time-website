@@ -1,4 +1,4 @@
-name: Migrate and optimize legacy media
+name: Migrate and optimize Coffee Time media
 
 on:
   push:
