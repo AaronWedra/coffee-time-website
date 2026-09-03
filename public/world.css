@@ -341,7 +341,7 @@ footer{background:var(--night)}
 .news-hero{background:linear-gradient(135deg,#e8fff7,#78d6bb 60%,#ffd447);color:var(--ink)}
 .news-hero p{color:#3b3150}.news-hero:after{content:"";position:absolute;right:8%;top:50%;translate:0 -50%;width:min(330px,26vw);aspect-ratio:1;background:url('/media/sugar-orb.png') center/contain no-repeat;opacity:.86}
 .faq-hero{background:linear-gradient(135deg,#d84b2a,#ec5d32 58%,#ffad45)}
-.faq-hero,.faq-hero p,.faq-hero .kicker.yellow{color:var(--ink)}
+.faq-hero,.faq-hero p,.faq-hero .kicker.yellow{color:#12071f}
 .faq-hero .question-mark{font-size:clamp(8rem,16vw,16rem);color:var(--yellow);text-shadow:8px 8px 0 var(--ink)}
 .world-section h2,.playable-copy h2,.adventure-lead h2,.game-copy h2,.demo-brief h2,.development h2,.dev-team h2,.builders h2,.team h2,.reviews-head h2,.gallery-head h2,.partner h2,.track-header h2,.score-worlds h2,.artist h2,.story-copy h2,.timeline h2,.milestone h2,.faq-sidebar h2,.help-band h2{
   text-transform:none;letter-spacing:-.045em;
