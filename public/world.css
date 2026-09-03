@@ -336,10 +336,12 @@ footer{background:var(--night)}
 .story-hero .mission b{font-size:clamp(2rem,3vw,3.5rem)}
 .music-hero .disc{background:radial-gradient(circle at 44% 42%,transparent 0 27%,#24113f 28% 34%,transparent 35%),url('/media/team-warp-orb.png') center/76% no-repeat,repeating-radial-gradient(circle,#0c071d 0 6px,#3b1d63 7px 12px);border:3px solid #ffffff55}
 .music-hero .disc:after{content:"♪";box-shadow:0 0 0 10px var(--pink)}
-.community-hero{background:linear-gradient(135deg,#a93072,#ef568e 58%,#ec5d32)}
+.community-hero{background:linear-gradient(135deg,#6f1e4d,#9e2f68 58%,#b63d27)}
+.community-hero p{color:#fff}
 .news-hero{background:linear-gradient(135deg,#e8fff7,#78d6bb 60%,#ffd447);color:var(--ink)}
 .news-hero p{color:#3b3150}.news-hero:after{content:"";position:absolute;right:8%;top:50%;translate:0 -50%;width:min(330px,26vw);aspect-ratio:1;background:url('/media/sugar-orb.png') center/contain no-repeat;opacity:.86}
 .faq-hero{background:linear-gradient(135deg,#d84b2a,#ec5d32 58%,#ffad45)}
+.faq-hero,.faq-hero p,.faq-hero .kicker.yellow{color:var(--ink)}
 .faq-hero .question-mark{font-size:clamp(8rem,16vw,16rem);color:var(--yellow);text-shadow:8px 8px 0 var(--ink)}
 .world-section h2,.playable-copy h2,.adventure-lead h2,.game-copy h2,.demo-brief h2,.development h2,.dev-team h2,.builders h2,.team h2,.reviews-head h2,.gallery-head h2,.partner h2,.track-header h2,.score-worlds h2,.artist h2,.story-copy h2,.timeline h2,.milestone h2,.faq-sidebar h2,.help-band h2{
   text-transform:none;letter-spacing:-.045em;
@@ -368,7 +370,7 @@ footer{background:var(--night)}
 .legacy-archive .track{display:grid;grid-template-columns:auto 72px 1fr;padding:16px;background:#fff;border:2px solid var(--ink);border-radius:18px;box-shadow:4px 5px 0 var(--ink)}
 .legacy-archive .track em,.legacy-archive .track .play{grid-column:3}.legacy-archive .track .play{display:none}
 .score-worlds{background:linear-gradient(140deg,#170925,#3d1a65)}
-.artist{background:linear-gradient(130deg,var(--orange),#d93e7a)}
+.artist{background:linear-gradient(130deg,var(--orange),#df4f88)}
 
 /* Ambient orbs inserted by site.js */
 .ambient-orbs{position:fixed;inset:0;z-index:45;pointer-events:none;overflow:hidden}
