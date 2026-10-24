@@ -37,12 +37,21 @@ export function home(s: Settings, b: B, worlds: World[], chars: Character[], rev
           <a class="btn btn-ghost" href="${s.demo_url}" ${ext}>Play the free video game demo</a>
         </p>
       </div>
-      <div class="hero-art"><img src="/img/characters.webp" alt="The Coffee Time cast: Cup Joe, Thermos, Little Miss Hot Shot, Donette and the sugar cube on one side, King Tea and his crumpet army on the other" width="1800" height="756" fetchpriority="high"></div>
+      <div class="hero-art" role="img" aria-label="The Coffee Time cast: King Tea in the middle, surrounded by Cup Joe, Thermos, Little Miss Hot Shot, Donette, Dotty and Roamer">
+        <img class="fx fx-king" src="/img/king-tea.webp" alt="" width="900" height="823" fetchpriority="high">
+        <img class="fx fx-joe" src="/img/cup-joe.webp" alt="" width="434" height="406">
+        <img class="fx fx-thermos" src="/img/thermos.webp" alt="" width="800" height="918">
+        <img class="fx fx-lmhs" src="/img/little-miss-hot-shot.webp" alt="" width="342" height="437">
+        <img class="fx fx-donette" src="/img/donette.webp" alt="" width="434" height="385">
+        <img class="fx fx-dotty" src="/img/dottie.webp" alt="" width="800" height="860">
+        <img class="fx fx-roamer" src="/img/roamer.webp" alt="" width="362" height="436">
+        <img class="fx fx-kruiser" src="/img/deep-space-kruiser.webp" alt="" width="1400" height="640">
+      </div>
     </div>
     <div class="wrap">${clockBar(worlds)}</div>
   </section>
 
-  <section class="sides" aria-labelledby="sides-title">
+  <section class="sides reveal" aria-labelledby="sides-title">
     <div class="wrap">
       <h2 id="sides-title" class="display">${t(b, 'home_sides_title')}</h2>
       <div class="sides-grid">
@@ -60,7 +69,7 @@ export function home(s: Settings, b: B, worlds: World[], chars: Character[], rev
     </div>
   </section>
 
-  <section class="box" aria-labelledby="box-title">
+  <section class="box reveal" aria-labelledby="box-title">
     <div class="wrap box-grid">
       <div class="box-art">
         ${img('/img/board.webp', 'The Coffee Time board: five clocks across the top and colored paths winding through a coffee-brown swirl', 'class="board" width="1400" height="1400"')}
@@ -75,7 +84,7 @@ export function home(s: Settings, b: B, worlds: World[], chars: Character[], rev
     </div>
   </section>
 
-  <section class="route" aria-labelledby="route-title">
+  <section class="route reveal" aria-labelledby="route-title">
     <div class="wrap">
       <h2 id="route-title" class="display">Five worlds, one clock</h2>
       <ol class="route-list">${worlds.map(
@@ -84,7 +93,7 @@ export function home(s: Settings, b: B, worlds: World[], chars: Character[], rev
     </div>
   </section>
 
-  <section class="game-band" aria-labelledby="game-title">
+  <section class="game-band reveal" aria-labelledby="game-title">
     <div class="wrap game-grid">
       <div>
         <h2 id="game-title" class="display">${t(b, 'home_game_title')}</h2>
@@ -96,7 +105,7 @@ export function home(s: Settings, b: B, worlds: World[], chars: Character[], rev
   </section>
 
   ${featured.length
-    ? html`<section class="quotes" aria-label="What players say">
+    ? html`<section class="quotes reveal" aria-label="What players say">
       <div class="wrap">
         <ul class="quote-list">${featured.map((r) => html`<li><blockquote><p>${r.quote}</p></blockquote><p class="who">${r.name}, ${r.role}</p></li>`)}</ul>
         <p><a href="/community#reviews">Read all ${reviews.length} reviews</a></p>
@@ -104,7 +113,7 @@ export function home(s: Settings, b: B, worlds: World[], chars: Character[], rev
     </section>`
     : ''}
 
-  <section class="davis" aria-labelledby="davis-title">
+  <section class="davis reveal" aria-labelledby="davis-title">
     <div class="wrap davis-grid">
       ${img('/img/purple-tree-team.webp', 'The Purple Tree Café team in Davis', 'width="1000" height="1333"')}
       <div>
@@ -129,7 +138,7 @@ export function worldsPage(s: Settings, b: B, worlds: World[]): Safe {
     </div>
   </section>
   ${worlds.map(
-    (w, i) => html`<section class="world w-${w.slug}" id="${w.slug}">
+    (w, i) => html`<section class="world reveal w-${w.slug}" id="${w.slug}">
       <div class="wrap world-grid">
         <div class="world-clock">${clock(w.name, `still s${i + 1}`, WORLD_HOURS[i] ?? 0)}<p>World ${i + 1} of ${worlds.length}</p></div>
         <div class="world-copy">
@@ -207,7 +216,7 @@ export function videoGame(s: Settings, b: B, games: Game[]): Safe {
       ${img('/img/little-miss-hot-shot.webp', 'Little Miss Hot Shot', 'class="lmhs" width="461" height="478"')}
     </div>
   </section>
-  <section class="section">
+  <section class="section reveal">
     <div class="wrap two">
       ${img('/img/game/adventures-4.webp', 'Coffee World: a hedge maze lit by lanterns', 'class="shot" width="1400" height="781"')}
       <div><h2 class="display">In the demo</h2>${richText(t(b, 'game_demo'))}</div>
@@ -216,14 +225,14 @@ export function videoGame(s: Settings, b: B, games: Game[]): Safe {
   <section class="section shots-band">
     <div class="wrap"><ul class="shots">${shots.map(([src, alt]) => html`<li><a href="${src}">${img(src, alt, 'width="1400" height="788"')}</a></li>`)}</ul></div>
   </section>
-  <section class="section">
+  <section class="section reveal">
     <div class="wrap two">
       <div><h2 class="display">Built by a game club</h2>${paragraphs(t(b, 'game_club'))}</div>
       ${img('/img/creator-sheet.webp', 'Coffee Time character design sheet', 'class="shot" width="1600" height="1036"')}
     </div>
   </section>
   ${more.length
-    ? html`<section class="section arcade" aria-labelledby="arcade-title">
+    ? html`<section class="section reveal arcade" aria-labelledby="arcade-title">
       <div class="wrap">
         <h2 id="arcade-title" class="display">Quick games you can play right now</h2>
         <ul class="arcade-list">${more.map(
@@ -289,7 +298,7 @@ export function community(s: Settings, b: B, reviews: Review[]): Safe {
       <div class="lede">${paragraphs(t(b, 'community_intro'))}</div>
     </div>
   </section>
-  <section class="section">
+  <section class="section reveal">
     <div class="wrap two">
       <div><h2 class="display">Who made the game</h2>${paragraphs(t(b, 'community_creators'))}</div>
       ${img('/img/comic-con-collage.webp', 'Players at the Coffee Time table at San Diego Comic-Con', 'class="shot" width="1200" height="1200"')}
@@ -301,7 +310,7 @@ export function community(s: Settings, b: B, reviews: Review[]): Safe {
       <ul class="review-grid">${reviews.map((r) => html`<li><blockquote><p>${r.quote}</p></blockquote><p class="who">${r.name}<span>${r.role}</span></p></li>`)}</ul>
     </div>
   </section>
-  <section class="section">
+  <section class="section reveal">
     <div class="wrap two">
       ${img('/img/purple-tree-team.webp', 'The Purple Tree Café team', 'class="shot" width="1000" height="1333"')}
       <div>
