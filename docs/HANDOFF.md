@@ -19,3 +19,10 @@ Status on 2026-10-24: built and tested, not deployed.
 ## Things to double-check with Aaron
 - Whether orders should stay "request then email" or get online payment later.
 - Where playcoffeetime.com is registered (probably Wix, like Sara's was).
+
+## Integrations worth adding later (not built, by design)
+- Online payment: a Stripe Payment Link or Checkout on the order page, keeping the request flow as the fallback.
+- Newsletter: the order form already records "email me news" (orders.newsletter); export those addresses from HQ
+  into whatever list tool is chosen (Buttondown, Mailchimp).
+- Analytics: Cloudflare Web Analytics is one line in src/site/layout.ts if wanted; nothing is tracked today.
+- Instagram or TikTok: there are no brand accounts yet; add links in HQ > Game details when they exist.
