@@ -22,17 +22,16 @@
   "triggers": { "crons": ["7 * * * *"] },
   "vars": {
     "APP_ENV": "production",
-    "SITE_URL": "",  // set to "https://www.playcoffeetime.com" at DNS cutover (enables apex->www + canonical URLs)
+    "SITE_URL": "https://www.playcoffeetime.com",
     "NOTIFY_TO": "playcoffeetime@yahoo.com"
   },
   // Secrets (set in the Worker's Settings or with `npx wrangler secret put NAME`, never in this file):
   //   HQ_SETUP_TOKEN   one-time phrase that unlocks /hq/setup until the first admin exists
   //   RESEND_API_KEY   turns on email alerts for orders and messages
   //   MAIL_FROM        e.g. "Coffee Time <orders@playcoffeetime.com>" (domain verified in Resend)
-  "observability": { "enabled": true }
-  // At DNS cutover (zone added to this account), add:
-  // "routes": [
-  //   { "pattern": "www.playcoffeetime.com", "custom_domain": true },
-  //   { "pattern": "playcoffeetime.com", "custom_domain": true }
-  // ]
+  "observability": { "enabled": true },
+  "routes": [
+    { "pattern": "www.playcoffeetime.com", "custom_domain": true },
+    { "pattern": "playcoffeetime.com", "custom_domain": true }
+  ]
 }
