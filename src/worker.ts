@@ -3,6 +3,9 @@ import { randomToken, type Env, type Ctx } from './lib/router.ts';
 import { site, notFound } from './site/routes.ts';
 import { hq } from './hq/routes.ts';
 import { ensureDatabase } from './db/bootstrap.ts';
+import { Room } from './play/room.ts';
+
+export { Room };
 
 const SECURITY_HEADERS: Record<string, string> = {
   'x-content-type-options': 'nosniff',
@@ -39,6 +42,24 @@ export default {
       if (url.hostname !== canon.hostname && url.hostname === canon.hostname.replace(/^www\./, '')) {
         return Response.redirect(canon.origin + url.pathname + url.search, 301);
       }
+    }
+
+    // The game: /play/ is the installable app (a static page with its own CSP: it runs inline scripts and
+    // loads two Google fonts), and /room/CODE is its WebSocket, one Durable Object per room.
+    if (url.pathname === '/play') return Response.redirect(url.origin + '/play/' + url.search, 301);
+    if (url.pathname === '/play/' || url.pathname === '/play/index.html') {
+      const res = await env.ASSETS.fetch(new Request(new URL('/play/index.html', url), request));
+      const h = new Headers(res.headers);
+      for (const [k, v] of Object.entries(SECURITY_HEADERS)) h.set(k, v);
+      h.set('content-type', 'text/html; charset=utf-8');
+      h.set('cache-control', 'public, max-age=300');
+      h.set('content-security-policy', [`default-src 'self'`, `script-src 'self' 'unsafe-inline'`, `style-src 'self' 'unsafe-inline' https://fonts.googleapis.com`, `font-src https://fonts.gstatic.com`, `img-src 'self' data: blob:`, `connect-src 'self' wss://${url.host}`, `manifest-src 'self'`, `worker-src 'self'`, `base-uri 'self'`, `object-src 'none'`, `frame-ancestors 'none'`].join('; '));
+      return new Response(res.body, { status: res.status, headers: h });
+    }
+    const room = url.pathname.match(/^\/room\/([A-Za-z0-9]{4,8})$/);
+    if (room) {
+      if (request.headers.get('Upgrade') !== 'websocket') return new Response('Expected a WebSocket', { status: 426 });
+      return env.ROOMS.get(env.ROOMS.idFromName(room[1].toUpperCase())).fetch(request);
     }
 
     // One URL per page: no trailing slashes.

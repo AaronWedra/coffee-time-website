@@ -18,6 +18,9 @@
       "migrations_dir": "db/migrations"
     }
   ],
+  // Online rooms for the Coffee Time game at /play. SQLite-backed, the kind the Workers Free plan allows.
+  "durable_objects": { "bindings": [{ "name": "ROOMS", "class_name": "Room" }] },
+  "migrations": [{ "tag": "v1", "new_sqlite_classes": ["Room"] }],
   "vars": {
     "APP_ENV": "production",
     "SITE_URL": "",  // set to "https://www.playcoffeetime.com" at DNS cutover (enables apex->www + canonical URLs)

@@ -309,3 +309,6 @@ section { position: relative; }
 .foot-credit { margin: 0; font-weight: 600; }
 .foot-credit .quiet { color: rgba(255, 255, 255, .45); font-weight: 400; margin-left: 1.5em; text-decoration: none; }
 .foot-credit .quiet:hover { color: var(--white); }
+
+.playonline { padding: 10px 0 20px; }
+.playonline-in { text-align: center; }

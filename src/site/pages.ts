@@ -109,6 +109,15 @@ export function home(s: Settings, blocks: Blocks, tracks: Track[], creators: Cre
   </div>
 </section>
 
+<section class="playonline" id="play-online">
+  <div class="wrap playonline-in">
+    <h2 class="big">Play Coffee Time on your phone</h2>
+    <p>Make a room, send your friends the code, and play the board game together online. Free, no sign-up, and it installs to your home screen.</p>
+    <p><a class="btn" href="/play/">Play Online</a></p>
+    <hr class="rule">
+  </div>
+</section>
+
 <section class="sponsor" id="sponsor">
   ${orb('ice', 'r', 20, 2)}
   <div class="wrap">

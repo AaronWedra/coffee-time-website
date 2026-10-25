@@ -3,6 +3,7 @@
 export type Env = {
   DB: D1Database;
   ASSETS: Fetcher;
+  ROOMS: DurableObjectNamespace;
   APP_ENV?: string;
   SITE_URL?: string;
   RESEND_API_KEY?: string;

@@ -1,5 +1,14 @@
 # Changelog
 
+## 2026-10-25: Play Online, the game app at /play/
+- The installable Coffee Time game (rules engine, AI, chat and taunts) is served from `public/play/`.
+  Its online rooms run as a SQLite-backed Durable Object (`src/play/room.ts`, binding `ROOMS`,
+  migration v1, free plan) reached at `/room/CODE`, so friends join by code or invite link on
+  playcoffeetime.com itself and install it from here. Nav gets "Play Online", home gets a Play band.
+- `/play/` has its own CSP (inline scripts, Google Fonts) rather than the nonce CSP. The manifest is
+  `manifest.json` because the Worker's static-file test only recognises 2 to 5 letter extensions.
+- The standalone copy at coffee-time-app.smartzgraphics.workers.dev can be retired once this is live.
+
 ## 2026-10-25: start over from the real site and the real assets
 - Threw out the invented structure (Five Worlds page, clock hero and clock logo, fact shields, "From the box",
   "pick a side", lessons). The site now mirrors playcoffeetime.com section for section: Learn to play like a
