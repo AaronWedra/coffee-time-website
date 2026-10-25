@@ -1,14 +1,36 @@
 {
   "$schema": "node_modules/wrangler/config-schema.json",
-  "name": "coffee-time-preview",
-  "main": "src/index.js",
-  "compatibility_date": "2026-08-24",
+  "name": "coffee-time",
+  "main": "src/worker.ts",
+  "compatibility_date": "2026-09-01",
+  "compatibility_flags": ["nodejs_compat"],
   "assets": {
     "directory": "./public",
     "binding": "ASSETS",
-    "not_found_handling": "single-page-application"
+    "not_found_handling": "none",
+    "run_worker_first": true
   },
-  "observability": {
-    "enabled": true
-  }
+  "d1_databases": [
+    {
+      "binding": "DB",
+      "database_name": "coffee-time",
+      "database_id": "REPLACE-WITH-D1-ID",  // create "coffee-time" in Cloudflare > D1, paste its id here
+      "migrations_dir": "db/migrations"
+    }
+  ],
+  "vars": {
+    "APP_ENV": "production",
+    "SITE_URL": "",  // set to "https://www.playcoffeetime.com" at DNS cutover (enables apex->www + canonical URLs)
+    "NOTIFY_TO": "playcoffeetime@yahoo.com"
+  },
+  // Secrets (set in the Worker's Settings or with `npx wrangler secret put NAME`, never in this file):
+  //   HQ_SETUP_TOKEN   one-time phrase that unlocks /hq/setup until the first admin exists
+  //   RESEND_API_KEY   turns on email alerts for orders and messages
+  //   MAIL_FROM        e.g. "Coffee Time <orders@playcoffeetime.com>" (domain verified in Resend)
+  "observability": { "enabled": true }
+  // At DNS cutover (zone added to this account), add:
+  // "routes": [
+  //   { "pattern": "www.playcoffeetime.com", "custom_domain": true },
+  //   { "pattern": "playcoffeetime.com", "custom_domain": true }
+  // ]
 }

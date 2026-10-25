@@ -1,0 +1,7 @@
+*.sqlite
+.dev.vars
+.dev/
+.env
+.wrangler/
+node_modules/
+shots/
