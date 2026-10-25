@@ -4,6 +4,7 @@ export type Env = {
   DB: D1Database;
   MEDIA?: R2Bucket;
   ASSETS: Fetcher;
+  ROOMS: DurableObjectNamespace;
   APP_ENV?: string;
   SITE_URL?: string;
   RESEND_API_KEY?: string;

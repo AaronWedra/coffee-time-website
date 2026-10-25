@@ -313,3 +313,5 @@ section { position: relative; }
 /* ------------------------------------------------------------ privacy page */
 [hidden] { display: none !important; }
 .privacy-card a { overflow-wrap: anywhere; color: var(--violet); font-weight: 500; }
+.playonline { padding: 10px 0 20px; }
+.playonline-in { text-align: center; }

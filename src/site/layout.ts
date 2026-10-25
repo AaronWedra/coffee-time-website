@@ -19,6 +19,7 @@ export const NAV: { href: string; label: string }[] = [
   { href: '/#order', label: 'Order' },
   { href: '/story', label: 'Story' },
   { href: '/arcade', label: 'Arcade' },
+  { href: '/play/', label: 'Play Online' },
   { href: '/#team', label: 'Team' },
   { href: '/news', label: 'News' },
   { href: '/#reviews', label: 'Reviews' },
