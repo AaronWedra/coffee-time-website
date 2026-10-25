@@ -17,37 +17,11 @@ CREATE TABLE IF NOT EXISTS blocks (
   updated_at TEXT NOT NULL DEFAULT (datetime('now'))
 );
 
--- The Five Worlds, in the order King Tea's clocks pass through them.
-CREATE TABLE IF NOT EXISTS worlds (
-  id INTEGER PRIMARY KEY AUTOINCREMENT,
-  slug TEXT NOT NULL UNIQUE,
-  name TEXT NOT NULL,
-  tagline TEXT NOT NULL DEFAULT '',
-  body TEXT NOT NULL DEFAULT '',
-  who TEXT NOT NULL DEFAULT '',
-  color TEXT NOT NULL DEFAULT '#9c44c8',
-  image TEXT NOT NULL DEFAULT '',
-  sort INTEGER NOT NULL DEFAULT 0,
-  published INTEGER NOT NULL DEFAULT 1
-);
-
--- Playable characters and villains. side: hero | villain
-CREATE TABLE IF NOT EXISTS characters (
-  id INTEGER PRIMARY KEY AUTOINCREMENT,
-  name TEXT NOT NULL UNIQUE,
-  side TEXT NOT NULL DEFAULT 'hero',
-  power TEXT NOT NULL DEFAULT '',
-  image TEXT NOT NULL DEFAULT '',
-  sort INTEGER NOT NULL DEFAULT 0,
-  published INTEGER NOT NULL DEFAULT 1
-);
-
 CREATE TABLE IF NOT EXISTS reviews (
   id INTEGER PRIMARY KEY AUTOINCREMENT,
   name TEXT NOT NULL,
   role TEXT NOT NULL DEFAULT '',
   quote TEXT NOT NULL,
-  featured INTEGER NOT NULL DEFAULT 0,
   sort INTEGER NOT NULL DEFAULT 0,
   published INTEGER NOT NULL DEFAULT 1
 );
@@ -57,8 +31,8 @@ CREATE TABLE IF NOT EXISTS news (
   date_label TEXT NOT NULL DEFAULT '',
   title TEXT NOT NULL,
   body TEXT NOT NULL DEFAULT '',
-  image TEXT NOT NULL DEFAULT '',
-  image_alt TEXT NOT NULL DEFAULT '',
+  images TEXT NOT NULL DEFAULT '',      -- comma-separated /img/... paths
+  video TEXT NOT NULL DEFAULT '',       -- /video/... path or a YouTube id
   url TEXT NOT NULL DEFAULT '',
   link_label TEXT NOT NULL DEFAULT '',
   sort INTEGER NOT NULL DEFAULT 0,
@@ -73,13 +47,13 @@ CREATE TABLE IF NOT EXISTS faqs (
   published INTEGER NOT NULL DEFAULT 1
 );
 
--- How to play: the 20 lessons, grouped into chapters.
-CREATE TABLE IF NOT EXISTS lessons (
+-- The video tutorials: one YouTube video each, numbered like the rulebook (1, 2-a, 2-b ...).
+CREATE TABLE IF NOT EXISTS tutorials (
   id INTEGER PRIMARY KEY AUTOINCREMENT,
-  chapter TEXT NOT NULL,
-  num TEXT NOT NULL DEFAULT '',
+  num TEXT NOT NULL,
   title TEXT NOT NULL,
   body TEXT NOT NULL DEFAULT '',
+  youtube_id TEXT NOT NULL DEFAULT '',
   sort INTEGER NOT NULL DEFAULT 0,
   published INTEGER NOT NULL DEFAULT 1
 );
@@ -87,11 +61,7 @@ CREATE TABLE IF NOT EXISTS lessons (
 CREATE TABLE IF NOT EXISTS tracks (
   id INTEGER PRIMARY KEY AUTOINCREMENT,
   title TEXT NOT NULL,
-  world TEXT NOT NULL DEFAULT '',
-  url TEXT NOT NULL DEFAULT '',
-  soundcloud_id TEXT NOT NULL DEFAULT '',
-  image TEXT NOT NULL DEFAULT '',
-  archive INTEGER NOT NULL DEFAULT 0,
+  url TEXT NOT NULL DEFAULT '',         -- SoundCloud track page; the player embeds from it
   sort INTEGER NOT NULL DEFAULT 0,
   published INTEGER NOT NULL DEFAULT 1
 );
@@ -100,7 +70,20 @@ CREATE TABLE IF NOT EXISTS games (
   id INTEGER PRIMARY KEY AUTOINCREMENT,
   title TEXT NOT NULL,
   blurb TEXT NOT NULL DEFAULT '',
-  platform TEXT NOT NULL DEFAULT '',
+  note TEXT NOT NULL DEFAULT '',
+  url TEXT NOT NULL DEFAULT '',
+  button TEXT NOT NULL DEFAULT '',
+  image TEXT NOT NULL DEFAULT '',
+  sort INTEGER NOT NULL DEFAULT 0,
+  published INTEGER NOT NULL DEFAULT 1
+);
+
+CREATE TABLE IF NOT EXISTS creators (
+  id INTEGER PRIMARY KEY AUTOINCREMENT,
+  name TEXT NOT NULL,
+  role TEXT NOT NULL DEFAULT '',
+  place TEXT NOT NULL DEFAULT 'Davis, CA',
+  bio TEXT NOT NULL DEFAULT '',
   url TEXT NOT NULL DEFAULT '',
   image TEXT NOT NULL DEFAULT '',
   sort INTEGER NOT NULL DEFAULT 0,
@@ -125,17 +108,14 @@ CREATE TABLE IF NOT EXISTS orders (
   updated_at TEXT NOT NULL DEFAULT (datetime('now'))
 );
 
-CREATE TABLE IF NOT EXISTS messages (
+-- Newsletter sign-ups from the home page.
+CREATE TABLE IF NOT EXISTS subscribers (
   id INTEGER PRIMARY KEY AUTOINCREMENT,
-  name TEXT NOT NULL,
-  email TEXT NOT NULL DEFAULT '',
-  phone TEXT NOT NULL DEFAULT '',
-  subject TEXT NOT NULL DEFAULT '',
-  body TEXT NOT NULL,
+  email TEXT NOT NULL UNIQUE,
+  source TEXT NOT NULL DEFAULT 'newsletter',
   ip TEXT NOT NULL DEFAULT '',
   created_at TEXT NOT NULL DEFAULT (datetime('now')),
-  read_at TEXT,
-  archived_at TEXT
+  unsubscribed_at TEXT
 );
 
 CREATE TABLE IF NOT EXISTS outbox (
@@ -180,7 +160,6 @@ CREATE TABLE IF NOT EXISTS audit_log (
   created_at TEXT NOT NULL DEFAULT (datetime('now'))
 );
 
-CREATE INDEX IF NOT EXISTS idx_messages_unread ON messages(read_at, archived_at, created_at);
 CREATE INDEX IF NOT EXISTS idx_orders_status ON orders(status, created_at);
 CREATE INDEX IF NOT EXISTS idx_sessions_exp ON sessions(expires_at);
 
@@ -188,6 +167,7 @@ CREATE INDEX IF NOT EXISTS idx_sessions_exp ON sessions(expires_at);
 CREATE UNIQUE INDEX IF NOT EXISTS ux_reviews_name_quote ON reviews(name, quote);
 CREATE UNIQUE INDEX IF NOT EXISTS ux_news_title ON news(title);
 CREATE UNIQUE INDEX IF NOT EXISTS ux_faqs_question ON faqs(question);
-CREATE UNIQUE INDEX IF NOT EXISTS ux_lessons_num ON lessons(num);
+CREATE UNIQUE INDEX IF NOT EXISTS ux_tutorials_num ON tutorials(num);
 CREATE UNIQUE INDEX IF NOT EXISTS ux_tracks_title ON tracks(title);
 CREATE UNIQUE INDEX IF NOT EXISTS ux_games_title ON games(title);
+CREATE UNIQUE INDEX IF NOT EXISTS ux_creators_name ON creators(name);

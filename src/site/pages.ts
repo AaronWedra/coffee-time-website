@@ -1,447 +1,312 @@
-// Every public page as a function returning markup. Words come from D1 (settings, blocks, lists),
-// so they can be changed in HQ without touching this file.
-import { html, raw, paragraphs, richText, inline, type Safe } from '../lib/html.ts';
-import type { Settings, Block, World, Character, Review, News, Faq, Lesson, Track, Game } from '../lib/db.ts';
-import { clock, img, shields, money } from './layout.ts';
+// Every public page, as functions returning markup. Words come from D1 (settings + blocks); nothing
+// here should be a sentence the team might want to change.
+import { html, raw, richText, inline, type Safe } from '../lib/html.ts';
+import type { Settings, Block, Review, News, Faq, Tutorial, Track, Game, Creator } from '../lib/db.ts';
+import { img, orb } from './layout.ts';
 
-type B = Record<string, Block>;
-const t = (b: B, key: string) => b[key]?.value ?? '';
-const ext = raw('rel="noopener" target="_blank"');
+type Blocks = Record<string, Block>;
+const b = (blocks: Blocks, key: string) => blocks[key]?.value || '';
+const line = (blocks: Blocks, key: string) => raw(inline(b(blocks, key)));
+const text = (blocks: Blocks, key: string) => richText(b(blocks, key));
+const t0 = () => html`<input type="hidden" name="_t" value="${Date.now()}"><div class="hp" aria-hidden="true"><label>Website <input name="website" tabindex="-1" autocomplete="off"></label></div>`;
 
-// World n spans hours (n-1)*12 to n*12 of King Tea's 60. Used for the clock on each world.
-const WORLD_HOURS = [12, 12, 12, 9, 0];
-
-function clockBar(worlds: World[]): Safe {
-  return html`<div class="clockbar" aria-label="The five World Clocks from the board">
-    <ol class="clocks">${worlds.slice(0, 5).map((w, i) => html`<li class="w-${w.slug}"><a href="/worlds#${w.slug}">${clock(w.name, `k${i + 1}`, WORLD_HOURS[i])}<span class="cl" aria-hidden="true">${w.name.split(' ')[0]}</span></a></li>`)}</ol>
-    <p class="clock-note">King Tea moves the clocks from Coffee World to Tea World. Twelve in the last one and it is Tea Time forever.</p>
-  </div>`;
+// The four "learn to play" links under the headline (and on the tutorials and FAQ pages).
+function learnLinks(s: Settings, skip: '' | 'tutorials' | 'faq' = ''): Safe {
+  return html`<ul class="learn">
+    ${skip === 'tutorials' ? '' : html`<li><a href="/video-tutorials">Watch video tutorials</a></li>`}
+    ${skip === 'faq' ? '' : html`<li><a href="/faq">Visit our FAQ page</a></li>`}
+    <li><a href="${s.rules_pdf}" target="_blank" rel="noopener">Download full game instructions here</a></li>
+    <li><a href="${s.story_pdf}" target="_blank" rel="noopener">Download game story here</a></li>
+  </ul>`;
 }
 
-// ------------------------------------------------------------------ home
-
-export function home(s: Settings, b: B, worlds: World[], chars: Character[], reviews: Review[]): Safe {
-  const heroes = chars.filter((c) => c.side === 'hero');
-  const villains = chars.filter((c) => c.side === 'villain');
-  const featured = reviews.filter((r) => r.featured).slice(0, 3);
-  return html`
-  <section class="hero">
-    <div class="wrap hero-grid">
-      <div class="hero-copy">
-        <h1 class="wordmark">Coffee Time</h1>
-        <p class="hero-tag">${s.tagline}</p>
-        <div class="lede">${paragraphs(t(b, 'home_lede'))}</div>
-        ${shields(s)}
-        <p class="actions">
-          <a class="btn btn-crown btn-big" href="/order">Order the board game, ${money(s)}</a>
-          <a class="btn btn-ghost" href="${s.demo_url}" ${ext}>Play the free video game demo</a>
-        </p>
-      </div>
-      <div class="hero-art" role="img" aria-label="The Coffee Time cast: King Tea in the middle, surrounded by Cup Joe, Thermos, Little Miss Hot Shot, Donette, Dotty and Roamer">
-        <img class="fx fx-king" src="/img/king-tea.webp" alt="" width="900" height="823" fetchpriority="high">
-        <img class="fx fx-joe" src="/img/cup-joe.webp" alt="" width="434" height="406">
-        <img class="fx fx-thermos" src="/img/thermos.webp" alt="" width="800" height="918">
-        <img class="fx fx-lmhs" src="/img/little-miss-hot-shot.webp" alt="" width="342" height="437">
-        <img class="fx fx-donette" src="/img/donette.webp" alt="" width="434" height="385">
-        <img class="fx fx-dotty" src="/img/dottie.webp" alt="" width="800" height="860">
-        <img class="fx fx-roamer" src="/img/roamer.webp" alt="" width="362" height="436">
-        <img class="fx fx-kruiser" src="/img/deep-space-kruiser.webp" alt="" width="1400" height="640">
-      </div>
-    </div>
-    <div class="wrap">${clockBar(worlds)}</div>
-  </section>
-
-  <section class="sides reveal" aria-labelledby="sides-title">
-    <div class="wrap">
-      <h2 id="sides-title" class="display">${t(b, 'home_sides_title')}</h2>
-      <div class="sides-grid">
-        <div class="side side-heroes">
-          <h3>The coffee heroes</h3>
-          ${paragraphs(t(b, 'home_heroes'))}
-          <ul class="cast">${heroes.map((c) => html`<li>${img(c.image, '')}<b>${c.name}</b><span>${c.power}</span></li>`)}</ul>
-        </div>
-        <div class="side side-villains">
-          <h3>King Tea and company</h3>
-          ${paragraphs(t(b, 'home_villains'))}
-          <ul class="cast">${villains.map((c) => html`<li>${img(c.image, '')}<b>${c.name}</b><span>${c.power}</span></li>`)}</ul>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <section class="box reveal" aria-labelledby="box-title">
-    <div class="wrap box-grid">
-      <div class="box-art">
-        ${img('/img/board.webp', 'The Coffee Time board: five clocks across the top and colored paths winding through a coffee-brown swirl', 'class="board" width="1400" height="1400"')}
-        ${img('/img/box-front.webp', 'The front of the Coffee Time box', 'class="boxfront" width="1400" height="710"')}
-      </div>
-      <div class="box-copy">
-        <h2 id="box-title" class="display">${t(b, 'home_box_title')}</h2>
-        ${richText(t(b, 'home_box'))}
-        <p class="price"><b>${money(s)}</b> ${s.edition}</p>
-        <p class="actions"><a class="btn btn-crown" href="/order">Order a copy</a><a class="btn btn-line" href="/how-to-play">See how it plays</a></p>
-      </div>
-    </div>
-  </section>
-
-  <section class="route reveal" aria-labelledby="route-title">
-    <div class="wrap">
-      <h2 id="route-title" class="display">Five worlds, one clock</h2>
-      <ol class="route-list">${worlds.map(
-        (w) => html`<li class="w-${w.slug}"><a href="/worlds#${w.slug}">${img(w.image, '')}<b>${w.name}</b><span>${w.tagline}</span></a></li>`,
-      )}</ol>
-    </div>
-  </section>
-
-  <section class="game-band reveal" aria-labelledby="game-title">
-    <div class="wrap game-grid">
-      <div>
-        <h2 id="game-title" class="display">${t(b, 'home_game_title')}</h2>
-        ${paragraphs(t(b, 'home_game'))}
-        <p class="actions"><a class="btn btn-crown" href="${s.demo_url}" ${ext}>Get the free demo</a><a class="btn btn-ghost" href="/video-game">More about the video game</a></p>
-      </div>
-      ${img('/img/game/adventures-4.webp', 'Coffee World in the Coffee Time Adventures video game: a hedge maze lit by lanterns at night', 'width="1400" height="781" class="shot"')}
-    </div>
-  </section>
-
-  ${featured.length
-    ? html`<section class="quotes reveal" aria-label="What players say">
-      <div class="wrap">
-        <ul class="quote-list">${featured.map((r) => html`<li><blockquote><p>${r.quote}</p></blockquote><p class="who">${r.name}, ${r.role}</p></li>`)}</ul>
-        <p><a href="/community#reviews">Read all ${reviews.length} reviews</a></p>
-      </div>
-    </section>`
-    : ''}
-
-  <section class="davis reveal" aria-labelledby="davis-title">
-    <div class="wrap davis-grid">
-      ${img('/img/purple-tree-team.webp', 'The Purple Tree Café team in Davis', 'width="1000" height="1333"')}
-      <div>
-        <h2 id="davis-title" class="display">${t(b, 'home_davis_title')}</h2>
-        ${paragraphs(t(b, 'home_davis'))}
-        <p class="actions"><a class="btn btn-line" href="/community">Meet the people behind it</a></p>
-      </div>
-    </div>
-  </section>`;
+function soundcloud(track: Track): Safe {
+  const src = `https://w.soundcloud.com/player/?url=${encodeURIComponent(track.url)}&color=%23320158&auto_play=false&hide_related=true&show_comments=false&show_user=true&show_reposts=false&show_teaser=false&visual=false`;
+  return html`<figure class="track">
+    <iframe title="${track.title} on SoundCloud" width="100%" height="166" scrolling="no" frameborder="0" loading="lazy" allow="autoplay" src="${src}"></iframe>
+    <figcaption><a href="${track.url}" target="_blank" rel="noopener">${track.title}</a></figcaption>
+  </figure>`;
 }
 
-// ------------------------------------------------------------------ five worlds
-
-export function worldsPage(s: Settings, b: B, worlds: World[]): Safe {
-  const pages = Array.from({ length: 8 }, (_, i) => i + 1);
-  return html`
-  <section class="page-head head-purple">
-    <div class="wrap">
-      <h1 class="display">The Five Worlds</h1>
-      <div class="lede">${paragraphs(t(b, 'worlds_intro'))}</div>
-      <nav class="jump" aria-label="Worlds on this page"><ol>${worlds.map((w) => html`<li><a href="#${w.slug}">${w.name}</a></li>`)}<li><a href="#story">The illustrated story</a></li></ol></nav>
-    </div>
-  </section>
-  ${worlds.map(
-    (w, i) => html`<section class="world reveal w-${w.slug}" id="${w.slug}">
-      <div class="wrap world-grid">
-        <div class="world-clock">${clock(w.name, `still s${i + 1}`, WORLD_HOURS[i] ?? 0)}<p>World ${i + 1} of ${worlds.length}</p></div>
-        <div class="world-copy">
-          <h2 class="display">${w.name}</h2>
-          <p class="world-tag">${w.tagline}</p>
-          ${paragraphs(w.body)}
-          ${w.who ? html`<p class="world-who"><b>Who you meet here:</b> ${w.who}</p>` : ''}
-        </div>
-        <div class="world-art">${img(w.image, '')}</div>
-      </div>
-    </section>`,
-  )}
-  <section class="story" id="story" aria-labelledby="story-title">
-    <div class="wrap">
-      <h2 id="story-title" class="display">The illustrated story</h2>
-      ${paragraphs(t(b, 'worlds_story'))}
-      <ol class="story-pages">${pages.map((n) => html`<li><a href="/img/story/page-${String(n)}.webp">${img(`/img/story/page-${n}.webp`, `Coffee Time story, page ${n}`, 'width="1100" height="1405"')}<span>Page ${String(n)}</span></a></li>`)}</ol>
-      <p class="actions"><a class="btn btn-line" href="${s.story_pdf}" ${ext}>Download the story (PDF)</a><a class="btn btn-crown" href="/order">Get the game</a></p>
-    </div>
-  </section>`;
+function video(src: string, poster: string, label: string): Safe {
+  return html`<video class="video" controls preload="none" poster="${poster}" playsinline aria-label="${label}"><source src="${src}" type="video/mp4"></video>`;
 }
 
-// ------------------------------------------------------------------ how to play
-
-export function howToPlay(s: Settings, b: B, lessons: Lesson[], faqs: Faq[]): Safe {
-  const chapters = [...new Set(lessons.map((l) => l.chapter))];
-  const slug = (x: string) => x.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
-  return html`
-  <section class="page-head head-brown">
-    <div class="wrap">
-      <h1 class="display">How to play</h1>
-      <div class="lede">${paragraphs(t(b, 'play_intro'))}</div>
-      <nav class="jump" aria-label="Chapters"><ol>${chapters.map((c) => html`<li><a href="#${slug(c)}">${c}</a></li>`)}<li><a href="#faq">Rules questions</a></li></ol></nav>
-      <p class="actions"><a class="btn btn-crown" href="${s.rules_pdf}" ${ext}>Download the rulebook (PDF)</a></p>
-    </div>
-  </section>
-  <div class="wrap rules">
-    ${chapters.map(
-      (c) => html`<section class="chapter" id="${slug(c)}" aria-labelledby="ch-${slug(c)}">
-        <h2 id="ch-${slug(c)}" class="display">${c}</h2>
-        <ol class="lessons">${lessons
-          .filter((l) => l.chapter === c)
-          .map((l) => html`<li id="lesson-${l.num.toLowerCase()}"><span class="num">${l.num}</span><div><h3>${l.title}</h3>${richText(l.body)}</div></li>`)}</ol>
-      </section>`,
-    )}
-    <section class="chapter faq" id="faq" aria-labelledby="faq-title">
-      <h2 id="faq-title" class="display">Rules questions</h2>
-      <p>Official answers for the first edition (2023).</p>
-      ${faqs.map((f) => html`<details><summary>${f.question}</summary><div>${richText(f.answer)}</div></details>`)}
-      <p class="ask">Stuck on something else? <a href="/contact?subject=Rules%20question">Ask us</a> and we will add it here.</p>
-    </section>
-  </div>`;
+function youtube(id: string, title: string): Safe {
+  return html`<div class="yt"><iframe src="https://www.youtube-nocookie.com/embed/${id}" title="${title}" loading="lazy" allow="accelerometer; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen referrerpolicy="strict-origin-when-cross-origin"></iframe></div>`;
 }
 
-// ------------------------------------------------------------------ video game
+const stars = () => raw('<span class="stars" aria-label="Five stars">' + '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.5l2.9 6.2 6.8.8-5 4.6 1.3 6.7L12 17.5l-6 3.3 1.3-6.7-5-4.6 6.8-.8z"/></svg>'.repeat(5) + '</span>');
 
-export function videoGame(s: Settings, b: B, games: Game[]): Safe {
-  const shots = [
-    ['/img/game/adventures-2.webp', 'The Coffee Time Adventures title screen'],
-    ['/img/game/adventures-5.webp', 'Little Miss Hot Shot jumping across floating platforms in space'],
-    ['/img/game/adventures-6.webp', 'Little Miss Hot Shot inside a glowing machine room'],
-    ['/img/game/adventures-1.webp', 'Characters gathered in Coffee World'],
-    ['/img/game/adventures-3.webp', 'A wide view of a Coffee Time Adventures level'],
-  ];
-  // The first game is Coffee Time Adventures itself (this page); the rest are the quick arcade games.
-  const more = games.slice(1);
-  return html`
-  <section class="page-head head-night">
-    <div class="wrap game-head">
-      <div>
-        <h1 class="display">Coffee Time Adventures</h1>
-        <div class="lede">${paragraphs(t(b, 'game_intro'))}</div>
-        <p class="actions"><a class="btn btn-crown btn-big" href="${s.demo_url}" ${ext}>Download the free demo</a></p>
-      </div>
-      ${img('/img/little-miss-hot-shot.webp', 'Little Miss Hot Shot', 'class="lmhs" width="461" height="478"')}
-    </div>
-  </section>
-  <section class="section reveal">
-    <div class="wrap two">
-      ${img('/img/game/adventures-4.webp', 'Coffee World: a hedge maze lit by lanterns', 'class="shot" width="1400" height="781"')}
-      <div><h2 class="display">In the demo</h2>${richText(t(b, 'game_demo'))}</div>
-    </div>
-  </section>
-  <section class="section shots-band">
-    <div class="wrap"><ul class="shots">${shots.map(([src, alt]) => html`<li><a href="${src}">${img(src, alt, 'width="1400" height="788"')}</a></li>`)}</ul></div>
-  </section>
-  <section class="section reveal">
-    <div class="wrap two">
-      <div><h2 class="display">Built by a game club</h2>${paragraphs(t(b, 'game_club'))}</div>
-      ${img('/img/creator-sheet.webp', 'Coffee Time character design sheet', 'class="shot" width="1600" height="1036"')}
-    </div>
-  </section>
-  ${more.length
-    ? html`<section class="section reveal arcade" aria-labelledby="arcade-title">
-      <div class="wrap">
-        <h2 id="arcade-title" class="display">Quick games you can play right now</h2>
-        <ul class="arcade-list">${more.map(
-          (g) => html`<li>${img(g.image, `${g.title} screenshot`)}<div><h3>${g.title}</h3><p>${g.blurb}</p><p class="small">${g.platform}</p><a class="btn btn-line" href="${g.url}" ${ext}>Play ${g.title}</a></div></li>`,
-        )}</ul>
-      </div>
-    </section>`
-    : ''}`;
-}
+export type OrderState = { sent?: boolean; error?: string; values?: Record<string, string> };
 
-// ------------------------------------------------------------------ music
-
-export function music(s: Settings, b: B, tracks: Track[]): Safe {
-  const main = tracks.filter((x) => !x.archive);
-  const archive = tracks.filter((x) => x.archive);
-  const player = (id: string) =>
-    `https://w.soundcloud.com/player/?url=${encodeURIComponent('https://api.soundcloud.com/tracks/' + id)}&color=%238e3cc0&auto_play=true&hide_related=true&show_comments=false&show_user=true&show_reposts=false&visual=false`;
-  return html`
-  <section class="page-head head-warp">
-    <div class="wrap">
-      <h1 class="display">Warp World music</h1>
-      <div class="lede">${paragraphs(t(b, 'music_intro'))}</div>
-    </div>
-  </section>
-  <div class="wrap section">
-    <ol class="tracks">${main.map(
-      (x) => html`<li>
-        ${x.image ? img(x.image, '', 'class="art"') : html`<span class="art"></span>`}
-        <div class="track-main">
-          <h2>${x.title}</h2><p class="small">${x.world}</p>
-          ${x.soundcloud_id
-            ? html`<details class="listen"><summary>Play here</summary><iframe title="${x.title} on SoundCloud" src="${player(x.soundcloud_id)}" loading="lazy" allow="autoplay"></iframe></details>`
-            : ''}
-        </div>
-        <a class="sc" href="${x.url}" ${ext}>SoundCloud</a>
-      </li>`,
-    )}</ol>
-    ${archive.length
-      ? html`<h2 class="display small-display">From the first website</h2>
-      <ul class="plain-links">${archive.map((x) => html`<li><a href="${x.url}" ${ext}>${x.title}</a></li>`)}</ul>`
-      : ''}
-    <p>More from the artists on <a href="${s.soundcloud}" ${ext}>eNuminous's SoundCloud</a>.</p>
-  </div>`;
-}
-
-// ------------------------------------------------------------------ community
-
-export function community(s: Settings, b: B, reviews: Review[]): Safe {
-  const art = [
-    ['/img/card-wind-feather.webp', 'Wind Feather card'],
-    ['/img/card-team-warp.webp', 'Team Warp card'],
-    ['/img/card-sugar-cube.webp', 'Sugar Cube card'],
-    ['/img/card-ice.webp', 'Ice card'],
-    ['/img/card-earth.webp', 'Earth card'],
-    ['/img/dottie.webp', 'Dotty, the Honey Bee Queen'],
-    ['/img/pup-pups.webp', 'The pup-pups'],
-    ['/img/deep-space-kruiser.webp', 'The Deep Space Kruiser'],
-  ];
-  return html`
-  <section class="page-head head-purple">
-    <div class="wrap">
-      <h1 class="display">The people behind it</h1>
-      <div class="lede">${paragraphs(t(b, 'community_intro'))}</div>
-    </div>
-  </section>
-  <section class="section reveal">
-    <div class="wrap two">
-      <div><h2 class="display">Who made the game</h2>${paragraphs(t(b, 'community_creators'))}</div>
-      ${img('/img/comic-con-collage.webp', 'Players at the Coffee Time table at San Diego Comic-Con', 'class="shot" width="1200" height="1200"')}
-    </div>
-  </section>
-  <section class="section quotes-all" id="reviews" aria-labelledby="reviews-title">
-    <div class="wrap">
-      <h2 id="reviews-title" class="display">What players say</h2>
-      <ul class="review-grid">${reviews.map((r) => html`<li><blockquote><p>${r.quote}</p></blockquote><p class="who">${r.name}<span>${r.role}</span></p></li>`)}</ul>
-    </div>
-  </section>
-  <section class="section reveal">
-    <div class="wrap two">
-      ${img('/img/purple-tree-team.webp', 'The Purple Tree Café team', 'class="shot" width="1000" height="1333"')}
-      <div>
-        <h2 class="display">${s.charity_name}</h2>${paragraphs(t(b, 'community_charity'))}
-        <p class="actions"><a class="btn btn-line" href="${s.charity_url}" ${ext}>Visit ${s.charity_name}</a><a class="btn btn-line" href="https://www.youtube.com/watch?v=N3I5WNw7kmk" ${ext}>Watch their story</a></p>
-        <h2 class="display">HMP Bikes</h2>${paragraphs(t(b, 'community_hmp'))}
-        <p class="actions"><a class="btn btn-line" href="https://www.hmpbikes.com/" ${ext}>Visit HMP Bikes</a></p>
-      </div>
-    </div>
-  </section>
-  <section class="section art-band" aria-labelledby="art-title">
-    <div class="wrap">
-      <h2 id="art-title" class="display">From the art box</h2>
-      <ul class="art-grid">${art.map(([src, alt]) => html`<li>${img(src, alt)}<span>${alt}</span></li>`)}</ul>
-      ${img('/img/hmp-bikes.webp', 'Coffee Time characters riding HMP bikes', 'class="hmp" width="1000" height="1152"')}
-    </div>
-  </section>`;
-}
-
-// ------------------------------------------------------------------ news
-
-export function news(items: News[]): Safe {
-  return html`
-  <section class="page-head head-brown"><div class="wrap"><h1 class="display">News</h1><div class="lede"><p>Conventions, radio, milestones and the video game, newest first.</p></div></div></section>
-  <div class="wrap section">
-    <ol class="timeline">${items.map(
-      (n) => html`<li>
-        <p class="when">${n.date_label}</p>
-        <div class="entry ${n.image ? 'has-img' : ''}">
-          <div><h2>${n.title}</h2>${paragraphs(n.body)}${n.url ? html`<p><a class="btn btn-line" href="${n.url}" ${/^https?:/.test(n.url) ? ext : ''}>${n.link_label || 'Read more'}</a></p>` : ''}</div>
-          ${n.image ? img(n.image, n.image_alt) : ''}
-        </div>
-      </li>`,
-    )}</ol>
-  </div>`;
-}
-
-// ------------------------------------------------------------------ order
-
-export type FormState = { sent?: boolean; error?: string; values?: Record<string, string> };
-
-export function order(s: Settings, b: B, st: FormState): Safe {
+export function orderForm(s: Settings, blocks: Blocks, st: OrderState): Safe {
   const v = st.values || {};
   const max = Math.max(1, parseInt(s.max_quantity || '10', 10));
-  const qty = Math.min(max, Math.max(1, parseInt(v.quantity || '1', 10) || 1));
-  const open = s.orders_open !== '0';
-  return html`
-  <section class="page-head head-purple order-head">
-    <div class="wrap order-top">
-      <div>
-        <h1 class="display">Order Coffee Time</h1>
-        <p class="price price-big"><b>${money(s)}</b> ${s.edition}, plus shipping</p>
-        ${shields(s)}
+  if (s.orders_open === '0') return html`<div class="order-card" id="order-form"><h3>${line(blocks, 'order_form_title')}</h3><p>Orders are paused right now. Email <a href="mailto:${s.email}">${s.email}</a> and we will let you know as soon as games are back in stock.</p></div>`;
+  if (st.sent) return html`<div class="order-card" id="order-form"><h3>Order request sent</h3><p>Thank you! We will email you shortly to confirm shipping and payment. It's Coffee Time!</p></div>`;
+  return html`<div class="order-card" id="order-form">
+    <h3>${line(blocks, 'order_form_title')}</h3>
+    ${text(blocks, 'order_form_body')}
+    ${st.error ? html`<p class="form-error" role="alert">${st.error}</p>` : ''}
+    <form method="post" action="/order" class="form">
+      ${t0()}
+      <div class="grid2">
+        <label>First and last name <input name="name" required autocomplete="name" value="${v.name || ''}"></label>
+        <label>Email <input name="email" type="email" required autocomplete="email" value="${v.email || ''}"></label>
+        <label>Phone <input name="phone" type="tel" autocomplete="tel" value="${v.phone || ''}"></label>
+        <label>Number of copies <input name="quantity" type="number" min="1" max="${max}" value="${v.quantity || '1'}"></label>
       </div>
-      ${img('/img/box-front.webp', 'The Coffee Time box', 'class="boxfront" width="1400" height="710"')}
-    </div>
-  </section>
-  <div class="wrap section order-grid">
-    <div class="order-form">
-      ${st.sent
-        ? html`<div class="notice notice-ok" role="status"><h2>Order request sent</h2>${paragraphs(t(b, 'order_after'))}<p><a href="/">Back to the home page</a></p></div>`
-        : !open
-          ? html`<div class="notice"><h2>Orders are paused</h2><p>We are restocking. Email <a href="mailto:${s.email}">${s.email}</a> and we will tell you when copies are ready.</p></div>`
-          : html`${paragraphs(t(b, 'order_intro'))}
-          ${st.error ? html`<p class="notice notice-err" role="alert">${st.error}</p>` : ''}
-          <form method="post" action="/order" class="form">
-            <input type="hidden" name="_t" value="${String(Date.now())}">
-            <p class="hp" aria-hidden="true"><label>Website <input name="website" tabindex="-1" autocomplete="off"></label></p>
-            <div class="row2">
-              <label>Your name <input name="name" required autocomplete="name" value="${v.name || ''}" maxlength="120"></label>
-              <label>Email <input name="email" type="email" required autocomplete="email" value="${v.email || ''}" maxlength="200"></label>
-            </div>
-            <div class="row2">
-              <label>Phone <small>optional, in case shipping needs a number</small><input name="phone" type="tel" autocomplete="tel" value="${v.phone || ''}" maxlength="40"></label>
-              <label>How many games
-                <select name="quantity">${Array.from({ length: max }, (_, i) => i + 1).map((n) => html`<option value="${String(n)}" ${n === qty ? raw('selected') : ''}>${String(n)}</option>`)}</select>
-              </label>
-            </div>
-            <label>Shipping address <textarea name="address" rows="4" required autocomplete="street-address" maxlength="600">${v.address || ''}</textarea></label>
-            <label>Anything else? <small>gift note, pickup in Davis, a question</small><textarea name="notes" rows="3" maxlength="1500">${v.notes || ''}</textarea></label>
-            <label class="check"><input type="checkbox" name="newsletter" value="1" ${v.newsletter ? raw('checked') : ''}> Email me when there is Coffee Time news (a few times a year)</label>
-            <p><button class="btn btn-crown btn-big">Send my order request</button></p>
-            <div class="small">${paragraphs(t(b, 'order_local'))}</div>
-          </form>`}
-    </div>
-    <aside class="order-side">
-      <h2>What you get</h2>
-      ${richText(t(b, 'home_box'))}
-      <p class="small">${s.charity_percent}% of every game sold supports <a href="${s.charity_url}" ${ext}>${s.charity_name}</a> in Davis.</p>
-      <p class="small">Prefer email? Write to <a href="mailto:${s.email}?subject=Coffee%20Time%20order">${s.email}</a> with your name, how many games, your address and a phone number.</p>
-    </aside>
+      <label>Shipping address <textarea name="address" rows="3" required autocomplete="street-address">${v.address || ''}</textarea></label>
+      <label>Anything else? <textarea name="notes" rows="2">${v.notes || ''}</textarea></label>
+      <label class="check"><input type="checkbox" name="newsletter" value="1" ${v.newsletter ? raw('checked') : ''}> Also sign me up for the newsletter</label>
+      <button class="btn">Send order request</button>
+      <p class="small">$${s.price} per game plus shipping. We reply by email; nothing is charged here.</p>
+    </form>
   </div>`;
 }
 
-// ------------------------------------------------------------------ contact
-
-export const CONTACT_SUBJECTS = ['Rules question', 'Events and schools', 'Press', 'Wholesale or stores', 'Something else'];
-
-export function contact(s: Settings, b: B, st: FormState): Safe {
-  const v = st.values || {};
+export function home(s: Settings, blocks: Blocks, tracks: Track[], creators: Creator[], reviews: Review[], flags: { joined?: string; order: OrderState }): Safe {
   return html`
-  <section class="page-head head-brown"><div class="wrap"><h1 class="display">Contact us</h1><div class="lede">${paragraphs(t(b, 'contact_intro'))}</div></div></section>
-  <div class="wrap section narrow">
-    ${st.sent
-      ? html`<div class="notice notice-ok" role="status"><h2>Message sent</h2><p>Thanks. We read every message and reply by email, usually within a few days.</p></div>`
-      : html`${st.error ? html`<p class="notice notice-err" role="alert">${st.error}</p>` : ''}
-      <form method="post" action="/contact" class="form">
-        <input type="hidden" name="_t" value="${String(Date.now())}">
-        <p class="hp" aria-hidden="true"><label>Website <input name="website" tabindex="-1" autocomplete="off"></label></p>
-        <div class="row2">
-          <label>Your name <input name="name" required autocomplete="name" value="${v.name || ''}" maxlength="120"></label>
-          <label>Email <input name="email" type="email" required autocomplete="email" value="${v.email || ''}" maxlength="200"></label>
-        </div>
-        <label>What is it about?
-          <select name="subject">${CONTACT_SUBJECTS.map((x) => html`<option ${x === v.subject ? raw('selected') : ''}>${x}</option>`)}</select>
-        </label>
-        <label>Message <textarea name="body" rows="7" required maxlength="4000">${v.body || ''}</textarea></label>
-        <p><button class="btn btn-crown">Send message</button></p>
+<section class="hero" id="rules">
+  ${orb('fire', 'r', 0, 1)}
+  <div class="wrap hero-grid">
+    <div class="hero-art"><img src="/img/don-floating.webp" alt="Donette, floating" width="440" height="840" fetchpriority="high"></div>
+    <div class="hero-copy">
+      <h1>${line(blocks, 'hero_title')}</h1>
+      ${text(blocks, 'hero_body')}
+      ${learnLinks(s)}
+    </div>
+    <div class="hero-ship">${img('/img/deep-space-kruiser.webp', 'The Deep Space Kruiser', 'width="900" height="411"')}</div>
+  </div>
+</section>
+
+<section class="newsletter" id="newsletter">
+  ${orb('warp', 'l', 10, 3)}
+  <div class="wrap news-grid">
+    <h2>${line(blocks, 'newsletter_title')}</h2>
+    <div>
+      ${text(blocks, 'newsletter_body')}
+      ${flags.joined === '1' ? html`<p class="form-ok" role="status">You're on the list. Welcome to the Coffee Time universe!</p>` : flags.joined === '0' ? html`<p class="form-error" role="alert">That email address does not look right. Please check it and try again.</p>` : ''}
+      <form method="post" action="/newsletter" class="join">
+        ${t0()}
+        <label><span>Email</span> <input name="email" type="email" required autocomplete="email" placeholder="e.g., email@example.com"></label>
+        <button class="btn">Join</button>
       </form>
-      <p class="small">Or email <a href="mailto:${s.email}">${s.email}</a>. Want a game? Use the <a href="/order">order form</a>.</p>`}
-  </div>`;
+    </div>
+  </div>
+</section>
+
+<section class="videogame" id="video-game">
+  <div class="wrap">
+    <hr class="rule">
+    <h2 class="big">${line(blocks, 'game_title')}</h2>
+    <div class="vg-grid">
+      ${video(s.trailer_video, s.trailer_poster, 'Coffee Time Adventures trailer')}
+      <div class="vg-copy">${text(blocks, 'game_body')}</div>
+    </div>
+    <hr class="rule">
+  </div>
+</section>
+
+<section class="sponsor" id="sponsor">
+  ${orb('ice', 'r', 20, 2)}
+  <div class="wrap">
+    <h2 class="sponsor-title">${line(blocks, 'sponsor_title')}</h2>
+    <div class="sponsor-grid">
+      <div class="sponsor-art">${img('/img/hmp-thermos.webp', 'Thermos riding an HMP electric bike', 'width="900" height="1037"')}</div>
+      <a class="sponsor-photo" href="${s.hmp_url}" target="_blank" rel="noopener">${img('/img/hmp-logo.webp', 'HMP Bikes', 'width="1280" height="720"')}</a>
+    </div>
+    <div class="sponsor-copy">${text(blocks, 'sponsor_body')}</div>
+    <h3 class="coloring-title">${line(blocks, 'coloring_title')}</h3>
+    <div class="coloring">
+      <a href="${s.coloring_pdf}" target="_blank" rel="noopener" aria-label="Download the coloring page (PDF)">${img('/img/coloring-bw.webp', 'Thermos on his HMP bike, black and white coloring page', 'width="900" height="900"')}</a>
+      <a href="${s.coloring_pdf}" target="_blank" rel="noopener" aria-label="Download the coloring page (PDF)">${img('/img/coloring-color.webp', 'Thermos on his HMP bike, colored in', 'width="900" height="900"')}</a>
+    </div>
+    <div class="sponsor-copy small-copy">${text(blocks, 'coloring_body')}</div>
+  </div>
+</section>
+
+<section class="stage" aria-label="The Coffee Time characters">
+  <div class="stage-art">${img('/img/characters-stage.webp', 'The whole cast: Little Miss Hot Shot, Donette, Thermos, Cup Joe, Sir Cubey, King Tea, the crumpets and friends', 'width="2000" height="830"')}</div>
+</section>
+
+<section class="music" id="music">
+  ${orb('feather', 'r', 10, 3)}
+  ${orb('warp', 'l', 40, 4)}
+  ${orb('earth', 'r', 80, 3)}
+  <div class="wrap">
+    <h2 class="huge">${line(blocks, 'music_title')}</h2>
+    <p class="music-sub">${line(blocks, 'music_sub')}</p>
+    <p class="music-tag">${line(blocks, 'music_tagline')}</p>
+    <div class="tracks">${tracks.map(soundcloud)}</div>
+  </div>
+</section>
+
+<section class="orders" id="order">
+  ${orb('sugar', 'l', 0, 2)}
+  ${orb('fire', 'r', 20, 3)}
+  <div class="wrap">
+    <div class="orders-head">
+      <h2 class="huge">${line(blocks, 'orders_title')}</h2>
+      <p class="badge">${s.players}<br>${s.ages}</p>
+    </div>
+    <div class="box-cover">${img('/img/box-cover.webp', 'The Coffee Time box, first edition', 'width="1800" height="1101"')}</div>
+    <h3 class="orders-intro">${line(blocks, 'orders_intro')}</h3>
+    <div class="orders-copy">${text(blocks, 'orders_body')}</div>
+
+    <div class="charity">
+      <a class="charity-logo" href="${s.charity_url}" target="_blank" rel="noopener">${img('/img/purple-tree-logo.webp', 'Purple Tree Café, where community means everyone', 'width="600" height="825"')}</a>
+      <div class="charity-copy">
+        <h3>${line(blocks, 'charity_title')}</h3>
+        ${text(blocks, 'charity_body')}
+      </div>
+      <div class="charity-photo">${img('/img/purple-tree-team.webp', 'Members of the Purple Tree Café team', 'width="900" height="1200"')}</div>
+    </div>
+
+    <div class="inbox">
+      <div class="inbox-board">${img('/img/board.webp', 'The Coffee Time game board: five World Clocks across the top and the heroes’ paths winding to the Activation Chamber', 'width="1400" height="1400"')}</div>
+      <div class="inbox-list">
+        <h3>${line(blocks, 'box_title')}</h3>
+        ${text(blocks, 'box_list')}
+      </div>
+    </div>
+
+    ${orderForm(s, blocks, flags.order)}
+  </div>
+</section>
+
+<section class="team" id="team">
+  ${orb('ice', 'r', 0, 4)}
+  <div class="wrap">
+    <h2 class="huge">${line(blocks, 'team_title')}</h2>
+    <ul class="creators">
+      ${creators.map(
+        (c) => html`<li>
+          ${img(c.image, c.name, 'width="520" height="520"')}
+          <div>
+            <h3>${c.name}<small>${c.role}</small><em>${c.place}</em></h3>
+            ${richText(c.bio)}
+          </div>
+        </li>`,
+      )}
+    </ul>
+  </div>
+</section>
+
+<section class="reviews" id="reviews">
+  ${orb('earth', 'l', 0, 2)}
+  ${orb('sugar', 'r', 50, 3)}
+  <div class="wrap">
+    <h2 class="huge">${line(blocks, 'reviews_title')}</h2>
+    <ul class="review-grid">
+      ${reviews.map((r, i) => html`<li class="review c${(i % 6) + 1}">${stars()}<h3>${r.name}<small>${r.role}</small></h3><blockquote>${raw(inline(r.quote))}</blockquote><span class="qm" aria-hidden="true">&rdquo;</span></li>`)}
+    </ul>
+  </div>
+</section>`;
 }
 
-// ------------------------------------------------------------------ 404
+export function orderPage(s: Settings, blocks: Blocks, st: OrderState): Safe {
+  return html`<section class="orders page-order" id="order">
+    <div class="wrap narrow">
+      <h1 class="huge">${line(blocks, 'orders_title')}</h1>
+      <div class="box-cover">${img('/img/box-cover.webp', 'The Coffee Time box, first edition', 'width="1800" height="1101"')}</div>
+      <div class="orders-copy">${text(blocks, 'orders_body')}</div>
+      ${orderForm(s, blocks, st)}
+      <p class="center"><a href="/#order">Back to the game</a></p>
+    </div>
+  </section>`;
+}
+
+export function story(s: Settings, blocks: Blocks): Safe {
+  const pages = [1, 2, 3, 4, 5, 6, 7, 8];
+  return html`<section class="page story">
+    <div class="wrap narrow">
+      <h1 class="huge">${line(blocks, 'story_title')}</h1>
+      <div class="intro">${text(blocks, 'story_intro')}</div>
+    </div>
+    <div class="wrap story-pages">
+      ${pages.map((n) => html`<figure>${img(`/img/story-${n}.webp`, `Coffee Time story, page ${n}`, `width="1400" height="1789" ${n === 1 ? 'loading="eager"' : ''}`)}</figure>`)}
+    </div>
+  </section>`;
+}
+
+export function arcade(s: Settings, blocks: Blocks, games: Game[]): Safe {
+  return html`<section class="page arcade">
+    ${orb('warp', 'r', 10, 3)}
+    <div class="wrap narrow">
+      <h1 class="huge">${line(blocks, 'arcade_title')}</h1>
+      ${video(s.trailer_video, s.trailer_poster, 'Coffee Time Adventures trailer')}
+      <div class="intro">${text(blocks, 'arcade_body')}</div>
+      <p class="center"><a class="btn" href="${s.demo_url}" target="_blank" rel="noopener">Download the free demo</a></p>
+    </div>
+    <div class="wrap">
+      <ul class="games">
+        ${games.map(
+          (g) => html`<li>
+            <a href="${g.url}" target="_blank" rel="noopener">${img(g.image, `${g.title} screenshot`, 'width="1000" height="600"')}</a>
+            <h2>${g.title}</h2>
+            ${richText(g.blurb)}
+            ${g.note ? html`<p class="small">${g.note}</p>` : ''}
+            <a class="btn" href="${g.url}" target="_blank" rel="noopener">${g.button || `Play ${g.title}`}</a>
+          </li>`,
+        )}
+      </ul>
+    </div>
+  </section>`;
+}
+
+export function news(s: Settings, blocks: Blocks, items: News[]): Safe {
+  return html`<section class="page news">
+    ${orb('earth', 'l', 5, 2)}
+    <div class="wrap narrow">
+      <h1 class="huge">${line(blocks, 'news_title')}</h1>
+      ${items.map((n) => {
+        const imgs = n.images.split(',').map((x) => x.trim()).filter(Boolean);
+        const yt = /^[\w-]{11}$/.test(n.video) ? n.video : '';
+        return html`<article class="news-item">
+          <p class="date">${n.date_label}</p>
+          <h2>${n.title}</h2>
+          ${n.video && !yt ? video(n.video, s.trailer_poster, n.title) : ''}
+          ${yt ? youtube(yt, n.title) : ''}
+          ${richText(n.body)}
+          ${imgs.length ? html`<div class="news-pics n${imgs.length}">${imgs.map((src) => img(src, n.title, 'width="1200" height="1200"'))}</div>` : ''}
+          ${n.url ? html`<p><a class="btn" href="${n.url}" target="_blank" rel="noopener">${n.link_label || 'Read more'}</a></p>` : ''}
+        </article>`;
+      })}
+    </div>
+  </section>`;
+}
+
+export function tutorials(s: Settings, blocks: Blocks, items: Tutorial[]): Safe {
+  return html`<section class="page tutorials">
+    <div class="wrap narrow">
+      <h1 class="huge">${line(blocks, 'tutorials_title')}</h1>
+      <div class="intro">${text(blocks, 'tutorials_intro')}${learnLinks(s, 'tutorials')}</div>
+      <nav class="jump" aria-label="Jump to a tutorial"><ol>${items.map((t) => html`<li><a href="#tutorial-${t.num}">${t.num}</a></li>`)}</ol></nav>
+      ${items.map(
+        (t) => html`<article class="tutorial" id="tutorial-${t.num}">
+          <p class="kicker">Tutorial ${t.num}</p>
+          <h2>${t.title}</h2>
+          ${richText(t.body)}
+          ${t.youtube_id ? youtube(t.youtube_id, `Tutorial ${t.num}: ${t.title}`) : ''}
+        </article>`,
+      )}
+    </div>
+  </section>`;
+}
+
+export function faq(s: Settings, blocks: Blocks, items: Faq[]): Safe {
+  return html`<section class="page faq">
+    ${orb('sugar', 'r', 5, 2)}
+    <div class="wrap narrow">
+      <h1 class="huge">${line(blocks, 'faq_title')}</h1>
+      <div class="intro">${text(blocks, 'faq_intro')}${learnLinks(s, 'faq')}</div>
+      ${items.map((f) => html`<article class="qa"><h2><span>Q:</span> ${f.question}</h2><div class="answer">${richText(f.answer)}</div></article>`)}
+    </div>
+  </section>`;
+}
 
 export function notFound(): Safe {
-  return html`<section class="page-head head-warp lost"><div class="wrap">
-    <h1 class="display">Lost in Warp World</h1>
-    <div class="lede"><p>That page does not exist, or it moved when we left the old website.</p></div>
-    <p class="actions"><a class="btn btn-crown" href="/">Go to the home page</a><a class="btn btn-ghost" href="/how-to-play">How to play</a></p>
-  </div></section>`;
+  return html`<section class="page"><div class="wrap narrow center"><h1 class="huge">Lost in the Realm of Time</h1><p>That page is not here. <a href="/">Back to Coffee Time</a>.</p></div></section>`;
 }
-
-export { inline };

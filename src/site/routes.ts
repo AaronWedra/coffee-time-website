@@ -9,46 +9,38 @@ type MetaIn = Omit<PageMeta, 'description'> & { description?: string };
 
 export const site = new Router();
 
-// Old URLs -> new ones. Keep these forever; they are printed in the rulebook, linked from Facebook,
-// Comic-Con programs and old emails. Covers the Wix site and the August 2026 preview.
+// Old URLs -> current ones. Keep these forever: they are printed in the rulebook, linked from
+// Facebook, Comic-Con programs and old emails. Covers the Wix site and the 2026 previews.
 const REDIRECTS: Record<string, string> = {
   '/home': '/',
-  '/rules': '/how-to-play',
-  '/video-tutorials': '/how-to-play',
-  '/tutorials': '/how-to-play',
-  '/learn-to-play': '/how-to-play',
-  '/faq': '/how-to-play#faq',
-  '/faqs': '/how-to-play#faq',
-  '/story': '/worlds',
-  '/the-story': '/worlds',
-  '/five-worlds': '/worlds',
-  '/arcade': '/video-game',
-  '/videogame': '/video-game',
-  '/video-games': '/video-game',
-  '/coffee-time-adventures': '/video-game',
-  '/warp-world-music': '/music',
-  '/team': '/community',
-  '/meet-the-creators': '/community',
-  '/reviews': '/community#reviews',
+  '/rules': '/#rules',
+  '/how-to-play': '/video-tutorials',
+  '/tutorials': '/video-tutorials',
+  '/learn-to-play': '/video-tutorials',
+  '/faqs': '/faq',
+  '/worlds': '/story',
+  '/the-story': '/story',
+  '/video-game': '/arcade',
+  '/videogame': '/arcade',
+  '/coffee-time-adventures': '/arcade',
+  '/music': '/#music',
+  '/warp-world-music': '/#music',
+  '/team': '/#team',
+  '/community': '/#team',
+  '/meet-the-creators': '/#team',
+  '/reviews': '/#reviews',
   '/pre-order': '/order',
   '/preorder': '/order',
   '/orders': '/order',
   '/shop': '/order',
   '/buy': '/order',
-  '/newsletter': '/contact',
+  '/contact': '/#newsletter',
+  '/newsletter': '/#newsletter',
 };
 
-export const STATIC_PATHS = ['/', '/worlds', '/how-to-play', '/video-game', '/music', '/community', '/news', '/order', '/contact'];
+export const STATIC_PATHS = ['/', '/story', '/arcade', '/news', '/video-tutorials', '/faq', '/order'];
 
 const siteUrl = (c: Ctx) => (c.env.SITE_URL || `${c.url.protocol}//${c.url.host}`).replace(/\/$/, '');
-
-// Per-world colors live in D1 (editable in HQ), so they are emitted as CSS custom properties per page.
-function worldCss(worlds: db.World[]): string {
-  return worlds
-    .filter((w) => /^#[0-9a-f]{3,8}$/i.test(w.color) && /^[a-z0-9-]+$/.test(w.slug))
-    .map((w) => `.w-${w.slug}{--wc:${w.color}}`)
-    .join('');
-}
 
 async function render(c: Ctx, meta: MetaIn, body: Safe, status = 200) {
   const s = (c.state.settings as db.Settings) || (await db.getSettings(c.env.DB));
@@ -56,7 +48,7 @@ async function render(c: Ctx, meta: MetaIn, body: Safe, status = 200) {
   const out = layout(s, { ...meta, description: meta.description || s.seo_description }, body, { nonce: c.nonce, siteUrl: siteUrl(c), indexable });
   const headers: Record<string, string> = {};
   if (!indexable) headers['x-robots-tag'] = 'noindex, nofollow';
-  if (c.req.method === 'POST' || /[?&](sent|error)=/.test(c.url.search)) headers['cache-control'] = 'no-store';
+  if (c.req.method === 'POST' || /[?&](sent|joined|error)=/.test(c.url.search)) headers['cache-control'] = 'no-store';
   return page(out, { status, headers });
 }
 
@@ -70,71 +62,57 @@ for (const [from, to] of Object.entries(REDIRECTS)) site.get(from, () => redirec
 
 site.get('/', async (c) => {
   const { s, b } = await base(c);
-  const [worlds, chars, reviews] = await Promise.all([db.listWorlds(c.env.DB), db.listCharacters(c.env.DB), db.listReviews(c.env.DB)]);
+  const [tracks, creators, reviews] = await Promise.all([db.listTracks(c.env.DB), db.listCreators(c.env.DB), db.listReviews(c.env.DB)]);
   const url = siteUrl(c);
   const jsonld = {
     '@context': 'https://schema.org',
     '@type': 'Product',
     name: 'Coffee Time board game',
     description: s.seo_description,
-    image: [url + '/img/box-front.webp', url + '/img/board.webp'],
-    brand: { '@type': 'Brand', name: 'Coffee Time Adventures' },
-    audience: { '@type': 'PeopleAudience', suggestedMinAge: parseInt(s.ages, 10) || 8 },
-    offers: { '@type': 'Offer', price: s.price, priceCurrency: 'USD', availability: s.orders_open === '0' ? 'https://schema.org/OutOfStock' : 'https://schema.org/InStock', url: url + '/order' },
+    image: [url + '/img/box-cover.webp', url + '/img/board.webp'],
+    brand: { '@type': 'Brand', name: 'Coffee Time' },
+    audience: { '@type': 'PeopleAudience', suggestedMinAge: 8 },
+    offers: { '@type': 'Offer', price: s.price, priceCurrency: 'USD', availability: s.orders_open === '0' ? 'https://schema.org/OutOfStock' : 'https://schema.org/InStock', url: url + '/#order' },
   };
-  return render(c, { title: 'Home', path: '/', bodyClass: 'is-home', jsonld, css: worldCss(worlds) }, P.home(s, b, worlds, chars, reviews));
+  const q = c.url.searchParams;
+  return render(c, { title: 'Home', path: '/', bodyClass: 'is-home', jsonld }, P.home(s, b, tracks, creators, reviews, { joined: q.get('joined') || undefined, order: { sent: q.get('sent') === '1' } }));
 });
 
-site.get('/worlds', async (c) => {
+site.get('/story', async (c) => {
   const { s, b } = await base(c);
-  const worlds = await db.listWorlds(c.env.DB);
-  return render(c, { title: 'The Five Worlds', description: 'Coffee World, Donut World, Warp World, Crumpet World and Tea World: the five worlds of the Coffee Time board game, and the illustrated story from the box.', path: '/worlds', image: '/img/story/page-1.webp', css: worldCss(worlds) }, P.worldsPage(s, b, worlds));
+  return render(c, { title: 'Story', description: 'The illustrated Coffee Time story from the box: King Tea, the crumpets, the Duchess, Roamer, and the heroes who race the World Clocks.', path: '/story', image: '/img/story-1.webp' }, P.story(s, b));
 });
 
-site.get('/how-to-play', async (c) => {
-  const { s, b } = await base(c);
-  const [lessons, faqs] = await Promise.all([db.listLessons(c.env.DB), db.listFaqs(c.env.DB)]);
-  const jsonld = faqs.length
-    ? { '@context': 'https://schema.org', '@type': 'FAQPage', mainEntity: faqs.map((f) => ({ '@type': 'Question', name: f.question, acceptedAnswer: { '@type': 'Answer', text: f.answer.replace(/\*\*/g, '') } })) }
-    : undefined;
-  return render(c, { title: 'How to play', description: 'The complete Coffee Time rules in 20 short lessons: setup, moving and battling, every card, playing Roamer and King Tea, and how to win. Plus answers to common rules questions.', path: '/how-to-play', jsonld }, P.howToPlay(s, b, lessons, faqs));
-});
-
-site.get('/video-game', async (c) => {
+site.get('/arcade', async (c) => {
   const { s, b } = await base(c);
   const games = await db.listGames(c.env.DB);
-  return render(c, { title: 'Coffee Time Adventures, the video game', description: 'Coffee Time Adventures is a 3D video game set in the Five Worlds. Play the free Windows demo, plus two quick browser games.', path: '/video-game', image: '/img/game/adventures-4.webp' }, P.videoGame(s, b, games));
-});
-
-site.get('/music', async (c) => {
-  const { s, b } = await base(c);
-  const tracks = await db.listTracks(c.env.DB);
-  return render(c, { title: 'Warp World music', description: 'The original Coffee Time soundtrack: a theme for every world, battle music and character themes.', path: '/music' }, P.music(s, b, tracks));
-});
-
-site.get('/community', async (c) => {
-  const { s, b } = await base(c);
-  const reviews = await db.listReviews(c.env.DB);
-  return render(c, { title: 'Community and reviews', description: 'The creators, artists, playtesters and partners behind Coffee Time, and what players say about it.', path: '/community' }, P.community(s, b, reviews));
+  return render(c, { title: 'Arcade', description: 'Coffee Time Adventures, the video game, plus Rapid Refill and Donut Dash to play in your browser.', path: '/arcade', image: '/img/trailer-poster.webp' }, P.arcade(s, b, games));
 });
 
 site.get('/news', async (c) => {
-  await base(c);
+  const { s, b } = await base(c);
   const items = await db.listNews(c.env.DB);
-  return render(c, { title: 'News', description: 'Coffee Time at San Diego Comic-Con, on KDVS radio, the first 100 games and the video game.', path: '/news' }, P.news(items));
+  return render(c, { title: 'News', description: 'Coffee Time at San Diego Comic-Con, on KDVS radio, the first 100 games and the video game.', path: '/news', image: '/img/comic-con-2025-a.webp' }, P.news(s, b, items));
+});
+
+site.get('/video-tutorials', async (c) => {
+  const { s, b } = await base(c);
+  const items = await db.listTutorials(c.env.DB);
+  return render(c, { title: 'Video Tutorials', description: 'Learn to play Coffee Time like a pro: 46 short video tutorials covering setup, moving, battles, every card, Roamer, King Tea and how to win.', path: '/video-tutorials' }, P.tutorials(s, b, items));
+});
+
+site.get('/faq', async (c) => {
+  const { s, b } = await base(c);
+  const items = await db.listFaqs(c.env.DB);
+  const jsonld = items.length
+    ? { '@context': 'https://schema.org', '@type': 'FAQPage', mainEntity: items.map((f) => ({ '@type': 'Question', name: f.question, acceptedAnswer: { '@type': 'Answer', text: f.answer.replace(/\*\*/g, '') } })) }
+    : undefined;
+  return render(c, { title: 'FAQ', description: 'Answers to the Coffee Time rules questions players ask most: turn order, King Tea and the World Clocks, the Team Path, sharing heat, Roamer.', path: '/faq', jsonld }, P.faq(s, b, items));
 });
 
 site.get('/order', async (c) => {
   const { s, b } = await base(c);
-  return render(c, { title: 'Order the board game', description: `Order Coffee Time, the board game for ${s.players} players, for $${s.price}. Fill in the form and we email you to arrange shipping and payment.`, path: '/order', image: '/img/box-front.webp' }, P.order(s, b, { sent: c.url.searchParams.get('sent') === '1' }));
-});
-
-site.get('/contact', async (c) => {
-  const { s, b } = await base(c);
-  const q = c.url.searchParams;
-  const values: Record<string, string> = {};
-  if (q.get('subject') && P.CONTACT_SUBJECTS.includes(q.get('subject')!)) values.subject = q.get('subject')!;
-  return render(c, { title: 'Contact', description: `Contact the Coffee Time team: ${s.email}.`, path: '/contact' }, P.contact(s, b, { sent: q.get('sent') === '1', values }));
+  return render(c, { title: 'Order', description: `Order Coffee Time, the board game, for $${s.price}. Send your details and we email you to arrange shipping and payment.`, path: '/order', image: '/img/box-cover.webp' }, P.orderPage(s, b, { sent: c.url.searchParams.get('sent') === '1' }));
 });
 
 // Shared bot checks for public forms: honeypot, too-fast submit, per-IP rate limit.
@@ -160,7 +138,7 @@ site.post('/order', async (c) => {
     notes: (f.notes || '').trim().slice(0, 1500),
     newsletter: f.newsletter ? '1' : '',
   };
-  const fail = (error: string, status = 400) => render(c, { title: 'Order the board game', path: '/order', noindex: true }, P.order(s, b, { error, values }), status);
+  const fail = (error: string, status = 400) => render(c, { title: 'Order', path: '/order', noindex: true }, P.orderPage(s, b, { error, values }), status);
 
   if (s.orders_open === '0') return redirect('/order', 303);
   const bot = await botCheck(c, f, 'order', 5);
@@ -172,35 +150,28 @@ site.post('/order', async (c) => {
 
   const qty = parseInt(values.quantity, 10);
   const id = await db.insertOrder(c.env.DB, { ...values, quantity: qty, newsletter: values.newsletter ? 1 : 0, ip: c.ip });
+  if (values.newsletter) await db.subscribe(c.env.DB, values.email, 'order', c.ip);
   const to = c.env.NOTIFY_TO || s.notify_email;
   if (s.notify_enabled === '1' && to) {
     const subtotal = (qty * parseFloat(s.price || '0')).toFixed(2);
-    const body = `New order request #${id} on the Coffee Time website\n\nName: ${values.name}\nEmail: ${values.email}\nPhone: ${values.phone || '(none)'}\nGames: ${qty} (subtotal $${subtotal} before shipping)\n\nShip to:\n${values.address}\n\nNotes: ${values.notes || '(none)'}\nNews by email: ${values.newsletter ? 'yes' : 'no'}\n\nOpen it in HQ: ${siteUrl(c)}/hq/orders/${id}\n`;
+    const body = `New order request #${id} on the Coffee Time website\n\nName: ${values.name}\nEmail: ${values.email}\nPhone: ${values.phone || '(none)'}\nGames: ${qty} (subtotal $${subtotal} before shipping)\n\nShip to:\n${values.address}\n\nNotes: ${values.notes || '(none)'}\nNewsletter: ${values.newsletter ? 'yes' : 'no'}\n\nOpen it in HQ: ${siteUrl(c)}/hq/orders/${id}\n`;
     c.waitUntil(sendEmail(c.env, to, `[Order #${id}] ${qty} x Coffee Time for ${values.name}`, body));
   }
   return redirect('/order?sent=1', 303);
 });
 
-site.post('/contact', async (c) => {
-  const { s, b } = await base(c);
+site.post('/newsletter', async (c) => {
+  const { s } = await base(c);
   const f = await formData(c.req);
-  const values = { name: (f.name || '').trim().slice(0, 120), email: (f.email || '').trim().slice(0, 200), subject: (f.subject || '').trim().slice(0, 80), body: (f.body || '').trim().slice(0, 4000) };
-  const fail = (error: string, status = 400) => render(c, { title: 'Contact', path: '/contact', noindex: true }, P.contact(s, b, { error, values }), status);
-
-  const bot = await botCheck(c, f, 'contact', 5);
-  if (bot === 'bot') return redirect('/contact?sent=1', 303);
-  if (bot === 'limited') return fail(`Too many messages from this connection in the last hour. Please email ${s.email} instead.`, 429);
-  if (!values.name || !values.body) return fail('Please add your name and a message.');
-  if (!EMAIL_RE.test(values.email)) return fail('That email address does not look right. Please check it so we can reply.');
-  if (!P.CONTACT_SUBJECTS.includes(values.subject)) values.subject = P.CONTACT_SUBJECTS[P.CONTACT_SUBJECTS.length - 1];
-
-  const id = await db.insertMessage(c.env.DB, { ...values, phone: '', ip: c.ip });
+  const email = (f.email || '').trim().slice(0, 200);
+  const bot = await botCheck(c, f, 'newsletter', 10);
+  if (bot === 'bot') return redirect('/?joined=1#newsletter', 303);
+  if (bot === 'limited') return redirect('/?joined=0#newsletter', 303);
+  if (!EMAIL_RE.test(email)) return redirect('/?joined=0#newsletter', 303);
+  const isNew = await db.subscribe(c.env.DB, email, 'newsletter', c.ip);
   const to = c.env.NOTIFY_TO || s.notify_email;
-  if (s.notify_enabled === '1' && to) {
-    const body = `New message on the Coffee Time website\n\nFrom: ${values.name}\nEmail: ${values.email}\nAbout: ${values.subject}\n\n${values.body}\n\nRead and reply in HQ: ${siteUrl(c)}/hq/messages/${id}\n`;
-    c.waitUntil(sendEmail(c.env, to, `[Website] ${values.subject}: ${values.name}`, body));
-  }
-  return redirect('/contact?sent=1', 303);
+  if (isNew && s.notify_enabled === '1' && to) c.waitUntil(sendEmail(c.env, to, `[Newsletter] ${email} joined`, `${email} signed up for the Coffee Time newsletter.\n\nThe full list is in HQ: ${siteUrl(c)}/hq/subscribers\n`));
+  return redirect('/?joined=1#newsletter', 303);
 });
 
 site.get('/sitemap.xml', async (c) => {

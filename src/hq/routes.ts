@@ -10,30 +10,29 @@ export const hq = new Router();
 const MENU = [
   ['/hq/dashboard', 'Dashboard'],
   ['/hq/orders', 'Orders'],
-  ['/hq/messages', 'Messages'],
+  ['/hq/subscribers', 'Newsletter'],
   ['/hq/details', 'Game details'],
   ['/hq/pages', 'Page copy'],
-  ['/hq/worlds', 'Worlds'],
-  ['/hq/characters', 'Characters'],
-  ['/hq/lessons', 'How to play'],
-  ['/hq/faqs', 'Rules FAQ'],
   ['/hq/reviews', 'Reviews'],
   ['/hq/news', 'News'],
+  ['/hq/tutorials', 'Tutorials'],
+  ['/hq/faqs', 'FAQ'],
   ['/hq/tracks', 'Music'],
-  ['/hq/games', 'Games'],
+  ['/hq/games', 'Arcade'],
+  ['/hq/creators', 'Team'],
   ['/hq/settings', 'Settings'],
 ];
 
-function shell(c: Ctx, title: string, body: Child, sess: Session | null, counts: Counts = { unread: 0, newOrders: 0 }): Response {
+function shell(c: Ctx, title: string, body: Child, sess: Session | null, counts: Counts = { newOrders: 0 }): Response {
   const flash = c.url.searchParams.get('ok') ? html`<div class="flash">${c.url.searchParams.get('ok')}</div>` : '';
   const out =
     '<!doctype html>' +
     html`<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
 <title>${title} | HQ</title><meta name="robots" content="noindex, nofollow">
-<link rel="icon" href="/favicon.svg"><link rel="stylesheet" href="/hq.css?v=1"></head>
+<link rel="icon" href="/favicon.png"><link rel="stylesheet" href="/hq.css?v=1"></head>
 <body class="hq">
 <header class="hq-head"><a class="hq-brand" href="/hq/dashboard">Coffee Time <span>HQ</span></a>
-${sess ? html`<nav class="hq-nav"><ul>${MENU.map(([h, l]) => html`<li><a href="${h}" ${c.url.pathname.startsWith(h) ? raw('aria-current="page"') : ''}>${l}${h === '/hq/messages' && counts.unread ? html` <b class="pill">${counts.unread}</b>` : ''}${h === '/hq/orders' && counts.newOrders ? html` <b class="pill">${counts.newOrders}</b>` : ''}</a></li>`)}</ul>
+${sess ? html`<nav class="hq-nav"><ul>${MENU.map(([h, l]) => html`<li><a href="${h}" ${c.url.pathname.startsWith(h) ? raw('aria-current="page"') : ''}>${l}${h === '/hq/orders' && counts.newOrders ? html` <b class="pill">${counts.newOrders}</b>` : ''}</a></li>`)}</ul>
 <form method="post" action="/hq/logout"><input type="hidden" name="csrf" value="${sess.csrf}"><span class="who">${sess.staff.name}</span><button class="link">Log out</button></form></nav>` : ''}
 </header>
 <main class="hq-main">${flash}<h1>${title}</h1>${body}</main>
@@ -56,12 +55,10 @@ async function guardedPost(c: Ctx): Promise<{ sess: Session; f: Record<string, s
   return { sess, f };
 }
 
-type Counts = { unread: number; newOrders: number };
+type Counts = { newOrders: number };
 async function counts(d: D1Database): Promise<Counts> {
-  const r = await d
-    .prepare("SELECT (SELECT COUNT(*) FROM messages WHERE read_at IS NULL AND archived_at IS NULL) AS unread, (SELECT COUNT(*) FROM orders WHERE status='new') AS newOrders")
-    .first<Counts>();
-  return { unread: r?.unread ?? 0, newOrders: r?.newOrders ?? 0 };
+  const r = await d.prepare("SELECT COUNT(*) AS newOrders FROM orders WHERE status='new'").first<Counts>();
+  return { newOrders: r?.newOrders ?? 0 };
 }
 
 // ---------- login / setup ----------
@@ -144,10 +141,10 @@ hq.post('/hq/setup', async (c) => {
 hq.get('/hq/dashboard', async (c) => {
   const sess = await requireSession(c);
   if (sess instanceof Response) return sess;
-  const [n, recentOrders, recent, s, outbox, lastEdit, sold] = await Promise.all([
+  const [n, recentOrders, subs, s, outbox, lastEdit, sold] = await Promise.all([
     counts(c.env.DB),
     c.env.DB.prepare("SELECT * FROM orders WHERE status IN ('new','contacted','paid') ORDER BY created_at DESC LIMIT 8").all<db.Order>().then((r) => r.results),
-    c.env.DB.prepare('SELECT * FROM messages WHERE archived_at IS NULL ORDER BY created_at DESC LIMIT 5').all<db.Message>().then((r) => r.results),
+    c.env.DB.prepare('SELECT COUNT(*) AS n FROM subscribers WHERE unsubscribed_at IS NULL').first<{ n: number }>(),
     db.getSettings(c.env.DB),
     c.env.DB.prepare('SELECT status, COUNT(*) n FROM outbox GROUP BY status').all<{ status: string; n: number }>().then((r) => r.results),
     c.env.DB.prepare('SELECT * FROM audit_log ORDER BY id DESC LIMIT 8').all<{ who: string; what: string; detail: string; created_at: string }>().then((r) => r.results),
@@ -161,16 +158,14 @@ hq.get('/hq/dashboard', async (c) => {
     html`
     <div class="cards">
       <a class="card ${n.newOrders ? 'card-hot' : ''}" href="/hq/orders"><b>${n.newOrders}</b><span>${n.newOrders === 1 ? 'new order request' : 'new order requests'}</span></a>
-      <a class="card ${n.unread ? 'card-hot' : ''}" href="/hq/messages"><b>${n.unread}</b><span>${n.unread === 1 ? 'unread message' : 'unread messages'}</span></a>
+      <a class="card" href="/hq/subscribers"><b>${subs?.n ?? 0}</b><span>newsletter sign-ups</span></a>
       <div class="card"><b>${sold?.q ?? 0}</b><span>games paid or shipped through the website</span></div>
       <a class="card" href="/hq/settings"><b>${live ? 'Live' : 'Hidden'}</b><span>${live ? 'Search engines may index the site' : 'Search engines are told to stay away'}</span></a>
       <a class="card" href="/hq/details"><b>${s.orders_open === '0' ? 'Paused' : 'Open'}</b><span>Order form</span></a>
-      <div class="card"><b>${mail ? 'On' : 'Off'}</b><span>Email alerts ${mail ? `to ${c.env.NOTIFY_TO || s.notify_email}` : '(orders and messages still land here)'}</span></div>
+      <div class="card"><b>${mail ? 'On' : 'Off'}</b><span>Email alerts ${mail ? `to ${c.env.NOTIFY_TO || s.notify_email}` : '(orders and sign-ups still land here)'}</span></div>
     </div>
     <h2>Orders to handle</h2>
     ${ordersTable(recentOrders)}
-    <h2>Recent messages</h2>
-    ${messagesTable(recent)}
     <h2>Recent changes</h2>
     <ul class="log">${lastEdit.map((l) => html`<li><time>${l.created_at}</time> ${l.who} ${l.what}${l.detail ? html`: <span class="muted">${l.detail}</span>` : ''}</li>`)}</ul>
     <p class="muted small">Outbox: ${outbox.map((o) => `${o.n} ${o.status}`).join(', ') || 'empty'}.</p>`,
@@ -265,100 +260,60 @@ hq.post('/hq/orders/:id', async (c) => {
   return redirect(`/hq/orders/${c.params.id}?ok=` + encodeURIComponent(`Saved. Order is ${statusLabel(status).toLowerCase()}.`), 303);
 });
 
-// ---------- messages ----------
+// ---------- newsletter sign-ups ----------
 
-function messagesTable(list: db.Message[]): Safe {
-  if (!list.length) return html`<p class="muted">No messages yet. When someone uses the contact form, it shows up here.</p>`;
-  return html`<table class="table">
-    <thead><tr><th>When</th><th>From</th><th>About</th><th></th></tr></thead>
-    <tbody>${list.map(
-      (m) => html`<tr class="${m.read_at ? '' : 'unread'}">
-        <td><a href="/hq/messages/${m.id}">${m.created_at.slice(0, 16).replace('T', ' ')}</a></td>
-        <td>${m.name}<br><span class="muted">${m.email}</span></td>
-        <td>${m.subject}<br><span class="muted">${m.body.slice(0, 90)}${m.body.length > 90 ? '…' : ''}</span></td>
-        <td>${m.read_at ? '' : html`<b class="pill">new</b>`}</td>
-      </tr>`,
-    )}</tbody></table>`;
-}
-
-hq.get('/hq/messages', async (c) => {
+hq.get('/hq/subscribers', async (c) => {
   const sess = await requireSession(c);
   if (sess instanceof Response) return sess;
-  const archived = c.url.searchParams.get('archived') === '1';
-  const list = await c.env.DB.prepare(`SELECT * FROM messages WHERE archived_at IS ${archived ? 'NOT' : ''} NULL ORDER BY created_at DESC LIMIT 200`).all<db.Message>().then((r) => r.results);
+  const list = await c.env.DB.prepare('SELECT * FROM subscribers ORDER BY created_at DESC LIMIT 2000').all<db.Subscriber>().then((r) => r.results);
+  const active = list.filter((x) => !x.unsubscribed_at);
   return shell(
     c,
-    archived ? 'Archived messages' : 'Messages',
-    html`<p class="tabs"><a href="/hq/messages" ${archived ? '' : raw('aria-current="page"')}>Inbox</a> <a href="/hq/messages?archived=1" ${archived ? raw('aria-current="page"') : ''}>Archived</a></p>${messagesTable(list)}`,
+    'Newsletter sign-ups',
+    html`<p class="muted">${active.length} ${active.length === 1 ? 'address' : 'addresses'}. Sign-ups come from the home page form and the order form. <a href="/hq/subscribers.csv">Download as CSV</a> to paste into your mailing tool.</p>
+    ${list.length ? html`<table class="table"><thead><tr><th>Email</th><th>From</th><th>When</th><th></th></tr></thead><tbody>${list.map(
+      (x) => html`<tr class="${x.unsubscribed_at ? 'muted' : ''}"><td>${x.email}</td><td>${x.source}</td><td>${x.created_at.slice(0, 16)}</td>
+        <td><form method="post" action="/hq/subscribers/${x.id}/toggle"><input type="hidden" name="csrf" value="${sess.csrf}"><button class="link">${x.unsubscribed_at ? 'Re-subscribe' : 'Unsubscribe'}</button></form></td></tr>`,
+    )}</tbody></table>` : html`<p class="muted">Nobody has signed up yet.</p>`}`,
     sess,
     await counts(c.env.DB),
   );
 });
 
-hq.get('/hq/messages/:id', async (c) => {
+hq.get('/hq/subscribers.csv', async (c) => {
   const sess = await requireSession(c);
   if (sess instanceof Response) return sess;
-  const m = await c.env.DB.prepare('SELECT * FROM messages WHERE id=?').bind(c.params.id).first<db.Message>();
-  if (!m) return text('Not found', 404);
-  if (!m.read_at) await c.env.DB.prepare("UPDATE messages SET read_at=datetime('now') WHERE id=?").bind(m.id).run();
-  const replySubject = encodeURIComponent(`Re: ${m.subject}`);
-  const replyBody = encodeURIComponent(`Hi ${m.name.split(' ')[0]},\n\nThanks for writing to us.\n\n\n\nIt's Coffee Time!\nThe Coffee Time team\n`);
-  return shell(
-    c,
-    `Message from ${m.name}`,
-    html`<p class="crumb"><a href="/hq/messages">All messages</a></p>
-    <dl class="kv">
-      <dt>Received</dt><dd>${m.created_at} (UTC)</dd>
-      <dt>Email</dt><dd><a href="mailto:${m.email}">${m.email}</a></dd>
-      <dt>Phone</dt><dd>${m.phone ? html`<a href="tel:${m.phone}">${m.phone}</a>` : html`<span class="muted">none given</span>`}</dd>
-      <dt>About</dt><dd>${m.subject}</dd>
-    </dl>
-    <div class="message-body">${paragraphs(m.body)}</div>
-    <div class="row">
-      <a class="btn" href="mailto:${m.email}?subject=${raw(replySubject)}&body=${raw(replyBody)}">Reply by email</a>
-      <form method="post" action="/hq/messages/${m.id}/archive"><input type="hidden" name="csrf" value="${sess.csrf}"><button class="btn btn-quiet">${m.archived_at ? 'Move back to inbox' : 'Archive'}</button></form>
-      <form method="post" action="/hq/messages/${m.id}/unread"><input type="hidden" name="csrf" value="${sess.csrf}"><button class="link">Mark as unread</button></form>
-    </div>`,
-    sess,
-    await counts(c.env.DB),
-  );
+  const list = await c.env.DB.prepare('SELECT email, source, created_at FROM subscribers WHERE unsubscribed_at IS NULL ORDER BY created_at').all<db.Subscriber>().then((r) => r.results);
+  const csv = 'email,source,signed_up\n' + list.map((x) => `${x.email.replace(/[",\n]/g, '')},${x.source},${x.created_at}`).join('\n') + '\n';
+  return new Response(csv, { headers: { 'content-type': 'text/csv; charset=utf-8', 'content-disposition': 'attachment; filename="coffee-time-newsletter.csv"' } });
 });
 
-hq.post('/hq/messages/:id/archive', async (c) => {
+hq.post('/hq/subscribers/:id/toggle', async (c) => {
   const g = await guardedPost(c);
   if (g instanceof Response) return g;
-  await c.env.DB.prepare("UPDATE messages SET archived_at = CASE WHEN archived_at IS NULL THEN datetime('now') ELSE NULL END WHERE id=?").bind(c.params.id).run();
-  return redirect('/hq/messages', 303);
-});
-
-hq.post('/hq/messages/:id/unread', async (c) => {
-  const g = await guardedPost(c);
-  if (g instanceof Response) return g;
-  await c.env.DB.prepare('UPDATE messages SET read_at = NULL WHERE id=?').bind(c.params.id).run();
-  return redirect('/hq/messages', 303);
+  await c.env.DB.prepare("UPDATE subscribers SET unsubscribed_at = CASE WHEN unsubscribed_at IS NULL THEN datetime('now') ELSE NULL END WHERE id=?").bind(c.params.id).run();
+  await db.audit(c.env.DB, g.sess.staff.name, 'toggled subscriber', `#${c.params.id}`);
+  return redirect('/hq/subscribers', 303);
 });
 
 // ---------- game details (settings shown across the site) ----------
 
 const DETAIL_FIELDS: { key: string; label: string; help?: string; wide?: boolean; type?: 'check' }[] = [
-  { key: 'orders_open', label: 'Order form is open', help: 'Untick while you are out of stock. The order page then says orders are paused.', type: 'check', wide: true },
-  { key: 'price', label: 'Price (USD, numbers only)', help: 'Shown on every page, for example 39.99' },
-  { key: 'edition', label: 'Edition', help: 'Shown next to the price.' },
+  { key: 'orders_open', label: 'Order form is open', help: 'Untick while you are out of stock. The form then says orders are paused.', type: 'check', wide: true },
+  { key: 'price', label: 'Price (USD, numbers only)', help: 'Used by the order form, for example 39.99. The price in the Orders paragraph is edited under Page copy.' },
   { key: 'max_quantity', label: 'Most games in one order request' },
-  { key: 'players', label: 'Players', help: 'For example: 2 to 6' },
-  { key: 'ages', label: 'Ages', help: 'For example: 8+' },
-  { key: 'play_time', label: 'Play time', help: 'For example: 60 min' },
-  { key: 'tagline', label: 'Tagline' },
+  { key: 'players', label: 'Players badge', help: 'For example: 2-6 Players' },
+  { key: 'ages', label: 'Ages badge', help: 'For example: Ages 8+' },
   { key: 'email', label: 'Public email address' },
-  { key: 'facebook', label: 'Facebook page URL' },
-  { key: 'demo_url', label: 'Video game demo URL', wide: true },
-  { key: 'soundcloud', label: 'SoundCloud artist URL', wide: true },
-  { key: 'charity_name', label: 'Charity name' },
-  { key: 'charity_percent', label: 'Percent of each sale to charity' },
-  { key: 'charity_url', label: 'Charity website', wide: true },
-  { key: 'rules_pdf', label: 'Rulebook PDF link', help: 'A /files/... path once the PDF is uploaded to the site, or a full URL.', wide: true },
-  { key: 'story_pdf', label: 'Story PDF link', wide: true },
-  { key: 'coloring_pdf', label: 'Coloring page PDF link', wide: true },
+  { key: 'facebook', label: 'Facebook page URL', wide: true },
+  { key: 'demo_url', label: 'Video game demo URL (itch.io)', wide: true },
+  { key: 'hmp_url', label: 'HMP Bikes website', wide: true },
+  { key: 'charity_url', label: 'Purple Tree Café website', wide: true },
+  { key: 'rules_pdf', label: 'Instructions PDF', help: 'A /files/... path on this site, or a full URL.', wide: true },
+  { key: 'story_pdf', label: 'Story PDF', wide: true },
+  { key: 'coloring_pdf', label: 'Coloring page PDF', wide: true },
+  { key: 'trailer_video', label: 'Trailer video', help: 'A /video/... path on this site.', wide: true },
+  { key: 'trailer_poster', label: 'Trailer poster image', help: 'Shown before the video plays.', wide: true },
 ];
 
 hq.get('/hq/details', async (c) => {
@@ -392,7 +347,7 @@ hq.post('/hq/details', async (c) => {
     if (f.type !== 'check' && !(f.key in g.f)) continue;
     let v = f.type === 'check' ? (g.f[f.key] ? '1' : '0') : (g.f[f.key] ?? '').trim();
     if (f.key === 'price') v = v.replace(/[^0-9.]/g, '') || before.price;
-    if (f.key === 'max_quantity' || f.key === 'charity_percent') v = String(parseInt(v, 10) || parseInt(before[f.key] || '1', 10));
+    if (f.key === 'max_quantity') v = String(parseInt(v, 10) || parseInt(before[f.key] || '1', 10));
     if (v !== (before[f.key] ?? '')) {
       await db.setSetting(c.env.DB, f.key, v);
       changed.push(f.label);
@@ -404,7 +359,7 @@ hq.post('/hq/details', async (c) => {
 
 // ---------- page copy blocks ----------
 
-const PAGE_NAMES: Record<string, string> = { home: 'Home page', order: 'Order page', worlds: 'Five Worlds page', 'video-game': 'Video game page', music: 'Music page', 'how-to-play': 'How to play page', community: 'Community page', contact: 'Contact page' };
+const PAGE_NAMES: Record<string, string> = { home: 'Home page', story: 'Story page', arcade: 'Arcade page', news: 'News page', tutorials: 'Video tutorials page', faq: 'FAQ page' };
 
 hq.get('/hq/pages', async (c) => {
   const sess = await requireSession(c);
@@ -450,109 +405,93 @@ hq.post('/hq/pages', async (c) => {
   return redirect('/hq/pages?ok=' + encodeURIComponent(changed.length ? `Saved: ${changed.join(', ')}.` : 'Nothing changed.'), 303);
 });
 
-// ---------- generic list editors (worlds, characters, lessons, FAQ, reviews, news, music, games) ----------
+// ---------- generic list editors (reviews, news, tutorials, FAQ, music, arcade, team) ----------
 
-type Field = { key: string; label: string; type?: 'text' | 'textarea' | 'select' | 'url' | 'check' | 'number' | 'color'; options?: { v: string; l: string }[]; help?: string };
-type ListDef = { table: 'worlds' | 'characters' | 'reviews' | 'news' | 'faqs' | 'lessons' | 'tracks' | 'games'; path: string; title: string; one: string; fields: Field[]; summary: (r: Record<string, unknown>) => string; order: string; note?: string };
+type Field = { key: string; label: string; type?: 'text' | 'textarea' | 'select' | 'url' | 'check' | 'number'; options?: { v: string; l: string }[]; help?: string };
+type ListDef = { table: 'reviews' | 'news' | 'faqs' | 'tutorials' | 'tracks' | 'games' | 'creators'; path: string; title: string; one: string; fields: Field[]; summary: (r: Record<string, unknown>) => string; order: string; note?: string };
 
-const IMAGE_HELP = 'Path of an image already on the site, like /img/king-tea.webp. To add new pictures, send them to Smartz Graphics.';
+const IMAGE_HELP = 'Path of an image already on the site, like /img/comic-con-2025-a.webp. To add new pictures, send them to Smartz Graphics.';
 const ORDER: Field = { key: 'sort', label: 'Order', type: 'number', help: 'Lower numbers come first.' };
 const SHOWN: Field = { key: 'published', label: 'Shown on the site', type: 'check' };
-const TEXT_HELP = 'Blank line between paragraphs. Lines starting with "- " become a list. **double stars** for bold.';
+const TEXT_HELP = 'Blank line between paragraphs. Lines starting with "- " become a list. **double stars** for bold. [words](https://...) for a link.';
 
 const LISTS: ListDef[] = [
   {
-    table: 'worlds', path: '/hq/worlds', title: 'Worlds', one: 'world', order: 'sort, id',
-    note: 'The order matters: King Tea travels through the worlds in this order, and the home page clocks follow it.',
-    summary: (r) => `${r.sort}. ${r.name}`,
-    fields: [
-      { key: 'name', label: 'Name' },
-      { key: 'slug', label: 'Web address', help: 'Lowercase, hyphens, no spaces. Used in links like /worlds#coffee-world.' },
-      { key: 'tagline', label: 'One-line tagline' },
-      { key: 'body', label: 'Description', type: 'textarea', help: TEXT_HELP },
-      { key: 'who', label: 'Who you meet here' },
-      { key: 'color', label: 'World color', type: 'color' },
-      { key: 'image', label: 'Character picture', help: IMAGE_HELP },
-      ORDER, SHOWN,
-    ],
-  },
-  {
-    table: 'characters', path: '/hq/characters', title: 'Characters', one: 'character', order: 'side, sort, id',
-    summary: (r) => `${r.side === 'villain' ? 'Villain' : 'Hero'}: ${r.name}`,
-    fields: [
-      { key: 'name', label: 'Name' },
-      { key: 'side', label: 'Side', type: 'select', options: [{ v: 'hero', l: 'Coffee hero' }, { v: 'villain', l: 'Villain' }] },
-      { key: 'power', label: 'What they do (one or two sentences)', type: 'textarea' },
-      { key: 'image', label: 'Picture', help: IMAGE_HELP },
-      ORDER, SHOWN,
-    ],
-  },
-  {
-    table: 'lessons', path: '/hq/lessons', title: 'How to play', one: 'lesson', order: 'sort, id',
-    note: 'Lessons are grouped by chapter, in this order. Chapter names must match exactly to sit together.',
-    summary: (r) => `${r.chapter} / ${r.num}. ${r.title}`,
-    fields: [
-      { key: 'title', label: 'Lesson title' },
-      { key: 'chapter', label: 'Chapter' },
-      { key: 'num', label: 'Lesson number', help: 'As printed in the rulebook, like 7 or 20A.' },
-      { key: 'body', label: 'The rule', type: 'textarea', help: TEXT_HELP },
-      ORDER, SHOWN,
-    ],
-  },
-  {
-    table: 'faqs', path: '/hq/faqs', title: 'Rules FAQ', one: 'question', order: 'sort, id',
-    summary: (r) => String(r.question),
-    fields: [{ key: 'question', label: 'Question' }, { key: 'answer', label: 'Answer', type: 'textarea', help: TEXT_HELP }, ORDER, SHOWN],
-  },
-  {
     table: 'reviews', path: '/hq/reviews', title: 'Reviews', one: 'review', order: 'sort, id',
-    summary: (r) => `${r.featured ? '[home] ' : ''}${r.name}: ${String(r.quote).slice(0, 60)}`,
+    note: 'Shown on the home page in this order, newest at the bottom like the old site. Give a new review a higher number to add it at the end.',
+    summary: (r) => `${r.name}: ${String(r.quote).slice(0, 60)}`,
     fields: [
       { key: 'quote', label: 'What they said', type: 'textarea' },
       { key: 'name', label: 'Name' },
-      { key: 'role', label: 'Who they are', help: 'Playtester, San Diego Comic-Con, Bought the game...' },
-      { key: 'featured', label: 'Show on the home page (the first three ticked are used)', type: 'check' },
+      { key: 'role', label: 'Who they are', help: 'Playtester, San Diego Comic-Con, Game Purchaser...' },
       ORDER, SHOWN,
     ],
   },
   {
     table: 'news', path: '/hq/news', title: 'News', one: 'news item', order: 'sort, id',
-    note: 'Newest first: give new items a lower order number than the rest (0, or negative numbers are fine).',
+    note: 'Newest first: give a new item a lower order number than the rest (0 or a negative number is fine).',
     summary: (r) => `${r.date_label}: ${r.title}`,
     fields: [
       { key: 'title', label: 'Headline' },
       { key: 'date_label', label: 'When', help: 'Shown as written, like "March 2023" or "2026".' },
       { key: 'body', label: 'Story', type: 'textarea', help: TEXT_HELP },
-      { key: 'image', label: 'Picture', help: IMAGE_HELP },
-      { key: 'image_alt', label: 'Describe the picture', help: 'For people using screen readers.' },
+      { key: 'images', label: 'Pictures', help: 'One or more image paths separated by commas. ' + IMAGE_HELP },
+      { key: 'video', label: 'Video', help: 'A YouTube video id (the 11 characters after watch?v=) or a /video/... path on this site.' },
       { key: 'url', label: 'Link', type: 'url' },
-      { key: 'link_label', label: 'Link text', help: 'For example "Watch the interview".' },
+      { key: 'link_label', label: 'Link button text', help: 'For example "Watch the interview".' },
       ORDER, SHOWN,
     ],
   },
   {
-    table: 'tracks', path: '/hq/tracks', title: 'Music', one: 'track', order: 'archive, sort, id',
-    summary: (r) => `${r.archive ? '[archive] ' : ''}${r.title}`,
+    table: 'tutorials', path: '/hq/tutorials', title: 'Video tutorials', one: 'tutorial', order: 'sort, id',
+    summary: (r) => `${r.num}. ${r.title}`,
     fields: [
-      { key: 'title', label: 'Track title' },
-      { key: 'world', label: 'World or label', help: 'Shown under the title, like "Tea World" or "Battle theme".' },
-      { key: 'url', label: 'SoundCloud page', type: 'url' },
-      { key: 'soundcloud_id', label: 'SoundCloud track number', help: 'Lets the track play right on the page. On SoundCloud: Share, Embed, then the number after tracks%2F or tracks/. Leave blank for a link only.' },
-      { key: 'image', label: 'Picture', help: IMAGE_HELP },
-      { key: 'archive', label: 'Put in "From the first website" (link only)', type: 'check' },
+      { key: 'title', label: 'Title' },
+      { key: 'num', label: 'Tutorial number', help: 'As on the page, like 7-c or 20-a.' },
+      { key: 'body', label: 'Explanation', type: 'textarea', help: TEXT_HELP },
+      { key: 'youtube_id', label: 'YouTube video id', help: 'The 11 characters after watch?v= in the video address.' },
       ORDER, SHOWN,
     ],
   },
   {
-    table: 'games', path: '/hq/games', title: 'Games', one: 'game', order: 'sort, id',
-    note: 'The first game is Coffee Time Adventures itself. The rest appear as quick games on the video game page.',
+    table: 'faqs', path: '/hq/faqs', title: 'FAQ', one: 'question', order: 'sort, id',
+    summary: (r) => String(r.question),
+    fields: [{ key: 'question', label: 'Question' }, { key: 'answer', label: 'Answer', type: 'textarea', help: TEXT_HELP }, ORDER, SHOWN],
+  },
+  {
+    table: 'tracks', path: '/hq/tracks', title: 'Music', one: 'track', order: 'sort, id',
+    note: 'Each track is a SoundCloud player, shown two across in this order.',
+    summary: (r) => String(r.title),
+    fields: [
+      { key: 'title', label: 'Track title (shown under the player)' },
+      { key: 'url', label: 'SoundCloud track page', type: 'url', help: 'Like https://soundcloud.com/user-565081345/wind-feather-theme' },
+      ORDER, SHOWN,
+    ],
+  },
+  {
+    table: 'games', path: '/hq/games', title: 'Arcade games', one: 'game', order: 'sort, id',
+    note: 'The small games listed under the Coffee Time Adventures trailer on the Arcade page.',
     summary: (r) => String(r.title),
     fields: [
       { key: 'title', label: 'Game' },
       { key: 'blurb', label: 'One-line description', type: 'textarea' },
-      { key: 'platform', label: 'Where it plays', help: 'For example "Plays in your browser, free".' },
+      { key: 'note', label: 'Small print', help: 'For example "For desktop only."' },
       { key: 'url', label: 'Link', type: 'url' },
+      { key: 'button', label: 'Button text', help: 'For example "Play Rapid Refill Now!"' },
       { key: 'image', label: 'Screenshot', help: IMAGE_HELP },
+      ORDER, SHOWN,
+    ],
+  },
+  {
+    table: 'creators', path: '/hq/creators', title: 'Meet the Creators', one: 'team member', order: 'sort, id',
+    summary: (r) => `${r.name}, ${r.role}`,
+    fields: [
+      { key: 'name', label: 'Name' },
+      { key: 'role', label: 'Role', help: 'For example Game Designer.' },
+      { key: 'place', label: 'Place', help: 'For example Davis, CA' },
+      { key: 'bio', label: 'Bio', type: 'textarea', help: TEXT_HELP },
+      { key: 'url', label: 'Website', type: 'url' },
+      { key: 'image', label: 'Photo', help: IMAGE_HELP },
       ORDER, SHOWN,
     ],
   },
@@ -562,15 +501,13 @@ function fieldInput(f: Field, v: unknown): Safe {
   const val = v === null || v === undefined ? '' : String(v);
   switch (f.type) {
     case 'textarea':
-      return html`<textarea name="${f.key}" rows="${['body', 'answer'].includes(f.key) ? 10 : 3}">${val}</textarea>`;
+      return html`<textarea name="${f.key}" rows="${['body', 'answer', 'bio'].includes(f.key) ? 10 : 3}">${val}</textarea>`;
     case 'select':
       return html`<select name="${f.key}">${(f.options || []).map((o) => html`<option value="${o.v}" ${o.v === val ? raw('selected') : ''}>${o.l}</option>`)}</select>`;
     case 'check':
       return html`<input type="checkbox" name="${f.key}" value="1" ${val === '1' || val === 'true' ? raw('checked') : ''}>`;
     case 'number':
       return html`<input type="number" name="${f.key}" value="${val || '0'}">`;
-    case 'color':
-      return html`<input type="color" name="${f.key}" value="${/^#[0-9a-f]{6}$/i.test(val) ? val : '#9c44c8'}">`;
     default:
       return html`<input type="${f.type === 'url' ? 'url' : 'text'}" name="${f.key}" value="${val}">`;
   }
@@ -629,8 +566,6 @@ for (const L of LISTS) {
       let v: unknown = (g.f[f.key] ?? '').trim();
       if (f.type === 'check') v = g.f[f.key] ? 1 : 0;
       if (f.type === 'number') v = parseInt(String(v), 10) || 0;
-      if (f.key === 'slug') v = String(v).toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
-      if (f.type === 'color' && !/^#[0-9a-f]{6}$/i.test(String(v))) v = '#9c44c8';
       cols.push(f.key);
       vals.push(v);
     }
@@ -662,9 +597,9 @@ hq.get('/hq/settings', async (c) => {
         <label class="check"><input type="checkbox" name="site_indexable" value="1" ${s.site_indexable === '1' ? raw('checked') : ''}> Let search engines index the site <small>Keep this off until playcoffeetime.com points at the new site, then turn it on once.</small></label>
       </fieldset>
       <fieldset><legend>Notifications</legend>
-        <label class="check"><input type="checkbox" name="notify_enabled" value="1" ${s.notify_enabled === '1' ? raw('checked') : ''}> Email us when an order or message arrives</label>
+        <label class="check"><input type="checkbox" name="notify_enabled" value="1" ${s.notify_enabled === '1' ? raw('checked') : ''}> Email us when an order or newsletter sign-up arrives</label>
         <label>Send notifications to <input name="notify_email" type="email" value="${s.notify_email || ''}"></label>
-        <p class="muted small">${c.env.RESEND_API_KEY && c.env.MAIL_FROM ? 'Email sending is configured.' : 'Email sending is not configured yet, so orders and messages only appear in HQ. The site maintainer can turn it on by setting RESEND_API_KEY and MAIL_FROM.'}</p>
+        <p class="muted small">${c.env.RESEND_API_KEY && c.env.MAIL_FROM ? 'Email sending is configured.' : 'Email sending is not configured yet, so orders and sign-ups only appear in HQ. The site maintainer can turn it on by setting RESEND_API_KEY and MAIL_FROM.'}</p>
       </fieldset>
       <fieldset><legend>Search listing</legend>
         <label>Site description <small>What Google shows under the site name. About 150 characters.</small><textarea name="seo_description" rows="3">${s.seo_description || ''}</textarea></label>

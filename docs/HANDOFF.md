@@ -1,6 +1,6 @@
 # Handoff: Coffee Time 2026 rebuild
 
-Status on 2026-10-24: built and tested, not deployed.
+Status on 2026-10-25: rebuilt from scratch to mirror the live site, tested, not deployed.
 
 ## What is left, in order
 1. Get this branch onto GitHub (`redesign-2026` on AaronWedra/coffee-time-website). The Claude GitHub
@@ -10,8 +10,7 @@ Status on 2026-10-24: built and tested, not deployed.
 2. Merge `redesign-2026` into `main` (the old preview files are replaced, not mixed).
 3. Deploy (CLAUDE.md "Deploying"): create D1 `coffee-time`, paste the id, connect Workers Builds,
    add HQ_SETUP_TOKEN, create the first admin at /hq/setup.
-4. Save the three Wix PDFs (rulebook, story, coloring page) into public/files/ and update the links in
-   HQ > Game details. They disappear when Wix is cancelled.
+4. (Done: the three PDFs and the trailer are in the repo and served from the site.)
 5. Optional: Resend for email alerts on new orders (otherwise check HQ).
 6. DNS cutover for playcoffeetime.com, set SITE_URL, uncomment routes, turn on indexing in HQ.
 7. Delete the old `coffee-time-preview` Worker.
@@ -22,7 +21,9 @@ Status on 2026-10-24: built and tested, not deployed.
 
 ## Integrations worth adding later (not built, by design)
 - Online payment: a Stripe Payment Link or Checkout on the order page, keeping the request flow as the fallback.
-- Newsletter: the order form already records "email me news" (orders.newsletter); export those addresses from HQ
-  into whatever list tool is chosen (Buttondown, Mailchimp).
+- Newsletter sending: sign-ups land in HQ > Newsletter (CSV download). Nothing sends mail to the list yet;
+  paste the CSV into whatever tool is chosen (Buttondown, Mailchimp), or wire Resend audiences later.
+- HMP Bikes video: the short clip on the Wix page was not in the media library. If Aaron has the file, drop
+  it in public/video/ and swap the logo link in src/site/pages.ts (sponsor section) for a <video>.
 - Analytics: Cloudflare Web Analytics is one line in src/site/layout.ts if wanted; nothing is tracked today.
 - Instagram or TikTok: there are no brand accounts yet; add links in HQ > Game details when they exist.

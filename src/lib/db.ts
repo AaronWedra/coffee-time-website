@@ -2,16 +2,15 @@
 
 export type Settings = Record<string, string>;
 export type Block = { key: string; label: string; kind: string; value: string; page: string; sort: number };
-export type World = { id: number; slug: string; name: string; tagline: string; body: string; who: string; color: string; image: string; sort: number; published: number };
-export type Character = { id: number; name: string; side: 'hero' | 'villain'; power: string; image: string; sort: number; published: number };
-export type Review = { id: number; name: string; role: string; quote: string; featured: number; sort: number; published: number };
-export type News = { id: number; date_label: string; title: string; body: string; image: string; image_alt: string; url: string; link_label: string; sort: number; published: number };
+export type Review = { id: number; name: string; role: string; quote: string; sort: number; published: number };
+export type News = { id: number; date_label: string; title: string; body: string; images: string; video: string; url: string; link_label: string; sort: number; published: number };
 export type Faq = { id: number; question: string; answer: string; sort: number; published: number };
-export type Lesson = { id: number; chapter: string; num: string; title: string; body: string; sort: number; published: number };
-export type Track = { id: number; title: string; world: string; url: string; soundcloud_id: string; image: string; archive: number; sort: number; published: number };
-export type Game = { id: number; title: string; blurb: string; platform: string; url: string; image: string; sort: number; published: number };
+export type Tutorial = { id: number; num: string; title: string; body: string; youtube_id: string; sort: number; published: number };
+export type Track = { id: number; title: string; url: string; sort: number; published: number };
+export type Game = { id: number; title: string; blurb: string; note: string; url: string; button: string; image: string; sort: number; published: number };
+export type Creator = { id: number; name: string; role: string; place: string; bio: string; url: string; image: string; sort: number; published: number };
 export type Order = { id: number; name: string; email: string; phone: string; quantity: number; address: string; notes: string; newsletter: number; status: string; staff_notes: string; ip: string; created_at: string; updated_at: string };
-export type Message = { id: number; name: string; email: string; phone: string; subject: string; body: string; ip: string; created_at: string; read_at: string | null; archived_at: string | null };
+export type Subscriber = { id: number; email: string; source: string; ip: string; created_at: string; unsubscribed_at: string | null };
 export type Staff = { id: number; name: string; pass_hash: string; role: string; created_at: string; last_login_at: string | null };
 
 export const ORDER_STATUSES: { key: string; label: string }[] = [
@@ -52,24 +51,13 @@ function list<T>(table: string, order = 'sort, id') {
     db.prepare(`SELECT * FROM ${table} ${all ? '' : 'WHERE published=1'} ORDER BY ${order}`).all<T>().then((r) => r.results);
 }
 
-export const listWorlds = list<World>('worlds');
-export const listCharacters = list<Character>('characters');
 export const listReviews = list<Review>('reviews');
 export const listNews = list<News>('news');
 export const listFaqs = list<Faq>('faqs');
-export const listLessons = list<Lesson>('lessons');
+export const listTutorials = list<Tutorial>('tutorials');
 export const listTracks = list<Track>('tracks');
 export const listGames = list<Game>('games');
-
-export const getWorld = (db: D1Database, slug: string) => db.prepare('SELECT * FROM worlds WHERE slug=? AND published=1').bind(slug).first<World>();
-
-export async function insertMessage(db: D1Database, m: Omit<Message, 'id' | 'created_at' | 'read_at' | 'archived_at'>): Promise<number> {
-  const r = await db
-    .prepare('INSERT INTO messages(name,email,phone,subject,body,ip) VALUES(?,?,?,?,?,?) RETURNING id')
-    .bind(m.name, m.email, m.phone, m.subject, m.body, m.ip)
-    .first<{ id: number }>();
-  return r!.id;
-}
+export const listCreators = list<Creator>('creators');
 
 export async function insertOrder(db: D1Database, o: Pick<Order, 'name' | 'email' | 'phone' | 'quantity' | 'address' | 'notes' | 'newsletter' | 'ip'>): Promise<number> {
   const r = await db
@@ -77,6 +65,17 @@ export async function insertOrder(db: D1Database, o: Pick<Order, 'name' | 'email
     .bind(o.name, o.email, o.phone, o.quantity, o.address, o.notes, o.newsletter, o.ip)
     .first<{ id: number }>();
   return r!.id;
+}
+
+// Adds an email to the newsletter list. Re-subscribing clears an earlier unsubscribe. Returns true when new.
+export async function subscribe(db: D1Database, email: string, source: string, ip: string): Promise<boolean> {
+  const existing = await db.prepare('SELECT id, unsubscribed_at FROM subscribers WHERE lower(email)=lower(?)').bind(email).first<{ id: number; unsubscribed_at: string | null }>();
+  if (existing) {
+    if (existing.unsubscribed_at) await db.prepare('UPDATE subscribers SET unsubscribed_at=NULL WHERE id=?').bind(existing.id).run();
+    return false;
+  }
+  await db.prepare('INSERT INTO subscribers(email,source,ip) VALUES(?,?,?)').bind(email, source, ip).run();
+  return true;
 }
 
 export async function audit(db: D1Database, who: string, what: string, detail = '') {

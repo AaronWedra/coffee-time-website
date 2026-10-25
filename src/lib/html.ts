@@ -43,9 +43,13 @@ export function paragraphs(text: string): Safe {
   return raw(blocks.map((b) => `<p>${inline(b)}</p>`).join(''));
 }
 
-// One line of plain text with **bold** support and line breaks.
+// One line of plain text with **bold**, [text](url) links and line breaks.
+// Only http(s), mailto and site-relative links are honoured; external ones open in a new tab.
 export function inline(text: string): string {
   return esc(text || '')
+    .replace(/\[([^\]]+)\]\(((?:https?:\/\/|mailto:|\/)[^)\s]+)\)/g, (_m, label: string, href: string) =>
+      /^https?:/.test(href) ? `<a href="${href}" target="_blank" rel="noopener">${label}</a>` : `<a href="${href}">${label}</a>`,
+    )
     .replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>')
     .replace(/\n/g, '<br>');
 }

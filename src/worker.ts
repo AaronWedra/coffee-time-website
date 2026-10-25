@@ -11,7 +11,8 @@ const SECURITY_HEADERS: Record<string, string> = {
   'permissions-policy': 'camera=(), microphone=(), geolocation=()',
 };
 
-// Fonts are self-hosted. The only third party is the SoundCloud player on /music.
+// Fonts, images and the trailer are self-hosted. Third parties: the SoundCloud players (music) and
+// YouTube (tutorials), both in iframes.
 function csp(nonce: string): string {
   return [
     `default-src 'self'`,
@@ -19,7 +20,8 @@ function csp(nonce: string): string {
     `style-src 'self' 'nonce-${nonce}'`,
     `font-src 'self'`,
     `img-src 'self' data:`,
-    `frame-src https://w.soundcloud.com`,
+    `media-src 'self'`,
+    `frame-src https://w.soundcloud.com https://www.youtube-nocookie.com`,
     `form-action 'self' mailto:`,
     `frame-ancestors 'none'`,
     `base-uri 'self'`,
@@ -39,12 +41,15 @@ export default {
       }
     }
 
+    // One URL per page: no trailing slashes.
+    if (url.pathname.length > 1 && url.pathname.endsWith('/')) return Response.redirect(url.origin + url.pathname.replace(/\/+$/, '') + url.search, 301);
+
     // Static files first (css, images, fonts, pdfs). Anything under public/ is served by Workers Static Assets.
     if (/\.[a-z0-9]{2,5}$/i.test(url.pathname) && !url.pathname.endsWith('.xml') && !url.pathname.endsWith('.txt')) {
       const res = await env.ASSETS.fetch(request);
       if (res.status !== 404) {
         const h = new Headers(res.headers);
-        if (/\.(webp|png|jpe?g|svg|ico|woff2?)$/i.test(url.pathname)) h.set('cache-control', 'public, max-age=31536000, immutable');
+        if (/\.(webp|png|jpe?g|gif|svg|ico|woff2?|mp4)$/i.test(url.pathname)) h.set('cache-control', 'public, max-age=31536000, immutable');
         else if (/\.(css|js)$/i.test(url.pathname)) h.set('cache-control', 'public, max-age=86400');
         else if (/\.pdf$/i.test(url.pathname)) h.set('cache-control', 'public, max-age=3600');
         h.set('x-content-type-options', 'nosniff');
