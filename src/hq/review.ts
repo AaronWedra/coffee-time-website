@@ -12,7 +12,7 @@
 //   - It runs in a shadow root so the site stylesheet and the widget cannot affect each other.
 //   - Everything it posts goes to /hq/api, which needs the session and an X-HQ header.
 import { Router, json, redirect, type Ctx } from '../lib/router.ts';
-import { currentSession, type Session } from '../lib/auth.ts';
+import { currentSession, COOKIE, type Session } from '../lib/auth.ts';
 import { parseCookies } from '../lib/router.ts';
 
 export const REVIEW_COOKIE = 'hq_review';
@@ -27,7 +27,12 @@ export function mountReview(hq: Router) {
     const raw = c.url.searchParams.get('to') || '/';
     // Only ever bounce to a path on this site, never to a caller-supplied absolute URL.
     const to = raw.startsWith('/') && !raw.startsWith('//') && !raw.startsWith('/hq') ? raw : '/';
-    return new Response(null, { status: 302, headers: { location: to, 'set-cookie': cookie(true, c.url.protocol === 'https:'), 'cache-control': 'no-store' } });
+    // A session started before the cookie moved to Path=/ is only sent to /hq, so the public site would never
+    // see it. Re-issue the same session id at Path=/ so the pencil works without logging in again.
+    const h = new Headers({ location: to, 'cache-control': 'no-store' });
+    h.append('set-cookie', cookie(true, c.url.protocol === 'https:'));
+    h.append('set-cookie', `${COOKIE}=${s.id}; Path=/; HttpOnly; SameSite=Lax; ${c.url.protocol === 'https:' ? 'Secure; ' : ''}Max-Age=${14 * 86400}`);
+    return new Response(null, { status: 302, headers: h });
   });
 
   hq.post('/hq/api/review/stop', async (c) => {
