@@ -92,7 +92,8 @@ createServer(async (req, res) => {
   const ctx = { waitUntil: (p) => pending.push(p), passThroughOnException() {} };
   try {
     const r = await worker.fetch(request, env, ctx);
-    res.writeHead(r.status, Object.fromEntries(r.headers));
+    const hd = Object.fromEntries(r.headers); const sc = r.headers.getSetCookie?.(); if (sc && sc.length) hd['set-cookie'] = sc;
+    res.writeHead(r.status, hd);
     res.end(Buffer.from(await r.arrayBuffer()));
     await Promise.allSettled(pending);
   } catch (e) {

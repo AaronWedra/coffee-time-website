@@ -1,5 +1,9 @@
 # Changelog
 
+## 2026-10-25: punch list is AI first
+- Aaron's rule: Claude handles the vast majority of the punch list. Decisions with an obvious answer (requests vs card payments, shipping quotes) are now made and closed; the rest are owned by Claude, and only account logins, files only he has and the registrar click stay with Aaron.
+- Edit website re-issues the session cookie site-wide, so a login made before the pencil shipped still gets it.
+
 ## 2026-10-25: HQ rebuilt on the Zombie Bike Parade pattern
 - Edit website: the sidebar button browses the real site with a pencil in the corner. Click it to file a change
   against the page you are on (paste or drag a screenshot, or "Point at it" to name the exact element). Only

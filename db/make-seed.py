@@ -450,5 +450,7 @@ for i, (section, ssort, title, detail, kind, owner, suggestion) in enumerate(pun
     ins("checklist_items", {"section": section, "section_sort": ssort, "title": title, "detail": detail, "kind": kind,
                             "owner": owner, "suggestion": suggestion, "source": "launch-2026-10-25", "added_by": "Claude", "sort": i})
 
+# Fresh databases run migrations before the seed, so repeat the guarded punch list decisions here.
+lines.append(open(OUT.parent / "migrations/0003_punch_ai_first.sql").read())
 OUT.write_text("\n".join(lines) + "\n")
 print(f"wrote {OUT} ({len(lines)} lines)")
