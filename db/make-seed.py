@@ -404,5 +404,51 @@ creators = [
 for i, (n, r, b, u, img) in enumerate(creators):
     ins("creators", {"name": n, "role": r, "place": "Davis, CA", "bio": b, "url": u, "image": img, "sort": i})
 
+# ---------------------------------------------------------------- punch list (HQ > Punch list)
+# kind: task = we build it, question = you decide it, asset = you send it. A question carries our
+# recommendation in `suggestion`; agreeing with it records the answer as "agreed".
+punch = [
+    ("Going live", 1, "Point playcoffeetime.com at this site",
+     "Add the domain to Cloudflare, move the nameservers at the registrar, switch on the site address and the custom domains, then tick Let search engines index the site in Settings. Wix keeps serving the old site until the nameservers move, so nothing breaks in between.",
+     "task", "Aaron", None),
+    ("Going live", 1, "Where is playcoffeetime.com registered?",
+     "We need to know before anything moves. If Wix holds the registration, cancelling Wix too early could take the domain with it.",
+     "question", "Aaron",
+     "Check Wix under Domains. If it is registered there, move it to a registrar you own first (Porkbun has been good for the festival and Sara's site), then cancel Wix."),
+    ("Going live", 1, "Retire the old coffee-time-preview Worker",
+     "It is the August attempt and is replaced by this site. Safe to delete once the new site has been checked page by page.",
+     "task", "Claude", None),
+    ("Going live", 1, "Cancel Wix after the cutover",
+     "The three PDFs and the trailer are already served from this site, so nothing is lost. Cancel only after the domain has moved and a few days have passed.",
+     "task", "Aaron", None),
+    ("Orders and email", 2, "Keep orders as requests, or take card payments online?",
+     "Today the order form stores a request and the team emails the buyer to settle shipping and payment. Nothing is charged on the site.",
+     "question", "Aaron",
+     "Keep requests for now. It matches how you sell today, nothing can be charged by mistake, and online payment can be added later as one more step without removing the request form."),
+    ("Orders and email", 2, "Turn on email alerts for new orders and sign-ups",
+     "Without it, every order and sign-up still lands in HQ, you just have to look. With it, an email arrives the moment someone orders.",
+     "question", "Aaron",
+     "Yes, once the domain has moved. Create a free Resend account, verify playcoffeetime.com, and send us the key through Cloudflare (never in a message). Until then HQ shows everything."),
+    ("Orders and email", 2, "How should shipping be quoted?",
+     "The order page says you will email each buyer a total once they send an address.",
+     "question", "Aaron",
+     "Keep quoting by email for now. When you have settled on a flat rate per game we can print it on the order page and in the reply template."),
+    ("Content to send", 3, "HMP Bikes riding video",
+     "The Wix site had a short clip of people riding in the HMP Bikes section. That file was not in the Wix media library, so the section shows the HMP logo and Thermos on his bike instead. Send the clip (MP4 is best) and it goes straight in.",
+     "asset", "Aaron", None),
+    ("Content to send", 3, "Any newer reviews or press quotes",
+     "Reviews live in HQ > Reviews and can be added there at any time. Send anything that should be added by us, or add it yourself.",
+     "asset", "Aaron", None),
+    ("The site", 4, "File one real change from the pencil",
+     "In HQ press Edit website, browse to a page, click the pencil in the corner and describe a change. That is the whole loop: it lands on the Requests board and is worked from there.",
+     "task", "Aaron", None),
+    ("The site", 4, "Beautify pass, page by page",
+     "Header, home hero, spacing, the character stage and the review cards. File each thing you want different from the pencil so it is tracked.",
+     "task", "Aaron", None),
+]
+for i, (section, ssort, title, detail, kind, owner, suggestion) in enumerate(punch):
+    ins("checklist_items", {"section": section, "section_sort": ssort, "title": title, "detail": detail, "kind": kind,
+                            "owner": owner, "suggestion": suggestion, "source": "launch-2026-10-25", "added_by": "Claude", "sort": i})
+
 OUT.write_text("\n".join(lines) + "\n")
 print(f"wrote {OUT} ({len(lines)} lines)")

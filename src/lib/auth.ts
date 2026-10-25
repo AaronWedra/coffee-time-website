@@ -3,7 +3,7 @@ import type { Ctx } from './router.ts';
 import { parseCookies, randomToken } from './router.ts';
 import type { Staff } from './db.ts';
 
-const COOKIE = 'hq_session';
+export const COOKIE = 'hq_session';
 const SESSION_DAYS = 14;
 // Cloudflare Workers reject PBKDF2 above 100,000 iterations (NotSupportedError). scripts/dev-server.mjs mirrors this limit.
 const PBKDF2_ITER = 100_000;
@@ -67,13 +67,15 @@ export async function startSession(c: Ctx, staffId: number): Promise<{ cookie: s
     .run();
   await c.env.DB.prepare(`UPDATE staff SET last_login_at = datetime('now') WHERE id = ?`).bind(staffId).run();
   const secure = c.url.protocol === 'https:' ? '; Secure' : '';
-  return { cookie: `${COOKIE}=${id}; Path=/hq; HttpOnly; SameSite=Lax; Max-Age=${SESSION_DAYS * 86400}${secure}` };
+  return { cookie: `${COOKIE}=${id}; Path=/; HttpOnly; SameSite=Lax; Max-Age=${SESSION_DAYS * 86400}${secure}` };
 }
 
-export async function endSession(c: Ctx): Promise<string> {
+// Clears the cookie at both paths: sessions began life at /hq and now live at / (so the public site can
+// tell a signed-in teammate from a visitor for Edit website mode).
+export async function endSession(c: Ctx): Promise<string[]> {
   const id = parseCookies(c.req)[COOKIE];
   if (id) await c.env.DB.prepare('DELETE FROM sessions WHERE id = ?').bind(id).run();
-  return `${COOKIE}=; Path=/hq; HttpOnly; SameSite=Lax; Max-Age=0`;
+  return [`${COOKIE}=; Path=/; HttpOnly; SameSite=Lax; Max-Age=0`, `${COOKIE}=; Path=/hq; HttpOnly; SameSite=Lax; Max-Age=0`, 'hq_review=; Path=/; HttpOnly; SameSite=Lax; Max-Age=0'];
 }
 
 export async function staffCount(db: D1Database): Promise<number> {

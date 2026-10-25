@@ -1,59 +1,17 @@
 // HQ: the staff backend at /hq. Server-rendered forms, no JavaScript required.
 import { Router, page, redirect, formData, text, type Ctx } from '../lib/router.ts';
-import { html, raw, paragraphs, type Child, type Safe } from '../lib/html.ts';
+import { html, raw, paragraphs, inline, type Child, type Safe } from '../lib/html.ts';
 import * as db from '../lib/db.ts';
 import { currentSession, startSession, endSession, hashPassword, verifyPassword, staffCount, type Session } from '../lib/auth.ts';
+import { shell, requireSession, guardedPost, navCounts } from './shell.ts';
 import { ORDER_STATUSES } from '../lib/db.ts';
+import { mountBoard } from './board.ts';
+import { mountReview } from './review.ts';
+import { CHANGELOG } from '../db/bundled.ts';
 
 export const hq = new Router();
-
-const MENU = [
-  ['/hq/dashboard', 'Dashboard'],
-  ['/hq/orders', 'Orders'],
-  ['/hq/subscribers', 'Newsletter'],
-  ['/hq/details', 'Game details'],
-  ['/hq/pages', 'Page copy'],
-  ['/hq/reviews', 'Reviews'],
-  ['/hq/news', 'News'],
-  ['/hq/tutorials', 'Tutorials'],
-  ['/hq/faqs', 'FAQ'],
-  ['/hq/tracks', 'Music'],
-  ['/hq/games', 'Arcade'],
-  ['/hq/creators', 'Team'],
-  ['/hq/settings', 'Settings'],
-];
-
-function shell(c: Ctx, title: string, body: Child, sess: Session | null, counts: Counts = { newOrders: 0 }): Response {
-  const flash = c.url.searchParams.get('ok') ? html`<div class="flash">${c.url.searchParams.get('ok')}</div>` : '';
-  const out =
-    '<!doctype html>' +
-    html`<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
-<title>${title} | HQ</title><meta name="robots" content="noindex, nofollow">
-<link rel="icon" href="/favicon.png"><link rel="stylesheet" href="/hq.css?v=1"></head>
-<body class="hq">
-<header class="hq-head"><a class="hq-brand" href="/hq/dashboard">Coffee Time <span>HQ</span></a>
-${sess ? html`<nav class="hq-nav"><ul>${MENU.map(([h, l]) => html`<li><a href="${h}" ${c.url.pathname.startsWith(h) ? raw('aria-current="page"') : ''}>${l}${h === '/hq/orders' && counts.newOrders ? html` <b class="pill">${counts.newOrders}</b>` : ''}</a></li>`)}</ul>
-<form method="post" action="/hq/logout"><input type="hidden" name="csrf" value="${sess.csrf}"><span class="who">${sess.staff.name}</span><button class="link">Log out</button></form></nav>` : ''}
-</header>
-<main class="hq-main">${flash}<h1>${title}</h1>${body}</main>
-<footer class="hq-foot"><a href="/" target="_blank" rel="noopener">View the live site</a></footer>
-</body></html>`.s;
-  return page(out);
-}
-
-async function requireSession(c: Ctx): Promise<Session | Response> {
-  const s = await currentSession(c);
-  if (!s) return redirect('/hq?next=' + encodeURIComponent(c.url.pathname));
-  return s;
-}
-
-async function guardedPost(c: Ctx): Promise<{ sess: Session; f: Record<string, string> } | Response> {
-  const sess = await requireSession(c);
-  if (sess instanceof Response) return sess;
-  const f = await formData(c.req);
-  if (f.csrf !== sess.csrf) return text('Form expired. Go back, reload the page and try again.', 403);
-  return { sess, f };
-}
+mountBoard(hq);
+mountReview(hq);
 
 type Counts = { newOrders: number };
 async function counts(d: D1Database): Promise<Counts> {
@@ -96,8 +54,9 @@ hq.post('/hq/login', async (c) => {
 });
 
 hq.post('/hq/logout', async (c) => {
-  const cookie = await endSession(c);
-  return new Response(null, { status: 303, headers: { location: '/hq', 'set-cookie': cookie } });
+  const headers = new Headers({ location: '/hq' });
+  for (const k of await endSession(c)) headers.append('set-cookie', k);
+  return new Response(null, { status: 303, headers });
 });
 
 // First-run: create the first admin. Only works while the staff table is empty, and only with the
@@ -151,12 +110,21 @@ hq.get('/hq/dashboard', async (c) => {
     c.env.DB.prepare("SELECT COALESCE(SUM(quantity),0) AS q FROM orders WHERE status IN ('paid','shipped')").first<{ q: number }>(),
   ]);
   const live = s.site_indexable === '1';
+  const lastRun = s.watchdog_last_run ? Date.parse(s.watchdog_last_run.replace(' ', 'T') + (s.watchdog_last_run.endsWith('Z') ? '' : 'Z')) : 0;
+  const silent = !lastRun || Date.now() - lastRun > 3 * 3600 * 1000;
+  let stale: { id: number; title: string; hours: number }[] = [];
+  try { stale = JSON.parse(s.watchdog_stale || '[]'); } catch { /* ignore */ }
+  const nav = await navCounts(c.env.DB, sess.staff.name);
   const mail = !!(c.env.RESEND_API_KEY && c.env.MAIL_FROM);
   return shell(
     c,
     'Dashboard',
     html`
+    ${stale.length ? html`<div class="flash flash-err"><b>${stale.length} ${stale.length === 1 ? 'request has' : 'requests have'} been waiting over 3 hours with no reply:</b> ${stale.map((r) => html`<a href="/hq/requests/${r.id}">#${r.id} ${r.title}</a> `)}</div>` : ''}
+    ${silent && live ? html`<div class="flash flash-err">The hourly watchdog has not reported in. Requests could be sitting unseen.</div>` : ''}
     <div class="cards">
+      <a class="card ${nav['/hq/requests'].fresh ? 'card-hot' : ''}" href="/hq/requests"><b>${nav['/hq/requests'].fresh}</b><span>requests nobody has picked up (${nav['/hq/requests'].total} open)</span></a>
+      <a class="card ${nav['/hq/punchlist'].fresh ? 'card-hot' : ''}" href="/hq/punchlist"><b>${nav['/hq/punchlist'].total}</b><span>punch list items left${nav['/hq/punchlist'].fresh ? ` (${nav['/hq/punchlist'].fresh} yours)` : ''}</span></a>
       <a class="card ${n.newOrders ? 'card-hot' : ''}" href="/hq/orders"><b>${n.newOrders}</b><span>${n.newOrders === 1 ? 'new order request' : 'new order requests'}</span></a>
       <a class="card" href="/hq/subscribers"><b>${subs?.n ?? 0}</b><span>newsletter sign-ups</span></a>
       <div class="card"><b>${sold?.q ?? 0}</b><span>games paid or shipped through the website</span></div>
@@ -170,7 +138,6 @@ hq.get('/hq/dashboard', async (c) => {
     <ul class="log">${lastEdit.map((l) => html`<li><time>${l.created_at}</time> ${l.who} ${l.what}${l.detail ? html`: <span class="muted">${l.detail}</span>` : ''}</li>`)}</ul>
     <p class="muted small">Outbox: ${outbox.map((o) => `${o.n} ${o.status}`).join(', ') || 'empty'}.</p>`,
     sess,
-    n,
   );
 });
 
@@ -208,7 +175,6 @@ hq.get('/hq/orders', async (c) => {
     <p class="muted small">Nothing is charged on the website. Each request is someone asking for games; email them to confirm shipping and payment, then move the order along.</p>
     ${ordersTable(list)}`,
     sess,
-    await counts(c.env.DB),
   );
 });
 
@@ -247,7 +213,6 @@ hq.get('/hq/orders/:id', async (c) => {
       <button class="btn">Save</button>
     </form>`,
     sess,
-    await counts(c.env.DB),
   );
 });
 
@@ -276,7 +241,6 @@ hq.get('/hq/subscribers', async (c) => {
         <td><form method="post" action="/hq/subscribers/${x.id}/toggle"><input type="hidden" name="csrf" value="${sess.csrf}"><button class="link">${x.unsubscribed_at ? 'Re-subscribe' : 'Unsubscribe'}</button></form></td></tr>`,
     )}</tbody></table>` : html`<p class="muted">Nobody has signed up yet.</p>`}`,
     sess,
-    await counts(c.env.DB),
   );
 });
 
@@ -334,7 +298,6 @@ hq.get('/hq/details', async (c) => {
       <div class="wide"><button class="btn">Save game details</button></div>
     </form>`,
     sess,
-    await counts(c.env.DB),
   );
 });
 
@@ -382,7 +345,6 @@ hq.get('/hq/pages', async (c) => {
       <button class="btn">Save page copy</button>
     </form>`,
     sess,
-    await counts(c.env.DB),
   );
 });
 
@@ -526,8 +488,7 @@ for (const L of LISTS) {
         (r) => html`<tr class="${r.published ? '' : 'muted'}"><td><a href="${L.path}/${String(r.id)}">${L.summary(r)}</a></td><td>${r.published ? '' : 'hidden'}</td></tr>`,
       )}</tbody></table>`,
       sess,
-      await counts(c.env.DB),
-    );
+      );
   });
 
   hq.get(`${L.path}/:id`, async (c) => {
@@ -547,8 +508,7 @@ for (const L of LISTS) {
         ${isNew ? '' : html`<button class="link danger" name="_delete" value="1" formnovalidate>Delete this ${L.one}</button>`}</div>
       </form>`,
       sess,
-      await counts(c.env.DB),
-    );
+      );
   });
 
   hq.post(`${L.path}/:id`, async (c) => {
@@ -622,7 +582,6 @@ hq.get('/hq/settings', async (c) => {
       <div class="wide"><button class="btn btn-quiet">Change password</button></div>
     </form>`,
     sess,
-    await counts(c.env.DB),
   );
 });
 
@@ -657,3 +616,28 @@ hq.post('/hq/password', async (c) => {
   return redirect('/hq/settings?ok=' + encodeURIComponent('Password changed.'), 303);
 });
 
+
+// ---------- what's new / sent email ----------
+
+hq.get('/hq/whats-new', async (c) => {
+  const sess = await requireSession(c);
+  if (sess instanceof Response) return sess;
+  const out: Safe[] = [];
+  let list: Safe[] = [];
+  const flush = () => { if (list.length) out.push(html`<ul>${list}</ul>`); list = []; };
+  for (const line of CHANGELOG.split('\n')) {
+    if (line.startsWith('## ')) { flush(); out.push(html`<h2>${line.slice(3)}</h2>`); }
+    else if (line.startsWith('- ')) list.push(html`<li>${raw(inline(line.slice(2)))}</li>`);
+    else if (/^\s+\S/.test(line) && list.length) list[list.length - 1] = html`${list[list.length - 1]}${' ' + line.trim()}`;
+  }
+  flush();
+  return shell(c, "What's new", html`<p class="muted">Every change to the website and HQ, newest first.</p><div class="rich">${out}</div>`, sess);
+});
+
+hq.get('/hq/outbox', async (c) => {
+  const sess = await requireSession(c);
+  if (sess instanceof Response) return sess;
+  const rows = (await c.env.DB.prepare('SELECT * FROM outbox ORDER BY id DESC LIMIT 100').all<{ id: number; to_addr: string; subject: string; status: string; error: string | null; created_at: string }>()).results;
+  return shell(c, 'Sent email', html`<p class="muted">Every email the site tried to send. "simulated" means email is not switched on yet, so it only landed here.</p>
+  ${rows.length ? html`<table class="table"><thead><tr><th>When</th><th>To</th><th>Subject</th><th>Status</th></tr></thead><tbody>${rows.map((r) => html`<tr><td class="nowrap"><time class="loc">${r.created_at}</time></td><td>${r.to_addr}</td><td>${r.subject}</td><td>${r.status}${r.error ? html` <span class="muted">${r.error}</span>` : ''}</td></tr>`)}</tbody></table>` : html`<p class="empty">Nothing sent yet.</p>`}`, sess);
+});

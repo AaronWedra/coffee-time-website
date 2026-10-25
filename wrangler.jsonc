@@ -18,6 +18,8 @@
       "migrations_dir": "db/migrations"
     }
   ],
+  "r2_buckets": [{ "binding": "MEDIA", "bucket_name": "coffee-time-media" }],
+  "triggers": { "crons": ["7 * * * *"] },
   "vars": {
     "APP_ENV": "production",
     "SITE_URL": "",  // set to "https://www.playcoffeetime.com" at DNS cutover (enables apex->www + canonical URLs)

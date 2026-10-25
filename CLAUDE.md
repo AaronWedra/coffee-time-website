@@ -28,6 +28,10 @@ src/lib/email.ts       THE ONE email seam. Writes an outbox row, sends via Resen
 src/site/layout.ts     <html> shell, header/nav/footer (the nine Wix nav links), SEO meta, orb() helper
 src/site/pages.ts      every public page as a function
 src/site/routes.ts     routes, old URL redirects (keep forever), order + newsletter POSTs, sitemap, robots
+src/hq/shell.ts        HQ frame: grouped sidebar, badges, Edit website button, ? bubble
+src/hq/board.ts        Requests board, Punch list, attachments (R2 MEDIA), /hq/api/*
+src/hq/review.ts       Edit website mode: cookie routes, pencil widget script, injection into public pages
+src/hq/watchdog.ts     hourly cron: stale requests -> settings
 src/hq/routes.ts       HQ: dashboard, orders, newsletter, game details, page copy, list editors, settings
 public/                site.css (design), hq.css, img/ (webp), video/ (trailer), files/ (the 3 PDFs),
                        fonts/ (self-hosted, OFL), favicon.png, apple-touch-icon.png, img/og.jpg
@@ -114,6 +118,12 @@ of WebP from the original files; don-floating.webp is the animated gif converted
 5. Check every page. Then retire the old `coffee-time-preview` Worker.
 6. Cutover: add playcoffeetime.com to Cloudflare, point nameservers there, uncomment `routes`, set
    SITE_URL, push; HQ > Settings > let search engines index the site. Then cancel Wix (PDFs first!).
+
+## Edit website and requests (added 2026-10-25)
+
+Same workflow as the Zombie HQ. Staff names in OURS (src/hq/board.ts, currently `Claude`) count as the team
+answering; everyone else's last message means a request is waiting. The assistant needs an HQ login named
+Claude. R2 bucket `coffee-time-media` (binding MEDIA) holds screenshots. Smoke test covers the pencil rules.
 
 ## Current state (2026-10-25)
 

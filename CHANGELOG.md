@@ -1,5 +1,17 @@
 # Changelog
 
+## 2026-10-25: HQ rebuilt on the Zombie Bike Parade pattern
+- Edit website: the sidebar button browses the real site with a pencil in the corner. Click it to file a change
+  against the page you are on (paste or drag a screenshot, or "Point at it" to name the exact element). Only
+  staff with a session and the 8-hour review cookie ever get the script; those pages are never cached.
+- Requests board (/hq/requests): threads, replies that ask a question, "X is on it" pickup, statuses, prev/next
+  with arrow keys, screenshots and PDFs stored in R2 (bucket coffee-time-media).
+- Punch list (/hq/punchlist): what is left, with a recommendation on each question, agree or answer, notes,
+  pick up, promote to a request thread, progress bar.
+- Grouped sidebar with orange new/total badges, dark mode, a ? bubble on every HQ page, dashboard cards for
+  requests and punch list, What's new, Sent email.
+- Hourly watchdog flags requests the team has not answered in 3 hours (dashboard banner only, no email).
+
 ## 2026-10-25: start over from the real site and the real assets
 - Threw out the invented structure (Five Worlds page, clock hero and clock logo, fact shields, "From the box",
   "pick a side", lessons). The site now mirrors playcoffeetime.com section for section: Learn to play like a

@@ -3,6 +3,8 @@ import { randomToken, type Env, type Ctx } from './lib/router.ts';
 import { site, notFound } from './site/routes.ts';
 import { hq } from './hq/routes.ts';
 import { ensureDatabase } from './db/bootstrap.ts';
+import { inject } from './hq/review.ts';
+import { runWatchdog } from './hq/watchdog.ts';
 
 const SECURITY_HEADERS: Record<string, string> = {
   'x-content-type-options': 'nosniff',
@@ -89,6 +91,7 @@ export default {
       res = new Response('Something went wrong on our side. Please try again in a minute, or email playcoffeetime@yahoo.com.' + detail, { status: 500, headers: { 'content-type': 'text/plain; charset=utf-8' } });
     }
 
+    if (!isHq) res = await inject(c, res).catch(() => res);
     const h = new Headers(res.headers);
     for (const [k, v] of Object.entries(SECURITY_HEADERS)) h.set(k, v);
     if ((h.get('content-type') || '').includes('text/html')) {
@@ -98,5 +101,8 @@ export default {
     }
     if (isHq) h.set('x-robots-tag', 'noindex, nofollow');
     return new Response(res.body, { status: res.status, statusText: res.statusText, headers: h });
+  },
+  async scheduled(_e: ScheduledEvent, env: Env, ctx: ExecutionContext): Promise<void> {
+    ctx.waitUntil(ensureDatabase(env.DB).then(() => runWatchdog(env.DB)));
   },
 };

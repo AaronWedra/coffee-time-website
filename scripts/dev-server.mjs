@@ -72,7 +72,14 @@ const worker = (await import(pathToFileURL(join(root, 'src/worker.ts')).href)).d
 const DB = new D1Shim(process.env.DB_FILE);
 // Schema + seed are applied by the Worker itself (src/db/bootstrap.ts), exactly as in production.
 
-const env = { DB, ASSETS, APP_ENV: 'dev', SITE_URL: process.env.SITE_URL || '', HQ_SETUP_TOKEN: process.env.HQ_SETUP_TOKEN || 'dev', NOTIFY_TO: '' };
+// In-memory stand-in for the R2 bucket (binding MEDIA).
+const blobs = new Map();
+const MEDIA = {
+  async put(key, value, opts) { const buf = value instanceof ArrayBuffer ? value : await new Response(value).arrayBuffer(); blobs.set(key, { buf, type: opts?.httpMetadata?.contentType || 'application/octet-stream' }); },
+  async get(key) { const b = blobs.get(key); return b ? { body: new Response(b.buf).body, httpMetadata: { contentType: b.type }, size: b.buf.byteLength } : null; },
+  async delete(key) { blobs.delete(key); },
+};
+const env = { DB, ASSETS, MEDIA, APP_ENV: 'dev', SITE_URL: process.env.SITE_URL || '', HQ_SETUP_TOKEN: process.env.HQ_SETUP_TOKEN || 'dev', NOTIFY_TO: '' };
 
 createServer(async (req, res) => {
   const chunks = [];

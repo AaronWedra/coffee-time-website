@@ -2,6 +2,7 @@
 
 export type Env = {
   DB: D1Database;
+  MEDIA?: R2Bucket;
   ASSETS: Fetcher;
   APP_ENV?: string;
   SITE_URL?: string;

@@ -111,5 +111,49 @@ r = await get('/hq/details', { method: 'POST', headers: { ...H, ...A }, body: fo
 ok((await (await get('/order')).text()).includes('Orders are paused'), 'unticking "order form is open" pauses orders');
 ok((await get('/hq/dashboard')).status === 302, 'HQ needs a login');
 
+// ---- requests board, pencil, punch list ----
+const J = { ...H, ...A, 'x-hq': '1', 'content-type': 'application/json' };
+ok((await get('/hq/review.js')).status === 401, 'review.js needs a session');
+ok((await get('/hq/review.js', { headers: A })).status === 200, 'review.js served to staff');
+r = await get('/hq/review/start?to=/story', { headers: A, redirect: 'manual' });
+const rc = (r.headers.get('set-cookie') || '').match(/hq_review=1/);
+ok(r.status === 302 && rc && r.headers.get('location') === '/story', 'Edit website sets the review cookie and lands on the page');
+r = await get('/hq/review/start?to=//evil.com', { headers: A, redirect: 'manual' });
+ok(r.headers.get('location') === '/', 'review start refuses off-site redirects');
+const R = { cookie: A.cookie + '; hq_review=1' };
+const withBoth = await (await get('/story', { headers: R })).text();
+ok(withBoth.includes('/hq/review.js'), 'pencil injected with session plus review cookie');
+ok(!(await (await get('/story', { headers: { cookie: 'hq_review=1' } })).text()).includes('/hq/review.js'), 'no pencil without a session');
+ok(!(await (await get('/story', { headers: A })).text()).includes('/hq/review.js'), 'no pencil without the review cookie');
+r = await get('/hq/api/requests', { method: 'POST', headers: { ...H, ...A, 'content-type': 'application/json' }, body: JSON.stringify({ title: 'x', body: 'y' }) });
+ok(r.status >= 400, 'API post without X-HQ header is refused');
+r = await get('/hq/api/requests', { method: 'POST', headers: J, body: JSON.stringify({ title: 'Make the title bigger [/story]', body: 'Smoke request', page: '/story', source: 'site', attachment_ids: [] }) });
+const filed = await r.json();
+ok(r.status === 200 && filed.id, 'request filed from the pencil');
+ok((await (await get('/hq/api/page-thread?page=/story', { headers: A })).text()).includes('Make the title bigger'), 'page thread lists it');
+ok((await (await get('/hq/requests', { headers: A })).text()).includes('Make the title bigger'), 'request on the board');
+r = await get(`/hq/api/requests/${filed.id}/pickup`, { method: 'POST', headers: J, body: '{}' });
+ok((await (await get('/hq/api/page-thread?page=/story', { headers: A })).text()).includes('is on it') || r.status === 200, 'pickup works');
+r = await get(`/hq/api/requests/${filed.id}/messages`, { method: 'POST', headers: J, body: JSON.stringify({ body: 'Done, check it', asks: false }) });
+ok(r.status === 200, 'reply posted');
+r = await get(`/hq/api/requests/${filed.id}/status`, { method: 'POST', headers: J, body: JSON.stringify({ status: 'done' }) });
+ok(r.status === 200, 'status set');
+const fd = new FormData(); fd.append('file', new Blob([new Uint8Array([137,80,78,71,13,10,26,10])], { type: 'image/png' }), 's.png');
+r = await get('/hq/api/attachments', { method: 'POST', headers: { ...A, 'x-hq': '1' }, body: fd });
+const att = await r.json();
+ok(r.status === 200 && att.id, 'screenshot uploads');
+ok((await get(`/hq/attachments/${att.id}`, { headers: A })).status === 200, 'screenshot served to staff');
+ok((await get(`/hq/attachments/${att.id}`)).status !== 200, 'screenshot not served to strangers');
+const pl = await (await get('/hq/punchlist?f=all', { headers: A })).text();
+ok(pl.includes('Point the domain') || pl.includes('domain'), 'punch list seeded');
+for (const p of ['/hq/punchlist', '/hq/requests', `/hq/requests/${filed.id}`, '/hq/whats-new', '/hq/outbox']) ok((await get(p, { headers: A })).status === 200, `${p} 200`);
+ok((await (await get('/hq/dashboard', { headers: A })).text()).includes('Edit website'), 'sidebar has the Edit website button');
+for (const p of ['/hq/requests', '/hq/punchlist', '/hq/dashboard']) {
+  const t = await (await get(p, { headers: A })).text();
+  ok(!/ style="/.test(t) && !t.includes('\u2014'), `${p}: no inline style, no em dash`);
+}
+r = await get('/hq/api/review/stop', { method: 'POST', headers: J, body: '{}' });
+ok(/hq_review=;/.test(r.headers.get('set-cookie') || ''), 'leaving review mode clears the cookie');
+
 console.log(fails ? `\n${fails} FAILED` : '\nall passed');
 process.exit(fails ? 1 : 0);

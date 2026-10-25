@@ -14,3 +14,10 @@ interface D1Database {
 }
 interface Fetcher { fetch(input: Request | string, init?: RequestInit): Promise<Response> }
 interface ExecutionContext { waitUntil(promise: Promise<unknown>): void; passThroughOnException(): void }
+interface R2ObjectBody { body: ReadableStream; httpMetadata?: { contentType?: string }; size: number }
+interface R2Bucket {
+  put(key: string, value: ArrayBuffer | ReadableStream | string, options?: { httpMetadata?: { contentType?: string } }): Promise<unknown>;
+  get(key: string): Promise<R2ObjectBody | null>;
+  delete(key: string | string[]): Promise<void>;
+}
+interface ScheduledEvent { scheduledTime: number; cron: string }
