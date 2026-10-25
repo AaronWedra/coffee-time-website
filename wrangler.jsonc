@@ -30,6 +30,7 @@
   //   RESEND_API_KEY   turns on email alerts for orders and messages
   //   MAIL_FROM        e.g. "Coffee Time <orders@playcoffeetime.com>" (domain verified in Resend)
   "observability": { "enabled": true },
+  "workers_dev": true,
   "routes": [
     { "pattern": "www.playcoffeetime.com", "custom_domain": true },
     { "pattern": "playcoffeetime.com", "custom_domain": true }
