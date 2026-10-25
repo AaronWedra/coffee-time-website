@@ -14,7 +14,7 @@
     {
       "binding": "DB",
       "database_name": "coffee-time",
-      "database_id": "REPLACE-WITH-D1-ID",  // create "coffee-time" in Cloudflare > D1, paste its id here
+      "database_id": "187c7972-2e37-458e-ab8e-4f48d9630477",
       "migrations_dir": "db/migrations"
     }
   ],

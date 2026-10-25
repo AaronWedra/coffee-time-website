@@ -33,3 +33,4 @@
 - Old Wix and preview URLs redirect permanently (/rules, /faq, /story, /arcade, /reviews, /pre-order and more).
 - Hidden from search engines until cutover. 77-check smoke test.
 - Hero rebuilt as a layered scene of the original character cutouts around King Tea (CSS bob + pop-in), CSS star/ring backdrop. Scroll-driven section reveals, cross-page view transitions, hover depth on the box and world cards. All CSS, no JavaScript, reduced motion respected.
+- 2026-10-25: D1 database coffee-time created; id set in wrangler.jsonc.

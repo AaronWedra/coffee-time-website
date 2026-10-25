@@ -8,7 +8,7 @@ GitHub as the backup. Built 2026-10-24 for Aaron Wedra (Smartz Graphics, smartzg
 - **Repo:** AaronWedra/coffee-time-website. The 2026 rebuild is on branch `redesign-2026`. `main` still
   holds the August/September 2026 attempt (static pages, Worker `coffee-time-preview`); it is
   superseded by this branch and kept only as history.
-- **Cloudflare:** Worker `coffee-time`, D1 `coffee-time` (not created yet; see Deploying).
+- **Cloudflare (Aaron's account `6adef798d5c77ea7d04513eb9886c0ab`, same as Sara and Zombie):** Worker `coffee-time`, D1 `coffee-time` (id `187c7972-2e37-458e-ab8e-4f48d9630477`, created 2026-10-25).
 - **Live site (target):** https://www.playcoffeetime.com. Wix is still serving it until DNS moves.
 - **HQ:** /hq (log in by first name; the first admin is created once at /hq/setup with HQ_SETUP_TOKEN).
 
