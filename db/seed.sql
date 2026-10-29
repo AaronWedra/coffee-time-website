@@ -18,6 +18,7 @@ INSERT OR IGNORE INTO settings(key,value) VALUES('trailer_poster','/img/trailer-
 INSERT OR IGNORE INTO settings(key,value) VALUES('orders_open','1');
 INSERT OR IGNORE INTO settings(key,value) VALUES('max_quantity','10');
 INSERT OR IGNORE INTO settings(key,value) VALUES('site_indexable','0');
+INSERT OR IGNORE INTO settings(key,value) VALUES('ga4_id','');
 INSERT OR IGNORE INTO settings(key,value) VALUES('notify_enabled','1');
 INSERT OR IGNORE INTO settings(key,value) VALUES('notify_email','playcoffeetime@yahoo.com');
 INSERT OR IGNORE INTO settings(key,value) VALUES('seo_description','Coffee Time is the board game where coffee heroes race King Tea through the Five Worlds. 2 to 6 players, ages 8 and up, made in Davis, California. Rules videos, FAQ, music, the story and how to order.');

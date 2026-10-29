@@ -55,6 +55,7 @@ settings = {
     "orders_open": "1",
     "max_quantity": "10",
     "site_indexable": "0",
+    "ga4_id": "",
     "notify_enabled": "1",
     "notify_email": EMAIL,
     "seo_description": "Coffee Time is the board game where coffee heroes race King Tea through the Five Worlds. 2 to 6 players, ages 8 and up, made in Davis, California. Rules videos, FAQ, music, the story and how to order.",

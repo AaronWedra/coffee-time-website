@@ -556,6 +556,9 @@ hq.get('/hq/settings', async (c) => {
       <fieldset><legend>Search engines</legend>
         <label class="check"><input type="checkbox" name="site_indexable" value="1" ${s.site_indexable === '1' ? raw('checked') : ''}> Let search engines index the site <small>Keep this off until playcoffeetime.com points at the new site, then turn it on once.</small></label>
       </fieldset>
+      <fieldset><legend>Google Analytics</legend>
+        <label>Measurement ID <small>Looks like G-XXXXXXXXXX. Leave blank to turn analytics off.</small><input name="ga4_id" value="${s.ga4_id || ''}" placeholder="G-XXXXXXXXXX" pattern="G-[A-Za-z0-9]{4,20}"></label>
+      </fieldset>
       <fieldset><legend>Notifications</legend>
         <label class="check"><input type="checkbox" name="notify_enabled" value="1" ${s.notify_enabled === '1' ? raw('checked') : ''}> Email us when an order or newsletter sign-up arrives</label>
         <label>Send notifications to <input name="notify_email" type="email" value="${s.notify_email || ''}"></label>
@@ -589,6 +592,8 @@ hq.post('/hq/settings', async (c) => {
   const g = await guardedPost(c);
   if (g instanceof Response) return g;
   await db.setSetting(c.env.DB, 'site_indexable', g.f.site_indexable ? '1' : '0');
+  const ga4 = (g.f.ga4_id || '').trim().toUpperCase();
+  await db.setSetting(c.env.DB, 'ga4_id', /^G-[A-Z0-9]{4,20}$/.test(ga4) ? ga4 : '');
   await db.setSetting(c.env.DB, 'notify_enabled', g.f.notify_enabled ? '1' : '0');
   await db.setSetting(c.env.DB, 'notify_email', (g.f.notify_email || '').trim());
   await db.setSetting(c.env.DB, 'seo_description', (g.f.seo_description || '').trim());

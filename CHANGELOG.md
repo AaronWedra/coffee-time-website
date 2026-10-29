@@ -53,3 +53,5 @@
 - 2026-10-25: Deployed. Worker coffee-time is live at https://coffee-time.smartzgraphics.workers.dev (Workers Builds on push to main). HQ_SETUP_TOKEN secret and /hq/setup still to do.
 
 - 2026-10-25: Cutover. playcoffeetime.com and www now served by the coffee-time Worker (removed from coffee-time-preview). workers_dev pinned true. Wix plan cancelled, auto-renew off.
+
+- 2026-10-29: Google Analytics 4. HQ > Settings > Google Analytics takes a Measurement ID; the tag and CSP entries appear only when it is set.

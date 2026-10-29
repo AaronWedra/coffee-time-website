@@ -69,7 +69,7 @@ for cropping and isolating pieces of the real files at most. Subtle effects are 
   in HQ > Settings after cutover.
 - **Never run smoke.mjs against a deployed site.** It refuses workers.dev and playcoffeetime.com on purpose.
 - **Public forms:** honeypot `website`, timing field `_t`, per-IP rate limit. They work without JavaScript.
-- No JavaScript on the public site at all. Mobile nav is `<details>`; every effect is CSS.
+- No JavaScript on the public site except Google Analytics, which loads only when HQ > Settings holds a `G-` Measurement ID (`ga4_id`, validated in layout.ts; CSP allows googletagmanager and google-analytics). Mobile nav is `<details>`; every effect is CSS.
 - No inline `style=""` attributes (the CSP has no unsafe-inline); the smoke test checks.
 - No em dashes anywhere in copy, code comments or UI (Smartz house convention). The seed script asserts it.
 - Commit after every meaningful change. CHANGELOG.md gets a line per functional change.

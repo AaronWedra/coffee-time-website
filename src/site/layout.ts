@@ -24,6 +24,15 @@ export const NAV: { href: string; label: string }[] = [
   { href: '/#reviews', label: 'Reviews' },
 ];
 
+// Google Analytics 4, only when HQ > Settings holds a valid Measurement ID. The id is checked against a
+// strict pattern before it goes anywhere near an inline script.
+function ga(id: string | undefined, nonce: string) {
+  const v = (id || '').trim();
+  if (!/^G-[A-Z0-9]{4,20}$/.test(v)) return '';
+  return raw(`<script async src="https://www.googletagmanager.com/gtag/js?id=${v}"></script>
+<script nonce="${nonce}">window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','${v}',{anonymize_ip:true});</script>`);
+}
+
 export function layout(s: Settings, meta: PageMeta, body: Child, opts: { nonce: string; siteUrl: string; indexable: boolean }): string {
   const base = opts.siteUrl.replace(/\/$/, '');
   const fullTitle = meta.path === '/' ? `${s.site_name} | The board game where coffee heroes race King Tea` : `${meta.title} | ${s.site_name}`;
@@ -55,6 +64,7 @@ export function layout(s: Settings, meta: PageMeta, body: Child, opts: { nonce: 
 <link rel="preload" href="/fonts/anton.woff" as="font" type="font/woff" crossorigin>
 <link rel="preload" href="/fonts/jost.woff" as="font" type="font/woff" crossorigin>
 <link rel="stylesheet" href="/site.css?v=2">
+${ga(s.ga4_id, opts.nonce)}
 ${meta.jsonld ? raw(`<script type="application/ld+json" nonce="${opts.nonce}">${JSON.stringify(meta.jsonld).replace(/</g, '\\u003c')}</script>`) : ''}
 </head>
 <body class="${meta.bodyClass || ''}">
