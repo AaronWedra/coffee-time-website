@@ -295,3 +295,8 @@ UPDATE checklist_items SET owner='Claude', detail='Claude sets up Resend and the
 UPDATE checklist_items SET kind='task', owner='Aaron', detail='Only you can see this: open Wix > Domains and tell us who the registrar is (a screenshot through the pencil is enough). Claude handles everything after that.'
   WHERE title='Where is playcoffeetime.com registered?' AND status='open' AND answer IS NULL;
 
+-- Coffee Time GA4 property (Smartz Graphics account, stream 16230827034). Only fills it while blank,
+-- so a later edit in HQ > Settings always wins.
+INSERT OR IGNORE INTO settings (key, value) VALUES ('ga4_id', '');
+UPDATE settings SET value = 'G-25HJXMDMHZ' WHERE key = 'ga4_id' AND value = '';
+

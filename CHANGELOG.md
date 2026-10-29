@@ -55,3 +55,5 @@
 - 2026-10-25: Cutover. playcoffeetime.com and www now served by the coffee-time Worker (removed from coffee-time-preview). workers_dev pinned true. Wix plan cancelled, auto-renew off.
 
 - 2026-10-29: Google Analytics 4. HQ > Settings > Google Analytics takes a Measurement ID; the tag and CSP entries appear only when it is set.
+
+- 2026-10-29: Migration 0004 sets ga4_id to G-25HJXMDMHZ (GA4 property "Coffee Time (playcoffeetime.com)" in the Smartz Graphics Analytics account) while blank.

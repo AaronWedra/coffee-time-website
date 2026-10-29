@@ -453,5 +453,6 @@ for i, (section, ssort, title, detail, kind, owner, suggestion) in enumerate(pun
 
 # Fresh databases run migrations before the seed, so repeat the guarded punch list decisions here.
 lines.append(open(OUT.parent / "migrations/0003_punch_ai_first.sql").read())
+lines.append(open(OUT.parent / "migrations/0004_ga4.sql").read())
 OUT.write_text("\n".join(lines) + "\n")
 print(f"wrote {OUT} ({len(lines)} lines)")
