@@ -1,5 +1,10 @@
 # Changelog
 
+## 2026-10-29: analytics notice and privacy page
+- A small bar (inside the GA snippet, so only where Analytics loads) says the site uses Google Analytics, with No thanks and OK. No thanks is remembered in localStorage, sets ga-disable before gtag config and deletes the _ga cookies. Same wording as every Smartz site.
+- New /privacy page (copy editable in HQ > Page copy, migration 0005), footer link, sitemap entry. "Change my analytics choice" re-asks.
+- GA config now sets Google signals and ad personalisation off (what the privacy page promises); CSP also allows analytics.google.com, the second GA4 transport host. Smoke 125/125.
+
 ## 2026-10-25: punch list is AI first
 - Aaron's rule: Claude handles the vast majority of the punch list. Decisions with an obvious answer (requests vs card payments, shipping quotes) are now made and closed; the rest are owned by Claude, and only account logins, files only he has and the registrar click stay with Aaron.
 - Edit website re-issues the session cookie site-wide, so a login made before the pencil shipped still gets it.

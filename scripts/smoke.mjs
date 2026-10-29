@@ -12,7 +12,7 @@ const H = { 'content-type': 'application/x-www-form-urlencoded' };
 const old = () => String(Date.now() - 9000);
 
 // ---- public pages
-for (const p of ['/', '/story', '/arcade', '/news', '/video-tutorials', '/faq', '/order', '/robots.txt']) {
+for (const p of ['/', '/story', '/arcade', '/news', '/video-tutorials', '/faq', '/order', '/privacy', '/robots.txt']) {
   const r = await get(p);
   ok(r.status === 200, `${p} 200`);
   if (p !== '/robots.txt') {
@@ -40,6 +40,15 @@ ok((htxt.match(/w\.soundcloud\.com\/player/g) || []).length === 12, 'twelve Soun
 ok(htxt.includes('Zacharia O.') && htxt.includes('Avery Armstrong Stockert'), 'all reviews on the home page');
 ok(htxt.includes('/img/logo-purple.webp') && !htxt.includes('<svg class="mark"'), 'real logo in the header');
 ok(!/style="/.test(htxt), 'no inline styles (CSP)');
+// ---- analytics notice + privacy (migration 0004 seeds the GA4 id, so a fresh DB has analytics on)
+ok(/<script nonce="[A-Za-z0-9_-]+">\(function\(\)\{var ids=\['G-[A-Z0-9]+'\]/.test(htxt) && htxt.includes('allow_google_signals:false') && htxt.includes('allow_ad_personalization_signals:false'), 'GA snippet nonce\'d, starts with the notice, signals and ad personalisation off');
+ok(htxt.includes("if(get()==='denied')flag(true)") && htxt.indexOf("window['ga-disable-'") < htxt.indexOf("gtag('config'"), 'ga-disable branch runs before gtag config');
+ok(htxt.includes("'Analytics notice'") && htxt.includes('We use Google Analytics to count visits and see which pages help. No ads, and nothing is sold. ') && htxt.includes("btn('No thanks'") && htxt.includes('window.analyticsChoice='), 'notice bar code and exact wording on public pages');
+ok(/<a href="\/privacy">Privacy<\/a>/.test(htxt), 'footer links to /privacy');
+const priv = await (await get('/privacy')).text();
+ok(priv.includes('<h2>Analytics and cookies</h2>') && priv.includes('href="https://tools.google.com/dlpage/gaoptout"') && priv.includes('href="https://policies.google.com/technologies/partner-sites"') && priv.includes('mailto:playcoffeetime@yahoo.com'), 'privacy page: analytics section, both Google links, contact email');
+ok(priv.includes('data-analytics-choice hidden>Change my analytics choice</button>') && !/style="/.test(priv), 'privacy: choice button hidden until the script reveals it, no inline styles');
+ok(/connect-src[^;]* https:\/\/analytics\.google\.com /.test(home.headers.get('content-security-policy') || ''), 'CSP allows the analytics.google.com transport host');
 const tut = await (await get('/video-tutorials')).text();
 ok((tut.match(/youtube-nocookie\.com\/embed\//g) || []).length === 46, '46 tutorial videos');
 ok(/href="\/files\/coffee-time-story\.pdf"/.test(tut), 'story PDF linked locally');
@@ -150,6 +159,7 @@ for (const p of ['/hq/punchlist', '/hq/requests', `/hq/requests/${filed.id}`, '/
 ok((await (await get('/hq/dashboard', { headers: A })).text()).includes('Edit website'), 'sidebar has the Edit website button');
 for (const p of ['/hq/requests', '/hq/punchlist', '/hq/dashboard']) {
   const t = await (await get(p, { headers: A })).text();
+  ok(!t.includes('analytics-choice') && !t.includes('ga-bar') && !t.includes('gtag/js'), `${p}: no analytics, no notice`);
   ok(!/ style="/.test(t) && !t.includes('\u2014'), `${p}: no inline style, no em dash`);
 }
 r = await get('/hq/api/review/stop', { method: 'POST', headers: J, body: '{}' });

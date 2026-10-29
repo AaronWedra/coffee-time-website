@@ -38,7 +38,7 @@ const REDIRECTS: Record<string, string> = {
   '/newsletter': '/#newsletter',
 };
 
-export const STATIC_PATHS = ['/', '/story', '/arcade', '/news', '/video-tutorials', '/faq', '/order'];
+export const STATIC_PATHS = ['/', '/story', '/arcade', '/news', '/video-tutorials', '/faq', '/order', '/privacy'];
 
 const siteUrl = (c: Ctx) => (c.env.SITE_URL || `${c.url.protocol}//${c.url.host}`).replace(/\/$/, '');
 
@@ -108,6 +108,11 @@ site.get('/faq', async (c) => {
     ? { '@context': 'https://schema.org', '@type': 'FAQPage', mainEntity: items.map((f) => ({ '@type': 'Question', name: f.question, acceptedAnswer: { '@type': 'Answer', text: f.answer.replace(/\*\*/g, '') } })) }
     : undefined;
   return render(c, { title: 'FAQ', description: 'Answers to the Coffee Time rules questions players ask most: turn order, King Tea and the World Clocks, the Team Path, sharing heat, Roamer.', path: '/faq', jsonld }, P.faq(s, b, items));
+});
+
+site.get('/privacy', async (c) => {
+  const { s, b } = await base(c);
+  return render(c, { title: 'Privacy', description: 'What the Coffee Time website collects when you visit, and how to say no to Google Analytics.', path: '/privacy' }, P.privacy(s, b));
 });
 
 site.get('/order', async (c) => {

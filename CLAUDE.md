@@ -70,6 +70,12 @@ for cropping and isolating pieces of the real files at most. Subtle effects are 
 - **Never run smoke.mjs against a deployed site.** It refuses workers.dev and playcoffeetime.com on purpose.
 - **Public forms:** honeypot `website`, timing field `_t`, per-IP rate limit. They work without JavaScript.
 - No JavaScript on the public site except Google Analytics, which loads only when HQ > Settings holds a `G-` Measurement ID (`ga4_id`, validated in layout.ts; CSP allows googletagmanager and google-analytics). Mobile nav is `<details>`; every effect is CSS.
+- **Analytics notice (2026-10-29, shared Smartz spec "Notice + Decline").** `consentJs()` in src/site/layout.ts runs
+  inside the GA snippet, so the bar exists only where GA loads (never HQ, never without an ID, skipped in Edit mode).
+  `localStorage['analytics-choice']` = granted | denied; denied sets `window['ga-disable-<ID>']` BEFORE `gtag('config')`.
+  `window.analyticsChoice()` re-asks; the /privacy button calls it and stays `hidden` without JS. /privacy copy is
+  blocks `privacy_*` (migration 0005). Keep the bar wording exact, and keep signals/ad personalisation off in the
+  config, because the privacy page says Google's advertising features are turned off.
 - No inline `style=""` attributes (the CSP has no unsafe-inline); the smoke test checks.
 - No em dashes anywhere in copy, code comments or UI (Smartz house convention). The seed script asserts it.
 - Commit after every meaningful change. CHANGELOG.md gets a line per functional change.

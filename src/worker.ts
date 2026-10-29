@@ -22,7 +22,7 @@ function csp(nonce: string): string {
     `style-src 'self' 'nonce-${nonce}'`,
     `font-src 'self'`,
     `img-src 'self' data: https://www.google-analytics.com https://*.google-analytics.com https://www.googletagmanager.com`,
-    `connect-src 'self' https://www.google-analytics.com https://*.google-analytics.com https://*.analytics.google.com https://www.googletagmanager.com`,
+    `connect-src 'self' https://www.google-analytics.com https://*.google-analytics.com https://analytics.google.com https://*.analytics.google.com https://www.googletagmanager.com`,
     `media-src 'self'`,
     `frame-src https://w.soundcloud.com https://www.youtube-nocookie.com`,
     `form-action 'self' mailto:`,

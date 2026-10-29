@@ -307,6 +307,24 @@ export function faq(s: Settings, blocks: Blocks, items: Faq[]): Safe {
   </section>`;
 }
 
+// Privacy: what the site collects (Google Analytics), with the button that re-asks the analytics question.
+// The button is hidden until the analytics script reveals it, so without JavaScript nothing dead shows.
+export function privacy(s: Settings, blocks: Blocks): Safe {
+  return html`<section class="page privacy">
+    <div class="wrap narrow">
+      <h1 class="huge">${line(blocks, 'privacy_title')}</h1>
+      <div class="intro">${text(blocks, 'privacy_intro')}</div>
+      <article class="qa privacy-card">
+        <h2>Analytics and cookies</h2>
+        <div class="answer">${text(blocks, 'privacy_analytics')}
+          <p><button type="button" class="btn" data-analytics-choice hidden>Change my analytics choice</button></p>
+          <p>${line(blocks, 'privacy_questions')} <a href="mailto:${s.email}">${s.email}</a></p>
+        </div>
+      </article>
+    </div>
+  </section>`;
+}
+
 export function notFound(): Safe {
   return html`<section class="page"><div class="wrap narrow center"><h1 class="huge">Lost in the Realm of Time</h1><p>That page is not here. <a href="/">Back to Coffee Time</a>.</p></div></section>`;
 }
