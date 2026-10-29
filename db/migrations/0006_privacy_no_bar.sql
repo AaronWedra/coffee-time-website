@@ -1,0 +1,4 @@
+-- No analytics notice bar (Aaron, 2026-10-29): the privacy copy no longer points at a choice button.
+-- Changes only that one sentence, and only while the block still holds it, so an HQ edit is never overwritten.
+UPDATE blocks SET value = REPLACE(value, 'You can say no at any time: use the button below, or install Google''s opt-out browser add-on ([https://tools.google.com/dlpage/gaoptout](https://tools.google.com/dlpage/gaoptout)).', 'You can opt out at any time by installing Google''s opt-out browser add-on ([https://tools.google.com/dlpage/gaoptout](https://tools.google.com/dlpage/gaoptout)).'), updated_at = datetime('now')
+  WHERE key = 'privacy_analytics' AND instr(value, 'You can say no at any time: use the button below, or install Google''s opt-out browser add-on ([https://tools.google.com/dlpage/gaoptout](https://tools.google.com/dlpage/gaoptout)).') > 0;

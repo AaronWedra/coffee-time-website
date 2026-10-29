@@ -307,8 +307,7 @@ export function faq(s: Settings, blocks: Blocks, items: Faq[]): Safe {
   </section>`;
 }
 
-// Privacy: what the site collects (Google Analytics), with the button that re-asks the analytics question.
-// The button is hidden until the analytics script reveals it, so without JavaScript nothing dead shows.
+// Privacy: what the site collects (Google Analytics) and how to opt out. Google Analytics Terms section 7.
 export function privacy(s: Settings, blocks: Blocks): Safe {
   return html`<section class="page privacy">
     <div class="wrap narrow">
@@ -317,7 +316,6 @@ export function privacy(s: Settings, blocks: Blocks): Safe {
       <article class="qa privacy-card">
         <h2>Analytics and cookies</h2>
         <div class="answer">${text(blocks, 'privacy_analytics')}
-          <p><button type="button" class="btn" data-analytics-choice hidden>Change my analytics choice</button></p>
           <p>${line(blocks, 'privacy_questions')} <a href="mailto:${s.email}">${s.email}</a></p>
         </div>
       </article>

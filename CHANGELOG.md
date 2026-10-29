@@ -1,5 +1,8 @@
 # Changelog
 
+## 2026-10-29 (later): no consent bar, by Aaron's decision
+- The analytics notice bar and all choice logic are removed; Analytics runs for every visitor. The privacy disclosure stays on /privacy (footer link, sitemap) without the choice button, and its opt-out sentence now points only at Google's browser add-on (migration 0006 updates the live copy unless it was edited in HQ). Signals and ad personalisation stay off; the analytics.google.com CSP fix stays. Smoke 124/124.
+
 ## 2026-10-29: analytics notice and privacy page
 - A small bar (inside the GA snippet, so only where Analytics loads) says the site uses Google Analytics, with No thanks and OK. No thanks is remembered in localStorage, sets ga-disable before gtag config and deletes the _ga cookies. Same wording as every Smartz site.
 - New /privacy page (copy editable in HQ > Page copy, migration 0005), footer link, sitemap entry. "Change my analytics choice" re-asks.
