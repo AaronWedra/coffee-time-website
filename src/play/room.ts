@@ -103,6 +103,24 @@ export class Room {
       }
       case 'action':
         return this.sendTo(this.host, { t: 'action', option: String(msg.option).slice(0, 64), player: String(msg.player).slice(0, 8), from: me.id });
+      // The 2026 games: any client sends an input to the host; the host may send a private message to one client.
+      case 'input': {
+        const text = JSON.stringify(msg.data === undefined ? null : msg.data);
+        if (text.length > 4096) return;
+        return this.sendTo(this.host, { t: 'input', data: JSON.parse(text), from: me.id, at: Date.now() });
+      }
+      case 'to': {
+        if (me.id !== this.host) return;
+        const text = JSON.stringify(msg.data === undefined ? null : msg.data);
+        if (text.length > 16384) return;
+        return this.sendTo(String(msg.to || '').slice(0, 40), { t: 'private', data: JSON.parse(text) });
+      }
+      case 'event': {
+        if (me.id !== this.host) return;
+        const text = JSON.stringify(msg.data === undefined ? null : msg.data);
+        if (text.length > 65536) return;
+        return this.broadcast({ t: 'event', data: JSON.parse(text), at: Date.now() }, ws);
+      }
       case 'protect':
         return this.sendTo(this.host, { t: 'protect', hero: String(msg.hero).slice(0, 12), card: String(msg.card).slice(0, 16), from: me.id });
       case 'chat': {

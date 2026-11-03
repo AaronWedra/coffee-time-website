@@ -44,16 +44,18 @@ export default {
       }
     }
 
-    // The game: /play/ is the installable app (a static page with its own CSP: it runs inline scripts and
-    // loads two Google fonts), and /room/CODE is its WebSocket, one Durable Object per room.
-    if (url.pathname === '/play') return Response.redirect(url.origin + '/play/' + url.search, 301);
-    if (url.pathname === '/play/' || url.pathname === '/play/index.html') {
-      const res = await env.ASSETS.fetch(new Request(new URL('/play/index.html', url), request));
+    // The games: /play/ (the faithful port), /overtime/ and /rush/ (the 2026 games) are static pages
+    // with their own CSP (they run inline scripts and load two Google fonts); /room/CODE is their
+    // shared WebSocket, one Durable Object per room.
+    const game = url.pathname.match(/^\/(play|overtime|rush)(\/|\/index\.html)?$/);
+    if (game && !game[2]) return Response.redirect(url.origin + '/' + game[1] + '/' + url.search, 301);
+    if (game) {
+      const res = await env.ASSETS.fetch(new Request(new URL('/' + game[1] + '/index.html', url), request));
       const h = new Headers(res.headers);
       for (const [k, v] of Object.entries(SECURITY_HEADERS)) h.set(k, v);
       h.set('content-type', 'text/html; charset=utf-8');
       h.set('cache-control', 'public, max-age=300');
-      h.set('content-security-policy', [`default-src 'self'`, `script-src 'self' 'unsafe-inline'`, `style-src 'self' 'unsafe-inline' https://fonts.googleapis.com`, `font-src https://fonts.gstatic.com`, `img-src 'self' data: blob:`, `connect-src 'self' wss://${url.host}`, `manifest-src 'self'`, `worker-src 'self'`, `base-uri 'self'`, `object-src 'none'`, `frame-ancestors 'none'`].join('; '));
+      h.set('content-security-policy', [`default-src 'self'`, `script-src 'self' 'unsafe-inline'`, `style-src 'self' 'unsafe-inline' https://fonts.googleapis.com`, `font-src 'self' https://fonts.gstatic.com`, `img-src 'self' data: blob:`, `media-src 'self'`, `connect-src 'self' wss://${url.host}`, `manifest-src 'self'`, `worker-src 'self'`, `base-uri 'self'`, `object-src 'none'`, `frame-ancestors 'none'`].join('; '));
       return new Response(res.body, { status: res.status, headers: h });
     }
     const room = url.pathname.match(/^\/room\/([A-Za-z0-9]{4,8})$/);
