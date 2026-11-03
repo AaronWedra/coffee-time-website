@@ -3,6 +3,7 @@ import * as db from '../lib/db.ts';
 import { layout, type PageMeta } from './layout.ts';
 import * as P from './pages.ts';
 import { sendEmail } from '../lib/email.ts';
+import { sendSms } from '../lib/sms.ts';
 import type { Safe } from '../lib/html.ts';
 
 type MetaIn = Omit<PageMeta, 'description'> & { description?: string };
@@ -157,6 +158,7 @@ site.post('/order', async (c) => {
   const id = await db.insertOrder(c.env.DB, { ...values, quantity: qty, newsletter: values.newsletter ? 1 : 0, ip: c.ip });
   if (values.newsletter) await db.subscribe(c.env.DB, values.email, 'order', c.ip);
   const to = c.env.NOTIFY_TO || s.notify_email;
+  if (s.notify_enabled === '1') c.waitUntil(sendSms(c.env, `Coffee Time order #${id}: ${qty} game${qty === 1 ? '' : 's'} from ${values.name}. Open HQ to reply.`));
   if (s.notify_enabled === '1' && to) {
     const subtotal = (qty * parseFloat(s.price || '0')).toFixed(2);
     const body = `New order request #${id} on the Coffee Time website\n\nName: ${values.name}\nEmail: ${values.email}\nPhone: ${values.phone || '(none)'}\nGames: ${qty} (subtotal $${subtotal} before shipping)\n\nShip to:\n${values.address}\n\nNotes: ${values.notes || '(none)'}\nNewsletter: ${values.newsletter ? 'yes' : 'no'}\n\nOpen it in HQ: ${siteUrl(c)}/hq/orders/${id}\n`;

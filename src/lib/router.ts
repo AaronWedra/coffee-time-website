@@ -11,6 +11,10 @@ export type Env = {
   EMAIL?: { send(m: { to: string; from: string; subject: string; text: string }): Promise<unknown> };
   MAIL_FROM?: string;
   NOTIFY_TO?: string;
+  NOTIFY_SMS_TO?: string;
+  TWILIO_ACCOUNT_SID?: string;
+  TWILIO_AUTH_TOKEN?: string;
+  TWILIO_FROM?: string;
   HQ_SETUP_TOKEN?: string;
 };
 

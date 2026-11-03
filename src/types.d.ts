@@ -21,3 +21,6 @@ interface R2Bucket {
   delete(key: string | string[]): Promise<void>;
 }
 interface ScheduledEvent { scheduledTime: number; cron: string }
+
+// Minimal stand-in so `tsc` works without @cloudflare/workers-types (used by the game rooms binding).
+interface DurableObjectNamespace { idFromName(name: string): unknown; get(id: unknown): { fetch(input: Request | string, init?: RequestInit): Promise<Response> }; }

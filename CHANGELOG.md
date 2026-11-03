@@ -88,3 +88,5 @@
 - 2026-10-29: Migration 0004 sets ga4_id to G-25HJXMDMHZ (GA4 property "Coffee Time (playcoffeetime.com)" in the Smartz Graphics Analytics account) while blank.
 
 - 2026-11-03: Order and newsletter alerts now go through Cloudflare Email Sending (EMAIL binding, orders@playcoffeetime.com) to smartzgraphics@yahoo.com.
+
+- 2026-11-03: Text alerts for new orders via Twilio (src/lib/sms.ts). Off until TWILIO_ACCOUNT_SID, TWILIO_AUTH_TOKEN and TWILIO_FROM secrets are set; NOTIFY_SMS_TO var holds the phone.

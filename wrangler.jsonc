@@ -28,11 +28,13 @@
     "APP_ENV": "production",
     "SITE_URL": "https://www.playcoffeetime.com",
     "NOTIFY_TO": "smartzgraphics@yahoo.com",
+    "NOTIFY_SMS_TO": "+15305747306",
     "MAIL_FROM": "Coffee Time <orders@playcoffeetime.com>"
   },
   // Secrets (set in the Worker's Settings or with `npx wrangler secret put NAME`, never in this file):
   //   HQ_SETUP_TOKEN   one-time phrase that unlocks /hq/setup until the first admin exists
   //   RESEND_API_KEY   turns on email alerts for orders and messages
+  //   TWILIO_ACCOUNT_SID, TWILIO_AUTH_TOKEN, TWILIO_FROM  turn on text alerts for orders (NOTIFY_SMS_TO is the phone)
   //   MAIL_FROM        e.g. "Coffee Time <orders@playcoffeetime.com>" (domain verified in Resend)
   "observability": { "enabled": true },
   "workers_dev": true,
