@@ -115,7 +115,7 @@ hq.get('/hq/dashboard', async (c) => {
   let stale: { id: number; title: string; hours: number }[] = [];
   try { stale = JSON.parse(s.watchdog_stale || '[]'); } catch { /* ignore */ }
   const nav = await navCounts(c.env.DB, sess.staff.name);
-  const mail = !!(c.env.RESEND_API_KEY && c.env.MAIL_FROM);
+  const mail = !!((c.env.RESEND_API_KEY || c.env.EMAIL) && c.env.MAIL_FROM);
   return shell(
     c,
     'Dashboard',
@@ -562,7 +562,7 @@ hq.get('/hq/settings', async (c) => {
       <fieldset><legend>Notifications</legend>
         <label class="check"><input type="checkbox" name="notify_enabled" value="1" ${s.notify_enabled === '1' ? raw('checked') : ''}> Email us when an order or newsletter sign-up arrives</label>
         <label>Send notifications to <input name="notify_email" type="email" value="${s.notify_email || ''}"></label>
-        <p class="muted small">${c.env.RESEND_API_KEY && c.env.MAIL_FROM ? 'Email sending is configured.' : 'Email sending is not configured yet, so orders and sign-ups only appear in HQ. The site maintainer can turn it on by setting RESEND_API_KEY and MAIL_FROM.'}</p>
+        <p class="muted small">${(c.env.RESEND_API_KEY || c.env.EMAIL) && c.env.MAIL_FROM ? 'Email sending is configured.' : 'Email sending is not configured yet, so orders and sign-ups only appear in HQ. The site maintainer can turn it on by setting RESEND_API_KEY and MAIL_FROM.'}</p>
       </fieldset>
       <fieldset><legend>Search listing</legend>
         <label>Site description <small>What Google shows under the site name. About 150 characters.</small><textarea name="seo_description" rows="3">${s.seo_description || ''}</textarea></label>

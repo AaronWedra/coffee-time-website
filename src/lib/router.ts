@@ -7,6 +7,7 @@ export type Env = {
   APP_ENV?: string;
   SITE_URL?: string;
   RESEND_API_KEY?: string;
+  EMAIL?: { send(m: { to: string; from: string; subject: string; text: string }): Promise<unknown> };
   MAIL_FROM?: string;
   NOTIFY_TO?: string;
   HQ_SETUP_TOKEN?: string;

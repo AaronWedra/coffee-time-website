@@ -7,6 +7,17 @@ export async function sendEmail(env: Env, to: string, subject: string, body: str
   const id = (
     await env.DB.prepare('INSERT INTO outbox(to_addr,subject,body) VALUES(?,?,?) RETURNING id').bind(to, subject, body).first<{ id: number }>()
   )!.id;
+  // Preferred: Cloudflare Email Sending (the EMAIL binding). Fallback: Resend.
+  if (env.EMAIL && env.MAIL_FROM) {
+    try {
+      await env.EMAIL.send({ to, from: env.MAIL_FROM, subject, text: body });
+      await env.DB.prepare("UPDATE outbox SET status='sent', sent_at=datetime('now') WHERE id=?").bind(id).run();
+      return 'sent';
+    } catch (e) {
+      await env.DB.prepare("UPDATE outbox SET status='failed', error=? WHERE id=?").bind(String(e).slice(0, 500), id).run();
+      return 'failed';
+    }
+  }
   if (!env.RESEND_API_KEY || !env.MAIL_FROM) {
     await env.DB.prepare("UPDATE outbox SET status='simulated' WHERE id=?").bind(id).run();
     return 'simulated';
