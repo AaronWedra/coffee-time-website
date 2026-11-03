@@ -13,7 +13,7 @@
   --plum: #4d1a73;         /* display type on light backgrounds */
   --violet: #8e3cc0;
   --yellow: #fff245;       /* links on purple, like the old site */
-  --peach: #ffbd7e;        /* the characters' stage */
+  --peach: #ffbd7e;        /* the characters' stage (now white: the pedestal art has white edges) */
   --cream: #fff8ee;
   --ink: #1d1230;
   --white: #fff;
@@ -176,8 +176,8 @@ section { position: relative; }
 @media (max-width: 760px) { .sponsor-grid { grid-template-columns: 1fr; } .sponsor-art img { width: 170px; } .coloring { grid-template-columns: 1fr 1fr; gap: 10px; } }
 
 /* ------------------------------------------------------------ the stage: all the characters on the peach band */
-.stage { background: var(--peach); padding: 30px 0 0; margin-top: 10px; overflow: hidden; }
-.stage::before { content: ''; position: absolute; left: 0; right: 0; top: -1px; height: 68px; background: url(/img/peach-curve.webp) center top / 100% 100% no-repeat; transform: translateY(-100%); pointer-events: none; }
+.stage { background: #fff; padding: 30px 0 0; margin-top: 10px; overflow: hidden; }
+.stage::before { content: ''; position: absolute; left: 0; right: 0; top: -1px; height: 68px; background: url(/img/white-curve.webp) center top / 100% 100% no-repeat; transform: translateY(-100%); pointer-events: none; }
 .stage-art { width: min(1100px, 92%); margin: 0 auto; }
 .stage-art img { width: 100%; }
 

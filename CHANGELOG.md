@@ -92,3 +92,5 @@
 - 2026-11-03: Text alerts for new orders via Twilio (src/lib/sms.ts). Off until TWILIO_ACCOUNT_SID, TWILIO_AUTH_TOKEN and TWILIO_FROM secrets are set; NOTIFY_SMS_TO var holds the phone.
 
 - 2026-11-03: First edition sold out. Migration 0007 closes the order form and rewrites the Orders copy (only where still unedited). The last games were festival raffle prizes.
+
+- 2026-11-03: Characters stage band is white (the pedestal art has white edges that looked random on peach); white-curve.webp, site.css v=5.
