@@ -116,7 +116,7 @@ for (const p of ['/hq/reviews', '/hq/news', '/hq/tutorials', '/hq/faqs', '/hq/tr
 r = await get('/hq/reviews/new', { method: 'POST', headers: { ...H, ...A }, body: form({ csrf, quote: 'Best game night ever.', name: 'Smoke Tester', role: 'Playtester', sort: '99', published: '1' }) });
 ok(r.status === 303 && (await (await get('/')).text()).includes('Smoke Tester'), 'new review added in HQ shows on the site');
 r = await get('/hq/details', { method: 'POST', headers: { ...H, ...A }, body: form({ csrf, price: '39.99', players: '2-6 Players', ages: 'Ages 8+', max_quantity: '10' }) });
-ok((await (await get('/order')).text()).includes('Orders are paused'), 'unticking "order form is open" pauses orders');
+ok((await (await get('/order')).text()).includes('find a home'), 'unticking "order form is open" pauses orders');
 ok((await get('/hq/dashboard')).status === 302, 'HQ needs a login');
 
 // ---- requests board, pencil, punch list ----

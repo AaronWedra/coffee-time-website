@@ -43,7 +43,7 @@ export type OrderState = { sent?: boolean; error?: string; values?: Record<strin
 export function orderForm(s: Settings, blocks: Blocks, st: OrderState): Safe {
   const v = st.values || {};
   const max = Math.max(1, parseInt(s.max_quantity || '10', 10));
-  if (s.orders_open === '0') return html`<div class="order-card" id="order-form"><h3>${line(blocks, 'order_form_title')}</h3><p>Orders are paused right now. Email <a href="mailto:${s.email}">${s.email}</a> and we will let you know as soon as games are back in stock.</p></div>`;
+  if (s.orders_open === '0') return html`<div class="order-card" id="order-form"><h3>${line(blocks, 'order_form_title')}</h3><p>Thank you for helping 1,000 games find a home. If you would like to say hello, email <a href="mailto:${s.email}">${s.email}</a>.</p></div>`;
   if (st.sent) return html`<div class="order-card" id="order-form"><h3>Order request sent</h3><p>Thank you! We will email you shortly to confirm shipping and payment. It's Coffee Time!</p></div>`;
   return html`<div class="order-card" id="order-form">
     <h3>${line(blocks, 'order_form_title')}</h3>
