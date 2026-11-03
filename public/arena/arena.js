@@ -65,7 +65,7 @@
       A.h('div', { class: 'ct-frost' }),
       opts.label === false ? null : A.h('div', { class: 'ct-label' }, opts.label || c.name));
     if (opts.size) el.style.setProperty('--size', opts.size + 'px');
-    el.style.setProperty('--mask', `url("${c.img}") center / contain no-repeat`);
+    el.style.setProperty('--mask', `url("${c.img}")`);
     const api = {
       el, kind,
       hit() { el.classList.remove('hit'); void el.offsetWidth; el.classList.add('hit'); A.sound.hit(); setTimeout(() => el.classList.remove('hit'), 300); },
@@ -116,7 +116,7 @@
         const x = 50 + Math.sin(a) * R, y = 50 - Math.cos(a) * R;
         arc.setAttribute('d', t <= 0 ? '' : `M50,3 A${R},${R} 0 ${t > 0.5 ? 1 : 0},1 ${x},${y}`);
         el.classList.toggle('overtime', hours >= 48);
-        if (worldName) world.textContent = worldName;
+        if (worldName != null) world.textContent = worldName;
         if (Math.floor(hours) > Math.floor(shown)) { el.classList.remove('tick'); void el.offsetWidth; el.classList.add('tick'); }
         shown = hours;
       },

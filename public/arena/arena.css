@@ -33,8 +33,8 @@ button { font: inherit; }
 .ct-sprite { position: relative; width: var(--size); height: var(--size); display: inline-block; animation: ct-idle 2.2s ease-in-out infinite; transform-origin: 50% 100%; will-change: transform; }
 .ct-sprite img { width: 100%; height: 100%; object-fit: contain; display: block; filter: drop-shadow(0 4px 4px rgba(0,0,0,.35)); transition: filter .4s; pointer-events: none; }
 .ct-sprite.flip img { transform: scaleX(-1); }
-.ct-sprite .ct-shine { position: absolute; inset: 0; pointer-events: none; -webkit-mask-image: var(--mask); mask-image: var(--mask); background: linear-gradient(115deg, transparent 40%, rgba(255,255,255,.55) 50%, transparent 60%); background-size: 300% 100%; animation: ct-shine 8s linear infinite; mix-blend-mode: screen; opacity: .9; }
-.ct-sprite .ct-frost { position: absolute; inset: 0; pointer-events: none; background: linear-gradient(to top, rgba(120,200,255,.85), rgba(120,200,255,0)); opacity: 0; transition: opacity .4s; -webkit-mask-image: var(--mask); mask-image: var(--mask); }
+.ct-sprite .ct-shine { position: absolute; inset: 0; pointer-events: none; -webkit-mask: var(--mask) center / contain no-repeat; mask: var(--mask) center / contain no-repeat; background: linear-gradient(115deg, transparent 40%, rgba(255,255,255,.55) 50%, transparent 60%); background-size: 300% 100%; animation: ct-shine 8s linear infinite; mix-blend-mode: screen; opacity: .9; }
+.ct-sprite .ct-frost { position: absolute; inset: 0; pointer-events: none; background: linear-gradient(to top, rgba(120,200,255,.85), rgba(120,200,255,0)); opacity: 0; transition: opacity .4s; -webkit-mask: var(--mask) center / contain no-repeat; mask: var(--mask) center / contain no-repeat; }
 .ct-sprite.frozen { animation: none; filter: saturate(.3) brightness(1.1); }
 .ct-sprite.frozen .ct-frost { opacity: 1; }
 .ct-sprite.frozen img { filter: drop-shadow(0 0 6px #9ad8ff) brightness(.95); }
