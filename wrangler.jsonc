@@ -19,11 +19,13 @@
     }
   ],
   "r2_buckets": [{ "binding": "MEDIA", "bucket_name": "coffee-time-media" }],
+  "send_email": [{ "name": "EMAIL", "remote": true }],
   "triggers": { "crons": ["7 * * * *"] },
   "vars": {
     "APP_ENV": "production",
     "SITE_URL": "https://www.playcoffeetime.com",
-    "NOTIFY_TO": "playcoffeetime@yahoo.com"
+    "NOTIFY_TO": "smartzgraphics@yahoo.com",
+    "MAIL_FROM": "Coffee Time <orders@playcoffeetime.com>"
   },
   // Secrets (set in the Worker's Settings or with `npx wrangler secret put NAME`, never in this file):
   //   HQ_SETUP_TOKEN   one-time phrase that unlocks /hq/setup until the first admin exists

@@ -65,3 +65,5 @@
 - 2026-10-29: Google Analytics 4. HQ > Settings > Google Analytics takes a Measurement ID; the tag and CSP entries appear only when it is set.
 
 - 2026-10-29: Migration 0004 sets ga4_id to G-25HJXMDMHZ (GA4 property "Coffee Time (playcoffeetime.com)" in the Smartz Graphics Analytics account) while blank.
+
+- 2026-11-03: Order and newsletter alerts now go through Cloudflare Email Sending (EMAIL binding, orders@playcoffeetime.com) to smartzgraphics@yahoo.com.
