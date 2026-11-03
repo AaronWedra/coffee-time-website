@@ -112,8 +112,9 @@ export function home(s: Settings, blocks: Blocks, tracks: Track[], creators: Cre
 <section class="playonline" id="play-online">
   <div class="wrap playonline-in">
     <h2 class="big">Play Coffee Time on your phone</h2>
-    <p>Make a room, send your friends the code, and play the board game together online. Free, no sign-up, and it installs to your home screen.</p>
-    <p><a class="btn" href="/play/">Play Online</a></p>
+    <p>Make a room, send your friends the code, and play together online. Free, no sign-up, and it installs to your home screen.</p>
+    <p class="playonline-btns"><a class="btn" href="/overtime/">Overtime</a> <a class="btn" href="/rush/">Rush Hour</a> <a class="btn btn-ghost" href="/play/">The board game, as printed</a></p>
+    <p class="playonline-note">Overtime: plan your cards together, watch the fight, find the Roamer hiding on your team. Rush Hour: race King Tea's clock in real time. Both are in preview.</p>
     <hr class="rule">
   </div>
 </section>

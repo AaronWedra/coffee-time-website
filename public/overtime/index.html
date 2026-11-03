@@ -1,0 +1,109 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, user-scalable=no">
+<title>Coffee Time: Overtime</title>
+<meta name="description" content="Coffee Time: Overtime. Plan your cards in 30 seconds, watch the fight, argue about who is working for the Roamer, and beat King Tea's clock. Free, with friends, on your phone.">
+<meta name="theme-color" content="#1b1030">
+<link rel="manifest" href="manifest.json">
+<link rel="apple-touch-icon" href="/play/icons/icon-180.png">
+<link rel="icon" href="/play/icons/icon-192.png">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Overtime">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Nunito:wght@400;700&display=swap">
+<link rel="stylesheet" href="/arena/arena.css">
+<style>
+  .home { text-align: center; padding-top: 12px; }
+  .home .tag { color: var(--peach); font-family: var(--font-head); font-size: 1.3rem; margin: 0 0 14px; }
+  .home .cast { display: flex; justify-content: center; gap: 6px; margin: 10px 0 18px; }
+  .home .cast .ct-sprite { --size: 64px; }
+  .home .ct-btn { width: 100%; max-width: 320px; margin: 6px auto; display: block; }
+  .home .fine { font-size: .8rem; color: var(--muted); margin-top: 18px; }
+  .lobby .ct-seat .ct-sprite { --size: 70px; margin: 0 auto; }
+  .lobby .opt { display: flex; align-items: center; gap: 10px; padding: 8px 0; }
+  .lobby .opt input { width: 20px; height: 20px; }
+
+  /* game */
+  .game { min-height: 100dvh; display: flex; flex-direction: column; background: var(--world-bg, var(--bg)); transition: background 1s; }
+  .game .ct-topbar .ct-clock svg { width: 64px; height: 64px; }
+  .phase { text-align: center; flex: 1; }
+  .phase .name { font-family: var(--font-head); font-size: 1.05rem; }
+  .phase .timer { font-family: var(--font-head); font-size: 1.8rem; line-height: 1; }
+  .stage { position: relative; margin: 10px 12px; border-radius: 16px; background: rgba(0,0,0,.25); padding: 14px 8px 22px; min-height: 250px; overflow: hidden; }
+  .lanes { display: grid; grid-template-columns: repeat(4, 1fr); gap: 4px; }
+  .lane { display: flex; flex-direction: column; align-items: center; gap: 22px; position: relative; }
+  .lane .enemy { --size: 60px; transition: opacity .4s, transform .4s; }
+  .lane .enemy.dead { opacity: 0; transform: scale(.4) rotate(20deg); }
+  .lane .hero { --size: 68px; }
+  .lane .hero.me::after { content: 'YOU'; position: absolute; top: -14px; left: 50%; transform: translateX(-50%); font-size: .6rem; font-family: var(--font-head); background: var(--yellow); color: #2a1a4a; padding: 1px 6px; border-radius: 999px; }
+  .lane .hero.frozen-x .ct-label { color: #9ad8ff; }
+  .bars { width: 60px; display: flex; flex-direction: column; gap: 3px; }
+  .bar { height: 6px; background: rgba(255,255,255,.18); border-radius: 4px; overflow: hidden; }
+  .bar i { display: block; height: 100%; background: var(--green); transition: width .4s; }
+  .bar.heat i { background: var(--coffee); }
+  .bar.ehp i { background: var(--red); }
+  .placed-mini { display: flex; gap: 2px; min-height: 14px; }
+  .placed-mini span { width: 10px; height: 14px; border-radius: 2px; background: var(--peach); display: inline-block; }
+  .placed-mini span.back { background: var(--purple); }
+  .seg { font-size: .62rem; color: var(--muted); }
+  .float { position: absolute; font-family: var(--font-head); font-weight: 700; font-size: 1.2rem; pointer-events: none; animation: floatup 1s ease-out forwards; text-shadow: 0 2px 4px #000; z-index: 3; }
+  .float.dmg { color: #fff; } .float.hdmg { color: var(--red); } .float.heal { color: var(--green); }
+  @keyframes floatup { 0% { transform: translate(-50%, 0); opacity: 1 } 100% { transform: translate(-50%, -48px); opacity: 0 } }
+  .caption { text-align: center; min-height: 2.4em; font-family: var(--font-head); font-size: 1rem; padding: 6px 12px; color: var(--peach); }
+  .king { position: absolute; right: 8px; top: 8px; --size: 54px; }
+  .roamer-corner { position: absolute; left: 8px; top: 8px; --size: 50px; }
+
+  /* hand */
+  .hand-wrap { padding: 0 12px 12px; }
+  .meta { display: flex; justify-content: space-between; align-items: center; font-size: .85rem; margin: 0 0 6px; }
+  .slots { display: flex; gap: 6px; margin-bottom: 8px; min-height: 56px; }
+  .slot { flex: 1; height: 56px; border: 2px dashed rgba(255,255,255,.3); border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: .75rem; color: var(--muted); }
+  .slot.filled { border-style: solid; border-color: var(--peach); background: rgba(255,185,138,.15); color: var(--ink); cursor: pointer; }
+  .hand { display: flex; gap: 8px; overflow-x: auto; padding: 6px 2px 10px; scrollbar-width: none; }
+  .hand::-webkit-scrollbar { display: none; }
+  .card { flex: 0 0 112px; height: 132px; border-radius: 12px; background: linear-gradient(170deg, #fff6ec, #f6d9c2); color: #2a1a4a; padding: 8px; display: flex; flex-direction: column; cursor: pointer; transition: transform .15s; position: relative; box-shadow: 0 4px 10px rgba(0,0,0,.3); }
+  .card:active { transform: scale(.96); }
+  .card.no { opacity: .45; }
+  .card .nm { font-family: var(--font-head); font-size: .85rem; line-height: 1.1; }
+  .card .tx { font-size: .66rem; flex: 1; margin-top: 4px; line-height: 1.2; }
+  .card .cost { position: absolute; top: 6px; right: 6px; width: 22px; height: 22px; border-radius: 50%; background: var(--coffee); color: #2a1a4a; font-family: var(--font-head); font-size: .8rem; display: flex; align-items: center; justify-content: center; }
+  .card.k-attack { background: linear-gradient(170deg, #ffe0b2, #ffb98a); } .card.k-protect { background: linear-gradient(170deg, #d4f1ff, #a6d8f2); } .card.k-heat { background: linear-gradient(170deg, #ffd6d6, #ffb0b0); } .card.k-special { background: linear-gradient(170deg, #e6d9ff, #c9b3ff); } .card.k-move { background: linear-gradient(170deg, #fff7b3, #ffe76b); }
+  .card.vanish { animation: vanish .7s forwards; }
+  @keyframes vanish { 50% { transform: scale(1.1) rotate(-8deg); filter: brightness(.3) } 100% { transform: scale(0); opacity: 0 } }
+  .actions { display: flex; gap: 8px; }
+  .actions .ct-btn { flex: 1; }
+  .talk { padding: 0 12px 12px; }
+  .ot-propose { width: 100%; margin-bottom: 8px; }
+  .ot-vote { position: fixed; left: 12px; right: 12px; bottom: 12px; background: var(--panel); border-radius: 16px; padding: 12px; z-index: 20; box-shadow: 0 10px 30px rgba(0,0,0,.5); text-align: center; }
+  .ot-vote .ct-row { justify-content: center; margin-top: 8px; }
+  .vote-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 8px; margin: 10px 0; }
+  .vote-opt { background: var(--panel2); border: 2px solid transparent; border-radius: 12px; padding: 8px; text-align: center; cursor: pointer; }
+  .vote-opt .ct-sprite { --size: 56px; }
+  .vote-opt.sel { border-color: var(--yellow); }
+  .vote-opt small { display: block; color: var(--muted); font-size: .7rem; }
+  .role { text-align: center; }
+  .role .ct-sprite { --size: 110px; margin: 6px auto 20px; }
+  .role.tea h2 { color: var(--peach); }
+  .end { text-align: center; padding: 20px 12px; }
+  .end .ct-sprite { --size: 120px; margin: 10px auto 20px; }
+  .score { text-align: left; background: var(--panel); border-radius: 12px; padding: 10px 14px; margin: 14px 0; }
+  .score div { display: flex; justify-content: space-between; padding: 4px 0; border-bottom: 1px solid rgba(255,255,255,.08); }
+  .trait-tools { display: flex; gap: 6px; margin-top: 6px; }
+  .trait-tools .ct-btn { background: #3a1a1a; box-shadow: 0 3px 0 #200; font-size: .85rem; }
+  .howto p { margin-bottom: .5em; }
+  .top-right { display: flex; gap: 6px; align-items: center; }
+  .icon-btn { background: rgba(255,255,255,.12); border: 0; color: #fff; border-radius: 999px; width: 36px; height: 36px; font-size: 1.1rem; cursor: pointer; }
+  @media (min-width: 720px) { .lane .hero { --size: 90px; } .lane .enemy { --size: 76px; } .stage { min-height: 320px; } .card { flex-basis: 130px; height: 150px; } }
+</style>
+</head>
+<body>
+<div id="app"></div>
+<script src="/arena/arena.js"></script>
+<script src="ot-rules.js"></script>
+<script src="overtime.js"></script>
+</body>
+</html>

@@ -38,7 +38,7 @@ const REDIRECTS: Record<string, string> = {
   '/newsletter': '/#newsletter',
 };
 
-export const STATIC_PATHS = ['/', '/story', '/arcade', '/play/', '/news', '/video-tutorials', '/faq', '/order', '/privacy'];
+export const STATIC_PATHS = ['/', '/story', '/arcade', '/play/', '/overtime/', '/rush/', '/news', '/video-tutorials', '/faq', '/order', '/privacy'];
 
 const siteUrl = (c: Ctx) => (c.env.SITE_URL || `${c.url.protocol}//${c.url.host}`).replace(/\/$/, '');
 
