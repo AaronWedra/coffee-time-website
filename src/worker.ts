@@ -53,7 +53,10 @@ export default {
     const game = url.pathname.match(/^\/(play|overtime|rush)(\/|\/index\.html)?$/);
     if (game && !game[2]) return Response.redirect(url.origin + '/' + game[1] + '/' + url.search, 301);
     if (game) {
-      const res = await env.ASSETS.fetch(new Request(new URL('/' + game[1] + '/index.html', url), request));
+      // Ask the assets layer for the directory path: with html_handling auto-trailing-slash it serves
+      // index.html with a 200, whereas asking for /x/index.html gets a redirect back to /x/ (a loop).
+      const res = await env.ASSETS.fetch(new Request(new URL('/' + game[1] + '/', url), { method: 'GET', headers: request.headers }));
+      if (res.status >= 300 && res.status < 400) return new Response('Game page not found', { status: 404 });
       const h = new Headers(res.headers);
       for (const [k, v] of Object.entries(SECURITY_HEADERS)) h.set(k, v);
       h.set('content-type', 'text/html; charset=utf-8');
