@@ -312,3 +312,6 @@ section { position: relative; }
 
 .playonline { padding: 10px 0 20px; }
 .playonline-in { text-align: center; }
+.playonline-btns .btn { margin: 4px 3px; }
+.playonline-note { font-size: .92em; opacity: .85; max-width: 640px; margin: 0 auto; }
+.btn-ghost { background: transparent; border: 2px solid currentColor; }

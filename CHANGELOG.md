@@ -1,5 +1,18 @@
 # Changelog
 
+## 2026-11-03: the two 2026 games, Overtime and Rush Hour
+- The faithful board-game port at /play/ was correct and not fun (the AI resolves instantly, so you read a
+  log instead of watching decisions). Two new games replace it in spirit, both at new paths, /play/ untouched.
+- /overtime/: everyone plans Journey Cards under a 30 s clock, the fight plays as one shared replay at human
+  pace, a hidden Roamer may be on your team (second-edition rules: he steals cards and triggers Landslides),
+  the Duchess runs an accusation vote, the team can call Overtime to double a round. 500 AI games: heroes 57%.
+- /rush/: real-time top-down race through the five worlds; brew meter, timing-ring fights, Duchess sweeps,
+  the two-beat Roamer with an 8-space reach, King Tea's clock always ticking. 200 AI games: heroes 62%.
+- Shared: public/arena/ (sprites with idle, blink, shine, hit and freeze; the clock face; chat and taunts;
+  host-authoritative rooms with clock sync; human-paced AI helpers). The room relay gained generic
+  input/event/private messages. The home page's Play band links both games.
+- Online rooms are wired for both but need the first two-phone test on the deployed Worker.
+
 ## 2026-10-25: Play Online, the game app at /play/
 - The installable Coffee Time game (rules engine, AI, chat and taunts) is served from `public/play/`.
   Its online rooms run as a SQLite-backed Durable Object (`src/play/room.ts`, binding `ROOMS`,
