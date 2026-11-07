@@ -94,3 +94,4 @@
 - 2026-11-03: First edition sold out. Migration 0007 closes the order form and rewrites the Orders copy (only where still unedited). The last games were festival raffle prizes.
 
 - 2026-11-03: Characters stage band is white (the pedestal art has white edges that looked random on peach); white-curve.webp, site.css v=5.
+- 2026 pass on the home page: new arcade-style cover (starfield, shimmer headline, chunky game buttons), steam and sparkles on the characters, XP scroll bar, tidier mobile top (new blocks cover_kicker and cover_tagline, migration 0008).

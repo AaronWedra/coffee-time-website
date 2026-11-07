@@ -68,12 +68,26 @@ export function orderForm(s: Settings, blocks: Blocks, st: OrderState): Safe {
 
 export function home(s: Settings, blocks: Blocks, tracks: Track[], creators: Creator[], reviews: Review[], flags: { joined?: string; order: OrderState }): Safe {
   return html`
+<section class="cover" aria-label="Coffee Time">
+  <div class="cover-sky" aria-hidden="true"></div>
+  <div class="wrap cover-in">
+    <p class="cover-kicker">${line(blocks, 'cover_kicker')}</p>
+    <h1 class="cover-title">${line(blocks, 'cover_tagline')}</h1>
+    <p class="cover-note">${line(blocks, 'orders_intro')}</p>
+    <p class="cover-btns"><a class="btn btn-go" href="#rules">Learn to play</a> <a class="btn btn-go btn-go2" href="#play-online">Play online</a> <a class="btn btn-ghost" href="#video-game">Watch the trailer</a></p>
+  </div>
+</section>
+
+<section class="stage" aria-label="The Coffee Time characters">
+  <div class="stage-art"><span class="steam s1" aria-hidden="true"></span><span class="steam s2" aria-hidden="true"></span><span class="steam s3" aria-hidden="true"></span><span class="spark k1" aria-hidden="true"></span><span class="spark k2" aria-hidden="true"></span><span class="spark k3" aria-hidden="true"></span><span class="spark k4" aria-hidden="true"></span>${img('/img/characters-stage.webp', 'The whole cast: Little Miss Hot Shot, Donette, Thermos, Cup Joe, Sir Cubey, King Tea, the crumpets and friends', 'width="2000" height="830"')}</div>
+</section>
+
 <section class="hero" id="rules">
   ${orb('fire', 'r', 0, 1)}
   <div class="wrap hero-grid">
     <div class="hero-art"><img src="/img/don-floating.webp" alt="Donette, floating" width="440" height="840" fetchpriority="high"></div>
     <div class="hero-copy">
-      <h1>${line(blocks, 'hero_title')}</h1>
+      <h2 class="hero-title">${line(blocks, 'hero_title')}</h2>
       ${text(blocks, 'hero_body')}
       ${learnLinks(s)}
     </div>
@@ -135,10 +149,6 @@ export function home(s: Settings, blocks: Blocks, tracks: Track[], creators: Cre
     </div>
     <div class="sponsor-copy small-copy">${text(blocks, 'coloring_body')}</div>
   </div>
-</section>
-
-<section class="stage" aria-label="The Coffee Time characters">
-  <div class="stage-art">${img('/img/characters-stage.webp', 'The whole cast: Little Miss Hot Shot, Donette, Thermos, Cup Joe, Sir Cubey, King Tea, the crumpets and friends', 'width="2000" height="830"')}</div>
 </section>
 
 <section class="music" id="music">

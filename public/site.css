@@ -60,7 +60,7 @@ hr.rule { border: 0; height: 1px; background: rgba(255, 255, 255, .45); margin: 
 .hp { position: absolute !important; left: -9999px; width: 1px; height: 1px; overflow: hidden; }
 
 /* ------------------------------------------------------------ type */
-.huge, .big, h1, .hero h1 { font-family: var(--display); font-weight: 400; text-transform: uppercase; letter-spacing: .01em; }
+.huge, .big, h1, .hero h1, .hero-title { font-family: var(--display); font-weight: 400; text-transform: uppercase; letter-spacing: .01em; }
 .huge { font-size: clamp(3rem, 8vw, 6.5rem); line-height: .95; text-align: center; margin: 0 0 .25em; }
 .big { font-size: clamp(2.4rem, 6vw, 4.6rem); text-align: center; }
 .kicker { font-family: var(--display); text-transform: uppercase; letter-spacing: .06em; font-size: .95rem; opacity: .8; margin: 0 0 .2em; }
@@ -124,7 +124,7 @@ section { position: relative; }
 .hero-grid { display: grid; grid-template-columns: 300px 1fr; gap: 20px 40px; align-items: start; }
 .hero-art img { width: 250px; margin: 20px auto 0; animation: rise .9s ease-out both; }
 .hero-copy { padding-top: 24px; animation: rise .9s .15s ease-out both; }
-.hero h1 { font-size: clamp(3rem, 7.5vw, 5.8rem); line-height: .95; margin: 0 0 .3em; }
+.hero h1, .hero-title { font-size: clamp(3rem, 7.5vw, 5.8rem); line-height: .95; margin: 0 0 .3em; }
 .hero-copy p { font-size: 1.05rem; max-width: 60ch; }
 .hero-copy a { color: var(--yellow); }
 .hero-ship { grid-column: 2; justify-self: end; width: min(360px, 60%); margin-top: -40px; animation: rise 1s .3s ease-out both; }
@@ -318,3 +318,90 @@ section { position: relative; }
 .playonline-btns .btn { margin: 4px 3px; }
 .playonline-note { font-size: .92em; opacity: .85; max-width: 640px; margin: 0 auto; }
 .btn-ghost { background: transparent; border: 2px solid currentColor; }
+
+/* ------------------------------------------------------------ 2026 pass: cover, arcade buttons, coffee + game effects (CSS only) */
+/* XP bar: fills as you scroll. Only where the browser supports scroll-driven animation. */
+@supports (animation-timeline: scroll()) {
+  body::before { content: ''; position: fixed; z-index: 90; left: 0; top: 0; height: 5px; width: 100%; background: linear-gradient(90deg, #8e3cc0, #fff245 60%, #78b92f); transform-origin: 0 50%; transform: scaleX(0); animation: xp linear both; animation-timeline: scroll(root); box-shadow: 0 0 10px rgba(255, 242, 69, .7); }
+}
+@keyframes xp { to { transform: scaleX(1); } }
+
+.cover { position: relative; text-align: center; padding: clamp(34px, 7vw, 76px) 0 clamp(22px, 4vw, 40px); overflow: hidden; }
+.cover-sky { position: absolute; inset: 0; pointer-events: none;
+  background:
+    radial-gradient(2px 2px at 12% 22%, #fff, transparent 60%), radial-gradient(2px 2px at 78% 14%, #fff, transparent 60%),
+    radial-gradient(3px 3px at 90% 60%, #ffe98a, transparent 60%), radial-gradient(2px 2px at 30% 70%, #fff, transparent 60%),
+    radial-gradient(2px 2px at 55% 38%, #fff, transparent 60%), radial-gradient(3px 3px at 5% 80%, #ffe98a, transparent 60%);
+  animation: twinkle 3.4s ease-in-out infinite alternate; }
+.cover-sky::after { content: ''; position: absolute; inset: 0;
+  background: radial-gradient(2px 2px at 22% 48%, #fff, transparent 60%), radial-gradient(3px 3px at 66% 26%, #ffe98a, transparent 60%), radial-gradient(2px 2px at 84% 82%, #fff, transparent 60%), radial-gradient(2px 2px at 42% 12%, #fff, transparent 60%);
+  animation: twinkle 2.3s 1.1s ease-in-out infinite alternate; }
+@keyframes twinkle { from { opacity: .25; } to { opacity: 1; } }
+.cover-in { position: relative; }
+.cover-kicker { display: inline-block; font-family: var(--display); text-transform: uppercase; letter-spacing: .22em; font-size: .95rem; color: var(--yellow); margin: 0 0 .6em; animation: blink 1.1s steps(2, jump-none) infinite; }
+@keyframes blink { 50% { opacity: .25; } }
+.cover-title { font-size: clamp(2.5rem, 8.2vw, 5.6rem); line-height: .98; margin: 0 auto .3em; max-width: 15ch; text-wrap: balance;
+  background: linear-gradient(100deg, #fff 0 40%, #fff245 50%, #fff 60% 100%) 0 0 / 250% 100%; -webkit-background-clip: text; background-clip: text; color: transparent;
+  filter: drop-shadow(0 4px 0 rgba(30, 0, 60, .4)); animation: shine 7s ease-in-out infinite; }
+@keyframes shine { 0%, 55% { background-position: 100% 0; } 100% { background-position: 0 0; } }
+.cover-note { font-family: var(--quote); font-style: italic; font-size: clamp(1.05rem, 2.6vw, 1.4rem); margin: 0 auto 1.2em; max-width: 34ch; opacity: .95; }
+.cover-btns { display: flex; flex-wrap: wrap; justify-content: center; gap: 12px 14px; margin: 0; }
+
+/* arcade buttons: chunky, a hard shadow, they press down when tapped */
+.btn-go { background: var(--yellow); color: var(--purple); font-family: var(--display); font-weight: 400; text-transform: uppercase; letter-spacing: .08em; font-size: 1.15rem; padding: .62em 1.5em; border-radius: 999px; border: 3px solid var(--purple);
+  box-shadow: 0 6px 0 #b39e00, 0 10px 18px rgba(20, 0, 45, .4); animation: coin 2.6s ease-in-out infinite; }
+.btn-go:hover { transform: translateY(-2px) rotate(-1.5deg); box-shadow: 0 8px 0 #b39e00, 0 14px 22px rgba(20, 0, 45, .4); }
+.btn-go:active { transform: translateY(5px); box-shadow: 0 1px 0 #b39e00; }
+.btn-go2 { background: #ff8a3d; color: #fff; border-color: #4a1d00; box-shadow: 0 6px 0 #b34a0a, 0 10px 18px rgba(20, 0, 45, .4); animation-delay: .5s; }
+.btn-go2:hover { box-shadow: 0 8px 0 #b34a0a, 0 14px 22px rgba(20, 0, 45, .4); }
+.btn-go2:active { box-shadow: 0 1px 0 #b34a0a; }
+@keyframes coin { 0%, 100% { filter: brightness(1); } 50% { filter: brightness(1.12) saturate(1.15); } }
+.cover .btn-ghost { border-radius: 999px; border-width: 3px; padding: .62em 1.4em; font-size: 1.05rem; background: rgba(255, 255, 255, .08); }
+.cover .btn-ghost:hover { background: rgba(255, 255, 255, .2); }
+
+/* the cast: breathes a little, with steam off the cups and sparkles */
+.stage { margin-top: 0; }
+.stage::before { display: none; }
+.stage-art { position: relative; }
+.stage-art img { transform-origin: 50% 100%; animation: breathe 5s ease-in-out infinite alternate; }
+@keyframes breathe { from { transform: scale(1); } to { transform: scale(1.014) translateY(-4px); } }
+.steam { position: absolute; width: 7%; aspect-ratio: 1 / 1.7; border-radius: 50%; pointer-events: none; opacity: 0; filter: blur(7px);
+  background: radial-gradient(closest-side, rgba(120, 90, 150, .38), rgba(120, 90, 150, 0)); animation: steam 4.8s ease-in infinite; }
+.steam.s1 { left: 34%; top: 14%; } .steam.s2 { left: 47%; top: -2%; animation-delay: 1.6s; } .steam.s3 { left: 57%; top: 6%; animation-delay: 3.1s; }
+@keyframes steam { 0% { opacity: 0; transform: translateY(40%) scaleX(.7); } 25% { opacity: .9; } 100% { opacity: 0; transform: translateY(-130%) translateX(12%) scaleX(1.5); } }
+.spark { position: absolute; width: clamp(14px, 2.4vw, 26px); aspect-ratio: 1; background: linear-gradient(135deg, #ffe14d, #ff9d2e); clip-path: polygon(50% 0, 61% 39%, 100% 50%, 61% 61%, 50% 100%, 39% 61%, 0 50%, 39% 39%); opacity: 0; animation: pop 3.2s ease-in-out infinite; pointer-events: none; }
+.spark.k1 { left: 22%; top: 20%; } .spark.k2 { left: 73%; top: 14%; animation-delay: 1.1s; } .spark.k3 { left: 86%; top: 52%; animation-delay: 2.1s; } .spark.k4 { left: 12%; top: 58%; animation-delay: .6s; }
+@keyframes pop { 0%, 100% { opacity: 0; transform: scale(.3) rotate(0); } 40% { opacity: 1; transform: scale(1) rotate(40deg); } 60% { opacity: 1; transform: scale(.85) rotate(60deg); } }
+
+/* Donette bobs, her shadow stays put */
+.hero-art img { animation: rise .9s ease-out both, bob 3.4s 1s ease-in-out infinite alternate; }
+@keyframes bob { from { transform: translateY(0); } to { transform: translateY(-10px); } }
+
+/* cards: a little tilt and glow on hover, like picking up a card */
+.review, .order-card, .vg-copy { transition: transform .25s, box-shadow .25s; }
+@media (hover: hover) { .review:hover { transform: translateY(-6px) rotate(-.6deg); box-shadow: 0 16px 30px rgba(20, 0, 45, .4); } }
+
+@media (prefers-reduced-motion: reduce) {
+  .cover-sky, .cover-sky::after, .cover-kicker, .cover-title, .btn-go, .stage-art img, .steam, .spark, .hero-art img { animation: none !important; }
+  .cover-title { background-position: 0 0; }
+  .spark { opacity: .9; transform: none; } .steam { display: none; }
+  body::before { display: none; }
+}
+
+/* phones: a hero that earns the first screen */
+@media (max-width: 760px) {
+  .cover { padding: 26px 0 14px; }
+  .cover-btns { gap: 10px; } .cover-btns .btn { flex: 1 1 40%; text-align: center; }
+  .cover-btns .btn-ghost { flex-basis: 100%; }
+  .cover-btns .btn-go { display: flex; align-items: center; justify-content: center; font-size: 1rem; padding: .55em .6em; white-space: nowrap; letter-spacing: .05em; }
+  .hero { padding-top: 26px; } .hero > .orb { display: none; }
+  .hero-grid { gap: 6px; }
+  .hero-art img { width: 120px; }
+  .hero-title { font-size: clamp(2.3rem, 11vw, 3.2rem); }
+  .hero-copy p { font-size: 1rem; line-height: 1.5; }
+  .learn { display: grid; gap: 10px; margin-top: 1.1em; }
+  .learn li { margin: 0; } .learn li::before { content: none; }
+  .learn a { display: block; text-align: center; text-decoration: none; font-weight: 600; padding: .75em 1em; border: 2px solid var(--yellow); border-radius: 999px; background: rgba(255, 255, 255, .08); }
+  .hero-ship { width: 44%; }
+  .steam { filter: blur(5px); }
+}

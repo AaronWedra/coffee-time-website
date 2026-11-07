@@ -71,6 +71,8 @@ def block(key, label, value, page="home", kind="text"):
     B.append((key, label, kind, value, page))
 
 
+block("cover_kicker", "Cover: small line above the buttons", "Press start", kind="line")
+block("cover_tagline", "Cover: tagline", "The board game where coffee heroes race King Tea.", kind="line")
 block("hero_title", "Top of the page: headline", "Learn to play like a pro", kind="line")
 block(
     "hero_body",
