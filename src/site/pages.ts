@@ -164,6 +164,7 @@ export function home(s: Settings, blocks: Blocks, flags: { joined?: string }, da
   return html`
 <section class="cover" aria-label="Coffee Time">
   <div class="cover-sky" aria-hidden="true"></div>
+  <img class="kruiser" src="/img/deep-space-kruiser.webp" alt="" width="900" height="411" aria-hidden="true">
   ${beans(10)}
   <div class="wrap cover-in">
     <div class="cover-copy">
@@ -200,7 +201,7 @@ export function home(s: Settings, blocks: Blocks, flags: { joined?: string }, da
   </div>
   <div class="cast-stage">
     <div class="cast-art">
-      ${img('/img/characters-cutout.webp', 'The whole cast: Little Miss Hot Shot, Donette, Thermos, Cup Joe, Sir Cubey, King Tea, the crumpets and the Mean Girl Crumpets', 'class="cast-main" width="1374" height="684"')}
+      ${img('/img/cast-depth.webp', 'The whole cast: Little Miss Hot Shot, Donette, Thermos, Cup Joe, Sir Cubey, King Tea, the crumpets and the Mean Girl Crumpets', 'class="cast-main" width="1374" height="684"')}
       <span class="cast-floor" aria-hidden="true"></span>
     </div>
   </div>
@@ -208,7 +209,7 @@ export function home(s: Settings, blocks: Blocks, flags: { joined?: string }, da
 
 <section class="hs hs-board" aria-label="The board game">
   <div class="wrap hs-split">
-    <a class="hs-box" href="/board-game" aria-label="The Coffee Time board game">${img('/img/box-3d.webp', 'The Coffee Time board game box, first edition', 'width="1500" height="880"')}</a>
+    <a class="hs-box" href="/board-game" aria-label="The Coffee Time board game">${img('/img/box-3d.webp', 'The Coffee Time board game box, first edition', 'width="1500" height="880"')}<img class="hs-cup" src="/img/coffee-cup.svg" alt="" width="520" height="480" loading="lazy"></a>
     <div>
       <header class="hs-head"><h2>${line(blocks, 'zone_bg_title')}</h2><p>${line(blocks, 'zone_bg_sub')}</p></header>
       <ul class="hs-quotes">${quotes.map((r) => html`<li>${stars()}<blockquote>${raw(inline(r.quote))}</blockquote><cite>${r.name}</cite></li>`)}</ul>

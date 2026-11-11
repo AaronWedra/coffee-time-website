@@ -545,3 +545,52 @@ body { background: transparent !important; }
 .hs-btns .hs-more { margin-left: 6px; }
 .hs-music .tracks { margin: 0; max-width: none; }
 @media (max-width: 900px) { .hs-row { grid-template-columns: 1fr 1fr; } .hs-split { grid-template-columns: 1fr; } .hs-quotes { grid-template-columns: 1fr; } .hs-head { grid-template-columns: 1fr; } .hs-more { grid-column: 1; grid-row: auto; } }
+.hs-box { position: relative; display: block; padding-bottom: 9%; }
+.hs-box .hs-cup { position: absolute; right: -2%; bottom: 0; width: 34%; height: auto; filter: none; transform: none; }
+.hs-box:hover .hs-cup { transform: rotate(8deg); }
+.hs-box .hs-cup { width: 40%; }
+
+/* the Deep Space Kruiser crosses the cover: first pass after 2s, then every 15s. He flies the way his
+   speed lines point, top right to bottom left, tilting into the dive. Behind the copy, in front of the stars. */
+.kruiser { position: absolute; z-index: 1; top: 0; left: 0; width: clamp(120px, 15vw, 230px); height: auto; pointer-events: none; opacity: 0; will-change: transform; animation: kruise 15s linear 2s infinite; }
+.cover-in, .cover .hud { position: relative; z-index: 2; }
+@keyframes kruise {
+  0% { opacity: 1; transform: translate(105vw, -4vh) rotate(-14deg) scale(.55); }
+  14% { transform: translate(52vw, 22vh) rotate(-10deg) scale(.85); }
+  28% { opacity: 1; transform: translate(-22vw, 60vh) rotate(-16deg) scale(1.15); }
+  28.1%, 100% { opacity: 0; transform: translate(-22vw, 60vh) rotate(-16deg) scale(1.15); }
+}
+@media (prefers-reduced-motion: reduce) { .kruiser { display: none; } }
+
+/* ---- cast, take 4: Aaron's art with shading added to it (scratch script: every pixel is his, only
+   light and shadow are computed from the shapes), on a round stage with no foot, under three soft
+   spotlights. The beams are conic gradients on the section, so they are cones of light with no box. */
+.cast { overflow: hidden; }
+.cast::before { display: block !important; content: ''; position: absolute; inset: 0; z-index: 0; pointer-events: none;
+  background:
+    conic-gradient(from 150deg at 20% -8%, transparent 0deg, rgba(255, 232, 140, .34) 10deg, transparent 21deg),
+    conic-gradient(from 168deg at 50% -10%, transparent 0deg, rgba(255, 255, 255, .26) 12deg, transparent 24deg),
+    conic-gradient(from 189deg at 80% -8%, transparent 0deg, rgba(210, 160, 255, .36) 10deg, transparent 21deg);
+  -webkit-mask: linear-gradient(#000 35%, transparent 88%); mask: linear-gradient(#000 35%, transparent 88%);
+  transform-origin: 50% 0; animation: beamsway 9s ease-in-out infinite alternate; }
+@keyframes beamsway { from { transform: rotate(-1.6deg); } to { transform: rotate(1.6deg); } }
+.cast .wrap, .cast-stage { position: relative; z-index: 2; }
+.cast-stage { width: min(900px, 92%) !important; padding-bottom: 5%; }
+.cast-floor { inset: auto -6% 0 -6% !important; top: auto !important; height: 30% !important; border-radius: 50%; z-index: 1;
+  background: radial-gradient(60% 70% at 50% 38%, rgba(255, 244, 200, .5), transparent 70%), radial-gradient(ellipse at 50% 40%, #8a54d6 0%, #5a2aa6 55%, #3a1680 100%);
+  box-shadow: 0 10px 0 #2a0f5e, 0 26px 40px rgba(8, 0, 26, .55), inset 0 3px 0 rgba(255, 255, 255, .35); }
+.cast-main { filter: drop-shadow(0 12px 10px rgba(14, 0, 40, .5)) !important; margin-bottom: -4%; }
+@media (prefers-reduced-motion: reduce) { .cast::before { animation: none; } }
+
+/* Kruiser flies over everything in the cover, not behind the trailer */
+.kruiser { z-index: 5; }
+
+/* board game "Learn to play": no box, no peach marble. White type on the page background, like every other section. */
+.hero .hero-grid { background: none !important; border: 0 !important; box-shadow: none !important; border-radius: 0 !important; padding: 0 !important; color: #fff; grid-template-columns: 200px 1fr 260px; align-items: center; }
+.hero .hero-grid::before { display: none !important; }
+.hero .hero-title { color: #fff !important; white-space: nowrap; font-size: clamp(2.2rem, 4.4vw, 3.6rem) !important; }
+.hero .prose26, .hero .prose26 > p:first-child, .hero .prose26 strong { color: #fff !important; font-size: 1.08rem; line-height: 1.6; }
+.hero .prose26 a { color: var(--yellow) !important; }
+.learn a { background: transparent !important; border: 2px solid rgba(255, 255, 255, .6); color: #fff !important; }
+.learn a:hover { background: var(--yellow) !important; color: var(--purple) !important; border-color: var(--yellow); }
+@media (max-width: 860px) { .hero .hero-grid { grid-template-columns: 1fr; } .hero .hero-title { white-space: normal; } }
