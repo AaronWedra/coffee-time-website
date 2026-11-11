@@ -1054,3 +1054,6 @@ main > section + section, main > section > div.hero, main > section > .reviews, 
 .hs-board, .music, .reviews { background: #2e0f63 !important; }
 .hs-board::before, .music::before, .reviews::before { background: radial-gradient(60% 70% at 50% 50%, rgba(46, 15, 99, .78), rgba(46, 15, 99, .2) 70%, transparent), url(/img/clock-tunnel-4.svg) center / cover no-repeat #2e0f63 !important; }
 .hs-board .hs-box > img:first-child { filter: drop-shadow(0 22px 26px rgba(0, 0, 0, .55)) !important; }
+/* delivered band on black, confetti on top */
+.delivered { background: #000 !important; }
+.dv-first + .bg-top { border-top: 0 !important; } .bg-top-board { border-top: 0; }
