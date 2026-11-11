@@ -23,7 +23,6 @@ export const NAV: { href: string; label: string }[] = [
 ];
 // Everything else the old nine-link bar carried, tucked under "More" so nothing was lost.
 export const MORE: { href: string; label: string }[] = [
-  { href: '/order', label: 'Order the board game' },
   { href: '/board-game#reviews', label: 'Reviews' },
   { href: '/video-tutorials', label: 'Tutorials' },
   { href: '/faq', label: 'FAQ' },
