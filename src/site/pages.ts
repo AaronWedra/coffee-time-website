@@ -297,6 +297,7 @@ export function boardGame(s: Settings, blocks: Blocks, reviews: Review[], flags:
 </div>
 
 <div class="orders" id="order">
+  <canvas class="latte" aria-hidden="true"></canvas>
   <div class="wrap">
     <div class="orders-split">
       <div class="orders-text">
@@ -361,6 +362,7 @@ export function teamPage(blocks: Blocks, creators: Creator[]): Safe {
 
 export function orderPage(s: Settings, blocks: Blocks, st: OrderState): Safe {
   return html`<section class="orders page-order" id="order">
+  <canvas class="latte" aria-hidden="true"></canvas>
     <div class="wrap">
       <div class="orders-split">
         <div class="orders-text">

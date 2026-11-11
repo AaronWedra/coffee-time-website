@@ -824,3 +824,10 @@ a:focus:not(:focus-visible), button:focus:not(:focus-visible), label:focus:not(:
 /* arcade: AR games first, then the rule, then Coffee Time Adventures */
 .cta-duo { border-bottom: 0 !important; padding-bottom: 0 !important; }
 .cta-wrap { margin-top: clamp(30px, 4vw, 56px); padding-top: clamp(30px, 4vw, 56px); border-top: 1px solid rgba(255, 255, 255, .7); }
+
+/* Orders sections are a cup of coffee too: the same foam the cursor stirs, with purple type on it */
+.orders { background: #ead9b8 !important; }
+.orders .orders-split, .orders .orders-split .sec-title, .orders .orders-intro, .orders .orders-copy, .orders .orders-copy p, .orders .orders-copy strong, .orders .badge, .orders .box-link, .orders .box-link a { color: #3b0f6e !important; text-shadow: none !important; }
+.orders .orders-split .sec-kicker { color: #6a1fb0 !important; text-shadow: none !important; }
+.orders .orders-copy a { color: #6a1fb0 !important; }
+.orders .cube-shadow { opacity: .5; }
