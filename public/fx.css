@@ -686,3 +686,18 @@ body { background: transparent !important; }
 @media (max-width: 860px) { .pair-cards > .k-ar { --d: 14px; } }
 .delivered .dv-conf { position: absolute !important; inset: 0; pointer-events: none; overflow: hidden; }
 .page-order .delivered { margin-bottom: calc(-1 * clamp(36px, 5vw, 60px)) !important; }
+
+/* three Kruisers at three depths: a small slow one far away (behind the copy, a little hazy), the
+   original in the middle, and now and then a big fast one close to the camera */
+.kruiser.k-far { z-index: 1; width: clamp(46px, 5vw, 80px); filter: blur(.6px) brightness(.8); animation: kruisefar 34s linear 9s infinite; }
+.kruiser.k-near { z-index: 6; width: clamp(240px, 30vw, 460px); animation: kruisenear 41s linear 21s infinite; }
+@keyframes kruisefar {
+  0% { opacity: .85; transform: translate(102vw, 6vh) rotate(-8deg); }
+  40% { opacity: .85; transform: translate(-10vw, 30vh) rotate(-10deg); }
+  40.1%, 100% { opacity: 0; transform: translate(-10vw, 30vh); }
+}
+@keyframes kruisenear {
+  0% { opacity: 1; transform: translate(104vw, -30vh) rotate(-20deg); }
+  5.5% { opacity: 1; transform: translate(-50vw, 78vh) rotate(-24deg); }
+  5.6%, 100% { opacity: 0; transform: translate(-50vw, 78vh); }
+}

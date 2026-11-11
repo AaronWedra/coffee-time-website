@@ -165,6 +165,8 @@ export function home(s: Settings, blocks: Blocks, flags: { joined?: string }, da
 <section class="cover" aria-label="Coffee Time">
   <div class="cover-sky" aria-hidden="true"></div>
   <img class="kruiser" src="/img/deep-space-kruiser.webp" alt="" width="900" height="411" aria-hidden="true">
+  <img class="kruiser k-far" src="/img/deep-space-kruiser.webp" alt="" width="900" height="411" aria-hidden="true">
+  <img class="kruiser k-near" src="/img/deep-space-kruiser.webp" alt="" width="900" height="411" aria-hidden="true">
   ${beans(10)}
   <div class="wrap cover-in">
     <div class="cover-copy">
