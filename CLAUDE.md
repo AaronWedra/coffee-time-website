@@ -90,7 +90,7 @@ for cropping and isolating pieces of the real files at most. Subtle effects are 
 - King Tea needs 60 hours: 12 per world, Coffee > Donut > Warp > Crumpet > Tea.
 - Credits (box): designed by Aaron Wedra and Stevie Price; art contributions Landon Christensen and Sam
   Lundholm; edited by Milly Judd; music by Matthew Wright (custom music with eNuminous and Archimedes).
-- Video game: Nick Domke leads the game club; Milly Wedra voices Little Miss Hot Shot. Demo on itch.io.
+- Video game: Nick Domke is the music behind ALL the Coffee Time video games (video game music specifically; he does NOT lead the game club and was not present there, Aaron corrected this 2026-11-11); Milly Wedra voices Little Miss Hot Shot. Demo on itch.io.
 - 5% of every sale goes to Purple Tree Café (Davis nonprofit). HMP Bikes (440 F St, Davis) sponsors.
 - Email: playcoffeetime@yahoo.com. Facebook profile id 100083230971672.
 - The three PDFs (instructions, story, coloring page) and the trailer are in public/files and public/video,

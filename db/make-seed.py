@@ -433,7 +433,7 @@ creators = [
     ("Milly Judd", "Game Editor", "Critiqued the initial prototype, assisted in developing the final game dynamics, wrote the instructions, and edited all text for the Coffee Time brand.", "", "/img/team-milly-judd.webp"),
     ("Sam Lundholm", "Abstract Artist", "Created abstract textures that set Coffee Time apart with its unique and vibrant style. Seen on the background of the game box, cards, and game board.", "", "/img/team-sam-lundholm.webp"),
     ("Matthew Wright", "Game Music Creator", "Created custom 22nd century AI music tracks to listen to as you play Coffee Time with your friends. More about Matthew at [www.enuminousandarchimedes.com](https://www.enuminousandarchimedes.com)", "https://www.enuminousandarchimedes.com", "/img/team-matthew-wright.webp"),
-    ("Nick Domke", "Video Game Lead", "Leads the Da Vinci game club that is building Coffee Time Adventures, our first video game, and brings the Coffee Time universe to life in 3D.", "https://dvgameclub.itch.io/", "/img/nick-domke-photo.webp"),
+    ("Nick Domke", "Video Game Music", "The music behind every Coffee Time video game. Nick composes and produces all of our video game soundtracks.", "https://dvgameclub.itch.io/", "/img/nick-domke-photo.webp"),
     ("Landon Christensen", "King Tea Artist", "Illustrated the ultimate villain, King Tea, who has infiltrated the Realm of Time and seeks to vanquish coffee forever!", "", "/img/team-landon-christensen.webp"),
 ]
 for i, (n, r, b, u, img) in enumerate(creators):

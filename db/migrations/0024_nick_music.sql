@@ -1,0 +1,1 @@
+UPDATE creators SET role = 'Video Game Music', bio = 'The music behind every Coffee Time video game. Nick composes and produces all of our video game soundtracks.' WHERE name = 'Nick Domke' AND role = 'Video Game Lead';
