@@ -1044,3 +1044,4 @@ main > section + section, main > section > div.hero, main > section > .reviews, 
 .trio-art img { aspect-ratio: 16 / 10; object-fit: cover; }
 @media (max-width: 900px) { .page.arcade .trio { grid-template-columns: 1fr; } .trio-wide { grid-column: auto; } }
 .cover-title .nw { white-space: nowrap; } @media (max-width: 520px) { .cover-title .nw { white-space: normal; } }
+.hs-mascot { bottom: clamp(40px, 5.5vw, 76px) !important; }
