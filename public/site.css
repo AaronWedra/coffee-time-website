@@ -637,7 +637,7 @@ h3.sec-title { font-size: clamp(1.9rem, 4.4vw, 3.1rem); }
 .arc-ar .sec-kicker { color: #7ee8ff; background: rgba(126, 232, 255, .1); }
 .arc-2d .sec-kicker { color: #ff9fc0; } .arc-online .sec-kicker { color: #ffc99a; }
 .arc .gcards { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: clamp(14px, 2vw, 24px); }
-.arc-foot { text-align: center; margin: 1.4em 0 0; } .arc-foot a { color: #7ee8ff; }
+.arc-foot { text-align: center; margin: 1.4em 0 0; } .arc-foot a { color: #fff245; }
 
 .gcard { --a: #ff8a3d; display: flex; flex-direction: column; background: #fff; color: var(--ink); border-radius: 22px; overflow: hidden; border: 3px solid #fff; box-shadow: 0 8px 0 rgba(10, 0, 30, .45), 0 16px 26px rgba(10, 0, 30, .4); transition: transform .2s, box-shadow .2s; }
 .gposter { position: relative; display: block; aspect-ratio: 16 / 10; overflow: hidden; background: linear-gradient(135deg, var(--a), #1d1230); text-decoration: none; }

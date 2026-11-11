@@ -166,7 +166,7 @@ export function home(s: Settings, blocks: Blocks, flags: { joined?: string }): S
       <p class="cover-kicker"><span class="dot" aria-hidden="true"></span>${line(blocks, 'cover_kicker')}</p>
       <h1 class="cover-title">${line(blocks, 'cover_tagline')}</h1>
       <p class="cover-note">${line(blocks, 'cover_note')}</p>
-      <p class="cover-btns"><a class="btn btn-go" href="${s.demo_url}" target="_blank" rel="noopener">Play the free demo</a><a class="btn btn-go btn-go2" href="/arcade">Open the arcade</a><a class="btn btn-go btn-go3" href="/arcade#ar"><span class="ar-chip" aria-hidden="true">AR</span>Try games in AR</a></p>
+      <p class="cover-btns"><a class="btn btn-go" href="${s.demo_url}" target="_blank" rel="noopener">Play the free demo</a><a class="btn btn-go btn-go2" href="/arcade">Open the arcade</a></p>
     </div>
     <a class="cover-card" href="/arcade" aria-label="Watch the Coffee Time Adventures trailer">
       <img src="/img/trailer-poster.webp" alt="" width="1280" height="720" fetchpriority="high">
@@ -415,13 +415,12 @@ export function story(s: Settings, blocks: Blocks): Safe {
 }
 
 export function arcade(s: Settings, blocks: Blocks, games: Game[]): Safe {
+  const solo = games.filter((g) => g.kind === '3d');
   return html`<section class="page arcade">
     ${orb('warp', 'r', 10, 3, 1)}
-    <div class="wrap narrow">
+    <div class="wrap">
       ${secHead('Video games', line(blocks, 'arcade_title'), '', 'h1')}
-      ${video(s.trailer_video, s.trailer_poster, 'Coffee Time Adventures trailer')}
-      <div class="intro prose26 cols">${text(blocks, 'arcade_body')}</div>
-      <p class="center"><a class="btn" href="${s.demo_url}" target="_blank" rel="noopener">Download the free demo</a></p>
+      <ul class="gcards solo-cards">${solo.map((g, i) => gameCard(g, i))}</ul>
     </div>
     ${gamesSections(blocks, games)}
   </section>`;

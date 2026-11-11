@@ -71,9 +71,9 @@ def block(key, label, value, page="home", kind="text"):
     B.append((key, label, kind, value, page))
 
 
-block("cover_kicker", "Cover: small line above the headline", "Delivered. 1,000 of 1,000.", kind="line")
-block("cover_tagline", "Cover: headline", "Our board game is delivered. Now we make video games.", kind="line")
-block("cover_note", "Cover: paragraph under the headline", "All 1,000 first-edition copies of the Coffee Time board game were delivered, to family shelves and in coffee shops and game shops. Thank you! The story keeps going in video games: play the free Coffee Time Adventures demo, hit the arcade, or try our games in AR.")
+block("cover_kicker", "Cover: small line above the headline", "Free to play", kind="line")
+block("cover_tagline", "Cover: headline", "Play Coffee Time.", kind="line")
+block("cover_note", "Cover: paragraph under the headline", "Free video games in your browser, on your phone and on your table in AR.")
 block("games_title", "Games: heading", "The Video Games", kind="line")
 block("games_intro", "Games: paragraph", "We are a small team in Davis, California, and we make video games set in the Coffee Time universe. Play them free in your browser, on your phone or on your own table in AR.")
 block("arcade_2d_title", "Games: 2D arcade heading", "2D Arcade", kind="line")
@@ -417,7 +417,7 @@ AR = "https://www.smartzgraphics.com/games/"
 games = [
     ("Rapid Refill", "2d", "GameMaker", "Help Thermos deliver fresh, hot coffee to coffee shops across the Five Worlds!", "For desktop only.", GX + "9kk8k1/rapid-refill/", "Play now", "/img/rapid-refill.webp"),
     ("Donut Dash", "2d", "GameMaker", "Collect enough donuts to feed the hungry pup-pups before they eat you!", "For desktop only.", GX + "fdz4p4/donut-dash/", "Play now", "/img/donut-dash.webp"),
-    ("Star Bugs", "2d", "GDevelop", "Star Bugs have invaded. Bop them before they get away.", "", "https://gd.games/aaronwedra/do-or-donut", "Play now", "/img/game-star-bugs-2d-dv.webp"),
+    ("Star Bugs", "2d", "GDevelop", "Star Bugs have invaded. Bop them before they get away.", "", "https://gd.games/aaronwedra/do-or-donut", "Play now", "/img/game-star-bugs-2d-land.webp"),
     ("Coffee Time Adventures", "3d", "Unreal Engine", "King Tea and Duchess are scheming. Little Miss Hot Shot must uncover their plot and save the Five Worlds.", "Free demo, in development.", DEMO, "Get the free demo", "/img/trailer-poster.webp"),
     ("Star Bugs", "ar", "AR in your browser", "Fire sprinkle donuts from a licorice slingshot and stop the Star Bugs. One or two players at the same table.", "", AR + "star-bugs/", "Play in AR", "/img/game-star-bugs.webp"),
     ("Rapid Refill", "ar", "AR in your browser", "Deliver the coffee across your own table.", "", AR + "rapid-refill/", "Play in AR", "/img/game-rapid-refill-ar.webp"),
