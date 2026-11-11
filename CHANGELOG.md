@@ -145,3 +145,4 @@
 - 2026-11-11: Home: trailer plays in place on the cover; games strip has the header rainbow bar top and bottom and Sir Cubey holding a controller (his own art, key swapped for a drawn controller) in the right margin on wide screens.
 - 2026-11-11: Clock sections (home board game strip, Music, Reviews): acid edition, drifting rainbow recolours the clocks over deep purple; soft dark halo behind text instead of a solid half.
 - 2026-11-11: Home music strip: rainbow notes float up behind the content.
+- 2026-11-11: Home games strip is white with purple type; Sir Cubey's blacks are true black.

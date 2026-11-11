@@ -907,3 +907,11 @@ a:focus:not(:focus-visible), button:focus:not(:focus-visible), label:focus:not(:
 
 /* Sir Cubey on purple: true blacks in the art, plus a white sticker edge so his arms and legs read */
 .hs-mascot { filter: drop-shadow(3px 0 0 #fff) drop-shadow(-3px 0 0 #fff) drop-shadow(0 3px 0 #fff) drop-shadow(0 -3px 0 #fff) drop-shadow(0 14px 14px rgba(8, 0, 26, .55)); }
+
+/* home games strip on white (Aaron's call, 2026-11-11), so Sir Cubey and his black line art read properly */
+.hs-games { background: #fff !important; color: #2a0d5a; }
+.hs-games .hs-head h2, .hs-games .hs-game, .hs-games .hs-game b { color: #3b0f6e; }
+.hs-games .hs-head p, .hs-games .hs-game span { color: #2a1a44; opacity: 1; }
+.hs-games .hs-more, .hs-games .hs-game em { color: #6a1fb0 !important; }
+.hs-games .hs-game img { box-shadow: 0 10px 22px rgba(42, 13, 90, .25); }
+.hs-games .hs-mascot { filter: drop-shadow(0 10px 10px rgba(42, 13, 90, .28)); }
