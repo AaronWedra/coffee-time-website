@@ -800,3 +800,19 @@ a:focus:not(:focus-visible), button:focus:not(:focus-visible), label:focus:not(:
 .hs-board { background: linear-gradient(rgba(26, 10, 56, .55), rgba(20, 6, 46, .62)), url(/img/realm-of-time.svg) #1a0a38 !important; background-size: auto, 900px !important; }
 /* arcade: a thin white rule between Coffee Time Adventures and the game pairs */
 .cta-duo { padding-bottom: clamp(26px, 4vw, 48px); margin-bottom: clamp(26px, 4vw, 48px) !important; border-bottom: 1px solid rgba(255, 255, 255, .7); }
+
+/* no italics for the line under a heading, site wide */
+.sec-sub, .music-tag, .cover-note { font-family: var(--body) !important; font-style: normal !important; font-size: clamp(1rem, 1.4vw, 1.15rem) !important; }
+
+/* ---- arcade games: three cards across, AR art leading, two buttons each */
+.trio { list-style: none; margin: clamp(16px, 2.4vw, 30px) 0 0; padding: 0; display: grid; grid-template-columns: repeat(3, 1fr); gap: clamp(18px, 2.6vw, 36px); }
+.trio-card { color: #fff; display: flex; flex-direction: column; }
+.trio-art { display: block; }
+.trio-art img { display: block; width: 100%; height: auto; box-shadow: 0 16px 30px rgba(10, 0, 30, .5); transition: transform .25s; }
+.trio-card:hover .trio-art img { transform: translateY(-5px); }
+.trio-card h3 { font-family: var(--display); font-weight: 400; text-transform: uppercase; font-size: clamp(1.5rem, 2.2vw, 2rem); margin: .6em 0 .15em; line-height: 1; }
+.trio-card p { margin: 0 0 .7em; font-size: 1rem; line-height: 1.45; }
+.trio-btns { display: flex; flex-wrap: wrap; gap: 10px; margin-top: auto !important; }
+.trio-btns .btn { font-size: .95rem; padding: .5em 1.1em; }
+.trio-note { font-size: .8rem !important; opacity: .7; margin: 0 !important; }
+@media (max-width: 900px) { .trio { grid-template-columns: 1fr; max-width: 520px; margin-inline: auto; } }

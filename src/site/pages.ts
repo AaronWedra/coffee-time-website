@@ -141,15 +141,27 @@ function gameCard(g: Game, i: number): Safe {
 
 export function gamesSections(blocks: Blocks, games: Game[]): Safe {
   const of = (k: string) => games.filter((g) => g.kind === k);
+  // One card per game. The AR art leads (it is the stronger picture); the 2D version is the second button.
+  const titles = [...new Set([...of('ar'), ...of('2d')].map((g) => g.title))];
   return html`
   <div class="wrap">
     <div class="arc arc-pair" id="arcade">
       <span id="ar"></span>
       ${secHead(line(blocks, 'pair_kicker'), line(blocks, 'pair_title'), raw(inline(b(blocks, 'pair_sub'))), 'h3')}
-      <div class="pair-heads" aria-hidden="true"><span class="ph ph2d">${line(blocks, 'pair_2d_label')}</span><span class="ph-mid"></span><span class="ph phar">${line(blocks, 'pair_ar_label')}</span></div>
-      <ul class="pairs">${of('2d').map((d, i) => {
-        const a = of('ar').find((x) => x.title === d.title);
-        return html`<li class="pair"><ul class="gcards pair-cards">${gameCard(d, i)}<li class="pair-link" aria-hidden="true"><b>=</b><i>${d.title}</i></li>${a ? gameCard(a, i) : ''}</ul></li>`;
+      <ul class="trio">${titles.map((title) => {
+        const a = of('ar').find((x) => x.title === title);
+        const d = of('2d').find((x) => x.title === title);
+        const lead = a || d!;
+        return html`<li class="trio-card">
+          <a class="trio-art" href="${lead.url}" ${ext(lead.url)} tabindex="-1" aria-hidden="true">${img(lead.image, '', 'width="1000" height="625"')}</a>
+          <h3>${title}</h3>
+          <p>${lead.blurb}</p>
+          <p class="trio-btns">
+            ${a ? html`<a class="btn btn-go" href="${a.url}" ${ext(a.url)}>Play in AR<span class="sr"> ${title}</span></a>` : ''}
+            ${d ? html`<a class="btn btn-go btn-ghost" href="${d.url}" ${ext(d.url)}>Play in 2D<span class="sr"> ${title}</span></a>` : ''}
+          </p>
+          ${a?.note || d?.note ? html`<p class="trio-note">${[a?.note ? 'AR: ' + a.note : '', d?.note ? '2D: ' + d.note : ''].filter(Boolean).join(' ')}</p>` : ''}
+        </li>`;
       })}</ul>
     </div>
   </div>`;

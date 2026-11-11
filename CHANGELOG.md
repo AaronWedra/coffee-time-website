@@ -138,3 +138,4 @@
 - 2026-11-11: Trailer thumbnail is the King Tea frame (0023), square corners, thin outside line, never cropped, play button bottom right. Game pairs are short horizontal cards whose frame is the picture's own edge; column labels and their rules removed.
 - 2026-11-11: Nick Domke is Video Game Music, not Video Game Lead (0024).
 - 2026-11-11: News: compact cards, three across, pictures whole at their own shape; orbs hidden below 1620px and on the news page.
+- 2026-11-11: Arcade games are three cards across, one per game, AR art leading, Play in AR and Play in 2D buttons. Italic sub-lines replaced with the body face. Shorter pair_sub (0029).

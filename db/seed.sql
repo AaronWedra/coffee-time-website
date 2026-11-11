@@ -32,7 +32,7 @@ INSERT OR IGNORE INTO blocks(key,label,kind,value,page,sort) VALUES('arcade_ar_t
 INSERT OR IGNORE INTO blocks(key,label,kind,value,page,sort) VALUES('latte_hint','Newsletter: latte art hint','line','Draw in the foam','home',7);
 INSERT OR IGNORE INTO blocks(key,label,kind,value,page,sort) VALUES('pair_kicker','Games: paired kicker','line','Same game, two ways to play','home',8);
 INSERT OR IGNORE INTO blocks(key,label,kind,value,page,sort) VALUES('pair_title','Games: paired heading','line','Every game, on your screen and on your table','home',9);
-INSERT OR IGNORE INTO blocks(key,label,kind,value,page,sort) VALUES('pair_sub','Games: paired paragraph','text','Play each game right in your browser in 2D, then open the AR version on your phone and the game pops out onto your table. Free, nothing to install.','home',10);
+INSERT OR IGNORE INTO blocks(key,label,kind,value,page,sort) VALUES('pair_sub','Games: paired paragraph','text','Free in your browser in 2D, or on your own table in AR.','home',10);
 INSERT OR IGNORE INTO blocks(key,label,kind,value,page,sort) VALUES('pair_2d_label','Games: 2D column label','line','On your screen (2D)','home',11);
 INSERT OR IGNORE INTO blocks(key,label,kind,value,page,sort) VALUES('pair_ar_label','Games: AR column label','line','On your table (AR, in 3D)','home',12);
 INSERT OR IGNORE INTO blocks(key,label,kind,value,page,sort) VALUES('arcade_ar_body','Games: AR paragraph','text','Same games, on your table. Open one on your phone, point it at a table and the table becomes the level. Nothing to install.','home',13);
