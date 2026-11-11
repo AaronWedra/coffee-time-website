@@ -276,8 +276,6 @@ export function boardGame(s: Settings, blocks: Blocks, reviews: Review[], flags:
 </div>
 
 <div class="orders" id="order">
-  ${orb('sugar', 'l', 0, 2, 3)}
-  ${orb('fire', 'r', 20, 3, -1)}
   <div class="wrap">
     <div class="orders-split">
       <div class="orders-text">

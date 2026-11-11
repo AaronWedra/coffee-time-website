@@ -124,3 +124,4 @@
 - 2026-11-11: Home doors redone: one calm purple surface, real game and box art, no icons or bean texture.
 - 2026-11-11: Cast back to Aaron's original art (ChatGPT render removed): purple stage, one soft overhead light, floor shadow, no pedestal, no spotlight beams, narrower.
 - 2026-11-11: Newsletter foam rebuilt (src/site/foam.ts): crema underneath, ivory foam with bubble clusters, cursor parts a soft channel that flows back. Doors: Star Bugs thumbnail, one-line titles, shorter.
+- 2026-11-11: One button style site-wide (yellow on purple, no orange or green); cover stacks on phones; doors sit on the sunset with no hard seam; orbs removed from the Orders heading.

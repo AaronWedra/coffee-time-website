@@ -505,3 +505,12 @@ body { background: transparent !important; }
 .newsletter > .orb, .newsletter .beans, .newsletter .bean { display: none !important; }
 .newsletter h2, .newsletter p, .newsletter label span { color: #3a1c08 !important; text-shadow: 0 1px 0 rgba(255, 248, 232, .7) !important; }
 .newsletter h2 { text-shadow: none !important; }
+
+/* one button language: yellow on purple, everywhere. No orange, no green. */
+.btn, .head-cta, .nav-m .head-cta { background: var(--yellow) !important; color: var(--purple) !important; border: 3px solid var(--purple) !important; border-radius: 999px !important; box-shadow: 0 4px 0 #b39e00 !important; text-shadow: none !important; }
+.btn:hover, .head-cta:hover { box-shadow: 0 6px 0 #b39e00 !important; }
+.btn:active, .head-cta:active { box-shadow: 0 1px 0 #b39e00 !important; }
+.btn-ghost, .cover-btns .btn-go2 { background: transparent !important; color: #fff !important; border-color: #fff !important; box-shadow: none !important; }
+/* no hard seam under the cover: the doors sit on the sunset, and the sunset fades into the next section */
+.doors { margin-top: 0 !important; padding: 0 0 clamp(34px, 5vw, 64px) !important; }
+@media (max-width: 860px) { .cover-in { grid-template-columns: 1fr !important; } .cover-note { max-width: none !important; } }
