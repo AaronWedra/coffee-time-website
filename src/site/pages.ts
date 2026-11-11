@@ -151,7 +151,6 @@ export function gamesSections(blocks: Blocks, games: Game[]): Safe {
         const a = of('ar').find((x) => x.title === d.title);
         return html`<li class="pair"><ul class="gcards pair-cards">${gameCard(d, i)}<li class="pair-link" aria-hidden="true"><b>=</b><i>${d.title}</i></li>${a ? gameCard(a, i) : ''}</ul></li>`;
       })}</ul>
-      <p class="arc-foot"><a href="https://www.smartzgraphics.com/news/star-bugs" target="_blank" rel="noopener">More about the AR arcade</a></p>
     </div>
   </div>`;
 }
@@ -196,9 +195,9 @@ export function home(s: Settings, blocks: Blocks, flags: { joined?: string }, da
   </div>
 </section>
 
-${b(blocks, 'home_reel_url') ? html`<section class="reel" aria-label="Coffee Time video">
-  <iframe src="https://www.facebook.com/plugins/video.php?href=${encodeURIComponent(b(blocks, 'home_reel_url'))}&show_text=false&width=1280" title="Coffee Time video on Facebook" loading="lazy" allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share" allowfullscreen scrolling="no"></iframe>
-</section>` : ''}
+<section class="reel" aria-label="The Coffee Time cast, animated in 3D">
+  <video autoplay muted loop playsinline preload="metadata" poster="/img/opening-scene-poster.webp" width="1920" height="1080"><source src="/video/opening-scene.mp4" type="video/mp4"></video>
+</section>
 
 <section class="hs hs-board" aria-label="The board game">
   <div class="wrap hs-split">

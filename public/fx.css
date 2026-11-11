@@ -722,3 +722,4 @@ a:focus:not(:focus-visible), button:focus:not(:focus-visible), label:focus:not(:
 /* home: the Facebook video, edge to edge, in place of the cast section */
 .reel { background: #000; line-height: 0; }
 .reel iframe { display: block; width: 100%; aspect-ratio: 16 / 9; max-height: 88vh; border: 0; }
+.reel video { display: block; width: 100%; height: auto; max-height: 88vh; object-fit: cover; background: #000; }

@@ -25,7 +25,7 @@ function csp(nonce: string): string {
     `img-src 'self' data: https://www.google-analytics.com https://*.google-analytics.com https://www.googletagmanager.com`,
     `connect-src 'self' https://www.google-analytics.com https://*.google-analytics.com https://analytics.google.com https://*.analytics.google.com https://www.googletagmanager.com`,
     `media-src 'self'`,
-    `frame-src https://w.soundcloud.com https://www.youtube-nocookie.com https://www.facebook.com`,
+    `frame-src https://w.soundcloud.com https://www.youtube-nocookie.com`,
     `form-action 'self' mailto:`,
     `frame-ancestors 'none'`,
     `base-uri 'self'`,
