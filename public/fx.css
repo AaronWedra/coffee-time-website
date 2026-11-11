@@ -1016,3 +1016,4 @@ a:focus:not(:focus-visible), button:focus:not(:focus-visible), label:focus:not(:
 .zone-bg { padding-top: 0 !important; margin-top: 0 !important; }
 .zone-bg > .bg-top { margin-top: 0 !important; }
 .hero > .orb { display: none !important; }
+.orders .badge span { margin: 0 .4em; opacity: .7; }

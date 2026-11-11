@@ -293,7 +293,7 @@ export function boardGame(s: Settings, blocks: Blocks, reviews: Review[], flags:
       <div class="orders-text">
         <div class="orders-head">
           ${secHead('First edition', line(blocks, 'orders_title'))}
-          <p class="badge">${s.players}<br>${s.ages}</p>
+          <p class="badge">${s.players} <span aria-hidden="true">&bull;</span> ${s.ages}</p>
         </div>
         <h3 class="orders-intro">${line(blocks, 'orders_intro')}</h3>
         <div class="orders-copy prose26 cols">${text(blocks, 'orders_body')}</div>
@@ -353,7 +353,7 @@ export function orderPage(s: Settings, blocks: Blocks, st: OrderState): Safe {
         <div class="orders-text">
           <div class="orders-head">
             ${secHead('First edition', line(blocks, 'orders_title'), '', 'h1')}
-            <p class="badge">${s.players}<br>${s.ages}</p>
+            <p class="badge">${s.players} <span aria-hidden="true">&bull;</span> ${s.ages}</p>
           </div>
           <h2 class="orders-intro">${line(blocks, 'orders_intro')}</h2>
           <div class="orders-copy prose26">${text(blocks, 'orders_body')}</div>
