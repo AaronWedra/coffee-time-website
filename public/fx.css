@@ -973,3 +973,20 @@ a:focus:not(:focus-visible), button:focus:not(:focus-visible), label:focus:not(:
   background: linear-gradient(115deg, #b14cff, #fff245, #ffffff, #7a1fd6, #fff245, #e9d5ff, #b14cff, #ff7bd5, #fff245, #7a1fd6) 0 0 / 400% 100% !important; }
 @keyframes acidspin { to { --acid-a: 360deg; } }
 @keyframes acidpulse { from { --acid-r: 46px; } to { --acid-r: 96px; } }
+
+/* Purple Tree: a full-width band, edge to edge, content kept to the page width. No card. */
+.pt { width: 100vw; max-width: none !important; margin: clamp(30px, 4vw, 56px) calc(50% - 50vw) 0 !important; border: 0 !important; border-radius: 0 !important; box-shadow: none !important; }
+.pt > * { padding-left: max(var(--gutter), calc(50vw - 590px)) !important; padding-right: max(var(--gutter), calc(50vw - 590px)) !important; }
+.orders:has(.pt) { padding-bottom: 0 !important; }
+.orders .delivered { margin-top: 0 !important; }
+.pt > * { max-width: none !important; margin-left: 0 !important; margin-right: 0 !important; }
+
+/* board game page: "Learn to play" is its own white band */
+.hero { background: #fff !important; }
+.hero > .orb { display: none !important; }
+.hero .hero-title { color: #3b0f6e !important; -webkit-text-fill-color: #3b0f6e; background: none !important; text-shadow: none !important; }
+.hero .prose26, .hero .prose26 > p:first-child, .hero .prose26 strong { color: #2a1a44 !important; }
+.hero .prose26 a { color: #6a1fb0 !important; }
+.learn a { border-color: #3b0f6e !important; color: #3b0f6e !important; }
+.learn a:hover { background: #3b0f6e !important; color: #fff !important; border-color: #3b0f6e !important; }
+.page .intro .learn a { border-color: rgba(255, 255, 255, .6) !important; color: #fff !important; }

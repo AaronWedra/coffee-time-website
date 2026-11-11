@@ -310,7 +310,6 @@ export function boardGame(s: Settings, blocks: Blocks, reviews: Review[], flags:
 
     ${purpleTree(s, blocks)}
 
-    <p class="box-link"><a href="/in-the-box">What is in the box? See the full contents</a></p>
 
     ${orderForm(s, blocks, flags.order)}
   </div>
