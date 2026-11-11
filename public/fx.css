@@ -777,3 +777,22 @@ a:focus:not(:focus-visible), button:focus:not(:focus-visible), label:focus:not(:
 @media (max-width: 1620px) { .orb { display: none !important; } }
 .pair-cards > .gcard, .pair-cards > .gcard:hover, .pair-cards > .gcard:focus-within { outline: none !important; }
 .pair-cards > .k-2d:hover { box-shadow: none !important; transform: none !important; }
+
+/* cover beans across the whole width; Kruisers on a gentler dive */
+.cover .beanfall i:nth-child(1){left:4%}.cover .beanfall i:nth-child(2){left:14%}.cover .beanfall i:nth-child(3){left:24%}.cover .beanfall i:nth-child(4){left:33%}.cover .beanfall i:nth-child(5){left:43%}.cover .beanfall i:nth-child(6){left:52%}.cover .beanfall i:nth-child(7){left:62%}.cover .beanfall i:nth-child(8){left:72%}.cover .beanfall i:nth-child(9){left:83%}.cover .beanfall i:nth-child(10){left:94%}.cover .beanfall i:nth-child(11){left:9%}.cover .beanfall i:nth-child(12){left:58%}.cover .beanfall i:nth-child(13){left:78%}.cover .beanfall i:nth-child(14){left:38%}
+@keyframes kruise {
+  0% { opacity: 1; transform: translate(105vw, 6vh) rotate(-5deg) scale(.6); }
+  14% { transform: translate(52vw, 16vh) rotate(-4deg) scale(.85); }
+  28% { opacity: 1; transform: translate(-22vw, 30vh) rotate(-7deg) scale(1.1); }
+  28.1%, 100% { opacity: 0; transform: translate(-22vw, 30vh) rotate(-7deg) scale(1.1); }
+}
+@keyframes kruisefar {
+  0% { opacity: .85; transform: translate(102vw, 8vh) rotate(-3deg); }
+  40% { opacity: .85; transform: translate(-10vw, 18vh) rotate(-4deg); }
+  40.1%, 100% { opacity: 0; transform: translate(-10vw, 18vh); }
+}
+@keyframes kruisenear {
+  0% { opacity: 1; transform: translate(104vw, 2vh) rotate(-8deg); }
+  5.5% { opacity: 1; transform: translate(-50vw, 40vh) rotate(-10deg); }
+  5.6%, 100% { opacity: 0; transform: translate(-50vw, 40vh); }
+}
