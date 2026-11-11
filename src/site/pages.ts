@@ -156,7 +156,11 @@ export function gamesSections(blocks: Blocks, games: Game[]): Safe {
   </div>`;
 }
 
-export function home(s: Settings, blocks: Blocks, flags: { joined?: string }): Safe {
+export function home(s: Settings, blocks: Blocks, flags: { joined?: string }, data: { games: Game[]; reviews: Review[]; tracks: Track[] }): Safe {
+  // Home is the highlights, about half of everything: play, the cast, the board game, music, newsletter.
+  // Each strip shows a few items and links to its own page for the rest.
+  const play = [...data.games.filter((g) => g.kind === '3d'), ...data.games.filter((g) => g.kind === '2d')].slice(0, 4);
+  const quotes = [...data.reviews].sort((a, b2) => a.quote.length - b2.quote.length).slice(0, 3);
   return html`
 <section class="cover" aria-label="Coffee Time">
   <div class="cover-sky" aria-hidden="true"></div>
@@ -182,18 +186,12 @@ export function home(s: Settings, blocks: Blocks, flags: { joined?: string }): S
   </ul>
 </section>
 
-<nav class="doors" aria-label="Choose: video games or the board game">
-  <div class="wrap doors-in">
-    <a class="door door-vg" href="/arcade">
-      <span class="door-copy"><b>${line(blocks, 'zone_vg_title')}</b><span>${line(blocks, 'zone_vg_sub')}</span><em>Play now</em></span>
-      <img class="door-art" src="/img/game-star-bugs.webp" alt="" width="1000" height="625" loading="lazy">
-    </a>
-    <a class="door door-bg" href="/board-game">
-      <span class="door-copy"><b>${line(blocks, 'zone_bg_title')}</b><span>${line(blocks, 'zone_bg_sub')}</span><em>Rules, tutorials, order</em></span>
-      <img class="door-art door-box" src="/img/box-3d.webp" alt="" width="1500" height="880" loading="lazy">
-    </a>
+<section class="hs hs-games" aria-label="Video games">
+  <div class="wrap">
+    <header class="hs-head"><h2>${line(blocks, 'games_title')}</h2><p>${line(blocks, 'zone_vg_sub')}</p><a class="hs-more" href="/arcade">All games and AR</a></header>
+    <ul class="hs-row">${play.map((g) => html`<li><a class="hs-game" href="${g.url}" ${ext(g.url)}>${g.image ? img(g.image, '', 'width="1000" height="625"') : ''}<b>${g.title}</b><span>${g.blurb}</span><em>${g.button || 'Play now'}</em></a></li>`)}</ul>
   </div>
-</nav>
+</section>
 
 <section class="cast" aria-label="The Coffee Time characters">
   <div class="cast-glow" aria-hidden="true"></div>
@@ -205,6 +203,24 @@ export function home(s: Settings, blocks: Blocks, flags: { joined?: string }): S
       ${img('/img/characters-cutout.webp', 'The whole cast: Little Miss Hot Shot, Donette, Thermos, Cup Joe, Sir Cubey, King Tea, the crumpets and the Mean Girl Crumpets', 'class="cast-main" width="1374" height="684"')}
       <span class="cast-floor" aria-hidden="true"></span>
     </div>
+  </div>
+</section>
+
+<section class="hs hs-board" aria-label="The board game">
+  <div class="wrap hs-split">
+    <a class="hs-box" href="/board-game" aria-label="The Coffee Time board game">${img('/img/box-3d.webp', 'The Coffee Time board game box, first edition', 'width="1500" height="880"')}</a>
+    <div>
+      <header class="hs-head"><h2>${line(blocks, 'zone_bg_title')}</h2><p>${line(blocks, 'zone_bg_sub')}</p></header>
+      <ul class="hs-quotes">${quotes.map((r) => html`<li>${stars()}<blockquote>${raw(inline(r.quote))}</blockquote><cite>${r.name}</cite></li>`)}</ul>
+      <p class="hs-btns"><a class="btn btn-go" href="/board-game#rules">Learn to play</a><a class="btn btn-go btn-ghost" href="/board-game#order">Order a copy</a><a class="hs-more" href="/board-game#reviews">All reviews</a></p>
+    </div>
+  </div>
+</section>
+
+<section class="hs hs-music" aria-label="Music">
+  <div class="wrap">
+    <header class="hs-head"><h2>${line(blocks, 'music_title')}</h2><p>${line(blocks, 'music_sub')}</p><a class="hs-more" href="/music">All ${data.tracks.length} tracks</a></header>
+    <div class="tracks">${data.tracks.slice(0, 3).map(soundcloud)}</div>
   </div>
 </section>
 

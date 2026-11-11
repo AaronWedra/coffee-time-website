@@ -80,7 +80,8 @@ site.get('/', async (c) => {
     offers: { '@type': 'Offer', price: s.price, priceCurrency: 'USD', availability: s.orders_open === '0' ? 'https://schema.org/OutOfStock' : 'https://schema.org/InStock', url: url + '/order' },
   };
   const q = c.url.searchParams;
-  return render(c, { title: 'Home', path: '/', bodyClass: 'is-home', jsonld }, P.home(s, b, { joined: q.get('joined') || undefined }));
+  const [games, reviews, tracks] = await Promise.all([db.listGames(c.env.DB), db.listReviews(c.env.DB), db.listTracks(c.env.DB)]);
+  return render(c, { title: 'Home', path: '/', bodyClass: 'is-home', jsonld }, P.home(s, b, { joined: q.get('joined') || undefined }, { games, reviews, tracks }));
 });
 
 site.get('/board-game', async (c) => {

@@ -125,3 +125,4 @@
 - 2026-11-11: Cast back to Aaron's original art (ChatGPT render removed): purple stage, one soft overhead light, floor shadow, no pedestal, no spotlight beams, narrower.
 - 2026-11-11: Newsletter foam rebuilt (src/site/foam.ts): crema underneath, ivory foam with bubble clusters, cursor parts a soft channel that flows back. Doors: Star Bugs thumbnail, one-line titles, shorter.
 - 2026-11-11: One button style site-wide (yellow on purple, no orange or green); cover stacks on phones; doors sit on the sunset with no hard seam; orbs removed from the Orders heading.
+- 2026-11-11: Home brought back to about half of everything: cover, a four-game Play strip, the cast, a board game strip (box, three short reviews, Learn to play and Order), three music players, newsletter. Each strip links to its full page. The two door cards are replaced by the strips.
