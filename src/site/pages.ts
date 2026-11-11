@@ -175,7 +175,7 @@ export function home(s: Settings, blocks: Blocks, flags: { joined?: string }, da
       <p class="cover-btns"><a class="btn btn-go" href="${s.demo_url}" target="_blank" rel="noopener">Play the free demo</a><a class="btn btn-go btn-go2" href="/arcade">Open the arcade</a></p>
     </div>
     <a class="cover-card" href="/arcade" aria-label="Watch the Coffee Time Adventures trailer">
-      <img src="/img/trailer-poster.webp" alt="" width="1280" height="720" fetchpriority="high">
+      <img src="${s.trailer_poster}" alt="" width="1280" height="720" fetchpriority="high">
       <span class="cc-play" aria-hidden="true"></span>
       <span class="cc-label">Coffee Time Adventures<small>Watch the trailer</small></span>
     </a>

@@ -723,3 +723,38 @@ a:focus:not(:focus-visible), button:focus:not(:focus-visible), label:focus:not(:
 .reel { background: #000; line-height: 0; }
 .reel iframe { display: block; width: 100%; aspect-ratio: 16 / 9; max-height: 88vh; border: 0; }
 .reel video { display: block; width: 100%; height: auto; max-height: 88vh; object-fit: cover; background: #000; }
+
+/* trailer thumbnails and players: square corners, the whole 16:9 frame (nothing cropped), and a thin
+   line OUTSIDE the picture instead of a thick border on top of it */
+.cover-card { border: 0 !important; border-radius: 0 !important; outline: 2px solid rgba(255, 255, 255, .85); outline-offset: 4px; aspect-ratio: 16 / 9 !important; box-shadow: 0 22px 44px rgba(20, 0, 45, .5) !important; overflow: visible !important; }
+.cover-card img { object-fit: contain !important; width: 100%; height: 100%; }
+.cover-card::after { background: linear-gradient(180deg, transparent 62%, rgba(20, 0, 45, .8)) !important; }
+.video, .cta-vid .video, .hs-game img { border-radius: 0 !important; border: 0 !important; object-fit: contain !important; }
+.cta-vid .video { outline: 2px solid rgba(255, 255, 255, .85); outline-offset: 4px; }
+/* cover trailer card: play button out of the picture's way, bottom right */
+.cc-play { left: auto !important; top: auto !important; right: 16px; bottom: 16px; margin: 0 !important; width: 58px !important; height: 58px !important; }
+.cc-play::before { margin: -11px 0 0 -6px !important; border-left-width: 19px !important; border-top-width: 11px !important; border-bottom-width: 11px !important; }
+
+/* ---- game pairs: short horizontal cards. The frame takes the picture's own shape (no bars, no crop):
+   picture on the left at its natural ratio, title, one line and the button on the right. */
+.pair-cards > .gcard { display: grid !important; grid-template-columns: minmax(0, 1.15fr) minmax(0, 1fr); align-items: center; padding: 0 !important; }
+.pair-cards .gposter { aspect-ratio: auto !important; background: none !important; overflow: visible; border-radius: 0 !important; align-self: stretch; display: flex; align-items: center; }
+.pair-cards .gposter .gfull { position: static !important; width: 100% !important; height: auto !important; object-fit: contain; background: none !important; display: block; filter: none !important; }
+.pair-cards .gbody { padding: 12px 16px !important; }
+.pair-cards .gbody h3 { font-family: var(--display) !important; font-size: 1.35rem !important; margin: .25em 0 .15em !important; }
+.pair-cards .gbody p { font-size: .92rem !important; line-height: 1.4 !important; margin: 0 0 .35em !important; }
+.pair-cards .gbody .gplay { font-size: .85rem !important; padding: .45em 1em !important; }
+.pair-cards .gplaybtn, .pair-cards .gtag { display: none !important; }
+.pair-cards .gbadge { top: 8px; left: 8px; }
+.pair-cards .k-2d { border-width: 2px !important; }
+.pair-cards > .k-ar .gposter { border-radius: 10px 0 0 10px !important; overflow: hidden; }
+.pair-cards > .k-ar .gbody { border-radius: 0 10px 10px 0 !important; }
+.pair-cards > .k-ar { --d: 16px; }
+@media (max-width: 1100px) { .pair-cards > .gcard { grid-template-columns: 1fr; } }
+/* no column labels (each card already says 2D or AR), and the 2D frame is the picture's own edge */
+.pair-heads { display: none !important; }
+.pair-cards { align-items: center; }
+.pair-cards .k-2d { border: 0 !important; background: none !important; }
+.pair-cards .k-2d .gposter .gfull { outline: 2px solid var(--yellow); outline-offset: -2px; }
+.pair-cards .k-2d .gposter { align-self: center; }
+.pairs { margin-top: clamp(14px, 2vw, 26px); }

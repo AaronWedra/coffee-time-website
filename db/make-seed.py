@@ -51,7 +51,7 @@ settings = {
     "story_pdf": "/files/coffee-time-story.pdf",
     "coloring_pdf": "/files/coffee-time-coloring-page.pdf",
     "trailer_video": "/video/coffee-time-adventures-trailer.mp4",
-    "trailer_poster": "/img/trailer-poster.webp",
+    "trailer_poster": "/img/trailer-poster-kingtea.webp",
     "orders_open": "1",
     "max_quantity": "10",
     "site_indexable": "0",

@@ -135,3 +135,4 @@
 - 2026-11-11: Fix: migration 0020 used a LIKE pattern over D1's 50 byte limit, which failed on every request and took the site down. Pattern shortened.
 - 2026-11-11: Home: cast section removed; a full-width Facebook video (block home_reel_url, migration 0021) takes its place. CSP frame-src allows www.facebook.com.
 - 2026-11-11: Home video is now the original 'Coffee Time Opening Scene' from Drive, self-hosted, muted, autoplaying on a loop (Facebook embed and its CSP entry removed, block dropped in 0022). 'More about the AR arcade' link removed.
+- 2026-11-11: Trailer thumbnail is the King Tea frame (0023), square corners, thin outside line, never cropped, play button bottom right. Game pairs are short horizontal cards whose frame is the picture's own edge; column labels and their rules removed.
