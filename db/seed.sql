@@ -29,46 +29,51 @@ INSERT OR IGNORE INTO blocks(key,label,kind,value,page,sort) VALUES('games_title
 INSERT OR IGNORE INTO blocks(key,label,kind,value,page,sort) VALUES('games_intro','Games: paragraph','text','We are a small team in Davis, California, and we make video games set in the Coffee Time universe. Play them free in your browser, on your phone or on your own table in AR.','home',4);
 INSERT OR IGNORE INTO blocks(key,label,kind,value,page,sort) VALUES('arcade_2d_title','Games: 2D arcade heading','line','2D Arcade','home',5);
 INSERT OR IGNORE INTO blocks(key,label,kind,value,page,sort) VALUES('arcade_ar_title','Games: AR heading','line','AR Arcade','home',6);
-INSERT OR IGNORE INTO blocks(key,label,kind,value,page,sort) VALUES('arcade_ar_body','Games: AR paragraph','text','Same games, on your table. Open one on your phone, point it at a table and the table becomes the level. Nothing to install.','home',7);
-INSERT OR IGNORE INTO blocks(key,label,kind,value,page,sort) VALUES('cast_title','Cast: heading','line','Meet the stars','home',8);
-INSERT OR IGNORE INTO blocks(key,label,kind,value,page,sort) VALUES('cast_sub','Cast: line under heading','line','Five worlds. One very big cup of trouble.','home',9);
-INSERT OR IGNORE INTO blocks(key,label,kind,value,page,sort) VALUES('zone_vg_title','Zone banner: video games heading','line','Video Games','home',10);
-INSERT OR IGNORE INTO blocks(key,label,kind,value,page,sort) VALUES('zone_vg_sub','Zone banner: video games line','line','Play free in your browser, on your phone, or on your table in AR.','home',11);
-INSERT OR IGNORE INTO blocks(key,label,kind,value,page,sort) VALUES('zone_bg_title','Zone banner: board game heading','line','The Board Game','home',12);
-INSERT OR IGNORE INTO blocks(key,label,kind,value,page,sort) VALUES('zone_bg_sub','Zone banner: board game line','line','Own the box? Learn to play, watch the tutorials, read the story, order a copy.','home',13);
-INSERT OR IGNORE INTO blocks(key,label,kind,value,page,sort) VALUES('games_3d_title','Games: 3D heading','line','The 3D games','home',14);
-INSERT OR IGNORE INTO blocks(key,label,kind,value,page,sort) VALUES('hero_title','Top of the page: headline','line','Learn to play like a pro','home',15);
-INSERT OR IGNORE INTO blocks(key,label,kind,value,page,sort) VALUES('hero_body','Top of the page: paragraph','text','We released our first edition of Coffee Time in 2023. Thank you for purchasing one of the first 1,000 games in existence! Here, you will find tutorial videos and FAQs to help you learn to play like a pro. **If you still have a question on game play, please email us at [playcoffeetime@yahoo.com](mailto:playcoffeetime@yahoo.com)**','home',16);
-INSERT OR IGNORE INTO blocks(key,label,kind,value,page,sort) VALUES('newsletter_title','Newsletter: headline','line','Newsletter','home',17);
-INSERT OR IGNORE INTO blocks(key,label,kind,value,page,sort) VALUES('newsletter_body','Newsletter: paragraph','text','Sign up for our newsletter for new releases, tips and tricks, and to explore the ever-expanding Coffee Time universe!','home',18);
-INSERT OR IGNORE INTO blocks(key,label,kind,value,page,sort) VALUES('game_title','Video game: headline','line','Video game: Coffee Time Adventures','home',19);
+INSERT OR IGNORE INTO blocks(key,label,kind,value,page,sort) VALUES('pair_kicker','Games: paired kicker','line','Same game, two ways to play','home',7);
+INSERT OR IGNORE INTO blocks(key,label,kind,value,page,sort) VALUES('pair_title','Games: paired heading','line','Every game, on your screen and on your table','home',8);
+INSERT OR IGNORE INTO blocks(key,label,kind,value,page,sort) VALUES('pair_sub','Games: paired paragraph','text','Play each game right in your browser in 2D, then open the AR version on your phone and the game pops out onto your table. Free, nothing to install.','home',9);
+INSERT OR IGNORE INTO blocks(key,label,kind,value,page,sort) VALUES('pair_2d_label','Games: 2D column label','line','On your screen (2D)','home',10);
+INSERT OR IGNORE INTO blocks(key,label,kind,value,page,sort) VALUES('pair_ar_label','Games: AR column label','line','On your table (AR, in 3D)','home',11);
+INSERT OR IGNORE INTO blocks(key,label,kind,value,page,sort) VALUES('arcade_ar_body','Games: AR paragraph','text','Same games, on your table. Open one on your phone, point it at a table and the table becomes the level. Nothing to install.','home',12);
+INSERT OR IGNORE INTO blocks(key,label,kind,value,page,sort) VALUES('cast_title','Cast: heading','line','Meet the stars','home',13);
+INSERT OR IGNORE INTO blocks(key,label,kind,value,page,sort) VALUES('cast_sub','Cast: line under heading','line','Five worlds. One very big cup of trouble.','home',14);
+INSERT OR IGNORE INTO blocks(key,label,kind,value,page,sort) VALUES('zone_vg_title','Zone banner: video games heading','line','Video Games','home',15);
+INSERT OR IGNORE INTO blocks(key,label,kind,value,page,sort) VALUES('zone_vg_sub','Zone banner: video games line','line','Play free in your browser, on your phone, or on your table in AR.','home',16);
+INSERT OR IGNORE INTO blocks(key,label,kind,value,page,sort) VALUES('zone_bg_title','Zone banner: board game heading','line','The Board Game','home',17);
+INSERT OR IGNORE INTO blocks(key,label,kind,value,page,sort) VALUES('zone_bg_sub','Zone banner: board game line','line','Own the box? Learn to play, watch the tutorials, read the story, order a copy.','home',18);
+INSERT OR IGNORE INTO blocks(key,label,kind,value,page,sort) VALUES('games_3d_title','Games: 3D heading','line','The 3D games','home',19);
+INSERT OR IGNORE INTO blocks(key,label,kind,value,page,sort) VALUES('hero_title','Top of the page: headline','line','Learn to play like a pro','home',20);
+INSERT OR IGNORE INTO blocks(key,label,kind,value,page,sort) VALUES('hero_body','Top of the page: paragraph','text','We released our first edition of Coffee Time in 2023. Thank you for purchasing one of the first 1,000 games in existence! Here, you will find tutorial videos and FAQs to help you learn to play like a pro. **If you still have a question on game play, please email us at [playcoffeetime@yahoo.com](mailto:playcoffeetime@yahoo.com)**','home',21);
+INSERT OR IGNORE INTO blocks(key,label,kind,value,page,sort) VALUES('newsletter_title','Newsletter: headline','line','Newsletter','home',22);
+INSERT OR IGNORE INTO blocks(key,label,kind,value,page,sort) VALUES('newsletter_body','Newsletter: paragraph','text','Sign up for our newsletter for new releases, tips and tricks, and to explore the ever-expanding Coffee Time universe!','home',23);
+INSERT OR IGNORE INTO blocks(key,label,kind,value,page,sort) VALUES('game_title','Video game: headline','line','Video game: Coffee Time Adventures','home',24);
 INSERT OR IGNORE INTO blocks(key,label,kind,value,page,sort) VALUES('game_body','Video game: paragraphs','text','[Download the FREE demo](https://dvgameclub.itch.io/coffee-time-adventures)! The Coffee Time team is thrilled to announce that Coffee Time Adventures, our first ever full-fledged video game, is well into development!
 
-From the creative minds of Aaron Wedra, [Milly Wedra](https://www.facebook.com/millywedra), and [Nick Domke](https://www.facebook.com/nick.domke.5), this game is inspired by the classic Coffee Time board game, and brings the Coffee Time Universe to life like never before. Join Little Miss Hot Shot, our caffeinated hero, on her BIG adventure. [For more information click here.](/arcade)','home',20);
-INSERT OR IGNORE INTO blocks(key,label,kind,value,page,sort) VALUES('sponsor_title','Sponsor: headline','line','Coffee Time is sponsored by [HMP Bikes](https://www.hmpbikes.com/)','home',21);
-INSERT OR IGNORE INTO blocks(key,label,kind,value,page,sort) VALUES('sponsor_body','Sponsor: paragraph','text','Founded in Davis, CA, HMP Bikes aims to globally deliver sustainable and affordable last-mile transportation. "We envision a world where the air is cleaner, the weather is better, and being eco-friendly is also pocket-friendly. As it should be... HMP Bikes has your back. Hop on this zero-emission ride with us toward a cleaner tomorrow." **More at [www.hmpbikes.com](https://www.hmpbikes.com/)**','home',22);
-INSERT OR IGNORE INTO blocks(key,label,kind,value,page,sort) VALUES('coloring_title','Coloring page: headline','line','Coloring page: click the image to download the print file','home',23);
-INSERT OR IGNORE INTO blocks(key,label,kind,value,page,sort) VALUES('coloring_body','Coloring page: paragraph','text','See how much fun Thermos is having out on the streets of Davis, CA on his new HMP Bike! Learn more about our sponsor HMP Bikes. Visit their downtown Davis location at 440 F Street or search [www.hmpbikes.com](https://www.hmpbikes.com/).','home',24);
-INSERT OR IGNORE INTO blocks(key,label,kind,value,page,sort) VALUES('music_title','Music: headline','line','Warp World Music','home',25);
-INSERT OR IGNORE INTO blocks(key,label,kind,value,page,sort) VALUES('music_sub','Music: line under the headline','line','22nd century AI music made in collaboration with [eNuminous & Archimedes](http://soundcloud.com/enuminous)','home',26);
-INSERT OR IGNORE INTO blocks(key,label,kind,value,page,sort) VALUES('music_tagline','Music: tagline','line','Listen as you play Coffee Time with friends!','home',27);
-INSERT OR IGNORE INTO blocks(key,label,kind,value,page,sort) VALUES('orders_title','Orders: headline','line','Orders','home',28);
-INSERT OR IGNORE INTO blocks(key,label,kind,value,page,sort) VALUES('orders_intro','Orders: line under the box','line','Coffee Time is now available!','home',29);
+From the creative minds of Aaron Wedra, [Milly Wedra](https://www.facebook.com/millywedra), and [Nick Domke](https://www.facebook.com/nick.domke.5), this game is inspired by the classic Coffee Time board game, and brings the Coffee Time Universe to life like never before. Join Little Miss Hot Shot, our caffeinated hero, on her BIG adventure. [For more information click here.](/arcade)','home',25);
+INSERT OR IGNORE INTO blocks(key,label,kind,value,page,sort) VALUES('sponsor_title','Sponsor: headline','line','Coffee Time is sponsored by [HMP Bikes](https://www.hmpbikes.com/)','home',26);
+INSERT OR IGNORE INTO blocks(key,label,kind,value,page,sort) VALUES('sponsor_body','Sponsor: paragraph','text','Founded in Davis, CA, HMP Bikes aims to globally deliver sustainable and affordable last-mile transportation. "We envision a world where the air is cleaner, the weather is better, and being eco-friendly is also pocket-friendly. As it should be... HMP Bikes has your back. Hop on this zero-emission ride with us toward a cleaner tomorrow." **More at [www.hmpbikes.com](https://www.hmpbikes.com/)**','home',27);
+INSERT OR IGNORE INTO blocks(key,label,kind,value,page,sort) VALUES('coloring_title','Coloring page: headline','line','Coloring page: click the image to download the print file','home',28);
+INSERT OR IGNORE INTO blocks(key,label,kind,value,page,sort) VALUES('coloring_body','Coloring page: paragraph','text','See how much fun Thermos is having out on the streets of Davis, CA on his new HMP Bike! Learn more about our sponsor HMP Bikes. Visit their downtown Davis location at 440 F Street or search [www.hmpbikes.com](https://www.hmpbikes.com/).','home',29);
+INSERT OR IGNORE INTO blocks(key,label,kind,value,page,sort) VALUES('music_title','Music: headline','line','Warp World Music','home',30);
+INSERT OR IGNORE INTO blocks(key,label,kind,value,page,sort) VALUES('music_sub','Music: line under the headline','line','22nd century AI music made in collaboration with [eNuminous & Archimedes](http://soundcloud.com/enuminous)','home',31);
+INSERT OR IGNORE INTO blocks(key,label,kind,value,page,sort) VALUES('music_tagline','Music: tagline','line','Listen as you play Coffee Time with friends!','home',32);
+INSERT OR IGNORE INTO blocks(key,label,kind,value,page,sort) VALUES('orders_title','Orders: headline','line','Orders','home',33);
+INSERT OR IGNORE INTO blocks(key,label,kind,value,page,sort) VALUES('orders_intro','Orders: line under the box','line','Coffee Time is now available!','home',34);
 INSERT OR IGNORE INTO blocks(key,label,kind,value,page,sort) VALUES('orders_body','Orders: paragraphs','text','We have completed a 5 year process of design, playtesting, and production and have our first 1,000 first edition games in stock.
 
-**Price $39.99.** If you would like to order Coffee Time contact our sales team at [playcoffeetime@yahoo.com](mailto:playcoffeetime@yahoo.com), or send us your details with the form below. Provide your first and last name, number of copies desired, address and phone number.','home',30);
-INSERT OR IGNORE INTO blocks(key,label,kind,value,page,sort) VALUES('charity_title','Purple Tree: headline','line','5% of your purchase will go to [Purple Tree Café](https://www.purpletreecafe.org/)','home',31);
-INSERT OR IGNORE INTO blocks(key,label,kind,value,page,sort) VALUES('charity_body','Purple Tree: paragraph','text','a nonprofit organization in Davis, CA that employs people with disabilities to make and sell vegan baked goods at the Davis Farmers Market and other events, and brings people with and without disabilities together through music and art. Learn more about Purple Tree''s work, and meet some of its employees, [here](https://www.youtube.com/watch?v=N3I5WNw7kmk).','home',32);
+**Price $39.99.** If you would like to order Coffee Time contact our sales team at [playcoffeetime@yahoo.com](mailto:playcoffeetime@yahoo.com), or send us your details with the form below. Provide your first and last name, number of copies desired, address and phone number.','home',35);
+INSERT OR IGNORE INTO blocks(key,label,kind,value,page,sort) VALUES('charity_title','Purple Tree: headline','line','5% of your purchase will go to [Purple Tree Café](https://www.purpletreecafe.org/)','home',36);
+INSERT OR IGNORE INTO blocks(key,label,kind,value,page,sort) VALUES('charity_body','Purple Tree: paragraph','text','a nonprofit organization in Davis, CA that employs people with disabilities to make and sell vegan baked goods at the Davis Farmers Market and other events, and brings people with and without disabilities together through music and art. Learn more about Purple Tree''s work, and meet some of its employees, [here](https://www.youtube.com/watch?v=N3I5WNw7kmk).','home',37);
 INSERT OR IGNORE INTO blocks(key,label,kind,value,page,sort) VALUES('charity_programs','Purple Tree: what they do','text','**Baked goods with a purpose.** Vegan, wheat-free treats and organic tea, made and sold by Purple Tree''s employees at the Davis Farmers Market every Saturday, 8 to 1.
 
 **A bicycle coffee cart** and a café at the UC Davis MIND Institute, Monday to Thursday, 8 to 2.
 
 **Music and art for everyone.** The Davis Hootenanny and Team Davis Singers bring people with and without disabilities together on stage.
 
-Purple Tree is where community truly means everyone.','home',33);
-INSERT OR IGNORE INTO blocks(key,label,kind,value,page,sort) VALUES('delivered_title','Delivered card: headline','line','Thank you for helping every game find a home','home',34);
-INSERT OR IGNORE INTO blocks(key,label,kind,value,page,sort) VALUES('delivered_body','Delivered card: paragraph','text','Every one of our 1,000 first edition games has been delivered, many given away along the way. Thank you for playing, playtesting and carrying a copy home.','home',35);
-INSERT OR IGNORE INTO blocks(key,label,kind,value,page,sort) VALUES('box_title','What''s in the box: headline','line','What''s in the Box?','home',36);
+Purple Tree is where community truly means everyone.','home',38);
+INSERT OR IGNORE INTO blocks(key,label,kind,value,page,sort) VALUES('delivered_title','Delivered card: headline','line','Thank you for helping every game find a home','home',39);
+INSERT OR IGNORE INTO blocks(key,label,kind,value,page,sort) VALUES('delivered_body','Delivered card: paragraph','text','Every one of our 1,000 first edition games has been delivered, many given away along the way. Thank you for playing, playtesting and carrying a copy home.','home',40);
+INSERT OR IGNORE INTO blocks(key,label,kind,value,page,sort) VALUES('box_title','What''s in the box: headline','line','What''s in the Box?','home',41);
 INSERT OR IGNORE INTO blocks(key,label,kind,value,page,sort) VALUES('box_list','What''s in the box: list','text','20"x20" game board (with moveable clock hands)
 
 21 unique cards (x59 total cards)
@@ -83,14 +88,14 @@ Roamer Deck (x19 total cards)
 
 - 4 dice (d4, d8, d10, d12)
 - Instructions Manual & Coffee Time story
-- First edition game patch with 4 additional cards','home',37);
-INSERT OR IGNORE INTO blocks(key,label,kind,value,page,sort) VALUES('order_form_title','Order form: headline','line','Order Coffee Time','home',38);
-INSERT OR IGNORE INTO blocks(key,label,kind,value,page,sort) VALUES('order_form_body','Order form: paragraph','text','Tell us who you are and where to ship, and we will email you back to arrange shipping and payment. Nothing is charged on this page.','home',39);
-INSERT OR IGNORE INTO blocks(key,label,kind,value,page,sort) VALUES('team_title','Team: headline','line','Meet the Creators','home',40);
-INSERT OR IGNORE INTO blocks(key,label,kind,value,page,sort) VALUES('reviews_title','Reviews: headline','line','Reviews','home',41);
-INSERT OR IGNORE INTO blocks(key,label,kind,value,page,sort) VALUES('story_title','Story page: headline','line','Story','story',42);
-INSERT OR IGNORE INTO blocks(key,label,kind,value,page,sort) VALUES('story_intro','Story page: paragraph (optional)','text','Read the eight-page Coffee Time story from the box, or [download it as a PDF](/files/coffee-time-story.pdf).','story',43);
-INSERT OR IGNORE INTO blocks(key,label,kind,value,page,sort) VALUES('arcade_title','Arcade: headline','line','Coffee Time Adventures','arcade',44);
+- First edition game patch with 4 additional cards','home',42);
+INSERT OR IGNORE INTO blocks(key,label,kind,value,page,sort) VALUES('order_form_title','Order form: headline','line','Order Coffee Time','home',43);
+INSERT OR IGNORE INTO blocks(key,label,kind,value,page,sort) VALUES('order_form_body','Order form: paragraph','text','Tell us who you are and where to ship, and we will email you back to arrange shipping and payment. Nothing is charged on this page.','home',44);
+INSERT OR IGNORE INTO blocks(key,label,kind,value,page,sort) VALUES('team_title','Team: headline','line','Meet the Creators','home',45);
+INSERT OR IGNORE INTO blocks(key,label,kind,value,page,sort) VALUES('reviews_title','Reviews: headline','line','Reviews','home',46);
+INSERT OR IGNORE INTO blocks(key,label,kind,value,page,sort) VALUES('story_title','Story page: headline','line','Story','story',47);
+INSERT OR IGNORE INTO blocks(key,label,kind,value,page,sort) VALUES('story_intro','Story page: paragraph (optional)','text','Read the eight-page Coffee Time story from the box, or [download it as a PDF](/files/coffee-time-story.pdf).','story',48);
+INSERT OR IGNORE INTO blocks(key,label,kind,value,page,sort) VALUES('arcade_title','Arcade: headline','line','Coffee Time Adventures','arcade',49);
 INSERT OR IGNORE INTO blocks(key,label,kind,value,page,sort) VALUES('arcade_body','Arcade: paragraphs','text','[Download the FREE demo](https://dvgameclub.itch.io/coffee-time-adventures)! The Coffee Time team is thrilled to announce that Coffee Time Adventures, our first-ever video game, is well into development!
 
 From the creative minds of Aaron Wedra, [Milly Wedra](https://www.facebook.com/millywedra), and [Nick Domke](https://www.facebook.com/nick.domke.5), this game is inspired by the classic Coffee Time board game, and brings the Coffee Time Universe to life like never before.
@@ -101,12 +106,12 @@ Explore 5 Worlds in the Coffee Time Universe! Join Little Miss Hot Shot, our caf
 
 Developed right here in Davis, California, this passion project is a labor of love, creativity, and teamwork.
 
-Support our adventure by liking, following, and sharing [this post](https://www.facebook.com/profile.php?id=100083230971672). Have ideas or feedback? [Contact us!](mailto:playcoffeetime@yahoo.com) Together, let''s help Little Miss Hot Shot save the Coffee Time Universe!','arcade',45);
-INSERT OR IGNORE INTO blocks(key,label,kind,value,page,sort) VALUES('news_title','News page: headline','line','News','news',46);
-INSERT OR IGNORE INTO blocks(key,label,kind,value,page,sort) VALUES('tutorials_title','Tutorials page: headline','line','Video Tutorials','tutorials',47);
-INSERT OR IGNORE INTO blocks(key,label,kind,value,page,sort) VALUES('tutorials_intro','Tutorials page: paragraph','text','We released our first edition of Coffee Time in 2023. Here, you will find tutorial videos to help you learn how to play like a pro. If you still have questions on game play, please email us at [playcoffeetime@yahoo.com](mailto:playcoffeetime@yahoo.com)','tutorials',48);
-INSERT OR IGNORE INTO blocks(key,label,kind,value,page,sort) VALUES('faq_title','FAQ page: headline','line','Frequently Asked Questions','faq',49);
-INSERT OR IGNORE INTO blocks(key,label,kind,value,page,sort) VALUES('faq_intro','FAQ page: paragraph','text','We released our first edition of Coffee Time in 2023. Thank you for purchasing one of the first one thousand games in existence! We hope Coffee Time will develop a cult following, but we need your help to develop a list of frequently asked questions. If you have a question on game play, please email us at [playcoffeetime@yahoo.com](mailto:playcoffeetime@yahoo.com)','faq',50);
+Support our adventure by liking, following, and sharing [this post](https://www.facebook.com/profile.php?id=100083230971672). Have ideas or feedback? [Contact us!](mailto:playcoffeetime@yahoo.com) Together, let''s help Little Miss Hot Shot save the Coffee Time Universe!','arcade',50);
+INSERT OR IGNORE INTO blocks(key,label,kind,value,page,sort) VALUES('news_title','News page: headline','line','News','news',51);
+INSERT OR IGNORE INTO blocks(key,label,kind,value,page,sort) VALUES('tutorials_title','Tutorials page: headline','line','Video Tutorials','tutorials',52);
+INSERT OR IGNORE INTO blocks(key,label,kind,value,page,sort) VALUES('tutorials_intro','Tutorials page: paragraph','text','We released our first edition of Coffee Time in 2023. Here, you will find tutorial videos to help you learn how to play like a pro. If you still have questions on game play, please email us at [playcoffeetime@yahoo.com](mailto:playcoffeetime@yahoo.com)','tutorials',53);
+INSERT OR IGNORE INTO blocks(key,label,kind,value,page,sort) VALUES('faq_title','FAQ page: headline','line','Frequently Asked Questions','faq',54);
+INSERT OR IGNORE INTO blocks(key,label,kind,value,page,sort) VALUES('faq_intro','FAQ page: paragraph','text','We released our first edition of Coffee Time in 2023. Thank you for purchasing one of the first one thousand games in existence! We hope Coffee Time will develop a cult following, but we need your help to develop a list of frequently asked questions. If you have a question on game play, please email us at [playcoffeetime@yahoo.com](mailto:playcoffeetime@yahoo.com)','faq',55);
 INSERT OR IGNORE INTO reviews(name,role,quote,sort) VALUES('Avery Armstrong Stockert','Playtester','Coffee Time is dope.
 If there''s ever an opportunity to be an investor, count me in.',0);
 INSERT OR IGNORE INTO reviews(name,role,quote,sort) VALUES('Violet Price','Playtester','This game is awesome and it has been so cool to watch the creators, Aaron and Stevie, perfect the game over the years!',1);

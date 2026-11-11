@@ -301,3 +301,70 @@ body { background: transparent !important; }
 .beanfall i:nth-child(16){left:77%;--s:1.02;--r:868deg;animation-duration:9.0s;animation-delay:-0.3s;width:35px;height:41px}
 .beanfall i:nth-child(17){left:37%;--s:0.70;--r:-484deg;animation-duration:12.3s;animation-delay:-13.5s;width:33px;height:35px}
 .beanfall i:nth-child(18){left:6%;--s:1.15;--r:373deg;animation-duration:10.8s;animation-delay:-7.8s;width:33px;height:41px}
+
+/* Hover outline: a crisp yellow ring with an orange lift and a soft glow, like the sponsor tiles on the Zombie Bike Parade site. */
+@media (hover: hover) {
+  .gcard, .review, .door, .creators > li, .news-item, .tchap, .tut-list > li, .faq-list details, .track, .coloring a, .zone-jump a, .ar-list a {
+    transition: outline-color .2s, box-shadow .25s, transform .25s;
+    outline: 3px solid transparent; outline-offset: 3px;
+  }
+  .gcard:hover, .review:hover, .door:hover, .creators > li:hover, .news-item:hover, .tchap:hover, .tut-list > li:hover, .faq-list details:hover, .track:hover, .coloring a:hover {
+    outline-color: #fff245;
+    box-shadow: 0 0 0 6px rgba(255, 138, 30, .55), 0 18px 36px rgba(20, 0, 45, .35);
+  }
+  .zone-jump a:hover, .ar-list a:hover { outline-color: #fff245; }
+}
+
+/* ---------- movie-star stage: the 3D cast picture under moving spotlights, shine and flares ---------- */
+.cast-stage { width: min(1240px, 98%); }
+.cast-art { position: relative; isolation: isolate; border-radius: 28px; overflow: hidden; box-shadow: 0 30px 60px rgba(50, 1, 88, .3), 0 0 0 6px #fff, 0 0 0 9px rgba(142, 60, 192, .5); }
+.cast-art::after { display: none; }
+.cast-main { display: block; width: 100%; height: auto; filter: none !important; animation: none; transform: none; }
+.cast-art > div, .cast-art > span { position: absolute; inset: 0; pointer-events: none; }
+.cast-art .cast-beams span { position: absolute; top: -10%; width: 20%; height: 95%; z-index: 0; mix-blend-mode: screen; filter: blur(7px); opacity: .7; transform-origin: 50% 0; clip-path: polygon(44% 0, 56% 0, 100% 100%, 0 100%); background: linear-gradient(180deg, rgba(255, 250, 200, .95), rgba(255, 250, 200, 0) 88%); animation: swing 6s ease-in-out infinite alternate; }
+.cast-art .cast-beams span:nth-child(1) { left: 6%; rotate: 10deg; background: linear-gradient(180deg, rgba(255, 236, 120, .95), rgba(255, 236, 120, 0) 88%); }
+.cast-art .cast-beams span:nth-child(2) { left: 30%; rotate: -6deg; animation-duration: 7.5s; animation-delay: -2s; background: linear-gradient(180deg, rgba(255, 255, 255, 1), rgba(255, 255, 255, 0) 88%); }
+.cast-art .cast-beams span:nth-child(3) { left: 52%; rotate: 6deg; animation-duration: 5.5s; animation-delay: -3s; background: linear-gradient(180deg, rgba(255, 170, 230, .95), rgba(255, 170, 230, 0) 88%); }
+.cast-art .cast-beams span:nth-child(4) { left: 74%; rotate: -10deg; animation-duration: 8s; animation-delay: -1s; background: linear-gradient(180deg, rgba(190, 160, 255, .95), rgba(190, 160, 255, 0) 88%); }
+@keyframes swing { from { rotate: -16deg; opacity: .35; } to { rotate: 16deg; opacity: .85; } }
+.cast-pool { background: radial-gradient(34% 14% at 50% 70%, rgba(255, 255, 255, .8), rgba(255, 245, 200, .35) 55%, transparent 75%); mix-blend-mode: screen; animation: poolpulse 3.2s ease-in-out infinite alternate; }
+@keyframes poolpulse { from { opacity: .5; scale: .96; } to { opacity: 1; scale: 1.04; } }
+.cast-sweep { background: linear-gradient(110deg, transparent 40%, rgba(255, 255, 255, .55) 49%, rgba(255, 255, 255, .9) 50%, rgba(255, 255, 255, .55) 51%, transparent 60%) -80% 0 / 250% 100% no-repeat; mix-blend-mode: soft-light; animation: starshine 5.5s ease-in-out infinite; }
+@keyframes starshine { 0%, 15% { background-position: 150% 0; } 65%, 100% { background-position: -80% 0; } }
+.cast-art .cast-spk { z-index: 2; }
+.cast-flare b { position: absolute; width: clamp(40px, 8vw, 110px); aspect-ratio: 1; translate: -50% -50%; mix-blend-mode: screen;
+  background: radial-gradient(circle, #fff 0 8%, rgba(255, 255, 255, .6) 14%, transparent 30%), linear-gradient(90deg, transparent 5%, rgba(255, 255, 255, .95) 50%, transparent 95%) center / 100% 3px no-repeat, linear-gradient(0deg, transparent 5%, rgba(255, 255, 255, .95) 50%, transparent 95%) center / 3px 100% no-repeat;
+  animation: flare 3.4s ease-in-out infinite; opacity: 0; }
+.cast-flare .f1 { left: 24%; top: 30%; } .cast-flare .f2 { left: 47%; top: 12%; animation-delay: -1.2s; } .cast-flare .f3 { left: 72%; top: 26%; animation-delay: -2.2s; } .cast-flare .f4 { left: 58%; top: 52%; animation-delay: -.6s; }
+@keyframes flare { 0%, 55%, 100% { opacity: 0; scale: .3; rotate: 0deg; } 70% { opacity: 1; scale: 1; rotate: 45deg; } 85% { opacity: .3; scale: .6; rotate: 90deg; } }
+@media (prefers-reduced-motion: reduce) { .cast-art .cast-beams span, .cast-pool, .cast-sweep, .cast-flare b { animation: none !important; } .cast-flare b { opacity: .6; } }
+
+/* ---------- paired games: each 2D game beside its AR twin, the AR ones made to look 3D ---------- */
+.arc-pair { padding-bottom: 8px; }
+.pair-heads { display: grid; grid-template-columns: 1fr 76px 1fr; gap: 0; margin: 22px 0 14px; text-align: center; }
+.ph { font: 400 clamp(1.1rem, 2vw, 1.5rem)/1 Anton, Impact, sans-serif; letter-spacing: .08em; text-transform: uppercase; padding: 12px 10px; border-radius: 999px; color: #2b0a4d; }
+.ph2d { background: #fff245; box-shadow: 0 5px 0 #b39e00; }
+.phar { background: linear-gradient(90deg, #6fe3ff, #b48cff); box-shadow: 0 5px 0 #2a7fa5, 0 0 24px rgba(111, 227, 255, .6); }
+.pairs { list-style: none; margin: 0; padding: 0; display: grid; gap: 26px; }
+.pair-cards { display: grid !important; grid-template-columns: 1fr 76px 1fr !important; gap: 0 !important; align-items: stretch; perspective: 1400px; }
+.pair-link { display: grid; place-items: center; align-content: center; gap: 6px; text-align: center; list-style: none; }
+.pair-link b { display: grid; place-items: center; width: 56px; height: 56px; border-radius: 50%; background: #fff245; color: #2b0a4d; font: 400 2rem/1 Anton, sans-serif; box-shadow: 0 4px 0 #b39e00, 0 0 0 5px rgba(255, 255, 255, .25); }
+.pair-link i { font: normal 700 .62rem/1.1 Jost, sans-serif; letter-spacing: .1em; text-transform: uppercase; color: #fff; opacity: .8; max-width: 70px; }
+/* the AR card: tilted in perspective with a thick cyan edge and a glow, so it reads as an object, not a screenshot */
+.pair-cards .k-ar { transform: rotateY(-9deg) rotateX(3deg) translateZ(0); transform-origin: 0 50%; transform-style: preserve-3d; transition: transform .45s cubic-bezier(.2, .8, .2, 1), box-shadow .45s;
+  box-shadow: 1px 1px 0 #1c9fc9, 2px 2px 0 #1a8fb8, 3px 3px 0 #187fa6, 4px 4px 0 #166f94, 5px 5px 0 #145f82, 6px 6px 0 #124f70, 7px 7px 0 #103f5e, 0 0 0 3px rgba(111, 227, 255, .9), 0 0 38px rgba(111, 227, 255, .55), 22px 34px 40px rgba(5, 0, 30, .55) !important; }
+.pair-cards .k-ar .gposter { transform: translateZ(40px); }
+.pair-cards .k-ar .gfull { filter: saturate(1.15) contrast(1.05); }
+.pair-cards .k-ar::before { content: ''; position: absolute; inset: 0; z-index: 4; pointer-events: none; border-radius: inherit; background: linear-gradient(115deg, transparent 30%, rgba(255, 255, 255, .35) 46%, transparent 54%) -120% 0 / 250% 100% no-repeat; animation: arshine 5s ease-in-out infinite; mix-blend-mode: screen; }
+@keyframes arshine { 0%, 30% { background-position: 160% 0; } 70%, 100% { background-position: -120% 0; } }
+.pair-cards .k-ar:hover { transform: rotateY(0) rotateX(0) translateY(-8px) scale(1.03) !important; }
+.pair-cards .k-2d { box-shadow: 0 0 0 3px #fff245, 0 14px 24px rgba(5, 0, 30, .45) !important; }
+.pair-cards .gcard { margin: 0; }
+@media (max-width: 860px) {
+  .pair-heads { grid-template-columns: 1fr 1fr; gap: 10px; } .ph-mid { display: none; }
+  .pair-cards { grid-template-columns: 1fr 1fr !important; gap: 12px !important; }
+  .pair-link { display: none; }
+  .pair-cards .k-ar { transform: rotateY(-5deg); }
+}
+@media (max-width: 560px) { .pair-cards { grid-template-columns: 1fr !important; } .pair-heads { display: none; } .pair-cards .k-ar { transform: none; } }
+@media (prefers-reduced-motion: reduce) { .pair-cards .k-ar::before { animation: none; } .pair-cards .k-ar { transform: none; } }

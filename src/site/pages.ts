@@ -117,7 +117,7 @@ const initials = (t: string) => t.replace(/[^A-Za-z0-9 ]/g, '').split(/\s+/).fil
 const ext = (u: string) => (u.startsWith('http') ? raw('target="_blank" rel="noopener"') : '');
 
 // One heading style for every section: a small blinking kicker over a shimmering title, like the cover.
-function secHead(kicker: string, title: Safe | string, sub: Safe | string = '', tag: 'h1' | 'h2' | 'h3' = 'h2', tone: '' | 'light' = ''): Safe {
+function secHead(kicker: Safe | string, title: Safe | string, sub: Safe | string = '', tag: 'h1' | 'h2' | 'h3' = 'h2', tone: '' | 'light' = ''): Safe {
   const t = tag === 'h1' ? html`<h1 class="sec-title">${title}</h1>` : tag === 'h3' ? html`<h3 class="sec-title">${title}</h3>` : html`<h2 class="sec-title">${title}</h2>`;
   return html`<header class="sec-head ${tone === 'light' ? 'on-light' : ''}"><p class="sec-kicker">${kicker}</p>${t}${sub ? html`<p class="sec-sub">${sub}</p>` : ''}</header>`;
 }
@@ -144,13 +144,14 @@ export function gamesSections(blocks: Blocks, games: Game[]): Safe {
   const of = (k: string) => games.filter((g) => g.kind === k);
   return html`
   <div class="wrap">
-    <div class="arc arc-2d" id="arcade">
-      ${secHead('Insert coin', line(blocks, 'arcade_2d_title'), 'Play right in your browser. Free.', 'h3')}
-      <ul class="gcards">${of('2d').map(gameCard)}</ul>
-    </div>
-    <div class="arc arc-ar" id="ar">
-      ${secHead('Same games, on your table', line(blocks, 'arcade_ar_title'), raw(inline(b(blocks, 'arcade_ar_body'))), 'h3')}
-      <ul class="gcards">${of('ar').map(gameCard)}</ul>
+    <div class="arc arc-pair" id="arcade">
+      <span id="ar"></span>
+      ${secHead(line(blocks, 'pair_kicker'), line(blocks, 'pair_title'), raw(inline(b(blocks, 'pair_sub'))), 'h3')}
+      <div class="pair-heads" aria-hidden="true"><span class="ph ph2d">${line(blocks, 'pair_2d_label')}</span><span class="ph-mid"></span><span class="ph phar">${line(blocks, 'pair_ar_label')}</span></div>
+      <ul class="pairs">${of('2d').map((d, i) => {
+        const a = of('ar').find((x) => x.title === d.title);
+        return html`<li class="pair"><ul class="gcards pair-cards">${gameCard(d, i)}<li class="pair-link" aria-hidden="true"><b>=</b><i>${d.title}</i></li>${a ? gameCard(a, i) : ''}</ul></li>`;
+      })}</ul>
       <p class="arc-foot"><a href="https://www.smartzgraphics.com/news/star-bugs" target="_blank" rel="noopener">More about the AR arcade</a></p>
     </div>
   </div>`;
@@ -177,7 +178,7 @@ export function home(s: Settings, blocks: Blocks, tracks: Track[], creators: Cre
   <ul class="wrap hud" aria-label="Coffee Time by the numbers">
     <li><b>1,000</b><span>board games made, every one delivered</span></li>
     <li><b>5</b><span>worlds to save from King Tea</span></li>
-    <li><b>3 ways</b><span>to play: 3D, 2D and AR</span></li>
+    <li><b>3 ways</b><span>of play: board game, 2D arcade and AR</span></li>
     <li><b>Free</b><span>to play, no sign-up</span></li>
   </ul>
 </section>
@@ -207,12 +208,12 @@ export function home(s: Settings, blocks: Blocks, tracks: Track[], creators: Cre
     ${secHead('Starring', line(blocks, 'cast_title'), line(blocks, 'cast_sub'), 'h2', 'light')}
   </div>
   <div class="cast-stage">
-    <div class="cast-beams" aria-hidden="true"><span></span><span></span><span></span></div>
-    <div class="cast-spk" aria-hidden="true">${[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12].map((n) => html`<i class="p${n}"></i>`)}</div>
     <div class="cast-art">
-      ${img('/img/characters-cutout.webp', 'The whole cast: Little Miss Hot Shot, Donette, Thermos, Cup Joe, Sir Cubey, King Tea, the crumpets and friends', 'class="cast-main" width="1374" height="684"')}
-      <span class="cast-shade" aria-hidden="true"></span><span class="cast-gloss" aria-hidden="true"></span>
-      ${img('/img/characters-cutout.webp', '', 'class="cast-mirror" width="1374" height="684"')}
+      ${img('/img/cast-3d.webp', 'The whole cast on a purple stage: Little Miss Hot Shot, Donette, Thermos, Cup Joe, Sir Cubey, King Tea, the crumpets and friends', 'class="cast-main" width="1672" height="941"')}
+      <div class="cast-beams" aria-hidden="true"><span></span><span></span><span></span><span></span></div>
+      <span class="cast-pool" aria-hidden="true"></span><span class="cast-sweep" aria-hidden="true"></span>
+      <div class="cast-spk" aria-hidden="true">${[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12].map((n) => html`<i class="p${n}"></i>`)}</div>
+      <div class="cast-flare" aria-hidden="true"><b class="f1"></b><b class="f2"></b><b class="f3"></b><b class="f4"></b></div>
     </div>
   </div>
 </section>

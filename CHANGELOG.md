@@ -1,5 +1,10 @@
 # Changelog
 
+## 2026-11-11: v6 cast and pairs
+- The characters stage is now a ChatGPT-made 3D version of the real cast (heroes unchanged, added depth, raised purple stage) under moving spotlights, a shine sweep, lens flares and glitter (CSS only).
+- The 2D and AR games are paired side by side, Rapid Refill, Donut Dash and Star Bugs each as 2D beside AR, with the AR cards tilted in 3D with a thick glowing edge. Editable headings (migration 0013).
+- Hover outline (yellow ring with orange halo) on cards, doors, news, FAQ, tracks. Stat strip reads "board game, 2D arcade and AR".
+
 ## 2026-11-11: v5 effects
 - New public/fx.css: coded 2026 space background (nebulae, aurora, three star layers, shooting stars), coffee drips, falling beans, a rising pour in the newsletter, a brand texture library (scripts/make-textures.py), glossy shaded characters, power-orb pickups, nicer typography.
 - The box is now a real CSS 3D cuboid built from the printed dieline, tilting with the cursor.
