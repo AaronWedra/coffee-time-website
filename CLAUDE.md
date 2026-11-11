@@ -77,6 +77,7 @@ for cropping and isolating pieces of the real files at most. Subtle effects are 
   /privacy says Google's advertising features are turned off. Do not add a bar back unless he asks.
 - No inline `style=""` attributes (the CSP has no unsafe-inline); the smoke test checks.
 - No em dashes anywhere in copy, code comments or UI (Smartz house convention). The seed script asserts it.
+- **A LIKE pattern in a migration must be under 50 bytes.** D1 refuses longer ones ("LIKE or GLOB pattern too complex"), node:sqlite does not, so smoke passes and production 500s on every page because the failed migration is retried on each request. This took the live site down on 2026-11-11 (migration 0020).
 - Commit after every meaningful change. CHANGELOG.md gets a line per functional change.
 
 ## Facts that are easy to get wrong
