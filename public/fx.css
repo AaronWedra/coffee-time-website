@@ -594,3 +594,37 @@ body { background: transparent !important; }
 .learn a { background: transparent !important; border: 2px solid rgba(255, 255, 255, .6); color: #fff !important; }
 .learn a:hover { background: var(--yellow) !important; color: var(--purple) !important; border-color: var(--yellow); }
 @media (max-width: 860px) { .hero .hero-grid { grid-template-columns: 1fr; } .hero .hero-title { white-space: normal; } }
+
+/* ---- the box is on a turntable: it spins all the way round, slowly and forever, and the cursor
+   still tilts and nudges it (the tilt lives on the wrapper, the spin on the box itself) */
+.cube-sway { animation: none !important; transform: rotateX(var(--rx)) rotateZ(var(--rz)); transition: transform .7s cubic-bezier(.2, .9, .25, 1.1); }
+.cube { transform: none; transition: none; animation: boxspin 26s linear infinite; }
+@keyframes boxspin { from { transform: rotateZ(0deg); } to { transform: rotateZ(360deg); } }
+@media (prefers-reduced-motion: reduce) { .cube { animation: none; } }
+
+/* orders copy: body size, not headline size */
+.orders-split .orders-intro { font-size: clamp(1.1rem, 1.5vw, 1.3rem) !important; margin: 10px 0 6px !important; }
+.orders-split .orders-copy, .orders-split .orders-copy p, .orders-split .orders-copy > p:first-child { font-size: 1rem !important; line-height: 1.55 !important; }
+.orders-split .orders-copy p { margin: 0 0 .7em; }
+.orders { padding: clamp(36px, 5vw, 60px) 0 !important; }
+
+/* "1,000 delivered" thank-you: a full-width band, no frame */
+.delivered { max-width: none !important; margin: clamp(20px, 3vw, 40px) calc(50% - 50vw) 0 !important; width: 100vw; border: 0 !important; border-radius: 0 !important; box-shadow: none !important;
+  padding: clamp(30px, 4vw, 54px) max(var(--gutter), calc(50vw - 590px)) !important;
+  background: linear-gradient(90deg, #3a1470, #24104a) !important; }
+.delivered .dv-copy { max-width: none; }
+
+/* ---- reviews: one row that drifts sideways by itself. Hover or focus pauses it; it can also be
+   scrolled by hand. The list is printed twice so the loop has no seam (the copy is aria-hidden). */
+.reviews { padding: clamp(36px, 5vw, 64px) 0 !important; overflow: hidden; }
+.rv-scroll { overflow-x: auto; scrollbar-width: none; padding: 8px 0 18px; -webkit-mask: linear-gradient(90deg, transparent, #000 6%, #000 94%, transparent); mask: linear-gradient(90deg, transparent, #000 6%, #000 94%, transparent); }
+.rv-scroll::-webkit-scrollbar { display: none; }
+.rv-track { list-style: none; margin: 0; padding: 0; display: flex; gap: 18px; width: max-content; animation: rvdrift 150s linear infinite; }
+.rv-scroll:hover .rv-track, .rv-scroll:focus-within .rv-track, .rv-scroll:focus .rv-track { animation-play-state: paused; }
+@keyframes rvdrift { to { transform: translateX(calc(-50% - 9px)); } }
+.rv-track .review { flex: 0 0 clamp(260px, 26vw, 340px); min-height: 0 !important; padding: 20px 22px 18px; border-radius: 16px; text-align: left; display: flex; flex-direction: column; gap: 10px; border: 0 !important; }
+.rv-track .review:hover { transform: none !important; }
+.rv-track .review .stars { justify-content: flex-start; margin: 0; } .rv-track .review .stars svg { width: 16px; height: 16px; }
+.rv-track .review blockquote { font-size: 1rem; line-height: 1.45; display: -webkit-box; -webkit-line-clamp: 6; -webkit-box-orient: vertical; overflow: hidden; }
+.rv-track .review h3 { margin: auto 0 0; font-size: .85rem; } .rv-track .review h3 small { display: inline; margin-left: .5em; font-size: .8rem; opacity: .85; }
+@media (prefers-reduced-motion: reduce) { .rv-track { animation: none; } }

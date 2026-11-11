@@ -282,12 +282,12 @@ export function boardGame(s: Settings, blocks: Blocks, reviews: Review[], flags:
 </div>
 
 <div class="reviews" id="reviews">
-  ${orb('earth', 'l', 0, 2, 5)}
-  ${orb('sugar', 'r', 50, 3, 1)}
   <div class="wrap">
     ${secHead('What players say', line(blocks, 'reviews_title'))}
-    <ul class="review-grid">
-      ${reviews.map((r, i) => html`<li class="review c${(i % 6) + 1}">${stars()}<h3>${r.name}<small>${r.role}</small></h3><blockquote>${raw(inline(r.quote))}</blockquote><span class="qm" aria-hidden="true">&rdquo;</span></li>`)}
+  </div>
+  <div class="rv-scroll" tabindex="0" aria-label="Reviews, scroll sideways for more">
+    <ul class="rv-track">
+      ${[0, 1].map((copy) => reviews.map((r, i) => html`<li class="review c${(i % 6) + 1}" ${copy ? raw('aria-hidden="true"') : ''}>${stars()}<blockquote>${raw(inline(r.quote))}</blockquote><h3>${r.name}<small>${r.role}</small></h3></li>`))}
     </ul>
   </div>
 </div>
