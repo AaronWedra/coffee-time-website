@@ -139,34 +139,6 @@ function gameCard(g: Game, i: number): Safe {
   </li>`;
 }
 
-export function gamesSections(blocks: Blocks, games: Game[]): Safe {
-  const of = (k: string) => games.filter((g) => g.kind === k);
-  // One card per game. The AR art leads (it is the stronger picture); the 2D version is the second button.
-  const titles = [...new Set([...of('ar'), ...of('2d')].map((g) => g.title))];
-  return html`
-  <div class="wrap">
-    <div class="arc arc-pair" id="arcade">
-      <span id="ar"></span>
-      ${secHead(line(blocks, 'pair_kicker'), line(blocks, 'pair_title'), raw(inline(b(blocks, 'pair_sub'))), 'h2')}
-      <ul class="trio">${titles.map((title) => {
-        const a = of('ar').find((x) => x.title === title);
-        const d = of('2d').find((x) => x.title === title);
-        const lead = a || d!;
-        return html`<li class="trio-card">
-          <a class="trio-art" href="${lead.url}" ${ext(lead.url)} tabindex="-1" aria-hidden="true">${img(lead.image, '', 'width="1000" height="625"')}</a>
-          <h3>${title}</h3>
-          <p>${lead.blurb}</p>
-          <p class="trio-btns">
-            ${a ? html`<a class="btn btn-go" href="${a.url}" ${ext(a.url)}>Play in AR<span class="sr"> ${title}</span></a>` : ''}
-            ${d ? html`<a class="btn btn-go btn-ghost" href="${d.url}" ${ext(d.url)}>Play in 2D<span class="sr"> ${title}</span></a>` : ''}
-          </p>
-          ${a?.note || d?.note ? html`<p class="trio-note">${[a?.note ? 'AR: ' + a.note : '', d?.note ? '2D: ' + d.note : ''].filter(Boolean).join(' ')}</p>` : ''}
-        </li>`;
-      })}</ul>
-    </div>
-  </div>`;
-}
-
 export function home(s: Settings, blocks: Blocks, flags: { joined?: string }, data: { games: Game[]; reviews: Review[]; tracks: Track[] }): Safe {
   // Home is the highlights, about half of everything: play, the cast, the board game, music, newsletter.
   // Each strip shows a few items and links to its own page for the rest.
@@ -421,17 +393,43 @@ export function story(s: Settings, blocks: Blocks): Safe {
 }
 
 export function arcade(s: Settings, blocks: Blocks, games: Game[]): Safe {
-  const solo = games.filter((g) => g.kind === '3d');
+  const of = (k: string) => games.filter((g) => g.kind === k);
+  // One arcade, one grid of three columns. Row one: the Coffee Time Adventures trailer (two columns wide)
+  // and its game card. Then one card per game, AR art leading, with the 2D version as the second button.
+  const titles = [...new Set([...of('ar'), ...of('2d')].map((g) => g.title))];
   return html`<section class="page arcade">
-    ${orb('warp', 'r', 10, 3, 1)}
-    ${solo.map((g) => html`<div class="wrap cta-wrap">
-      ${secHead('Video games', g.title, g.blurb, 'h1')}
-      <div class="cta-duo">
-        <figure class="cta-vid">${video(s.trailer_video, '/img/trailer-poster-roamer.webp', g.title + ' trailer')}<figcaption>Watch the trailer</figcaption></figure>
-        <figure class="cta-vid cta-play"><a href="${g.url}" ${ext(g.url)}>${img(s.trailer_poster, 'Play ' + g.title, 'width="1280" height="720"')}<span class="cta-go" aria-hidden="true"></span></a><figcaption><a href="${g.url}" ${ext(g.url)}>${g.button || 'Play now'}</a>${g.note ? html` <small>${g.note}</small>` : ''}</figcaption></figure>
-      </div>
-    </div>`)}
-    <div class="arc-rule">${gamesSections(blocks, games)}</div>
+    <div class="wrap" id="arcade">
+      <span id="ar"></span>
+      ${secHead(line(blocks, 'pair_kicker'), line(blocks, 'pair_title'), raw(inline(b(blocks, 'pair_sub'))), 'h1')}
+      <ul class="trio">
+        ${of('3d').map((g) => html`<li class="trio-card trio-wide">
+          ${video(s.trailer_video, '/img/trailer-poster-roamer.webp', g.title + ' trailer')}
+          <h2>${g.title}: watch the trailer</h2>
+        </li>
+        <li class="trio-card">
+          <a class="trio-art" href="${g.url}" ${ext(g.url)} tabindex="-1" aria-hidden="true">${img(s.trailer_poster, '', 'width="1280" height="720"')}</a>
+          <h3>${g.title}</h3>
+          <p>${g.blurb}</p>
+          <p class="trio-btns"><a class="btn btn-go" href="${g.url}" ${ext(g.url)}>${g.button || 'Play now'}</a></p>
+          ${g.note ? html`<p class="trio-note">${g.note}</p>` : ''}
+        </li>`)}
+        ${titles.map((title) => {
+          const a = of('ar').find((x) => x.title === title);
+          const d = of('2d').find((x) => x.title === title);
+          const lead = a || d!;
+          return html`<li class="trio-card">
+          <a class="trio-art" href="${lead.url}" ${ext(lead.url)} tabindex="-1" aria-hidden="true">${img(lead.image, '', 'width="1000" height="625"')}</a>
+          <h3>${title}</h3>
+          <p>${lead.blurb}</p>
+          <p class="trio-btns">
+            ${a ? html`<a class="btn btn-go" href="${a.url}" ${ext(a.url)}>Play in AR<span class="sr"> ${title}</span></a>` : ''}
+            ${d ? html`<a class="btn btn-go btn-ghost" href="${d.url}" ${ext(d.url)}>Play in 2D<span class="sr"> ${title}</span></a>` : ''}
+          </p>
+          ${a?.note || d?.note ? html`<p class="trio-note">${[a?.note ? 'AR: ' + a.note : '', d?.note ? '2D: ' + d.note : ''].filter(Boolean).join(' ')}</p>` : ''}
+        </li>`;
+        })}
+      </ul>
+    </div>
   </section>`;
 }
 

@@ -1035,3 +1035,11 @@ main > section + section, main > section > div.hero, main > section > .reviews, 
 .hs-music .notes { display: none !important; }
 .hs-music { background: #2a0d5a !important; position: relative; isolation: isolate; overflow: hidden; }
 .hs-music::before { content: ''; position: absolute; inset: 0; z-index: -1; pointer-events: none; background: radial-gradient(60% 70% at 50% 50%, rgba(42, 13, 90, .8), rgba(42, 13, 90, .2) 70%, transparent), url(/img/note-tunnel.svg) center / cover no-repeat #2a0d5a; }
+
+/* ---- arcade as one grid: trailer (two columns) + Adventures card, then the three AR games */
+.page.arcade .trio { grid-template-columns: repeat(3, minmax(0, 1fr)); row-gap: clamp(30px, 4vw, 54px); margin-top: 0 !important; }
+.trio-wide { grid-column: span 2; }
+.trio-wide .video { display: block; width: 100%; height: auto; aspect-ratio: 16 / 9; background: #000; outline: 0 !important; box-shadow: 0 16px 30px rgba(10, 0, 30, .5); }
+.trio-wide h2 { font-family: var(--display); font-weight: 400; text-transform: uppercase; font-size: clamp(1.5rem, 2.2vw, 2rem); margin: .6em 0 0; line-height: 1; color: #fff; }
+.trio-art img { aspect-ratio: 16 / 10; object-fit: cover; }
+@media (max-width: 900px) { .page.arcade .trio { grid-template-columns: 1fr; } .trio-wide { grid-column: auto; } }
