@@ -1004,3 +1004,15 @@ a:focus:not(:focus-visible), button:focus:not(:focus-visible), label:focus:not(:
 
 /* board game page top: the spinning box beside the title */
 .bg-top-box .boxtilt { width: 100%; height: clamp(280px, 30vw, 420px); margin: 0; }
+
+/* board game page top, final: the board fills the right half of the section, flush to its top, bottom and right edge */
+.zone-bg { position: relative; }
+.bg-top { position: relative; grid-template-columns: 1fr 1fr !important; padding: 0 !important; min-height: clamp(380px, 46vw, 640px); align-items: center; }
+.bg-top-copy { padding: clamp(30px, 4vw, 56px) 0; }
+.bg-top-board { perspective: none; position: absolute; top: 0; bottom: 0; left: 50%; right: calc(50% - 50vw); overflow: hidden; }
+.bg-top-board img { width: 100% !important; height: 100% !important; object-fit: cover; object-position: 50% 50%; margin: 0 !important; border-radius: 0 !important; transform: none !important; box-shadow: none !important; animation: none !important; translate: none; }
+.bg-top-board:hover img { transform: none !important; }
+@media (max-width: 860px) { .bg-top { grid-template-columns: 1fr !important; min-height: 0; } .bg-top-board { position: relative; left: 0; right: 0; margin: 0 calc(50% - 50vw); aspect-ratio: 1; } }
+.zone-bg { padding-top: 0 !important; margin-top: 0 !important; }
+.zone-bg > .bg-top { margin-top: 0 !important; }
+.hero > .orb { display: none !important; }

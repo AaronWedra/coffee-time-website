@@ -152,3 +152,4 @@
 - 2026-11-11: Board game page top rebuilt: title beside the real game board tilted in 3D; jump buttons replaced with four text links (no Learn to play or Order).
 - 2026-11-11: Clock sections are a tunnel of clocks flying toward the viewer. Footer 'Team login' link removed (HQ is still at /hq).
 - 2026-11-11: Board game page top shows the spinning box instead of the board; 'Learn to play' white band reverted.
+- 2026-11-11: Board game page top: the game board fills the right half of the section, flush to top, bottom and right edge.
