@@ -155,3 +155,4 @@
 - 2026-11-11: Board game page top: the game board fills the right half of the section, flush to top, bottom and right edge.
 - 2026-11-11: Board game page: the '1,000 delivered' band is the first section while orders are closed.
 - 2026-11-11: Rainbow gradient line between every section, site wide. Clock tunnel thinned out in the centre.
+- 2026-11-11: Home music strip: rainbow notes fly toward the viewer (note-tunnel.svg), replacing the floating notes. Clock tunnel on black.
