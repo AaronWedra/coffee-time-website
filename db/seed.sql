@@ -14,7 +14,7 @@ INSERT OR IGNORE INTO settings(key,value) VALUES('rules_pdf','/files/coffee-time
 INSERT OR IGNORE INTO settings(key,value) VALUES('story_pdf','/files/coffee-time-story.pdf');
 INSERT OR IGNORE INTO settings(key,value) VALUES('coloring_pdf','/files/coffee-time-coloring-page.pdf');
 INSERT OR IGNORE INTO settings(key,value) VALUES('trailer_video','/video/coffee-time-adventures-trailer.mp4');
-INSERT OR IGNORE INTO settings(key,value) VALUES('trailer_poster','/img/trailer-poster-kingtea.webp');
+INSERT OR IGNORE INTO settings(key,value) VALUES('trailer_poster','/img/trailer-poster-kruiser.webp');
 INSERT OR IGNORE INTO settings(key,value) VALUES('orders_open','1');
 INSERT OR IGNORE INTO settings(key,value) VALUES('max_quantity','10');
 INSERT OR IGNORE INTO settings(key,value) VALUES('site_indexable','0');
