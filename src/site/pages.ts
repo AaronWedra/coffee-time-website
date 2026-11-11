@@ -43,7 +43,7 @@ const stars = () => raw('<span class="stars" aria-label="Five stars">' + '<svg v
 const ICON_D20 = raw('<svg class="door-svg" viewBox="0 0 100 100" aria-hidden="true"><defs><linearGradient id="d20a" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#d9a8ff"/><stop offset=".55" stop-color="#9a45d8"/><stop offset="1" stop-color="#4b1a86"/></linearGradient></defs><polygon points="50,4 91,27 91,73 50,96 9,73 9,27" fill="url(#d20a)" stroke="#2a0a52" stroke-width="3" stroke-linejoin="round"/><polygon points="50,4 91,27 50,38" fill="#ecd0ff" opacity=".55"/><polygon points="50,4 9,27 50,38" fill="#c488f0" opacity=".5"/><polygon points="9,27 50,38 9,73" fill="#7a2fc0" opacity=".55"/><polygon points="91,27 50,38 91,73" fill="#5a1f9e" opacity=".6"/><polygon points="50,38 91,73 50,96" fill="#6d28b4" opacity=".55"/><polygon points="50,38 9,73 50,96" fill="#8a3ccf" opacity=".5"/><path d="M50 4 50 38 M9 27 50 38 91 27 M9 73 50 38 91 73 M9 73 50 96 91 73" fill="none" stroke="#2a0a52" stroke-width="1.6" opacity=".7"/><text x="50" y="62" text-anchor="middle" font-family="Anton,Impact,sans-serif" font-size="25" fill="#fff" stroke="#2a0a52" stroke-width="1.2" paint-order="stroke">20</text></svg>');
 const ICON_PAD = raw('<svg class="door-svg" viewBox="0 0 120 80" aria-hidden="true"><defs><linearGradient id="pada" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#6ee7ff"/><stop offset=".5" stop-color="#2f7de0"/><stop offset="1" stop-color="#1b2f8f"/></linearGradient></defs><path d="M30 10h60c14 0 21 8 26 28l5 24c2 10-4 16-12 16-7 0-11-4-16-11l-5-8H32l-5 8c-5 7-9 11-16 11-8 0-14-6-12-16l5-24C14 18 16 10 30 10z" fill="url(#pada)" stroke="#0b1650" stroke-width="3.5" stroke-linejoin="round"/><path d="M30 14h60c8 0 12 3 15 11-8-3-18-4-45-4S23 22 15 25c3-8 7-11 15-11z" fill="#fff" opacity=".3"/><rect x="27" y="29" width="22" height="7" rx="3" fill="#0b1650"/><rect x="34.5" y="21.5" width="7" height="22" rx="3" fill="#0b1650"/><circle cx="84" cy="25" r="5" fill="#ffd93a" stroke="#0b1650" stroke-width="2"/><circle cx="94" cy="34" r="5" fill="#ff4f7b" stroke="#0b1650" stroke-width="2"/><circle cx="74" cy="34" r="5" fill="#7ee02f" stroke="#0b1650" stroke-width="2"/><circle cx="84" cy="43" r="5" fill="#fff" stroke="#0b1650" stroke-width="2"/><circle cx="47" cy="51" r="8" fill="#0b1650"/><circle cx="73" cy="51" r="8" fill="#0b1650"/><circle cx="47" cy="49.5" r="4.5" fill="#3a5bd0"/><circle cx="73" cy="49.5" r="4.5" fill="#3a5bd0"/></svg>');
 
-const drip = (tone: '' | 'purple' = ''): Safe => raw(`<div class="drip ${tone}" aria-hidden="true"><i></i><i></i><i></i><i></i></div>`);
+const drip = (tone: '' | 'purple' = ''): Safe => raw(`<div class="rim ${tone}" aria-hidden="true"></div>`);
 const beans = (n = 12): Safe => raw(`<div class="beanfall" aria-hidden="true">${'<i></i>'.repeat(n)}</div>`);
 const prose = (blocks: Blocks, key: string, cls = ''): Safe => html`<div class="prose26 ${cls}">${richText(b(blocks, key))}</div>`;
 
@@ -314,6 +314,7 @@ export function home(s: Settings, blocks: Blocks, tracks: Track[], creators: Cre
 </section>
 
 <section class="newsletter" id="newsletter">
+  <canvas class="latte" aria-hidden="true"></canvas><p class="latte-hint" aria-hidden="true">${line(blocks, 'latte_hint')}</p>
   ${beans(14)}
   ${orb('warp', 'l', 10, 3, 5)}
   <div class="wrap news-grid">
@@ -484,7 +485,7 @@ export function tutorials(s: Settings, blocks: Blocks, items: Tutorial[]): Safe 
       <div class="intro prose26">${text(blocks, 'tutorials_intro')}${learnLinks(s, 'tutorials')}</div>
       <p class="tidx-label">Pick a chapter</p>
       <ul class="tidx" aria-label="Tutorial chapters">${chapters.map(
-        (c) => html`<li class="tchap"><a href="#tutorial-${c.parts[0].num}"><b>${c.n}</b><span class="ttl">${c.title}</span></a>${c.parts.length > 1 ? html`<span class="tparts">${c.parts.map((p) => html`<a href="#tutorial-${p.num}">${p.num.replace(/^\d+-?/, '') || p.num}</a>`)}</span>` : ''}</li>`,
+        (c) => html`<li class="tchap"><a href="#tutorial-${c.parts[0].num}"><b>${c.n}</b><span class="ttl">${c.title}</span></a></li>`,
       )}</ul>
       <div class="tut-list">${items.map(
         (t) => html`<article class="tutorial" id="tutorial-${t.num}">

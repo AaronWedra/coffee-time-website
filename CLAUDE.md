@@ -69,7 +69,7 @@ for cropping and isolating pieces of the real files at most. Subtle effects are 
   in HQ > Settings after cutover.
 - **Never run smoke.mjs against a deployed site.** It refuses workers.dev and playcoffeetime.com on purpose.
 - **Public forms:** honeypot `website`, timing field `_t`, per-IP rate limit. They work without JavaScript.
-- No JavaScript on the public site except Google Analytics, which loads only when HQ > Settings holds a `G-` Measurement ID (`ga4_id`, validated in layout.ts; CSP allows googletagmanager and google-analytics). Mobile nav is `<details>`; every effect is CSS.
+- No JavaScript on the public site except Google Analytics (loads only when HQ > Settings holds a `G-` Measurement ID, `ga4_id`) and ONE small nonce'd script in layout.ts: the newsletter "draw foam on the coffee" canvas (Aaron asked for it, 2026-11-11). Mobile nav is `<details>`; every other effect is CSS.
 - **No consent bar, by Aaron's decision (2026-10-29).** A notice bar was built and removed the same day: he wants no
   hurdle, and it is not required for this US site. The privacy disclosure (what GA collects, the `_ga` cookies, the
   opt-out add-on) is on /privacy, which Google Analytics Terms section 7 requires; keep it and its footer link. Copy is

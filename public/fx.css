@@ -54,18 +54,7 @@ body { background: transparent !important; }
 .reviews { background: linear-gradient(rgba(16, 2, 36, .7), rgba(16, 2, 36, .78)), url(/img/tex-clocks.webp) #1c0840 !important; background-size: auto, 460px !important; }
 .page.story, .page.faq, .page.news, .page.tutorials { background: transparent; }
 
-/* ---------- coffee drip edges ---------- */
-.drip { position: absolute; left: 0; right: 0; top: -2px; height: 84px; z-index: 6; pointer-events: none; }
-.drip::before, .drip::after { content: ''; position: absolute; left: 0; right: 0; top: 0; height: 84px; background-repeat: repeat-x; }
-.drip::before { background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 600 84' preserveAspectRatio='none'%3E%3Cpath d='M0 0H600V16C592 16 587 22 585 38C583 70 574 70 572 38C570 24 560 16 540 16C522 16 515 22 513 44C511 80 498 80 496 44C494 26 482 16 440 16C402 16 394 26 391 34C389 52 384 52 382 34C380 20 362 16 322 16C282 16 274 24 271 56C269 84 256 84 254 56C252 28 240 16 200 16C162 16 154 24 151 40C149 62 140 62 138 40C136 24 122 16 82 16C52 16 46 22 43 48C41 76 30 76 28 48C26 24 14 16 0 16Z' fill='%23361c0e'/%3E%3Cpath d='M0 14C40 14 60 16 80 16' stroke='%23a8683c' stroke-width='3' fill='none' opacity='.5'/%3E%3C/svg%3E"); background-size: 600px 84px; filter: drop-shadow(0 6px 4px rgba(10, 2, 0, .45)); }
-.drip::after { background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 840 70' preserveAspectRatio='none'%3E%3Cpath d='M0 0H840V12C826 12 820 18 818 30C816 56 806 56 804 30C802 16 790 12 750 12C706 12 698 20 696 34C694 62 684 62 682 34C680 16 660 12 610 12C560 12 552 20 550 40C548 66 538 66 536 40C534 18 516 12 470 12C430 12 422 22 420 36C418 54 412 54 410 36C408 18 390 12 340 12C296 12 288 20 286 46C284 68 274 68 272 46C270 20 252 12 200 12C150 12 144 22 142 34C140 58 130 58 128 34C126 18 106 12 60 12C30 12 20 16 0 12Z' fill='%23482410' opacity='.92'/%3E%3C/svg%3E"); background-size: 840px 70px; opacity: .9; }
-.drip.purple::before { background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 600 84' preserveAspectRatio='none'%3E%3Cpath d='M0 0H600V16C592 16 587 22 585 38C583 70 574 70 572 38C570 24 560 16 540 16C522 16 515 22 513 44C511 80 498 80 496 44C494 26 482 16 440 16C402 16 394 26 391 34C389 52 384 52 382 34C380 20 362 16 322 16C282 16 274 24 271 56C269 84 256 84 254 56C252 28 240 16 200 16C162 16 154 24 151 40C149 62 140 62 138 40C136 24 122 16 82 16C52 16 46 22 43 48C41 76 30 76 28 48C26 24 14 16 0 16Z' fill='%23320158'/%3E%3C/svg%3E"); }
-.drip.purple::after { opacity: .5; }
-.drip i { position: absolute; top: 40px; width: 12px; height: 17px; border-radius: 50% 50% 50% 50% / 62% 62% 38% 38%; background: #361c0e; box-shadow: inset -2px -3px 0 rgba(255, 190, 120, .25); opacity: 0; animation: dropfall 5.5s cubic-bezier(.5, 0, .9, .6) infinite; }
-.drip.purple i { background: #4a1a85; }
-.drip i:nth-child(1) { left: 11%; animation-delay: .4s; } .drip i:nth-child(2) { left: 37%; animation-delay: 2.2s; animation-duration: 6.4s; } .drip i:nth-child(3) { left: 63%; animation-delay: 3.6s; } .drip i:nth-child(4) { left: 86%; animation-delay: 1.4s; animation-duration: 7s; }
-@keyframes dropfall { 0% { opacity: 0; transform: translateY(-6px) scale(.5); } 8% { opacity: 1; transform: translateY(0) scale(1); } 70% { opacity: 1; transform: translateY(210px) scale(1, 1.2); } 76%, 100% { opacity: 0; transform: translateY(240px) scale(1.4, .4); } }
-@media (prefers-reduced-motion: reduce) { .drip i { animation: none; display: none; } }
+/* ---------- latte foam rims (section tops) ---------- */
 .zone-bg, .orders, .music, .team, .newsletter { position: relative; }
 
 /* ---------- falling beans and the rising cup of coffee ---------- */
@@ -386,3 +375,20 @@ body { background: transparent !important; }
 }
 .orders-split .orders-copy, .orders-split .orders-copy.cols { columns: 1 !important; column-count: 1 !important; display: block; width: 100%; }
 .orders-split .orders-copy > p:first-child { text-align: left; margin-inline: 0; max-width: none; }
+
+.rim { position: absolute; left: 0; right: 0; top: -1px; height: 26px; z-index: 6; pointer-events: none;
+  background: radial-gradient(circle at 14px 0, #fff3dc 0 13px, rgba(255, 243, 220, 0) 14px) 0 0 / 28px 26px repeat-x, radial-gradient(circle at 30px 0, #f2d9b5 0 9px, rgba(242, 217, 181, 0) 10px) 0 0 / 46px 22px repeat-x; filter: drop-shadow(0 3px 2px rgba(40, 14, 4, .35)); }
+.rim.purple { filter: drop-shadow(0 3px 2px rgba(20, 0, 50, .45)); }
+
+/* ---------- latte art: draw foam on the coffee with the cursor ---------- */
+.latte { position: absolute; inset: 0; width: 100%; height: 100%; z-index: 2; pointer-events: none; }
+.latte-hint { position: absolute; right: clamp(14px, 3vw, 40px); bottom: 14px; z-index: 4; margin: 0; padding: 7px 14px; border-radius: 999px; background: rgba(255, 243, 220, .92); color: #3a1c0a; font: 700 .78rem/1 Jost, sans-serif; letter-spacing: .06em; text-transform: uppercase; pointer-events: none; box-shadow: 0 3px 0 #b98b5a; }
+@media (hover: none) { .latte-hint { display: none; } }
+
+/* compact chapter index: topics only */
+.tidx { grid-template-columns: repeat(auto-fill, minmax(176px, 1fr)); gap: 8px; margin-bottom: 22px; }
+.tchap { padding: 6px 10px; border-radius: 14px; border-width: 1.5px; gap: 0 9px; }
+.tchap b { grid-row: auto; width: 1.9rem; height: 1.9rem; font-size: .95rem; }
+.tchap span.ttl { font-size: .8rem; line-height: 1.2; -webkit-line-clamp: 2; }
+.tchap .tparts { display: none; }
+.tidx-label { margin-bottom: 8px; font-size: .8rem; }
