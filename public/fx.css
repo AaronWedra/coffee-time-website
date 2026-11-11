@@ -667,3 +667,22 @@ body { background: transparent !important; }
   background: linear-gradient(115deg, transparent 20%, rgba(126, 232, 255, .10) 38%, rgba(201, 160, 255, .13) 50%, rgba(255, 155, 230, .10) 62%, transparent 80%) 0 0 / 300% 100%; animation: holo 16s ease-in-out infinite alternate; }
 @keyframes holo { to { background-position: 100% 0; } }
 @media (prefers-reduced-motion: reduce) { .music::after, .reviews::after { animation: none; } }
+
+/* ---- AR cards as real lifted blocks, take 2. The card face stays flat and readable (no skewed type);
+   the depth is a solid extruded side and bottom drawn behind it, a contact shadow on the "table",
+   and a small lift on hover. This replaces the rotated card with its two glued-on faces. */
+.pair-cards > .k-ar { --d: 26px; transform: none !important; margin: 0 var(--d) calc(var(--d) + 18px) 0 !important; border: 0 !important; border-radius: 10px !important; overflow: visible !important;
+  background: #12324a !important; box-shadow: none !important; position: relative; transition: translate .25s; }
+.pair-cards > .k-ar .gposter { border-radius: 10px 10px 0 0; overflow: hidden; }
+.pair-cards > .k-ar .gbody { border-radius: 0 0 10px 10px; }
+.pair-cards > .k-ar::before { content: ''; position: absolute; inset: 0; z-index: -1; border-radius: 10px; transform: none; animation: none; mix-blend-mode: normal; width: auto; height: auto; top: 0; right: 0;
+  background: #0a1d2c;
+  box-shadow: 1px 1px 0 #0d2a40, 2px 2px 0 #0d2a40, 3px 3px 0 #0d2a40, 4px 4px 0 #0d2a40, 5px 5px 0 #0d2a40, 6px 6px 0 #0d2a40, 7px 7px 0 #0d2a40, 8px 8px 0 #0c2538, 9px 9px 0 #0c2538, 10px 10px 0 #0c2538, 11px 11px 0 #0c2538, 12px 12px 0 #0c2538,
+    13px 13px 0 #0b2032, 14px 14px 0 #0b2032, 15px 15px 0 #0b2032, 16px 16px 0 #0b2032, 17px 17px 0 #0b2032, 18px 18px 0 #0b2032, 19px 19px 0 #0a1b2b, 20px 20px 0 #0a1b2b, 21px 21px 0 #0a1b2b, 22px 22px 0 #0a1b2b, 23px 23px 0 #0a1b2b, 24px 24px 0 #0a1b2b, 25px 25px 0 #091724, 26px 26px 0 #091724,
+    40px 52px 34px rgba(4, 0, 20, .6); }
+.pair-cards > .k-ar::after { content: ''; position: absolute; inset: 0; z-index: 3; pointer-events: none; border-radius: 10px; transform: none; width: auto; height: auto; left: 0; bottom: 0;
+  background: linear-gradient(135deg, rgba(255, 255, 255, .28) 0, transparent 28%); box-shadow: inset 0 0 0 2px rgba(126, 232, 255, .55); }
+.pair-cards > .k-ar:hover { transform: none !important; translate: -6px -8px; }
+@media (max-width: 860px) { .pair-cards > .k-ar { --d: 14px; } }
+.delivered .dv-conf { position: absolute !important; inset: 0; pointer-events: none; overflow: hidden; }
+.page-order .delivered { margin-bottom: calc(-1 * clamp(36px, 5vw, 60px)) !important; }

@@ -357,12 +357,19 @@ export function teamPage(blocks: Blocks, creators: Creator[]): Safe {
 
 export function orderPage(s: Settings, blocks: Blocks, st: OrderState): Safe {
   return html`<section class="orders page-order" id="order">
-    <div class="wrap narrow">
-      ${secHead('First edition', line(blocks, 'orders_title'), '', 'h1')}
-      <div class="box-cover">${img('/img/box-3d.webp', 'The Coffee Time board game box, first edition', 'width="1500" height="880"')}</div>
-      <div class="orders-copy">${text(blocks, 'orders_body')}</div>
+    <div class="wrap">
+      <div class="orders-split">
+        <div class="orders-text">
+          <div class="orders-head">
+            ${secHead('First edition', line(blocks, 'orders_title'), '', 'h1')}
+            <p class="badge">${s.players}<br>${s.ages}</p>
+          </div>
+          <h2 class="orders-intro">${line(blocks, 'orders_intro')}</h2>
+          <div class="orders-copy prose26">${text(blocks, 'orders_body')}</div>
+        </div>
+        <div class="orders-box">${boxTilt()}</div>
+      </div>
       ${orderForm(s, blocks, st)}
-      <p class="center"><a href="/order">Back to the game</a></p>
     </div>
   </section>`;
 }
