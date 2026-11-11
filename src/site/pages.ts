@@ -260,7 +260,7 @@ export function boardGame(s: Settings, blocks: Blocks, reviews: Review[], flags:
       ${secHead('Own the board game?', line(blocks, 'zone_bg_title'), line(blocks, 'zone_bg_sub'), 'h1')}
       <p class="bg-top-links"><a href="/video-tutorials">Video tutorials</a><a href="/faq">FAQ</a><a href="/story">The story</a><a href="#reviews">Reviews</a></p>
     </div>
-    <div class="bg-top-board">${img('/img/board.webp', 'The Coffee Time game board: five world clocks across the top and the coloured paths of the four heroes', 'width="1400" height="1400" loading="eager" fetchpriority="high"')}</div>
+    <div class="bg-top-box">${boxTilt()}</div>
   </div>
 
 <div class="hero" id="rules">
