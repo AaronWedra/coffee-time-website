@@ -292,13 +292,17 @@ export function home(s: Settings, blocks: Blocks, tracks: Track[], creators: Cre
   ${orb('sugar', 'l', 0, 2, 3)}
   ${orb('fire', 'r', 20, 3, -1)}
   <div class="wrap">
-    <div class="orders-head">
-      ${secHead('First edition', line(blocks, 'orders_title'))}
-      <p class="badge">${s.players}<br>${s.ages}</p>
+    <div class="orders-split">
+      <div class="orders-text">
+        <div class="orders-head">
+          ${secHead('First edition', line(blocks, 'orders_title'))}
+          <p class="badge">${s.players}<br>${s.ages}</p>
+        </div>
+        <h3 class="orders-intro">${line(blocks, 'orders_intro')}</h3>
+        <div class="orders-copy prose26 cols">${text(blocks, 'orders_body')}</div>
+      </div>
+      <div class="orders-box">${boxTilt()}</div>
     </div>
-    ${boxTilt()}
-    <h3 class="orders-intro">${line(blocks, 'orders_intro')}</h3>
-    <div class="orders-copy prose26 cols">${text(blocks, 'orders_body')}</div>
 
     ${purpleTree(s, blocks)}
 

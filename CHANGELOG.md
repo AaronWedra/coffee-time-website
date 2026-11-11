@@ -1,6 +1,7 @@
 # Changelog
 
 ## 2026-11-11: v6 cast and pairs
+- Orders section is split: title, intro and copy (smaller, one wide column) on the left, the 3D box on the right; stacks on phones.
 - The characters stage is now a ChatGPT-made 3D version of the real cast (heroes unchanged, added depth, raised purple stage) under moving spotlights, a shine sweep, lens flares and glitter (CSS only).
 - The 2D and AR games are paired side by side, Rapid Refill, Donut Dash and Star Bugs each as 2D beside AR, with the AR cards tilted in 3D with a thick glowing edge. Editable headings (migration 0013).
 - Hover outline (yellow ring with orange halo) on cards, doors, news, FAQ, tracks. Stat strip reads "board game, 2D arcade and AR".
