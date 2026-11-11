@@ -710,3 +710,7 @@ body { background: transparent !important; }
 .cta-info { color: #fff; } .cta-info h2 { font-family: var(--display); font-weight: 400; text-transform: uppercase; font-size: clamp(1.5rem, 2.4vw, 2rem); margin: .3em 0 .2em; line-height: 1; }
 .cta-info p { margin: 0 0 .5em; font-size: 1rem; line-height: 1.5; } .cta-info .gnote { opacity: .8; font-size: .9rem; } .cta-info .btn { margin-top: .5em; }
 @media (max-width: 760px) { .cta-duo { grid-template-columns: 1fr; } }
+/* focus ring only for keyboard users, not left behind after a mouse click */
+a:focus:not(:focus-visible), button:focus:not(:focus-visible), label:focus:not(:focus-visible), .rv-scroll:focus:not(:focus-visible) { outline: none !important; box-shadow: none; }
+.hs-game:focus, .hs-game:focus-visible, .hs-box:focus, .hs-box:focus-visible { outline: none !important; }
+.hs-game:focus-visible b { text-decoration: underline; text-decoration-color: var(--yellow); text-underline-offset: 4px; }
