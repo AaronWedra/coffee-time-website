@@ -130,3 +130,4 @@
 - 2026-11-11: Foam is now a GPU fluid simulation (stirs, swirls, settles). Reviews are one auto-drifting row. Orders copy at body size. Delivered thank-you is a full-width band. Box spins 360 continuously and still tilts to the cursor.
 - 2026-11-11: Realm of Time clock background (varied sizes, turning dials, holographic hand tracers). Nick Domke's real photo. Orbs sized to the page margin so they never cover content at rest.
 - 2026-11-11: Order page: text beside the spinning 3D box, shorter sold-out copy (0020), full-width confetti, no back link. AR cards are flat-faced lifted blocks.
+- 2026-11-11: Arcade top is two small pieces (trailer player, game link). Three Kruisers at different depths on the home cover.

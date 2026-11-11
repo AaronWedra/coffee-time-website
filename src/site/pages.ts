@@ -435,7 +435,16 @@ export function arcade(s: Settings, blocks: Blocks, games: Game[]): Safe {
     ${orb('warp', 'r', 10, 3, 1)}
     <div class="wrap">
       ${secHead('Video games', line(blocks, 'arcade_title'), '', 'h1')}
-      <ul class="gcards solo-cards">${solo.map((g, i) => gameCard(g, i))}</ul>
+      ${solo.map((g) => html`<div class="cta-duo">
+        <figure class="cta-vid">${video(s.trailer_video, s.trailer_poster, g.title + ' trailer')}<figcaption>Watch the trailer</figcaption></figure>
+        <div class="cta-info">
+          ${g.engine ? html`<span class="gtag">${g.engine}</span>` : ''}
+          <h2>${g.title}</h2>
+          <p>${g.blurb}</p>
+          ${g.note ? html`<p class="gnote">${g.note}</p>` : ''}
+          <a class="btn btn-go" href="${g.url}" ${ext(g.url)}>${g.button || 'Play now'}</a>
+        </div>
+      </div>`)}
     </div>
     ${gamesSections(blocks, games)}
   </section>`;

@@ -701,3 +701,12 @@ body { background: transparent !important; }
   5.5% { opacity: 1; transform: translate(-50vw, 78vh) rotate(-24deg); }
   5.6%, 100% { opacity: 0; transform: translate(-50vw, 78vh); }
 }
+
+/* arcade top: Coffee Time Adventures as two small pieces side by side, the trailer and the game link */
+.page.arcade > .wrap .sec-title { font-size: clamp(2rem, 4vw, 3.2rem) !important; }
+.cta-duo { display: grid; grid-template-columns: minmax(0, 440px) minmax(0, 440px); justify-content: center; align-items: center; gap: clamp(20px, 3vw, 44px); margin: clamp(10px, 2vw, 22px) 0 clamp(26px, 4vw, 48px); }
+.cta-vid { margin: 0; } .cta-vid .video { width: 100%; height: auto; aspect-ratio: 16 / 9; display: block; border-radius: 12px; background: #000; box-shadow: 0 14px 28px rgba(10, 0, 30, .5); }
+.cta-vid figcaption { margin-top: .5em; font-family: var(--display); text-transform: uppercase; letter-spacing: .1em; font-size: .85rem; color: var(--yellow); }
+.cta-info { color: #fff; } .cta-info h2 { font-family: var(--display); font-weight: 400; text-transform: uppercase; font-size: clamp(1.5rem, 2.4vw, 2rem); margin: .3em 0 .2em; line-height: 1; }
+.cta-info p { margin: 0 0 .5em; font-size: 1rem; line-height: 1.5; } .cta-info .gnote { opacity: .8; font-size: .9rem; } .cta-info .btn { margin-top: .5em; }
+@media (max-width: 760px) { .cta-duo { grid-template-columns: 1fr; } }
