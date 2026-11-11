@@ -154,9 +154,9 @@ export function home(s: Settings, blocks: Blocks, flags: { joined?: string }, da
   <div class="wrap cover-in">
     <div class="cover-copy">
       <p class="cover-kicker"><span class="dot" aria-hidden="true"></span>${line(blocks, 'cover_kicker')}</p>
-      <h1 class="cover-title">${line(blocks, 'cover_tagline')}</h1>
+      <h1 class="cover-title">${(() => { const w = b(blocks, 'cover_tagline').split(' '); return w.length > 1 ? html`${w[0]}<br><span class="nw">${w.slice(1).join(' ')}</span>` : w[0]; })()}</h1>
       <p class="cover-note">${line(blocks, 'cover_note')}</p>
-      <p class="cover-btns"><a class="btn btn-go" href="${s.demo_url}" target="_blank" rel="noopener">Play the free demo</a><a class="btn btn-go btn-go2" href="/arcade">Open the arcade</a></p>
+      <p class="cover-btns"><a class="btn btn-go" href="/arcade">Open the arcade</a></p>
     </div>
     <figure class="cover-card cover-video">${video(s.trailer_video, s.trailer_poster, 'Coffee Time Adventures trailer')}<figcaption>Coffee Time Adventures <small>Watch the trailer</small></figcaption></figure>
   </div>
