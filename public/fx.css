@@ -875,3 +875,32 @@ a:focus:not(:focus-visible), button:focus:not(:focus-visible), label:focus:not(:
 .hs-board .hs-split > div::before { top: -70px !important; bottom: -70px !important; left: -110px !important; right: -110px !important; box-shadow: none !important;
   background: radial-gradient(closest-side, rgba(14, 3, 36, .94) 62%, rgba(14, 3, 36, .6) 82%, transparent) !important; }
 .hs-board .hs-head h2, .hs-board .hs-head p, .hs-board blockquote, .hs-board cite, .music .sec-title, .music .music-sub, .music .music-tag, .music .track, .reviews .sec-title { text-shadow: 0 2px 10px #0e0324, 0 0 3px #0e0324; }
+
+/* home music strip: rainbow notes drifting up behind the content */
+.hs-music { overflow: hidden; isolation: isolate; }
+.hs-music > .wrap { position: relative; z-index: 1; }
+.hs-music .hs-head h2, .hs-music .hs-head p, .hs-music .track { text-shadow: 0 2px 10px #1c0745, 0 0 3px #1c0745; }
+.notes { position: absolute; inset: 0; z-index: 0; pointer-events: none; }
+.notes i { position: absolute; bottom: -80px; left: var(--x); font-style: normal; font-size: var(--fs); line-height: 1; color: #ff3bd4; opacity: 0; text-shadow: 0 0 14px currentColor;
+  animation: notefloat var(--d) linear var(--t) infinite, notehue var(--h) linear infinite; }
+@keyframes notefloat { 0% { transform: translate(0, 0) rotate(-12deg) scale(.7); opacity: 0; } 12% { opacity: var(--o); } 50% { transform: translate(var(--sw), -300px) rotate(14deg) scale(1.1); } 88% { opacity: var(--o); } 100% { transform: translate(0, -620px) rotate(-10deg) scale(.8); opacity: 0; } }
+@keyframes notehue { to { filter: hue-rotate(360deg); } }
+@media (prefers-reduced-motion: reduce) { .notes { display: none; } }
+.notes i:nth-child(1){--x:25%;--fs:46px;--d:16.9s;--t:-10.8s;--h:9.7s;--sw:13px;--o:0.28}
+.notes i:nth-child(2){--x:9%;--fs:74px;--d:11.6s;--t:-0.1s;--h:5.5s;--sw:1px;--o:0.75}
+.notes i:nth-child(3){--x:9%;--fs:79px;--d:11.3s;--t:-13.6s;--h:8.1s;--sw:-63px;--o:0.75}
+.notes i:nth-child(4){--x:26%;--fs:83px;--d:10.0s;--t:-1.9s;--h:6.7s;--sw:-53px;--o:0.28}
+.notes i:nth-child(5){--x:19%;--fs:47px;--d:10.9s;--t:-16.4s;--h:7.8s;--sw:31px;--o:0.75}
+.notes i:nth-child(6){--x:9%;--fs:83px;--d:15.1s;--t:-6.1s;--h:6.9s;--sw:-67px;--o:0.75}
+.notes i:nth-child(7){--x:76%;--fs:82px;--d:17.3s;--t:-2.4s;--h:9.2s;--sw:-68px;--o:0.28}
+.notes i:nth-child(8){--x:2%;--fs:77px;--d:14.0s;--t:-8.1s;--h:6.1s;--sw:-37px;--o:0.75}
+.notes i:nth-child(9){--x:87%;--fs:60px;--d:17.9s;--t:-0.0s;--h:10.2s;--sw:7px;--o:0.75}
+.notes i:nth-child(10){--x:78%;--fs:35px;--d:10.9s;--t:-7.1s;--h:10.1s;--sw:-45px;--o:0.28}
+.notes i:nth-child(11){--x:82%;--fs:50px;--d:9.1s;--t:-11.0s;--h:10.0s;--sw:28px;--o:0.75}
+.notes i:nth-child(12){--x:2%;--fs:34px;--d:14.4s;--t:-6.7s;--h:7.7s;--sw:53px;--o:0.75}
+.notes i:nth-child(13){--x:69%;--fs:42px;--d:16.8s;--t:-3.3s;--h:5.9s;--sw:-12px;--o:0.28}
+.notes i:nth-child(14){--x:17%;--fs:44px;--d:15.7s;--t:-16.9s;--h:6.2s;--sw:29px;--o:0.75}
+.notes i:nth-child(15){--x:90%;--fs:37px;--d:9.9s;--t:-0.7s;--h:10.8s;--sw:-9px;--o:0.75}
+.notes i:nth-child(16){--x:63%;--fs:59px;--d:11.3s;--t:-14.8s;--h:8.6s;--sw:5px;--o:0.28}
+.notes i:nth-child(17){--x:11%;--fs:42px;--d:11.1s;--t:-10.1s;--h:10.1s;--sw:-52px;--o:0.75}
+.notes i:nth-child(18){--x:6%;--fs:81px;--d:9.1s;--t:-4.8s;--h:7.7s;--sw:-55px;--o:0.75}

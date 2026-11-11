@@ -220,6 +220,7 @@ export function home(s: Settings, blocks: Blocks, flags: { joined?: string }, da
 </section>
 
 <section class="hs hs-music" aria-label="Music">
+  <div class="notes" aria-hidden="true">${raw('<i>&#9833;</i><i>&#9833;</i><i>&#9833;</i><i>&#9835;</i><i>&#9835;</i><i>&#9833;</i><i>&#9835;</i><i>&#9834;</i><i>&#9833;</i><i>&#9836;</i><i>&#9835;</i><i>&#9834;</i><i>&#9834;</i><i>&#9833;</i><i>&#9833;</i><i>&#9835;</i><i>&#9834;</i><i>&#9834;</i>')}</div>
   <div class="wrap">
     <header class="hs-head"><h2>${line(blocks, 'music_title')}</h2><p>${line(blocks, 'music_sub')}</p><a class="hs-more" href="/music">All ${data.tracks.length} tracks</a></header>
     <div class="tracks">${data.tracks.slice(0, 3).map(soundcloud)}</div>
