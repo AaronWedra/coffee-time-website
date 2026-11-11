@@ -159,7 +159,7 @@ export function gamesSections(blocks: Blocks, games: Game[]): Safe {
 export function home(s: Settings, blocks: Blocks, flags: { joined?: string }, data: { games: Game[]; reviews: Review[]; tracks: Track[] }): Safe {
   // Home is the highlights, about half of everything: play, the cast, the board game, music, newsletter.
   // Each strip shows a few items and links to its own page for the rest.
-  const play = [...data.games.filter((g) => g.kind === '3d'), ...data.games.filter((g) => g.kind === '2d')].slice(0, 4);
+  const play = [...data.games.filter((g) => g.kind === '3d'), ...data.games.filter((g) => g.kind === 'ar')].slice(0, 4);
   const quotes = [...data.reviews].sort((a, b2) => a.quote.length - b2.quote.length).slice(0, 3);
   return html`
 <section class="cover" aria-label="Coffee Time">
@@ -192,7 +192,7 @@ export function home(s: Settings, blocks: Blocks, flags: { joined?: string }, da
 <section class="hs hs-games" aria-label="Video games">
   <div class="wrap">
     <header class="hs-head"><h2>${line(blocks, 'games_title')}</h2><p>${line(blocks, 'zone_vg_sub')}</p><a class="hs-more" href="/arcade">All games and AR</a></header>
-    <ul class="hs-row">${play.map((g) => html`<li><a class="hs-game" href="${g.url}" ${ext(g.url)}>${g.image ? img(g.image, '', 'width="1000" height="625"') : ''}<b>${g.title}</b><span>${g.blurb}</span><em>${g.button || 'Play now'}</em></a></li>`)}</ul>
+    <ul class="hs-row">${play.map((g) => html`<li><a class="hs-game" href="${g.url}" ${ext(g.url)}>${g.image ? img(g.image, '', 'width="1000" height="625"') : ''}<b>${g.title}${g.kind === 'ar' ? html` <i>AR</i>` : ''}</b><span>${g.blurb}</span><em>${g.button || 'Play now'}</em></a></li>`)}</ul>
   </div>
 </section>
 
@@ -203,7 +203,7 @@ export function home(s: Settings, blocks: Blocks, flags: { joined?: string }, da
   </div>
   <div class="cast-stage">
     <div class="cast-art">
-      ${img('/img/cast-depth.webp', 'The whole cast: Little Miss Hot Shot, Donette, Thermos, Cup Joe, Sir Cubey, King Tea, the crumpets and the Mean Girl Crumpets', 'class="cast-main" width="1374" height="684"')}
+      ${img('/img/cast-original.webp', 'The whole cast: Little Miss Hot Shot, Donette, Thermos, Cup Joe, Sir Cubey, King Tea, the crumpets and the Mean Girl Crumpets', 'class="cast-main" width="1374" height="684"')}
       <span class="cast-floor" aria-hidden="true"></span>
     </div>
   </div>

@@ -131,3 +131,4 @@
 - 2026-11-11: Realm of Time clock background (varied sizes, turning dials, holographic hand tracers). Nick Domke's real photo. Orbs sized to the page margin so they never cover content at rest.
 - 2026-11-11: Order page: text beside the spinning 3D box, shorter sold-out copy (0020), full-width confetti, no back link. AR cards are flat-faced lifted blocks.
 - 2026-11-11: Arcade top is two small pieces (trailer player, game link). Three Kruisers at different depths on the home cover.
+- 2026-11-11: Cast is Aaron's untouched original art again, with the hole in Thermos's lid repaired; coded shading removed. Home games strip features Coffee Time Adventures then the AR games. Newsletter text purple with a serif heading.
