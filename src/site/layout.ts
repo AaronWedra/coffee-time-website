@@ -73,8 +73,8 @@ export function layout(s: Settings, meta: PageMeta, body: Child, opts: { nonce: 
 <link rel="apple-touch-icon" href="/apple-touch-icon.png">
 <link rel="preload" href="/fonts/anton.woff" as="font" type="font/woff" crossorigin>
 <link rel="preload" href="/fonts/jost.woff" as="font" type="font/woff" crossorigin>
-<link rel="stylesheet" href="/site.css?v=11">
-<link rel="stylesheet" href="/fx.css?v=9">
+<link rel="stylesheet" href="/site.css?v=12">
+<link rel="stylesheet" href="/fx.css?v=11">
 ${ga(s.ga4_id, opts.nonce)}
 ${meta.jsonld ? raw(`<script type="application/ld+json" nonce="${opts.nonce}">${JSON.stringify(meta.jsonld).replace(/</g, '\\u003c')}</script>`) : ''}
 </head>
@@ -100,7 +100,8 @@ ${meta.jsonld ? raw(`<script type="application/ld+json" nonce="${opts.nonce}">${
     <p class="foot-credit">Website Design by <a href="https://www.smartzgraphics.com" target="_blank" rel="noopener">www.SmartzGraphics.com</a> <a href="/hq" class="quiet">Team login</a></p>
   </div>
 </footer>
-<script nonce="${opts.nonce}">(function(){var c=document.querySelector('.latte');if(!c||matchMedia('(prefers-reduced-motion: reduce)').matches)return;var s=c.parentNode,x=c.getContext('2d'),w=0,h=0,last=null,run=false,d=Math.min(devicePixelRatio||1,2);function fit(){var r=s.getBoundingClientRect();w=r.width;h=r.height;c.width=w*d;c.height=h*d;x.setTransform(d,0,0,d,0,0)}fit();addEventListener('resize',fit);function dot(px,py,r,a){x.globalAlpha=a;x.fillStyle='#fff3dc';x.beginPath();x.arc(px,py,r,0,6.283);x.fill()}function draw(e){var r=s.getBoundingClientRect(),px=e.clientX-r.left,py=e.clientY-r.top;if(py<0||py>h)return;var sp=last?Math.hypot(px-last.x,py-last.y):0,rad=Math.max(8,Math.min(20,20-sp*.12)),n=last?Math.ceil(sp/3):1;for(var i=0;i<n;i++){var t=last?i/n:0,qx=last?last.x+(px-last.x)*t:px,qy=last?last.y+(py-last.y)*t:py;dot(qx,qy,rad,.75);dot(qx,qy,rad*.6,1);if(Math.random()<.18)dot(qx+(Math.random()-.5)*rad*2.4,qy+(Math.random()-.5)*rad*2.4,1+Math.random()*3,.8)}last={x:px,y:py};if(!run){run=true;requestAnimationFrame(fade)}}function fade(){x.globalCompositeOperation='destination-out';x.globalAlpha=.022;x.fillRect(0,0,w,h);x.globalCompositeOperation='source-over';x.globalAlpha=1;requestAnimationFrame(fade)}s.addEventListener('pointermove',draw);s.addEventListener('pointerleave',function(){last=null})})();</script>
+<canvas class="latte" aria-hidden="true"></canvas>
+<script nonce="${opts.nonce}">(function(){var c=document.querySelector('.latte');if(!c||matchMedia('(prefers-reduced-motion: reduce)').matches)return;var x=c.getContext('2d'),w=0,h=0,last=null,run=false,d=Math.min(devicePixelRatio||1,2);function fit(){w=innerWidth;h=innerHeight;c.width=w*d;c.height=h*d;x.setTransform(d,0,0,d,0,0)}fit();addEventListener('resize',fit);function dot(px,py,r,a){x.globalAlpha=a;x.fillStyle='#fff3dc';x.beginPath();x.arc(px,py,r,0,6.283);x.fill()}function draw(e){var px=e.clientX,py=e.clientY;var sp=last?Math.hypot(px-last.x,py-last.y):0,rad=Math.max(8,Math.min(20,20-sp*.12)),n=last?Math.ceil(sp/3):1;for(var i=0;i<n;i++){var t=last?i/n:0,qx=last?last.x+(px-last.x)*t:px,qy=last?last.y+(py-last.y)*t:py;dot(qx,qy,rad,.75);dot(qx,qy,rad*.6,1);if(Math.random()<.18)dot(qx+(Math.random()-.5)*rad*2.4,qy+(Math.random()-.5)*rad*2.4,1+Math.random()*3,.8)}last={x:px,y:py};if(!run){run=true;requestAnimationFrame(fade)}}function fade(){x.globalCompositeOperation='destination-out';x.globalAlpha=.022;x.fillRect(0,0,w,h);x.globalCompositeOperation='source-over';x.globalAlpha=1;requestAnimationFrame(fade)}addEventListener('pointermove',draw);document.addEventListener('pointerleave',function(){last=null})})();</script>
 </body>
 </html>`.s
   );

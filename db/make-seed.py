@@ -134,9 +134,9 @@ block("charity_title", "Purple Tree: headline", "5% of your purchase will go to 
 block(
     "charity_body",
     "Purple Tree: paragraph",
-    "a nonprofit organization in Davis, CA that employs people with disabilities to make and sell vegan baked goods at the Davis Farmers Market and other events, and brings people with and without disabilities together through music and art. Learn more about Purple Tree's work, and meet some of its employees, [here](https://www.youtube.com/watch?v=N3I5WNw7kmk).",
+    "A Davis nonprofit that employs people with disabilities to make and sell vegan baked goods. [Meet the team](https://www.youtube.com/watch?v=N3I5WNw7kmk).",
 )
-block("charity_programs", "Purple Tree: what they do", "**Baked goods with a purpose.** Vegan, wheat-free treats and organic tea, made and sold by Purple Tree's employees at the Davis Farmers Market every Saturday, 8 to 1.\n\n**A bicycle coffee cart** and a café at the UC Davis MIND Institute, Monday to Thursday, 8 to 2.\n\n**Music and art for everyone.** The Davis Hootenanny and Team Davis Singers bring people with and without disabilities together on stage.\n\nPurple Tree is where community truly means everyone.")
+block("charity_programs", "Purple Tree: what they do", "**Farmers Market** Vegan baked goods and organic tea. Saturdays, 8 to 1.\n\n**Coffee cart and café** At the UC Davis MIND Institute. Monday to Thursday, 8 to 2.\n\n**Music and art** Davis Hootenanny and Team Davis Singers perform together on stage.")
 block("delivered_title", "Delivered card: headline", "Thank you for helping every game find a home", kind="line")
 block("delivered_body", "Delivered card: paragraph", "Every one of our 1,000 first edition games has been delivered, many given away along the way. Thank you for playing, playtesting and carrying a copy home.")
 block("box_title", "What's in the box: headline", "What's in the Box?", kind="line")

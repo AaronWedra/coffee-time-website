@@ -64,14 +64,12 @@ INSERT OR IGNORE INTO blocks(key,label,kind,value,page,sort) VALUES('orders_body
 
 **Price $39.99.** If you would like to order Coffee Time contact our sales team at [playcoffeetime@yahoo.com](mailto:playcoffeetime@yahoo.com), or send us your details with the form below. Provide your first and last name, number of copies desired, address and phone number.','home',36);
 INSERT OR IGNORE INTO blocks(key,label,kind,value,page,sort) VALUES('charity_title','Purple Tree: headline','line','5% of your purchase will go to [Purple Tree Café](https://www.purpletreecafe.org/)','home',37);
-INSERT OR IGNORE INTO blocks(key,label,kind,value,page,sort) VALUES('charity_body','Purple Tree: paragraph','text','a nonprofit organization in Davis, CA that employs people with disabilities to make and sell vegan baked goods at the Davis Farmers Market and other events, and brings people with and without disabilities together through music and art. Learn more about Purple Tree''s work, and meet some of its employees, [here](https://www.youtube.com/watch?v=N3I5WNw7kmk).','home',38);
-INSERT OR IGNORE INTO blocks(key,label,kind,value,page,sort) VALUES('charity_programs','Purple Tree: what they do','text','**Baked goods with a purpose.** Vegan, wheat-free treats and organic tea, made and sold by Purple Tree''s employees at the Davis Farmers Market every Saturday, 8 to 1.
+INSERT OR IGNORE INTO blocks(key,label,kind,value,page,sort) VALUES('charity_body','Purple Tree: paragraph','text','A Davis nonprofit that employs people with disabilities to make and sell vegan baked goods. [Meet the team](https://www.youtube.com/watch?v=N3I5WNw7kmk).','home',38);
+INSERT OR IGNORE INTO blocks(key,label,kind,value,page,sort) VALUES('charity_programs','Purple Tree: what they do','text','**Farmers Market** Vegan baked goods and organic tea. Saturdays, 8 to 1.
 
-**A bicycle coffee cart** and a café at the UC Davis MIND Institute, Monday to Thursday, 8 to 2.
+**Coffee cart and café** At the UC Davis MIND Institute. Monday to Thursday, 8 to 2.
 
-**Music and art for everyone.** The Davis Hootenanny and Team Davis Singers bring people with and without disabilities together on stage.
-
-Purple Tree is where community truly means everyone.','home',39);
+**Music and art** Davis Hootenanny and Team Davis Singers perform together on stage.','home',39);
 INSERT OR IGNORE INTO blocks(key,label,kind,value,page,sort) VALUES('delivered_title','Delivered card: headline','line','Thank you for helping every game find a home','home',40);
 INSERT OR IGNORE INTO blocks(key,label,kind,value,page,sort) VALUES('delivered_body','Delivered card: paragraph','text','Every one of our 1,000 first edition games has been delivered, many given away along the way. Thank you for playing, playtesting and carrying a copy home.','home',41);
 INSERT OR IGNORE INTO blocks(key,label,kind,value,page,sort) VALUES('box_title','What''s in the box: headline','line','What''s in the Box?','home',42);
