@@ -66,20 +66,94 @@ export function orderForm(s: Settings, blocks: Blocks, st: OrderState): Safe {
   </div>`;
 }
 
-export function home(s: Settings, blocks: Blocks, tracks: Track[], creators: Creator[], reviews: Review[], flags: { joined?: string; order: OrderState }): Safe {
+// ---- Games (2026): the 3D games, the 2D arcade and the AR panel. All rows come from D1.
+const initials = (t: string) => t.replace(/[^A-Za-z0-9 ]/g, '').split(/\s+/).filter(Boolean).slice(0, 2).map((w) => w[0]).join('').toUpperCase();
+const ext = (u: string) => (u.startsWith('http') ? raw('target="_blank" rel="noopener"') : '');
+
+function gameCard(g: Game, i: number): Safe {
+  return html`<li class="gcard c${i % 5} k-${g.kind}">
+    <a class="gthumb" href="${g.url}" ${ext(g.url)} tabindex="-1" aria-hidden="true">${g.image ? img(g.image, '', 'width="400" height="300"') : html`<b>${initials(g.title)}</b>`}</a>
+    <div class="gbody">
+      ${g.engine ? html`<span class="gtag">${g.engine}</span>` : ''}
+      <h3>${g.title}</h3>
+      <p>${g.blurb}</p>
+      ${g.note ? html`<p class="gnote">${g.note}</p>` : ''}
+      <a class="gplay" href="${g.url}" ${ext(g.url)}>${g.button || 'Play now'}<span class="arrow" aria-hidden="true"></span><span class="sr"> ${g.title}</span></a>
+    </div>
+  </li>`;
+}
+
+export function gamesSections(blocks: Blocks, games: Game[]): Safe {
+  const of = (k: string) => games.filter((g) => g.kind === k);
+  return html`
+  <div class="wrap">
+    <h3 class="gh gh-3d">${line(blocks, 'games_3d_title')}</h3>
+    <ul class="gcards g3d">${of('3d').map(gameCard)}</ul>
+    <div class="arcade-ar">
+      <div class="arcade-2d" id="arcade">
+        <h3 class="gh">${line(blocks, 'arcade_2d_title')}</h3>
+        <ul class="gcards g2d">${of('2d').map(gameCard)}</ul>
+      </div>
+      <aside class="arpanel" id="ar" aria-labelledby="ar-h">
+        <span class="ar-badge">AR</span>
+        <h3 id="ar-h">${line(blocks, 'arcade_ar_title')}</h3>
+        ${text(blocks, 'arcade_ar_body')}
+        <ul class="ar-list">${of('ar').map((g) => html`<li><a href="${g.url}" ${ext(g.url)}><span class="ar-name">${g.title}</span><span class="ar-go">${g.button || 'Play in AR'}</span></a>${g.note ? html`<small>${g.note}</small>` : ''}</li>`)}</ul>
+        <p class="ar-foot"><a href="https://www.smartzgraphics.com/news/star-bugs" target="_blank" rel="noopener">More about the AR arcade</a></p>
+      </aside>
+    </div>
+    <div class="games-all">${text(blocks, 'games_all_note')}</div>
+  </div>`;
+}
+
+export function home(s: Settings, blocks: Blocks, tracks: Track[], creators: Creator[], reviews: Review[], games: Game[], flags: { joined?: string; order: OrderState }): Safe {
   return html`
 <section class="cover" aria-label="Coffee Time">
   <div class="cover-sky" aria-hidden="true"></div>
   <div class="wrap cover-in">
-    <p class="cover-kicker">${line(blocks, 'cover_kicker')}</p>
-    <h1 class="cover-title">${line(blocks, 'cover_tagline')}</h1>
-    <p class="cover-note">${line(blocks, 'orders_intro')}</p>
-    <p class="cover-btns"><a class="btn btn-go" href="#rules">Learn to play</a> <a class="btn btn-go btn-go2" href="#play-online">Play online</a> <a class="btn btn-ghost" href="#video-game">Watch the trailer</a></p>
+    <div class="cover-copy">
+      <p class="cover-kicker"><span class="dot" aria-hidden="true"></span>${line(blocks, 'cover_kicker')}</p>
+      <h1 class="cover-title">${line(blocks, 'cover_tagline')}</h1>
+      <p class="cover-note">${line(blocks, 'cover_note')}</p>
+      <p class="cover-btns"><a class="btn btn-go" href="${s.demo_url}" target="_blank" rel="noopener">Play the free demo</a> <a class="btn btn-go btn-go2" href="#games">Open the arcade</a> <a class="btn btn-ghost" href="#ar">Try games in AR</a></p>
+    </div>
+    <a class="cover-card" href="#video-game" aria-label="Watch the Coffee Time Adventures trailer">
+      <img src="/img/trailer-poster.webp" alt="" width="1280" height="720" fetchpriority="high">
+      <span class="cc-play" aria-hidden="true"></span>
+      <span class="cc-label">Coffee Time Adventures<small>Watch the trailer</small></span>
+    </a>
   </div>
+  <ul class="wrap hud" aria-label="Coffee Time by the numbers">
+    <li><b>1,000</b><span>board games made, every one sold</span></li>
+    <li><b>18</b><span>video games and counting</span></li>
+    <li><b>5</b><span>worlds to save from King Tea</span></li>
+    <li><b>2D 3D AR</b><span>play them all, free</span></li>
+  </ul>
 </section>
 
 <section class="stage" aria-label="The Coffee Time characters">
   <div class="stage-art"><span class="steam s1" aria-hidden="true"></span><span class="steam s2" aria-hidden="true"></span><span class="steam s3" aria-hidden="true"></span><span class="spark k1" aria-hidden="true"></span><span class="spark k2" aria-hidden="true"></span><span class="spark k3" aria-hidden="true"></span><span class="spark k4" aria-hidden="true"></span>${img('/img/characters-stage.webp', 'The whole cast: Little Miss Hot Shot, Donette, Thermos, Cup Joe, Sir Cubey, King Tea, the crumpets and friends', 'width="2000" height="830"')}</div>
+</section>
+
+<section class="videogame" id="video-game">
+  <div class="wrap">
+    <hr class="rule">
+    <h2 class="big">${line(blocks, 'game_title')}</h2>
+    <div class="vg-grid">
+      ${video(s.trailer_video, s.trailer_poster, 'Coffee Time Adventures trailer')}
+      <div class="vg-copy">${text(blocks, 'game_body')}</div>
+    </div>
+    <hr class="rule">
+  </div>
+</section>
+
+<section class="gsec" id="games">
+  ${orb('warp', 'r', 30, 3)}
+  <div class="wrap games-head">
+    <h2 class="big">${line(blocks, 'games_title')}</h2>
+    <div class="games-intro">${text(blocks, 'games_intro')}</div>
+  </div>
+  ${gamesSections(blocks, games)}
 </section>
 
 <section class="hero" id="rules">
@@ -92,6 +166,16 @@ export function home(s: Settings, blocks: Blocks, tracks: Track[], creators: Cre
       ${learnLinks(s)}
     </div>
     <div class="hero-ship">${img('/img/deep-space-kruiser.webp', 'The Deep Space Kruiser', 'width="900" height="411"')}</div>
+  </div>
+</section>
+
+<section class="playonline" id="play-online">
+  <div class="wrap playonline-in">
+    <h2 class="big">Play Coffee Time on your phone</h2>
+    <p>Make a room, send your friends the code, and play together online. Free, no sign-up, and it installs to your home screen.</p>
+    <p class="playonline-btns"><a class="btn" href="/overtime/">Overtime</a> <a class="btn" href="/rush/">Rush Hour</a> <a class="btn btn-ghost" href="/play/">The board game, as printed</a></p>
+    <p class="playonline-note">Overtime: plan your cards together, watch the fight, find the Roamer hiding on your team. Rush Hour: race King Tea's clock in real time. Both are in preview.</p>
+    <hr class="rule">
   </div>
 </section>
 
@@ -108,28 +192,6 @@ export function home(s: Settings, blocks: Blocks, tracks: Track[], creators: Cre
         <button class="btn">Join</button>
       </form>
     </div>
-  </div>
-</section>
-
-<section class="videogame" id="video-game">
-  <div class="wrap">
-    <hr class="rule">
-    <h2 class="big">${line(blocks, 'game_title')}</h2>
-    <div class="vg-grid">
-      ${video(s.trailer_video, s.trailer_poster, 'Coffee Time Adventures trailer')}
-      <div class="vg-copy">${text(blocks, 'game_body')}</div>
-    </div>
-    <hr class="rule">
-  </div>
-</section>
-
-<section class="playonline" id="play-online">
-  <div class="wrap playonline-in">
-    <h2 class="big">Play Coffee Time on your phone</h2>
-    <p>Make a room, send your friends the code, and play together online. Free, no sign-up, and it installs to your home screen.</p>
-    <p class="playonline-btns"><a class="btn" href="/overtime/">Overtime</a> <a class="btn" href="/rush/">Rush Hour</a> <a class="btn btn-ghost" href="/play/">The board game, as printed</a></p>
-    <p class="playonline-note">Overtime: plan your cards together, watch the fight, find the Roamer hiding on your team. Rush Hour: race King Tea's clock in real time. Both are in preview.</p>
-    <hr class="rule">
   </div>
 </section>
 
@@ -260,19 +322,7 @@ export function arcade(s: Settings, blocks: Blocks, games: Game[]): Safe {
       <div class="intro">${text(blocks, 'arcade_body')}</div>
       <p class="center"><a class="btn" href="${s.demo_url}" target="_blank" rel="noopener">Download the free demo</a></p>
     </div>
-    <div class="wrap">
-      <ul class="games">
-        ${games.map(
-          (g) => html`<li>
-            <a href="${g.url}" target="_blank" rel="noopener">${img(g.image, `${g.title} screenshot`, 'width="1000" height="600"')}</a>
-            <h2>${g.title}</h2>
-            ${richText(g.blurb)}
-            ${g.note ? html`<p class="small">${g.note}</p>` : ''}
-            <a class="btn" href="${g.url}" target="_blank" rel="noopener">${g.button || `Play ${g.title}`}</a>
-          </li>`,
-        )}
-      </ul>
-    </div>
+    ${gamesSections(blocks, games)}
   </section>`;
 }
 

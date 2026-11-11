@@ -95,3 +95,4 @@
 
 - 2026-11-03: Characters stage band is white (the pedestal art has white edges that looked random on peach); white-curve.webp, site.css v=5.
 - 2026 pass on the home page: new arcade-style cover (starfield, shimmer headline, chunky game buttons), steam and sparkles on the characters, XP scroll bar, tidier mobile top (new blocks cover_kicker and cover_tagline, migration 0008).
+- 2026 redesign: new frosted header (Games, Board Game, Story, Music, Team, News, More, Play free), sold-out and video-game cover with trailer card and stat strip, Play our games section (3D games, 2D arcade of 14 games beside Try these games in AR, linking Smartz Graphics), games now have kind and engine in HQ (migration 0009). Donette, orbs, backgrounds and the board game sections kept.

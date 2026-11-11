@@ -63,7 +63,7 @@ for (const [from, to] of Object.entries(REDIRECTS)) site.get(from, () => redirec
 
 site.get('/', async (c) => {
   const { s, b } = await base(c);
-  const [tracks, creators, reviews] = await Promise.all([db.listTracks(c.env.DB), db.listCreators(c.env.DB), db.listReviews(c.env.DB)]);
+  const [tracks, creators, reviews, games] = await Promise.all([db.listTracks(c.env.DB), db.listCreators(c.env.DB), db.listReviews(c.env.DB), db.listGames(c.env.DB)]);
   const url = siteUrl(c);
   const jsonld = {
     '@context': 'https://schema.org',
@@ -76,7 +76,7 @@ site.get('/', async (c) => {
     offers: { '@type': 'Offer', price: s.price, priceCurrency: 'USD', availability: s.orders_open === '0' ? 'https://schema.org/OutOfStock' : 'https://schema.org/InStock', url: url + '/#order' },
   };
   const q = c.url.searchParams;
-  return render(c, { title: 'Home', path: '/', bodyClass: 'is-home', jsonld }, P.home(s, b, tracks, creators, reviews, { joined: q.get('joined') || undefined, order: { sent: q.get('sent') === '1' } }));
+  return render(c, { title: 'Home', path: '/', bodyClass: 'is-home', jsonld }, P.home(s, b, tracks, creators, reviews, games, { joined: q.get('joined') || undefined, order: { sent: q.get('sent') === '1' } }));
 });
 
 site.get('/story', async (c) => {
@@ -87,7 +87,7 @@ site.get('/story', async (c) => {
 site.get('/arcade', async (c) => {
   const { s, b } = await base(c);
   const games = await db.listGames(c.env.DB);
-  return render(c, { title: 'Arcade', description: 'Coffee Time Adventures, the video game, plus Rapid Refill and Donut Dash to play in your browser.', path: '/arcade', image: '/img/trailer-poster.webp' }, P.arcade(s, b, games));
+  return render(c, { title: 'Arcade', description: 'Coffee Time Adventures, our 3D games, the 2D arcade, and games you can play in AR on your own table.', path: '/arcade', image: '/img/trailer-poster.webp' }, P.arcade(s, b, games));
 });
 
 site.get('/news', async (c) => {

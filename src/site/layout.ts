@@ -11,18 +11,23 @@ export type PageMeta = {
   jsonld?: unknown;
 };
 
-// The same nine links as the Wix site, in the same order. Six of them are sections of the home page.
+// 2026 header: the games come first now. Most links are sections of the home page.
 export const NAV: { href: string; label: string }[] = [
-  { href: '/#rules', label: 'Rules' },
-  { href: '/#video-game', label: 'Video Game' },
-  { href: '/#music', label: 'Music' },
-  { href: '/#order', label: 'Order' },
+  { href: '/#games', label: 'Games' },
+  { href: '/#rules', label: 'Board Game' },
   { href: '/story', label: 'Story' },
-  { href: '/arcade', label: 'Arcade' },
-  { href: '/play/', label: 'Play Online' },
+  { href: '/#music', label: 'Music' },
   { href: '/#team', label: 'Team' },
   { href: '/news', label: 'News' },
+];
+// Everything else the old nine-link bar carried, tucked under "More" so nothing was lost.
+export const MORE: { href: string; label: string }[] = [
+  { href: '/#order', label: 'Order' },
   { href: '/#reviews', label: 'Reviews' },
+  { href: '/play/', label: 'Play Online' },
+  { href: '/video-tutorials', label: 'Tutorials' },
+  { href: '/faq', label: 'FAQ' },
+  { href: '/arcade', label: 'Arcade page' },
 ];
 
 // Google Analytics 4, only when HQ > Settings holds a valid Measurement ID. The id is checked against a
@@ -44,7 +49,9 @@ export function layout(s: Settings, meta: PageMeta, body: Child, opts: { nonce: 
   const ogImage = base + (meta.image || '/img/og.jpg');
   const robots = meta.noindex || !opts.indexable ? 'noindex, nofollow' : 'index, follow';
   const current = (href: string) => (!href.includes('#') && meta.path === href ? raw('aria-current="page"') : '');
-  const navItems = NAV.map((n) => html`<li><a href="${n.href}" ${current(n.href)}>${n.label}</a></li>`);
+  const li = (n: { href: string; label: string }) => html`<li><a href="${n.href}" ${current(n.href)}>${n.label}</a></li>`;
+  const navItems = NAV.map(li);
+  const moreItems = MORE.map(li);
   return (
     '<!doctype html>' +
     html`<html lang="en">
@@ -67,7 +74,7 @@ export function layout(s: Settings, meta: PageMeta, body: Child, opts: { nonce: 
 <link rel="apple-touch-icon" href="/apple-touch-icon.png">
 <link rel="preload" href="/fonts/anton.woff" as="font" type="font/woff" crossorigin>
 <link rel="preload" href="/fonts/jost.woff" as="font" type="font/woff" crossorigin>
-<link rel="stylesheet" href="/site.css?v=7">
+<link rel="stylesheet" href="/site.css?v=8">
 ${ga(s.ga4_id, opts.nonce)}
 ${meta.jsonld ? raw(`<script type="application/ld+json" nonce="${opts.nonce}">${JSON.stringify(meta.jsonld).replace(/</g, '\\u003c')}</script>`) : ''}
 </head>
@@ -76,10 +83,11 @@ ${meta.jsonld ? raw(`<script type="application/ld+json" nonce="${opts.nonce}">${
 <header class="site-head">
   <div class="wrap head-row">
     <a class="brand" href="/" aria-label="${s.site_name}, home"><img src="/img/logo-purple.webp" alt="Coffee Time" width="1200" height="195"></a>
-    <nav class="nav" aria-label="Main"><ul>${navItems}</ul></nav>
+    <nav class="nav" aria-label="Main"><ul>${navItems}<li class="more"><details><summary>More</summary><ul>${moreItems}</ul></details></li></ul></nav>
+    <a class="head-cta" href="/#games">Play free</a>
     <details class="nav-m">
       <summary aria-label="Menu"><span></span><span></span><span></span></summary>
-      <ul>${navItems}</ul>
+      <ul>${navItems}${moreItems}<li class="m-cta"><a href="/#games">Play our games free</a></li></ul>
     </details>
   </div>
 </header>
