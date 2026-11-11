@@ -1021,3 +1021,9 @@ a:focus:not(:focus-visible), button:focus:not(:focus-visible), label:focus:not(:
 .dv-first .delivered { margin-top: 0 !important; margin-bottom: 0 !important; }
 /* no scroll progress bar */
 body::before { display: none !important; animation: none !important; }
+
+/* the header's rainbow line between every section, site wide */
+main > section + section, main > section > div.hero, main > section > .reviews, main > section > .orders, .orders .pt, .orders .delivered, .dv-first + .bg-top, .hs, .reel, .newsletter, .coloring-band, .arc-rule, .site-foot {
+  border-top: 3px solid transparent !important; border-image: linear-gradient(90deg, #8e3cc0, #ff8a3d 40%, #fff245 70%, #78b92f) 1 !important; border-image-slice: 1 !important; }
+.hs-games { border-bottom: 0 !important; }
+.arc-rule > .wrap { border-top: 0 !important; }
