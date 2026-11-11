@@ -990,3 +990,18 @@ a:focus:not(:focus-visible), button:focus:not(:focus-visible), label:focus:not(:
 .learn a { border-color: #3b0f6e !important; color: #3b0f6e !important; }
 .learn a:hover { background: #3b0f6e !important; color: #fff !important; border-color: #3b0f6e !important; }
 .page .intro .learn a { border-color: rgba(255, 255, 255, .6) !important; color: #fff !important; }
+
+/* ---- board game page top: the real board, tilted like it is on a table, beside the title */
+.bg-top { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: clamp(24px, 4vw, 64px); align-items: center; padding: clamp(30px, 4vw, 56px) 0 clamp(40px, 5vw, 70px); }
+.bg-top .sec-head, .bg-top .sec-head * { text-align: left !important; margin-left: 0 !important; }
+.bg-top .sec-title { font-size: clamp(3rem, 6.4vw, 6rem) !important; line-height: .95; }
+.bg-top .sec-sub { font-size: clamp(1.1rem, 1.5vw, 1.3rem) !important; max-width: 34ch !important; }
+.bg-top-links { display: flex; flex-wrap: wrap; gap: 8px 26px; margin: 1.2em 0 0; }
+.bg-top-links a { font-family: var(--display); text-transform: uppercase; letter-spacing: .1em; font-size: 1.1rem; color: var(--yellow); text-decoration: none; }
+.bg-top-links a::after { content: ' \2192'; } .bg-top-links a:hover { text-decoration: underline; }
+.bg-top-board { perspective: 1400px; }
+.bg-top-board img { display: block; width: min(100%, 520px); height: auto; margin: 0 auto; border-radius: 10px; transform: rotateX(48deg) rotateZ(-24deg); box-shadow: -30px 40px 50px rgba(8, 0, 26, .6), 0 0 0 6px #2a0f5c; transition: transform .6s cubic-bezier(.2, .8, .2, 1); animation: boardfloat 6s ease-in-out infinite alternate; }
+.bg-top-board:hover img { transform: rotateX(12deg) rotateZ(-4deg) scale(1.04); animation-play-state: paused; }
+@keyframes boardfloat { from { translate: 0 0; } to { translate: 0 -14px; } }
+@media (max-width: 860px) { .bg-top { grid-template-columns: 1fr; } .bg-top .sec-head, .bg-top .sec-head * { text-align: center !important; } .bg-top-links { justify-content: center; } }
+@media (prefers-reduced-motion: reduce) { .bg-top-board img { animation: none; } }
