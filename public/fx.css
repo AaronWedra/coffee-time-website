@@ -998,7 +998,7 @@ a:focus:not(:focus-visible), button:focus:not(:focus-visible), label:focus:not(:
 
 /* ---- clocks, take 4: a tunnel. Clocks fly out of the centre toward the viewer (clock-tunnel.svg).
    No sunburst, no rings, no colour wash. A soft dark centre keeps the text readable. */
-.hs-board::before, .music::before, .reviews::before { background: radial-gradient(60% 70% at 50% 50%, rgba(12, 2, 32, .78), rgba(12, 2, 32, .25) 70%, transparent), url(/img/clock-tunnel-3.svg) center / cover no-repeat #0c0220 !important; filter: none !important; animation: none !important; }
+.hs-board::before, .music::before, .reviews::before { background: radial-gradient(60% 70% at 50% 50%, rgba(12, 2, 32, .78), rgba(12, 2, 32, .25) 70%, transparent), url(/img/clock-tunnel-4.svg) center / cover no-repeat #0c0220 !important; filter: none !important; animation: none !important; }
 .hs-board::after, .music::after, .reviews::after { display: none !important; }
 .hs-board .hs-split > div::before { display: none !important; }
 
@@ -1029,7 +1029,7 @@ main > section + section, main > section > div.hero, main > section > .reviews, 
 .arc-rule > .wrap { border-top: 0 !important; }
 /* clock tunnel on solid black */
 .hs-board, .music, .reviews { background: #000 !important; }
-.hs-board::before, .music::before, .reviews::before { background: radial-gradient(60% 70% at 50% 50%, rgba(0, 0, 0, .75), rgba(0, 0, 0, .2) 70%, transparent), url(/img/clock-tunnel-3.svg) center / cover no-repeat #000 !important; }
+.hs-board::before, .music::before, .reviews::before { background: radial-gradient(60% 70% at 50% 50%, rgba(0, 0, 0, .75), rgba(0, 0, 0, .2) 70%, transparent), url(/img/clock-tunnel-4.svg) center / cover no-repeat #000 !important; }
 
 /* home music strip: rainbow notes fly out of the centre, same tunnel as the clocks */
 .hs-music .notes { display: none !important; }
@@ -1050,3 +1050,7 @@ main > section + section, main > section > div.hero, main > section > .reviews, 
 /* board game page: Learn to play on solid purple */
 .hero { background: #3b0f6e !important; }
 .hero { background: radial-gradient(90% 140% at 22% 40%, #6a25b8 0%, #46148a 45%, #2a0b5c 100%) !important; }
+/* clock tunnel on purple (not black) */
+.hs-board, .music, .reviews { background: #2e0f63 !important; }
+.hs-board::before, .music::before, .reviews::before { background: radial-gradient(60% 70% at 50% 50%, rgba(46, 15, 99, .78), rgba(46, 15, 99, .2) 70%, transparent), url(/img/clock-tunnel-4.svg) center / cover no-repeat #2e0f63 !important; }
+.hs-board .hs-box > img:first-child { filter: drop-shadow(0 22px 26px rgba(0, 0, 0, .55)) !important; }
