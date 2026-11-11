@@ -714,3 +714,6 @@ body { background: transparent !important; }
 a:focus:not(:focus-visible), button:focus:not(:focus-visible), label:focus:not(:focus-visible), .rv-scroll:focus:not(:focus-visible) { outline: none !important; box-shadow: none; }
 .hs-game:focus, .hs-game:focus-visible, .hs-box:focus, .hs-box:focus-visible { outline: none !important; }
 .hs-game:focus-visible b { text-decoration: underline; text-decoration-color: var(--yellow); text-underline-offset: 4px; }
+/* newsletter on the foam: purple, and the heading in the serif instead of the poster face */
+.newsletter h2, .newsletter p, .newsletter label span { color: #3b0f6e !important; text-shadow: none !important; }
+.newsletter h2 { font-family: var(--quote) !important; font-style: italic; font-weight: 700; text-transform: none !important; letter-spacing: 0 !important; font-size: clamp(2.6rem, 5.5vw, 4.4rem) !important; }
