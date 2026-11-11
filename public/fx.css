@@ -1017,3 +1017,5 @@ a:focus:not(:focus-visible), button:focus:not(:focus-visible), label:focus:not(:
 .zone-bg > .bg-top { margin-top: 0 !important; }
 .hero > .orb { display: none !important; }
 .orders .badge span { margin: 0 .4em; opacity: .7; }
+/* board game page: the "1,000 delivered" thank-you leads the page while orders are closed */
+.dv-first .delivered { margin-top: 0 !important; margin-bottom: 0 !important; }

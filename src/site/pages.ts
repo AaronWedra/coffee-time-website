@@ -255,6 +255,7 @@ export function home(s: Settings, blocks: Blocks, flags: { joined?: string }, da
 export function boardGame(s: Settings, blocks: Blocks, reviews: Review[], flags: { order: OrderState }): Safe {
   return html`
 <section class="zone zone-bg" id="board-game">
+  ${s.orders_open === '0' ? html`<div class="wrap dv-first">${orderForm(s, blocks, flags.order)}</div>` : ''}
   <div class="wrap bg-top">
     <div class="bg-top-copy">
       ${secHead('Own the board game?', line(blocks, 'zone_bg_title'), line(blocks, 'zone_bg_sub'), 'h1')}
@@ -304,7 +305,7 @@ export function boardGame(s: Settings, blocks: Blocks, reviews: Review[], flags:
     ${purpleTree(s, blocks)}
 
 
-    ${orderForm(s, blocks, flags.order)}
+    ${s.orders_open === '0' ? '' : orderForm(s, blocks, flags.order)}
   </div>
 </div>
 </section>
