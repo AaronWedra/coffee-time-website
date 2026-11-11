@@ -825,13 +825,6 @@ a:focus:not(:focus-visible), button:focus:not(:focus-visible), label:focus:not(:
 .cta-duo { border-bottom: 0 !important; padding-bottom: 0 !important; }
 .cta-wrap { margin-top: clamp(30px, 4vw, 56px); padding-top: clamp(30px, 4vw, 56px); border-top: 1px solid rgba(255, 255, 255, .7); }
 
-/* Orders sections are a cup of coffee too: the same foam the cursor stirs, with purple type on it */
-.orders { background: #ead9b8 !important; }
-.orders .orders-split, .orders .orders-split .sec-title, .orders .orders-intro, .orders .orders-copy, .orders .orders-copy p, .orders .orders-copy strong, .orders .badge, .orders .box-link, .orders .box-link a { color: #3b0f6e !important; text-shadow: none !important; }
-.orders .orders-split .sec-kicker { color: #6a1fb0 !important; text-shadow: none !important; }
-.orders .orders-copy a { color: #6a1fb0 !important; }
-.orders .cube-shadow { opacity: .5; }
-.flip-cta .glove { width: 2.6em; height: auto; flex: none; filter: drop-shadow(0 2px 0 rgba(59, 15, 110, .25)); }
 /* coloring band: foam background, purple type */
 .coloring-band { position: relative; overflow: hidden; background: #ead9b8 !important; border-top: 0 !important; }
 .coloring-band > .wrap { position: relative; z-index: 2; }
@@ -915,3 +908,31 @@ a:focus:not(:focus-visible), button:focus:not(:focus-visible), label:focus:not(:
 .hs-games .hs-more, .hs-games .hs-game em { color: #6a1fb0 !important; }
 .hs-games .hs-game img { box-shadow: 0 10px 22px rgba(42, 13, 90, .25); }
 .hs-games .hs-mascot { filter: drop-shadow(0 10px 10px rgba(42, 13, 90, .28)); }
+
+/* ---- arcade, final order: Coffee Time Adventures (trailer + play, two equal thumbnails), one rule,
+   then the three AR games. One spacing value everywhere so the rhythm is even. */
+.page.arcade { --gap: clamp(34px, 4.5vw, 60px); padding-top: var(--gap) !important; padding-bottom: var(--gap) !important; }
+.page.arcade .cta-wrap { margin: 0 auto !important; padding: 0 !important; border: 0 !important; }
+.page.arcade .sec-head { margin: 0 auto calc(var(--gap) * .5) !important; }
+.page.arcade .cta-duo { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) !important; max-width: 1040px; margin: 0 auto !important; padding: 0 !important; border: 0 !important; gap: clamp(20px, 3vw, 40px); align-items: start; }
+.cta-play a { display: block; position: relative; }
+.cta-play img { display: block; width: 100%; height: auto; aspect-ratio: 16 / 9; object-fit: contain; outline: 2px solid rgba(255, 255, 255, .85); outline-offset: 4px; box-shadow: 0 14px 28px rgba(10, 0, 30, .5); }
+.cta-go { position: absolute; right: 14px; bottom: 14px; width: 54px; height: 54px; border-radius: 50%; background: var(--yellow); border: 3px solid var(--purple); box-shadow: 0 4px 0 #b39e00; }
+.cta-go::before { content: ''; position: absolute; left: 19px; top: 13px; border-left: 18px solid var(--purple); border-top: 11px solid transparent; border-bottom: 11px solid transparent; }
+.cta-play:hover img { transform: translateY(-3px); } .cta-play img { transition: transform .2s; }
+.cta-vid figcaption a { color: var(--yellow); text-decoration: none; } .cta-vid figcaption a:hover { text-decoration: underline; }
+.cta-vid figcaption small { font-family: var(--body); text-transform: none; letter-spacing: 0; font-size: .8em; color: #fff; opacity: .85; margin-left: .6em; }
+.arc-rule { margin-top: var(--gap); }
+.arc-rule > .wrap { padding-top: var(--gap); border-top: 1px solid rgba(255, 255, 255, .7); }
+.page.arcade .arc, .page.arcade .arc-pair { margin: 0 !important; padding: 0 !important; }
+.page.arcade .trio { margin-top: 0 !important; }
+@media (max-width: 760px) { .page.arcade .cta-duo { grid-template-columns: 1fr !important; } }
+
+/* Orders sections: plain deep purple (the foam here was tried and dropped, 2026-11-11) */
+.orders { background: linear-gradient(180deg, #2a0f5c, #1a0a38) !important; }
+/* section titles over the clocks: plain white type, no gradient-clip fill and no dark shadow */
+.reviews .sec-title, .music .sec-title { color: #fff !important; -webkit-text-fill-color: #fff !important; background: none !important; text-shadow: 0 3px 0 rgba(30, 0, 60, .7) !important; animation: none !important; }
+/* arcade: room between the rule and the next heading, and that heading on one line */
+.arc-rule .sec-head { margin-top: 0 !important; }
+.arc-rule .sec-title { font-size: clamp(1.8rem, 3.4vw, 3rem) !important; }
+.pt h3 a { white-space: nowrap; } .pt h3 { text-wrap: balance; }

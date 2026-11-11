@@ -147,7 +147,7 @@ export function gamesSections(blocks: Blocks, games: Game[]): Safe {
   <div class="wrap">
     <div class="arc arc-pair" id="arcade">
       <span id="ar"></span>
-      ${secHead(line(blocks, 'pair_kicker'), line(blocks, 'pair_title'), raw(inline(b(blocks, 'pair_sub'))), 'h1')}
+      ${secHead(line(blocks, 'pair_kicker'), line(blocks, 'pair_title'), raw(inline(b(blocks, 'pair_sub'))), 'h2')}
       <ul class="trio">${titles.map((title) => {
         const a = of('ar').find((x) => x.title === title);
         const d = of('2d').find((x) => x.title === title);
@@ -197,7 +197,7 @@ export function home(s: Settings, blocks: Blocks, flags: { joined?: string }, da
 </section>
 
 <section class="hs hs-games" aria-label="Video games">
-  <img class="hs-mascot" src="/img/cubey-gamer-2.webp" alt="Sir Cubey holding a game controller" width="754" height="673" loading="lazy">
+  <img class="hs-mascot" src="/img/cubey-gamer-3.webp" alt="Sir Cubey holding a game controller" width="820" height="673" loading="lazy">
   <div class="wrap">
     <header class="hs-head"><h2>${line(blocks, 'games_title')}</h2><p>${line(blocks, 'zone_vg_sub')}</p><a class="hs-more" href="/arcade">All games and AR</a></header>
     <ul class="hs-row">${play.map((g) => html`<li><a class="hs-game" href="${g.url}" ${ext(g.url)}>${g.image ? img(g.image, '', 'width="1000" height="625"') : ''}<b>${g.title}${g.kind === 'ar' ? html` <i>AR</i>` : ''}</b><span>${g.blurb}</span><em>${g.button || 'Play now'}</em></a></li>`)}</ul>
@@ -295,7 +295,6 @@ export function boardGame(s: Settings, blocks: Blocks, reviews: Review[], flags:
 </div>
 
 <div class="orders" id="order">
-  <canvas class="latte" aria-hidden="true"></canvas>
   <div class="wrap">
     <div class="orders-split">
       <div class="orders-text">
@@ -357,7 +356,6 @@ export function teamPage(blocks: Blocks, creators: Creator[]): Safe {
 
 export function orderPage(s: Settings, blocks: Blocks, st: OrderState): Safe {
   return html`<section class="orders page-order" id="order">
-  <canvas class="latte" aria-hidden="true"></canvas>
     <div class="wrap">
       <div class="orders-split">
         <div class="orders-text">
@@ -433,20 +431,14 @@ export function arcade(s: Settings, blocks: Blocks, games: Game[]): Safe {
   const solo = games.filter((g) => g.kind === '3d');
   return html`<section class="page arcade">
     ${orb('warp', 'r', 10, 3, 1)}
-    ${gamesSections(blocks, games)}
-    <div class="wrap cta-wrap">
-      ${secHead('Video games', line(blocks, 'arcade_title'), '', 'h2')}
-      ${solo.map((g) => html`<div class="cta-duo">
+    ${solo.map((g) => html`<div class="wrap cta-wrap">
+      ${secHead('Video games', g.title, g.blurb, 'h1')}
+      <div class="cta-duo">
         <figure class="cta-vid">${video(s.trailer_video, '/img/trailer-poster-roamer.webp', g.title + ' trailer')}<figcaption>Watch the trailer</figcaption></figure>
-        <div class="cta-info">
-          ${g.engine ? html`<span class="gtag">${g.engine}</span>` : ''}
-          <h2>${g.title}</h2>
-          <p>${g.blurb}</p>
-          ${g.note ? html`<p class="gnote">${g.note}</p>` : ''}
-          <a class="btn btn-go" href="${g.url}" ${ext(g.url)}>${g.button || 'Play now'}</a>
-        </div>
-      </div>`)}
-    </div>
+        <figure class="cta-vid cta-play"><a href="${g.url}" ${ext(g.url)}>${img(s.trailer_poster, 'Play ' + g.title, 'width="1280" height="720"')}<span class="cta-go" aria-hidden="true"></span></a><figcaption><a href="${g.url}" ${ext(g.url)}>${g.button || 'Play now'}</a>${g.note ? html` <small>${g.note}</small>` : ''}</figcaption></figure>
+      </div>
+    </div>`)}
+    <div class="arc-rule">${gamesSections(blocks, games)}</div>
   </section>`;
 }
 
