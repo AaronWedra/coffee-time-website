@@ -147,7 +147,7 @@ export function gamesSections(blocks: Blocks, games: Game[]): Safe {
   <div class="wrap">
     <div class="arc arc-pair" id="arcade">
       <span id="ar"></span>
-      ${secHead(line(blocks, 'pair_kicker'), line(blocks, 'pair_title'), raw(inline(b(blocks, 'pair_sub'))), 'h3')}
+      ${secHead(line(blocks, 'pair_kicker'), line(blocks, 'pair_title'), raw(inline(b(blocks, 'pair_sub'))), 'h1')}
       <ul class="trio">${titles.map((title) => {
         const a = of('ar').find((x) => x.title === title);
         const d = of('2d').find((x) => x.title === title);
@@ -435,8 +435,9 @@ export function arcade(s: Settings, blocks: Blocks, games: Game[]): Safe {
   const solo = games.filter((g) => g.kind === '3d');
   return html`<section class="page arcade">
     ${orb('warp', 'r', 10, 3, 1)}
-    <div class="wrap">
-      ${secHead('Video games', line(blocks, 'arcade_title'), '', 'h1')}
+    ${gamesSections(blocks, games)}
+    <div class="wrap cta-wrap">
+      ${secHead('Video games', line(blocks, 'arcade_title'), '', 'h2')}
       ${solo.map((g) => html`<div class="cta-duo">
         <figure class="cta-vid">${video(s.trailer_video, '/img/trailer-poster-roamer.webp', g.title + ' trailer')}<figcaption>Watch the trailer</figcaption></figure>
         <div class="cta-info">
@@ -448,7 +449,6 @@ export function arcade(s: Settings, blocks: Blocks, games: Game[]): Safe {
         </div>
       </div>`)}
     </div>
-    ${gamesSections(blocks, games)}
   </section>`;
 }
 

@@ -821,3 +821,6 @@ a:focus:not(:focus-visible), button:focus:not(:focus-visible), label:focus:not(:
 .cta-vid figcaption { font-size: clamp(1.1rem, 1.5vw, 1.35rem) !important; letter-spacing: .12em; margin-top: .8em !important; color: var(--yellow) !important; opacity: 1 !important; text-shadow: 0 2px 0 rgba(30, 0, 60, .6); }
 .cta-info .gtag { font-size: .95rem !important; }
 .hs-more, .hs-game em { font-size: 1.05rem !important; }
+/* arcade: AR games first, then the rule, then Coffee Time Adventures */
+.cta-duo { border-bottom: 0 !important; padding-bottom: 0 !important; }
+.cta-wrap { margin-top: clamp(30px, 4vw, 56px); padding-top: clamp(30px, 4vw, 56px); border-top: 1px solid rgba(255, 255, 255, .7); }
