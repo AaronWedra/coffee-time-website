@@ -1,3 +1,4 @@
+import { FOAM_JS } from './foam.ts';
 import { html, raw, esc, type Child, type Safe } from '../lib/html.ts';
 import type { Settings } from '../lib/db.ts';
 
@@ -73,7 +74,7 @@ export function layout(s: Settings, meta: PageMeta, body: Child, opts: { nonce: 
 <link rel="preload" href="/fonts/anton.woff" as="font" type="font/woff" crossorigin>
 <link rel="preload" href="/fonts/jost.woff" as="font" type="font/woff" crossorigin>
 <link rel="stylesheet" href="/site.css?v=13">
-<link rel="stylesheet" href="/fx.css?v=28">
+<link rel="stylesheet" href="/fx.css?v=30">
 ${ga(s.ga4_id, opts.nonce)}
 ${meta.jsonld ? raw(`<script type="application/ld+json" nonce="${opts.nonce}">${JSON.stringify(meta.jsonld).replace(/</g, '\\u003c')}</script>`) : ''}
 </head>
@@ -99,13 +100,7 @@ ${meta.jsonld ? raw(`<script type="application/ld+json" nonce="${opts.nonce}">${
     <p class="foot-credit">Website Design by <a href="https://www.smartzgraphics.com" target="_blank" rel="noopener">www.SmartzGraphics.com</a> <a href="/hq" class="quiet">Team login</a></p>
   </div>
 </footer>
-<script nonce="${opts.nonce}">(function(){var c=document.querySelector('.latte');if(!c)return;var s=c.parentNode,x=c.getContext('2d'),w=0,h=0,d=Math.min(devicePixelRatio||1,2),pt,pat,calm=matchMedia('(prefers-reduced-motion: reduce)').matches,last=null,mv=0;
-function tile(){var t=document.createElement('canvas');t.width=t.height=400;var g=t.getContext('2d');g.fillStyle='#d9b585';g.fillRect(0,0,400,400);for(var i=0;i<0;i++){var px=Math.random()*400,py=Math.random()*400,r=30+Math.random()*70;[[-400,0],[400,0],[0,-400],[0,400],[0,0]].forEach(function(o){var q=g.createRadialGradient(px+o[0],py+o[1],0,px+o[0],py+o[1],r);q.addColorStop(0,'rgba(244,224,190,.28)');q.addColorStop(1,'rgba(244,224,190,0)');g.fillStyle=q;g.fillRect(px+o[0]-r,py+o[1]-r,2*r,2*r)})}for(var j=0;j<420;j++){var bx=Math.random()*400,by=Math.random()*400,br=.8+Math.random()*3.2;[[-400,0],[400,0],[0,-400],[0,400],[0,0]].forEach(function(o){g.fillStyle='rgba(255,244,224,.28)';g.beginPath();g.arc(bx+o[0],by+o[1],br,0,6.283);g.fill();g.strokeStyle='rgba(120,78,40,.22)';g.lineWidth=.8;g.stroke()})}return t}
-function fit(){var r=s.getBoundingClientRect();w=r.width;h=r.height;c.width=w*d;c.height=h*d;x.setTransform(d,0,0,d,0,0);pat=x.createPattern(pt,'repeat');x.globalCompositeOperation='source-over';x.globalAlpha=1;x.fillStyle=pat;x.fillRect(0,0,w,h)}
-pt=tile();fit();addEventListener('resize',fit);
-function part(e){var r=s.getBoundingClientRect(),px=e.clientX-r.left,py=e.clientY-r.top;if(py<-60||py>h+60)return;var n=last?Math.max(1,Math.ceil(Math.hypot(px-last.x,py-last.y)/6)):1;x.globalCompositeOperation='destination-out';for(var i=0;i<n;i++){var f=last?i/n:1,qx=last?last.x+(px-last.x)*f:px,qy=last?last.y+(py-last.y)*f:py,g=x.createRadialGradient(qx,qy,6,qx,qy,46);g.addColorStop(0,'rgba(0,0,0,1)');g.addColorStop(1,'rgba(0,0,0,0)');x.globalAlpha=1;x.fillStyle=g;x.beginPath();x.arc(qx,qy,46,0,6.283);x.fill()}last={x:px,y:py};mv=1}
-function heal(){if(mv||true){x.globalCompositeOperation='source-over';x.globalAlpha=.012;x.fillStyle=pat;x.fillRect(0,0,w,h);x.globalAlpha=1}requestAnimationFrame(heal)}
-if(!calm){s.addEventListener('pointermove',part);s.addEventListener('pointerleave',function(){last=null});requestAnimationFrame(heal)}})();</script>
+<script nonce="${opts.nonce}">${raw(FOAM_JS)}</script>
 </body>
 </html>`.s
   );

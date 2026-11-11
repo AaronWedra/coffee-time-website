@@ -488,3 +488,20 @@ body { background: transparent !important; }
 .cast-main { position: relative; z-index: 2; display: block; width: 100%; height: auto;
   filter: drop-shadow(0 2px 0 rgba(255, 255, 255, .55)) drop-shadow(0 10px 14px rgba(10, 0, 30, .45)) !important; animation: none !important; transform: none !important; }
 .cast-floor { position: absolute; z-index: 1; inset: auto 10% 0 10% !important; top: auto !important; height: 14%; border-radius: 50%; background: radial-gradient(50% 50% at 50% 50%, rgba(10, 0, 30, .55), transparent 70%); pointer-events: none; }
+
+/* doors, tighter: one-line titles, less height, art fills its half */
+.door { grid-template-columns: 1.15fr 1fr !important; padding: clamp(18px, 2.2vw, 28px) clamp(20px, 2.6vw, 34px) !important; align-items: center; }
+.door b { font-size: clamp(1.7rem, 2.9vw, 2.6rem) !important; white-space: nowrap; }
+.door-copy { gap: .35em; }
+.door-copy > span { max-width: none !important; font-size: 1rem !important; line-height: 1.45; }
+.door-copy em { white-space: nowrap; margin-top: .2em; }
+.door-art { aspect-ratio: 16 / 10; object-fit: cover; }
+.door-box { aspect-ratio: auto; object-fit: contain; transform: scale(1.25) rotate(-3deg); }
+.door:hover .door-box { transform: scale(1.3) rotate(-1deg); }
+@media (max-width: 700px) { .door { grid-template-columns: 1fr !important; } .door b { white-space: normal; } }
+
+/* newsletter: the foam is the whole surface, nothing else floats on it */
+.newsletter { background: #7a4018 !important; }
+.newsletter > .orb, .newsletter .beans, .newsletter .bean { display: none !important; }
+.newsletter h2, .newsletter p, .newsletter label span { color: #3a1c08 !important; text-shadow: 0 1px 0 rgba(255, 248, 232, .7) !important; }
+.newsletter h2 { text-shadow: none !important; }

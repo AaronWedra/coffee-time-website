@@ -123,3 +123,4 @@
 - 2026-11-11: Wider desktop text columns; arcade solo card and AR cubes; Star Bugs 2D landscape thumbnail; cyan links now yellow; home cover shortened to 'Play Coffee Time.' with two on-brand buttons (migrations 0017, 0018).
 - 2026-11-11: Home doors redone: one calm purple surface, real game and box art, no icons or bean texture.
 - 2026-11-11: Cast back to Aaron's original art (ChatGPT render removed): purple stage, one soft overhead light, floor shadow, no pedestal, no spotlight beams, narrower.
+- 2026-11-11: Newsletter foam rebuilt (src/site/foam.ts): crema underneath, ivory foam with bubble clusters, cursor parts a soft channel that flows back. Doors: Star Bugs thumbnail, one-line titles, shorter.

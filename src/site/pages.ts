@@ -186,7 +186,7 @@ export function home(s: Settings, blocks: Blocks, flags: { joined?: string }): S
   <div class="wrap doors-in">
     <a class="door door-vg" href="/arcade">
       <span class="door-copy"><b>${line(blocks, 'zone_vg_title')}</b><span>${line(blocks, 'zone_vg_sub')}</span><em>Play now</em></span>
-      <img class="door-art" src="/img/game-rapid-refill-ar.webp" alt="" width="520" height="390" loading="lazy">
+      <img class="door-art" src="/img/game-star-bugs.webp" alt="" width="1000" height="625" loading="lazy">
     </a>
     <a class="door door-bg" href="/board-game">
       <span class="door-copy"><b>${line(blocks, 'zone_bg_title')}</b><span>${line(blocks, 'zone_bg_sub')}</span><em>Rules, tutorials, order</em></span>
