@@ -758,3 +758,20 @@ a:focus:not(:focus-visible), button:focus:not(:focus-visible), label:focus:not(:
 .pair-cards .k-2d .gposter .gfull { outline: 2px solid var(--yellow); outline-offset: -2px; }
 .pair-cards .k-2d .gposter { align-self: center; }
 .pairs { margin-top: clamp(14px, 2vw, 26px); }
+
+/* ---- news: compact cards, three across on a desktop, every picture whole at its own shape */
+.page.news .wrap.wide { width: min(1500px, 100% - 2 * var(--gutter)); }
+.news-list { columns: 3 !important; column-gap: 20px !important; }
+.news-list .news-item { margin: 0 0 20px !important; padding: 16px 18px 14px !important; border-radius: 12px !important; border: 0 !important; box-shadow: 0 10px 22px rgba(20, 0, 45, .3) !important; }
+.news-list .news-item .date { font-size: .72rem; }
+.news-list .news-item h2 { font-size: 1.25rem !important; line-height: 1.08; margin: 0 0 .4em; }
+.news-list .news-item p { font-size: .9rem !important; line-height: 1.5 !important; margin: 0 0 .7em; }
+.news-pics { grid-template-columns: 1fr !important; gap: 8px !important; }
+.news-pics.n2, .news-pics.n4 { grid-template-columns: 1fr 1fr !important; align-items: start; }
+.news-pics img, .news-item img { aspect-ratio: auto !important; height: auto !important; width: 100%; object-fit: contain !important; border-radius: 0 !important; display: block; }
+.news-item .video, .news-item .yt { margin: 6px 0 12px; }
+.news-list .news-item .btn { font-size: .85rem; padding: .45em 1em; }
+@media (max-width: 1200px) { .news-list { columns: 2 !important; } }
+@media (max-width: 760px) { .news-list { columns: 1 !important; } }
+.page.news .orb { display: none !important; }
+@media (max-width: 1620px) { .orb { display: none !important; } }
