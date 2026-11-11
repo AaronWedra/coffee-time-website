@@ -143,3 +143,4 @@
 - 2026-11-11: Orders sections (board game page and /order) use the foam effect as their background, purple type on it; foam script handles several canvases and keeps bubble size constant on tall sections.
 - 2026-11-11: Story: white cartoon glove on the Click to turn button; coloring band uses the foam background. Music page has no orbs.
 - 2026-11-11: Home: trailer plays in place on the cover; games strip has the header rainbow bar top and bottom and Sir Cubey holding a controller (his own art, key swapped for a drawn controller) in the right margin on wide screens.
+- 2026-11-11: Clock sections (home board game strip, Music, Reviews): acid edition, drifting rainbow recolours the clocks over deep purple; soft dark halo behind text instead of a solid half.

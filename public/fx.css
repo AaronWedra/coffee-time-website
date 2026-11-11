@@ -858,3 +858,20 @@ a:focus:not(:focus-visible), button:focus:not(:focus-visible), label:focus:not(:
 @keyframes cubeybob { from { transform: rotate(-3deg) translateY(0); } to { transform: rotate(3deg) translateY(-8px); } }
 @media (max-width: 1500px) { .hs-mascot { display: none; } }
 @media (prefers-reduced-motion: reduce) { .hs-mascot { animation: none; } }
+
+/* ---- Realm of Time, acid edition. Three layers behind the content of these sections:
+   deep purple, the melting clocks (hue slowly rotating), and a drifting rainbow that recolours the
+   clock lines (blend mode "color": dark stays dark, lines go rainbow). Text keeps a soft dark halo,
+   no boxes and no hard edges. */
+.hs-board, .music, .reviews { background: #160633 !important; position: relative; isolation: isolate; overflow: hidden; }
+.hs-board::before, .music::before, .reviews::before { content: ''; position: absolute; inset: 0; z-index: -1; pointer-events: none; display: block !important;
+  background: radial-gradient(60% 80% at 50% 50%, rgba(120, 40, 200, .35), transparent 70%), url(/img/realm-of-time-2.svg) 0 0 / 900px; filter: saturate(1.7) brightness(1.25); animation: acidhue 24s linear infinite; }
+.hs-board::after, .music::after, .reviews::after { content: ''; position: absolute; inset: 0; z-index: -1; pointer-events: none; opacity: .8; mix-blend-mode: color;
+  background: linear-gradient(115deg, #ff3bd4, #8a5cff, #2ee6ff, #5dff8f, #ffe14a, #ff7a3b, #ff3bd4, #8a5cff, #2ee6ff) 0 0 / 400% 100% !important; animation: aciddrift 30s linear infinite !important; }
+@keyframes acidhue { to { filter: saturate(1.7) brightness(1.25) hue-rotate(360deg); } }
+@keyframes aciddrift { to { background-position: 133% 0; } }
+@media (prefers-reduced-motion: reduce) { .hs-board::before, .music::before, .reviews::before, .hs-board::after, .music::after, .reviews::after { animation: none !important; } }
+/* readability: a soft dark halo behind the text column instead of a solid half */
+.hs-board .hs-split > div::before { top: -70px !important; bottom: -70px !important; left: -110px !important; right: -110px !important; box-shadow: none !important;
+  background: radial-gradient(closest-side, rgba(14, 3, 36, .94) 62%, rgba(14, 3, 36, .6) 82%, transparent) !important; }
+.hs-board .hs-head h2, .hs-board .hs-head p, .hs-board blockquote, .hs-board cite, .music .sec-title, .music .music-sub, .music .music-tag, .music .track, .reviews .sec-title { text-shadow: 0 2px 10px #0e0324, 0 0 3px #0e0324; }
