@@ -74,13 +74,19 @@ def block(key, label, value, page="home", kind="text"):
 block("cover_kicker", "Cover: small line above the headline", "Sold out. 1,000 of 1,000.", kind="line")
 block("cover_tagline", "Cover: headline", "Our board game sold out. Now we make video games.", kind="line")
 block("cover_note", "Cover: paragraph under the headline", "All 1,000 first-edition copies of the Coffee Time board game found a home, on family shelves and in coffee shops and game shops. Thank you! The story keeps going in video games: play the free Coffee Time Adventures demo, hit the arcade, or try our games in AR.")
-block("games_title", "Games: heading", "Play our games", kind="line")
-block("games_intro", "Games: paragraph", "We are a small team in Davis, California, and we have built 18 games, from tiny arcade games to full 3D adventures. Play them in your browser or download them.")
-block("arcade_2d_title", "Games: 2D arcade heading", "The 2D arcade", kind="line")
-block("arcade_ar_title", "Games: AR heading", "Try these games in AR", kind="line")
-block("arcade_ar_body", "Games: AR paragraph", "Open one on your phone, point it at a table, and the table becomes the game board. Nothing to install. These live on the Smartz Graphics website.")
+block("games_title", "Games: heading", "The Video Games", kind="line")
+block("games_intro", "Games: paragraph", "We are a small team in Davis, California, and we make video games set in the Coffee Time universe. Play them free in your browser, on your phone or on your own table in AR.")
+block("arcade_2d_title", "Games: 2D arcade heading", "2D Arcade", kind="line")
+block("arcade_ar_title", "Games: AR heading", "AR Arcade", kind="line")
+block("arcade_ar_body", "Games: AR paragraph", "Same games, on your table. Open one on your phone, point it at a table and the table becomes the level. Nothing to install.")
+block("cast_title", "Cast: heading", "Meet the stars", kind="line")
+block("cast_sub", "Cast: line under heading", "Five worlds. One very big cup of trouble.", kind="line")
+block("zone_vg_title", "Zone banner: video games heading", "Video Games", kind="line")
+block("zone_vg_sub", "Zone banner: video games line", "Play free in your browser, on your phone, or on your table in AR.", kind="line")
+block("zone_bg_title", "Zone banner: board game heading", "The Board Game", kind="line")
+block("zone_bg_sub", "Zone banner: board game line", "Own the box? Learn to play, watch the tutorials, read the story, order a copy.", kind="line")
+block("online_title", "Online games: heading", "Play online with friends", kind="line")
 block("games_3d_title", "Games: 3D heading", "The 3D games", kind="line")
-block("games_all_note", "Games: line under the lists", "Every game also lives on the [DV Game Design website](https://www.dvgamedesign.com), where the whole game club's catalog is.")
 block("hero_title", "Top of the page: headline", "Learn to play like a pro", kind="line")
 block(
     "hero_body",
@@ -403,26 +409,14 @@ AR = "https://www.smartzgraphics.com/games/"
 games = [
     ("Rapid Refill", "2d", "GameMaker", "Help Thermos deliver fresh, hot coffee to coffee shops across the Five Worlds!", "For desktop only.", GX + "9kk8k1/rapid-refill/", "Play now", "/img/rapid-refill.webp"),
     ("Donut Dash", "2d", "GameMaker", "Collect enough donuts to feed the hungry pup-pups before they eat you!", "For desktop only.", GX + "fdz4p4/donut-dash/", "Play now", "/img/donut-dash.webp"),
-    ("Star Bugs", "2d", "GDevelop", "Star Bugs have invaded. Bop them before they get away.", "", "https://gd.games/aaronwedra/do-or-donut", "Play now", ""),
-    ("Archer the Archer", "2d", "GameMaker", "A retro top-down action adventure.", "", GX + "jg4t4k/archer-the-archer/", "Play now", ""),
-    ("Chip", "2d", "GameMaker", "Pilot a bag of chips through waves of enemy snacks.", "", GX + "b1c98w/chip/", "Play now", ""),
-    ("Mission Solve", "2d", "GameMaker", "A fast space mission: match orbs to fuel your rocket.", "", GX + "4gmbp8/mission-solve/", "Play now", ""),
-    ("Gravity Manipulator", "2d", "GameMaker", "Grab objects with a gravity tool, then scroll to pull them closer or push them away.", "", GX + "wo85ri/gravity-manipulator-game/", "Play now", ""),
-    ("Robot Survival", "2d", "GameMaker", "A solo project by Cairo Love. Beat all the robots. Every pixel and line of code made by hand.", "", GX + "dzfk7b/cairo-s-robot-survival/tracks/4fb8b29e-57f5-4d05-8ca5-4512b7e77dc1/", "Play now", ""),
-    ("Tiger Dash", "2d", "GDevelop", "A demo for Davis School for Independent Study. Dodge the Davis Cow Crew and collect tokens.", "", "https://gd.games/aaronwedra/tigerstrike", "Play now", ""),
-    ("Target Buster Station", "2d", "CMU CS Academy", "Hit targets with lasers and missiles.", "", "https://academy.cs.cmu.edu/sharing/wheatCrocodile3831", "Play now", ""),
-    ("Orb Rush", "2d", "Code.org", "A fast clicker. Catch the orbs before they get past.", "", "https://studio.code.org/projects/gamelab/cY-hW8EJRam_Uys2cNzv6OpdHq3J-NbcsO5KakAQYjI", "Play now", ""),
-    ("8-Ball Fall", "2d", "Code.org", "Catch the falling 8-balls before you run out of lives.", "", "https://studio.code.org/projects/gamelab/ZWlrx8JdUDcCgPtazz_w0_2icBy6TPAWomT9HPwRsIk", "Play now", ""),
-    ("Space Evade", "2d", "Code.org", "Earn points, grab health, dodge everything else.", "", "https://studio.code.org/projects/gamelab/5o73YAolHBXgFLGhcF3d3Z05YAxfXzeJh8uSGu03dvo", "Play now", ""),
-    ("Car Velocity Test", "2d", "Scratch", "A physics prototype: press space to set off an earthquake and catch cars in a dumpster.", "", "https://scratch.mit.edu/projects/814720042/", "Play now", ""),
+    ("Star Bugs", "2d", "GDevelop", "Star Bugs have invaded. Bop them before they get away.", "", "https://gd.games/aaronwedra/do-or-donut", "Play now", "/img/poster-star-bugs.webp"),
     ("Coffee Time Adventures", "3d", "Unreal Engine", "King Tea and Duchess are scheming. Little Miss Hot Shot must uncover their plot and save the Five Worlds.", "Free demo, in development.", DEMO, "Get the free demo", "/img/trailer-poster.webp"),
-    ("Da Vinci's Duck Ship", "3d", "Unreal Engine", "One duck and many possibilities among the stars. The game club's flagship.", "", IT + "da-vincis-elite-2025", "Get it", ""),
-    ("Lev's Zombies", "3d", "Unreal Engine", "Zombies that are faster, smarter and always hunting you.", "", IT + "levs-zombies", "Get it", ""),
-    ("Da Vinci's Zombies: Bike Parade Edition", "3d", "Unreal Engine", "The festival edition, made for the Zombie Bike Parade in Davis.", "", IT + "levs-zombies-bike-parade-edition", "Get it", ""),
-    ("Star Bugs", "ar", "AR in your browser", "Fire sprinkle donuts from a licorice slingshot and stop the Star Bugs. One or two players at the same table.", "", AR + "star-bugs/", "Play in AR", ""),
-    ("Archer the Archer", "ar", "AR in your browser", "The retro adventure on your table. First draft, with the whole level playable.", "", AR + "archer-the-archer/", "Play in AR", ""),
-    ("Rapid Refill", "ar", "AR in your browser", "Deliver the coffee across your own table.", "", AR + "rapid-refill/", "Play in AR", ""),
-    ("Donut Dash", "ar", "AR in your browser", "Feed the pups their donuts, on your table.", "In development.", AR + "donut-dash/", "Play in AR", ""),
+    ("Star Bugs", "ar", "AR in your browser", "Fire sprinkle donuts from a licorice slingshot and stop the Star Bugs. One or two players at the same table.", "", AR + "star-bugs/", "Play in AR", "/img/poster-star-bugs.webp"),
+    ("Rapid Refill", "ar", "AR in your browser", "Deliver the coffee across your own table.", "", AR + "rapid-refill/", "Play in AR", "/img/rapid-refill.webp"),
+    ("Donut Dash", "ar", "AR in your browser", "Feed the pups their donuts, on your table.", "In development.", AR + "donut-dash/", "Play in AR", "/img/donut-dash.webp"),
+    ("Overtime", "online", "Online, with friends", "Plan your cards together, watch the fight, find the Roamer hiding on your team. Preview.", "", "/overtime/", "Play online", "/img/poster-overtime.webp"),
+    ("Rush Hour", "online", "Online, with friends", "Race King Tea's clock in real time. Preview.", "", "/rush/", "Play online", "/img/poster-rush-hour.webp"),
+    ("Coffee Time, as printed", "online", "Online, with friends", "The board game itself, on your phone. Make a room, send the code, play together.", "", "/play/", "Play online", "/img/poster-coffee-time-online.webp"),
 ]
 for i, (t, k, e, b_, n, u, btn, img) in enumerate(games):
     ins("games", {"title": t, "kind": k, "engine": e, "blurb": b_, "note": n, "url": u, "button": btn, "image": img, "sort": i})

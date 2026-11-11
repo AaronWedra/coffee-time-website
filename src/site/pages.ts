@@ -66,13 +66,24 @@ export function orderForm(s: Settings, blocks: Blocks, st: OrderState): Safe {
   </div>`;
 }
 
-// ---- Games (2026): the 3D games, the 2D arcade and the AR panel. All rows come from D1.
+// ---- Games (2026): online games, the 2D arcade and the AR arcade. All rows come from D1.
 const initials = (t: string) => t.replace(/[^A-Za-z0-9 ]/g, '').split(/\s+/).filter(Boolean).slice(0, 2).map((w) => w[0]).join('').toUpperCase();
 const ext = (u: string) => (u.startsWith('http') ? raw('target="_blank" rel="noopener"') : '');
 
+// One heading style for every section: a small blinking kicker over a shimmering title, like the cover.
+function secHead(kicker: string, title: Safe | string, sub: Safe | string = '', tag: 'h1' | 'h2' | 'h3' = 'h2', tone: '' | 'light' = ''): Safe {
+  const t = tag === 'h1' ? html`<h1 class="sec-title">${title}</h1>` : tag === 'h3' ? html`<h3 class="sec-title">${title}</h3>` : html`<h2 class="sec-title">${title}</h2>`;
+  return html`<header class="sec-head ${tone === 'light' ? 'on-light' : ''}"><p class="sec-kicker">${kicker}</p>${t}${sub ? html`<p class="sec-sub">${sub}</p>` : ''}</header>`;
+}
+
+// Posters sit whole (contain) over a blurred copy of themselves, so no screenshot is ever cropped.
 function gameCard(g: Game, i: number): Safe {
+  const badge = g.kind === 'ar' ? 'AR' : g.kind === 'online' ? 'Online' : g.kind === '3d' ? '3D' : '2D';
   return html`<li class="gcard c${i % 5} k-${g.kind}">
-    <a class="gthumb" href="${g.url}" ${ext(g.url)} tabindex="-1" aria-hidden="true">${g.image ? img(g.image, '', 'width="400" height="300"') : html`<b>${initials(g.title)}</b>`}</a>
+    <a class="gposter" href="${g.url}" ${ext(g.url)} tabindex="-1" aria-hidden="true">
+      ${g.image ? html`${img(g.image, '', 'class="gbg" width="800" height="500"')}${img(g.image, '', 'class="gfg" width="800" height="500"')}` : html`<b>${initials(g.title)}</b>`}
+      <span class="gbadge">${badge}</span><span class="gplaybtn" aria-hidden="true"></span>
+    </a>
     <div class="gbody">
       ${g.engine ? html`<span class="gtag">${g.engine}</span>` : ''}
       <h3>${g.title}</h3>
@@ -87,22 +98,19 @@ export function gamesSections(blocks: Blocks, games: Game[]): Safe {
   const of = (k: string) => games.filter((g) => g.kind === k);
   return html`
   <div class="wrap">
-    <h3 class="gh gh-3d">${line(blocks, 'games_3d_title')}</h3>
-    <ul class="gcards g3d">${of('3d').map(gameCard)}</ul>
-    <div class="arcade-ar">
-      <div class="arcade-2d" id="arcade">
-        <h3 class="gh">${line(blocks, 'arcade_2d_title')}</h3>
-        <ul class="gcards g2d">${of('2d').map(gameCard)}</ul>
-      </div>
-      <aside class="arpanel" id="ar" aria-labelledby="ar-h">
-        <span class="ar-badge">AR</span>
-        <h3 id="ar-h">${line(blocks, 'arcade_ar_title')}</h3>
-        ${text(blocks, 'arcade_ar_body')}
-        <ul class="ar-list">${of('ar').map((g) => html`<li><a href="${g.url}" ${ext(g.url)}><span class="ar-name">${g.title}</span><span class="ar-go">${g.button || 'Play in AR'}</span></a>${g.note ? html`<small>${g.note}</small>` : ''}</li>`)}</ul>
-        <p class="ar-foot"><a href="https://www.smartzgraphics.com/news/star-bugs" target="_blank" rel="noopener">More about the AR arcade</a></p>
-      </aside>
+    ${of('online').length ? html`<div class="arc arc-online" id="online">
+      ${secHead('Play with friends', line(blocks, 'online_title'), '', 'h3')}
+      <ul class="gcards">${of('online').map(gameCard)}</ul>
+    </div>` : ''}
+    <div class="arc arc-2d" id="arcade">
+      ${secHead('Insert coin', line(blocks, 'arcade_2d_title'), 'Play right in your browser. Free.', 'h3')}
+      <ul class="gcards">${of('2d').map(gameCard)}</ul>
     </div>
-    <div class="games-all">${text(blocks, 'games_all_note')}</div>
+    <div class="arc arc-ar" id="ar">
+      ${secHead('Same games, on your table', line(blocks, 'arcade_ar_title'), raw(inline(b(blocks, 'arcade_ar_body'))), 'h3')}
+      <ul class="gcards">${of('ar').map(gameCard)}</ul>
+      <p class="arc-foot"><a href="https://www.smartzgraphics.com/news/star-bugs" target="_blank" rel="noopener">More about the AR arcade</a></p>
+    </div>
   </div>`;
 }
 
@@ -115,9 +123,9 @@ export function home(s: Settings, blocks: Blocks, tracks: Track[], creators: Cre
       <p class="cover-kicker"><span class="dot" aria-hidden="true"></span>${line(blocks, 'cover_kicker')}</p>
       <h1 class="cover-title">${line(blocks, 'cover_tagline')}</h1>
       <p class="cover-note">${line(blocks, 'cover_note')}</p>
-      <p class="cover-btns"><a class="btn btn-go" href="${s.demo_url}" target="_blank" rel="noopener">Play the free demo</a> <a class="btn btn-go btn-go2" href="#games">Open the arcade</a> <a class="btn btn-ghost" href="#ar">Try games in AR</a></p>
+      <p class="cover-btns"><a class="btn btn-go" href="${s.demo_url}" target="_blank" rel="noopener">Play the free demo</a><a class="btn btn-go btn-go2" href="#arcade">Open the arcade</a><a class="btn btn-go btn-go3" href="#ar"><span class="ar-chip" aria-hidden="true">AR</span>Try games in AR</a></p>
     </div>
-    <a class="cover-card" href="#video-game" aria-label="Watch the Coffee Time Adventures trailer">
+    <a class="cover-card" href="#feature" aria-label="Watch the Coffee Time Adventures trailer">
       <img src="/img/trailer-poster.webp" alt="" width="1280" height="720" fetchpriority="high">
       <span class="cc-play" aria-hidden="true"></span>
       <span class="cc-label">Coffee Time Adventures<small>Watch the trailer</small></span>
@@ -125,115 +133,124 @@ export function home(s: Settings, blocks: Blocks, tracks: Track[], creators: Cre
   </div>
   <ul class="wrap hud" aria-label="Coffee Time by the numbers">
     <li><b>1,000</b><span>board games made, every one sold</span></li>
-    <li><b>18</b><span>video games and counting</span></li>
     <li><b>5</b><span>worlds to save from King Tea</span></li>
-    <li><b>2D 3D AR</b><span>play them all, free</span></li>
+    <li><b>3 ways</b><span>to play: 2D, AR and online</span></li>
+    <li><b>Free</b><span>to play, no sign-up</span></li>
   </ul>
 </section>
 
-<section class="stage" aria-label="The Coffee Time characters">
-  <div class="stage-art"><span class="steam s1" aria-hidden="true"></span><span class="steam s2" aria-hidden="true"></span><span class="steam s3" aria-hidden="true"></span><span class="spark k1" aria-hidden="true"></span><span class="spark k2" aria-hidden="true"></span><span class="spark k3" aria-hidden="true"></span><span class="spark k4" aria-hidden="true"></span>${img('/img/characters-stage.webp', 'The whole cast: Little Miss Hot Shot, Donette, Thermos, Cup Joe, Sir Cubey, King Tea, the crumpets and friends', 'width="2000" height="830"')}</div>
+<nav class="doors" aria-label="Choose: video games or the board game">
+  <div class="wrap doors-in">
+    <a class="door door-vg" href="#video-games">
+      <span class="door-tag">New</span>
+      <span class="door-ic" aria-hidden="true">&#127918;</span>
+      <b>${line(blocks, 'zone_vg_title')}</b>
+      <span>${line(blocks, 'zone_vg_sub')}</span>
+      <i class="door-go" aria-hidden="true"></i>
+    </a>
+    <a class="door door-bg" href="#board-game">
+      <span class="door-tag">Sold out</span>
+      <span class="door-ic" aria-hidden="true">&#127922;</span>
+      <b>${line(blocks, 'zone_bg_title')}</b>
+      <span>${line(blocks, 'zone_bg_sub')}</span>
+      <i class="door-go" aria-hidden="true"></i>
+    </a>
+  </div>
+</nav>
+
+<section class="cast" aria-label="The Coffee Time characters">
+  <div class="cast-glow" aria-hidden="true"></div>
+  <div class="wrap">
+    ${secHead('Starring', line(blocks, 'cast_title'), line(blocks, 'cast_sub'), 'h2', 'light')}
+  </div>
+  <div class="cast-stage">
+    <div class="cast-beams" aria-hidden="true"><span></span><span></span><span></span></div>
+    <div class="cast-spk" aria-hidden="true">${[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12].map((n) => html`<i class="p${n}"></i>`)}</div>
+    <div class="cast-art">
+      ${img('/img/characters-cutout.webp', 'The whole cast: Little Miss Hot Shot, Donette, Thermos, Cup Joe, Sir Cubey, King Tea, the crumpets and friends', 'class="cast-main" width="1374" height="684"')}
+      ${img('/img/characters-cutout.webp', '', 'class="cast-mirror" width="1374" height="684"')}
+    </div>
+  </div>
 </section>
 
-<section class="videogame" id="video-game">
+<section class="zone zone-vg" id="video-games">
+  ${orb('warp', 'r', 12, 3)}
   <div class="wrap">
-    <hr class="rule">
-    <h2 class="big">${line(blocks, 'game_title')}</h2>
+    <div class="zone-banner">
+      <span class="zone-chip">Video games</span>
+      ${secHead('Now playing', line(blocks, 'zone_vg_title'), line(blocks, 'zone_vg_sub'), 'h2')}
+      <ul class="zone-jump" aria-label="In this section">
+        <li><a href="#feature">Coffee Time Adventures</a></li>
+        <li><a href="#online">Play online</a></li>
+        <li><a href="#arcade">2D arcade</a></li>
+        <li><a href="#ar">AR arcade</a></li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="wrap feature" id="feature">
+    ${secHead('Featured game', line(blocks, 'game_title'), '', 'h3')}
     <div class="vg-grid">
       ${video(s.trailer_video, s.trailer_poster, 'Coffee Time Adventures trailer')}
       <div class="vg-copy">${text(blocks, 'game_body')}</div>
     </div>
-    <hr class="rule">
   </div>
-</section>
 
-<section class="gsec" id="games">
-  ${orb('warp', 'r', 30, 3)}
   <div class="wrap games-head">
-    <h2 class="big">${line(blocks, 'games_title')}</h2>
     <div class="games-intro">${text(blocks, 'games_intro')}</div>
   </div>
   ${gamesSections(blocks, games)}
 </section>
 
-<section class="hero" id="rules">
+<section class="zone zone-bg" id="board-game">
+  <div class="wrap">
+    <div class="zone-banner">
+      <span class="zone-chip">The board game</span>
+      ${secHead('Own the box?', line(blocks, 'zone_bg_title'), line(blocks, 'zone_bg_sub'), 'h2')}
+      <ul class="zone-jump" aria-label="In this section">
+        <li><a href="#rules">Learn to play</a></li>
+        <li><a href="/video-tutorials">Video tutorials</a></li>
+        <li><a href="/faq">FAQ</a></li>
+        <li><a href="/story">The story</a></li>
+        <li><a href="#reviews">Reviews</a></li>
+        <li><a href="#order">Order</a></li>
+      </ul>
+    </div>
+  </div>
+
+<div class="hero" id="rules">
   ${orb('fire', 'r', 0, 1)}
   <div class="wrap hero-grid">
     <div class="hero-art"><img src="/img/don-floating.webp" alt="Donette, floating" width="440" height="840" fetchpriority="high"></div>
     <div class="hero-copy">
-      <h2 class="hero-title">${line(blocks, 'hero_title')}</h2>
+      <h2 class="hero-title sec-title">${line(blocks, 'hero_title')}</h2>
       ${text(blocks, 'hero_body')}
       ${learnLinks(s)}
     </div>
     <div class="hero-ship">${img('/img/deep-space-kruiser.webp', 'The Deep Space Kruiser', 'width="900" height="411"')}</div>
   </div>
-</section>
+</div>
 
-<section class="playonline" id="play-online">
-  <div class="wrap playonline-in">
-    <h2 class="big">Play Coffee Time on your phone</h2>
-    <p>Make a room, send your friends the code, and play together online. Free, no sign-up, and it installs to your home screen.</p>
-    <p class="playonline-btns"><a class="btn" href="/overtime/">Overtime</a> <a class="btn" href="/rush/">Rush Hour</a> <a class="btn btn-ghost" href="/play/">The board game, as printed</a></p>
-    <p class="playonline-note">Overtime: plan your cards together, watch the fight, find the Roamer hiding on your team. Rush Hour: race King Tea's clock in real time. Both are in preview.</p>
-    <hr class="rule">
-  </div>
-</section>
-
-<section class="newsletter" id="newsletter">
-  ${orb('warp', 'l', 10, 3)}
-  <div class="wrap news-grid">
-    <h2>${line(blocks, 'newsletter_title')}</h2>
-    <div>
-      ${text(blocks, 'newsletter_body')}
-      ${flags.joined === '1' ? html`<p class="form-ok" role="status">You're on the list. Welcome to the Coffee Time universe!</p>` : flags.joined === '0' ? html`<p class="form-error" role="alert">That email address does not look right. Please check it and try again.</p>` : ''}
-      <form method="post" action="/newsletter" class="join">
-        ${t0()}
-        <label><span>Email</span> <input name="email" type="email" required autocomplete="email" placeholder="e.g., email@example.com"></label>
-        <button class="btn">Join</button>
-      </form>
-    </div>
-  </div>
-</section>
-
-<section class="sponsor" id="sponsor">
-  ${orb('ice', 'r', 20, 2)}
+<div class="reviews" id="reviews">
+  ${orb('earth', 'l', 0, 2)}
+  ${orb('sugar', 'r', 50, 3)}
   <div class="wrap">
-    <h2 class="sponsor-title">${line(blocks, 'sponsor_title')}</h2>
-    <div class="sponsor-grid">
-      <div class="sponsor-art">${img('/img/hmp-thermos.webp', 'Thermos riding an HMP electric bike', 'width="900" height="1037"')}</div>
-      <a class="sponsor-photo" href="${s.hmp_url}" target="_blank" rel="noopener">${img('/img/hmp-logo.webp', 'HMP Bikes', 'width="1280" height="720"')}</a>
-    </div>
-    <div class="sponsor-copy">${text(blocks, 'sponsor_body')}</div>
-    <h3 class="coloring-title">${line(blocks, 'coloring_title')}</h3>
-    <div class="coloring">
-      <a href="${s.coloring_pdf}" target="_blank" rel="noopener" aria-label="Download the coloring page (PDF)">${img('/img/coloring-bw.webp', 'Thermos on his HMP bike, black and white coloring page', 'width="900" height="900"')}</a>
-      <a href="${s.coloring_pdf}" target="_blank" rel="noopener" aria-label="Download the coloring page (PDF)">${img('/img/coloring-color.webp', 'Thermos on his HMP bike, colored in', 'width="900" height="900"')}</a>
-    </div>
-    <div class="sponsor-copy small-copy">${text(blocks, 'coloring_body')}</div>
+    ${secHead('What players say', line(blocks, 'reviews_title'))}
+    <ul class="review-grid">
+      ${reviews.map((r, i) => html`<li class="review c${(i % 6) + 1}">${stars()}<h3>${r.name}<small>${r.role}</small></h3><blockquote>${raw(inline(r.quote))}</blockquote><span class="qm" aria-hidden="true">&rdquo;</span></li>`)}
+    </ul>
   </div>
-</section>
+</div>
 
-<section class="music" id="music">
-  ${orb('feather', 'r', 10, 3)}
-  ${orb('warp', 'l', 40, 4)}
-  ${orb('earth', 'r', 80, 3)}
-  <div class="wrap">
-    <h2 class="huge">${line(blocks, 'music_title')}</h2>
-    <p class="music-sub">${line(blocks, 'music_sub')}</p>
-    <p class="music-tag">${line(blocks, 'music_tagline')}</p>
-    <div class="tracks">${tracks.map(soundcloud)}</div>
-  </div>
-</section>
-
-<section class="orders" id="order">
+<div class="orders" id="order">
   ${orb('sugar', 'l', 0, 2)}
   ${orb('fire', 'r', 20, 3)}
   <div class="wrap">
     <div class="orders-head">
-      <h2 class="huge">${line(blocks, 'orders_title')}</h2>
+      ${secHead('First edition', line(blocks, 'orders_title'))}
       <p class="badge">${s.players}<br>${s.ages}</p>
     </div>
-    <div class="box-cover">${img('/img/box-cover.webp', 'The Coffee Time box, first edition', 'width="1800" height="1101"')}</div>
+    <div class="box-cover">${img('/img/box-3d.webp', 'The Coffee Time board game box, first edition', 'width="1500" height="880"')}</div>
     <h3 class="orders-intro">${line(blocks, 'orders_intro')}</h3>
     <div class="orders-copy">${text(blocks, 'orders_body')}</div>
 
@@ -256,12 +273,59 @@ export function home(s: Settings, blocks: Blocks, tracks: Track[], creators: Cre
 
     ${orderForm(s, blocks, flags.order)}
   </div>
+</div>
+</section>
+
+<section class="newsletter" id="newsletter">
+  ${orb('warp', 'l', 10, 3)}
+  <div class="wrap news-grid">
+    <h2>${line(blocks, 'newsletter_title')}</h2>
+    <div>
+      ${text(blocks, 'newsletter_body')}
+      ${flags.joined === '1' ? html`<p class="form-ok" role="status">You're on the list. Welcome to the Coffee Time universe!</p>` : flags.joined === '0' ? html`<p class="form-error" role="alert">That email address does not look right. Please check it and try again.</p>` : ''}
+      <form method="post" action="/newsletter" class="join">
+        ${t0()}
+        <label><span>Email</span> <input name="email" type="email" required autocomplete="email" placeholder="e.g., email@example.com"></label>
+        <button class="btn">Join</button>
+      </form>
+    </div>
+  </div>
+</section>
+
+<section class="sponsor" id="sponsor">
+  ${orb('ice', 'r', 20, 2)}
+  <div class="wrap">
+    ${secHead('Proudly backed by', line(blocks, 'sponsor_title'))}
+    <div class="sponsor-grid">
+      <div class="sponsor-art">${img('/img/hmp-thermos.webp', 'Thermos riding an HMP electric bike', 'width="900" height="1037"')}</div>
+      <a class="sponsor-photo" href="${s.hmp_url}" target="_blank" rel="noopener">${img('/img/hmp-logo.webp', 'HMP Bikes', 'width="1280" height="720"')}</a>
+    </div>
+    <div class="sponsor-copy">${text(blocks, 'sponsor_body')}</div>
+    <h3 class="coloring-title">${line(blocks, 'coloring_title')}</h3>
+    <div class="coloring">
+      <a href="${s.coloring_pdf}" target="_blank" rel="noopener" aria-label="Download the coloring page (PDF)">${img('/img/coloring-bw.webp', 'Thermos on his HMP bike, black and white coloring page', 'width="900" height="900"')}</a>
+      <a href="${s.coloring_pdf}" target="_blank" rel="noopener" aria-label="Download the coloring page (PDF)">${img('/img/coloring-color.webp', 'Thermos on his HMP bike, colored in', 'width="900" height="900"')}</a>
+    </div>
+    <div class="sponsor-copy small-copy">${text(blocks, 'coloring_body')}</div>
+  </div>
+</section>
+
+<section class="music" id="music">
+  ${orb('feather', 'r', 10, 3)}
+  ${orb('warp', 'l', 40, 4)}
+  ${orb('earth', 'r', 80, 3)}
+  <div class="wrap">
+    ${secHead('Press play', line(blocks, 'music_title'))}
+    <p class="music-sub">${line(blocks, 'music_sub')}</p>
+    <p class="music-tag">${line(blocks, 'music_tagline')}</p>
+    <div class="tracks">${tracks.map(soundcloud)}</div>
+  </div>
 </section>
 
 <section class="team" id="team">
   ${orb('ice', 'r', 0, 4)}
   <div class="wrap">
-    <h2 class="huge">${line(blocks, 'team_title')}</h2>
+    ${secHead('Made in Davis, California', line(blocks, 'team_title'))}
     <ul class="creators">
       ${creators.map(
         (c) => html`<li>
@@ -276,23 +340,14 @@ export function home(s: Settings, blocks: Blocks, tracks: Track[], creators: Cre
   </div>
 </section>
 
-<section class="reviews" id="reviews">
-  ${orb('earth', 'l', 0, 2)}
-  ${orb('sugar', 'r', 50, 3)}
-  <div class="wrap">
-    <h2 class="huge">${line(blocks, 'reviews_title')}</h2>
-    <ul class="review-grid">
-      ${reviews.map((r, i) => html`<li class="review c${(i % 6) + 1}">${stars()}<h3>${r.name}<small>${r.role}</small></h3><blockquote>${raw(inline(r.quote))}</blockquote><span class="qm" aria-hidden="true">&rdquo;</span></li>`)}
-    </ul>
-  </div>
-</section>`;
+`;
 }
 
 export function orderPage(s: Settings, blocks: Blocks, st: OrderState): Safe {
   return html`<section class="orders page-order" id="order">
     <div class="wrap narrow">
-      <h1 class="huge">${line(blocks, 'orders_title')}</h1>
-      <div class="box-cover">${img('/img/box-cover.webp', 'The Coffee Time box, first edition', 'width="1800" height="1101"')}</div>
+      ${secHead('First edition', line(blocks, 'orders_title'), '', 'h1')}
+      <div class="box-cover">${img('/img/box-3d.webp', 'The Coffee Time board game box, first edition', 'width="1500" height="880"')}</div>
       <div class="orders-copy">${text(blocks, 'orders_body')}</div>
       ${orderForm(s, blocks, st)}
       <p class="center"><a href="/#order">Back to the game</a></p>
@@ -304,7 +359,7 @@ export function story(s: Settings, blocks: Blocks): Safe {
   const pages = [1, 2, 3, 4, 5, 6, 7, 8];
   return html`<section class="page story">
     <div class="wrap narrow">
-      <h1 class="huge">${line(blocks, 'story_title')}</h1>
+      ${secHead('The board game', line(blocks, 'story_title'), '', 'h1')}
       <div class="intro">${text(blocks, 'story_intro')}</div>
     </div>
     <div class="wrap story-pages">
@@ -317,7 +372,7 @@ export function arcade(s: Settings, blocks: Blocks, games: Game[]): Safe {
   return html`<section class="page arcade">
     ${orb('warp', 'r', 10, 3)}
     <div class="wrap narrow">
-      <h1 class="huge">${line(blocks, 'arcade_title')}</h1>
+      ${secHead('Video games', line(blocks, 'arcade_title'), '', 'h1')}
       ${video(s.trailer_video, s.trailer_poster, 'Coffee Time Adventures trailer')}
       <div class="intro">${text(blocks, 'arcade_body')}</div>
       <p class="center"><a class="btn" href="${s.demo_url}" target="_blank" rel="noopener">Download the free demo</a></p>
@@ -330,7 +385,7 @@ export function news(s: Settings, blocks: Blocks, items: News[]): Safe {
   return html`<section class="page news">
     ${orb('earth', 'l', 5, 2)}
     <div class="wrap narrow">
-      <h1 class="huge">${line(blocks, 'news_title')}</h1>
+      ${secHead('Latest', line(blocks, 'news_title'), '', 'h1')}
       ${items.map((n) => {
         const imgs = n.images.split(',').map((x) => x.trim()).filter(Boolean);
         const yt = /^[\w-]{11}$/.test(n.video) ? n.video : '';
@@ -351,7 +406,7 @@ export function news(s: Settings, blocks: Blocks, items: News[]): Safe {
 export function tutorials(s: Settings, blocks: Blocks, items: Tutorial[]): Safe {
   return html`<section class="page tutorials">
     <div class="wrap narrow">
-      <h1 class="huge">${line(blocks, 'tutorials_title')}</h1>
+      ${secHead('The board game', line(blocks, 'tutorials_title'), '', 'h1')}
       <div class="intro">${text(blocks, 'tutorials_intro')}${learnLinks(s, 'tutorials')}</div>
       <nav class="jump" aria-label="Jump to a tutorial"><ol>${items.map((t) => html`<li><a href="#tutorial-${t.num}">${t.num}</a></li>`)}</ol></nav>
       ${items.map(
@@ -370,7 +425,7 @@ export function faq(s: Settings, blocks: Blocks, items: Faq[]): Safe {
   return html`<section class="page faq">
     ${orb('sugar', 'r', 5, 2)}
     <div class="wrap narrow">
-      <h1 class="huge">${line(blocks, 'faq_title')}</h1>
+      ${secHead('The board game', line(blocks, 'faq_title'), '', 'h1')}
       <div class="intro">${text(blocks, 'faq_intro')}${learnLinks(s, 'faq')}</div>
       ${items.map((f) => html`<article class="qa"><h2><span>Q:</span> ${f.question}</h2><div class="answer">${richText(f.answer)}</div></article>`)}
     </div>
@@ -381,7 +436,7 @@ export function faq(s: Settings, blocks: Blocks, items: Faq[]): Safe {
 export function privacy(s: Settings, blocks: Blocks): Safe {
   return html`<section class="page privacy">
     <div class="wrap narrow">
-      <h1 class="huge">${line(blocks, 'privacy_title')}</h1>
+      ${secHead('The fine print', line(blocks, 'privacy_title'), '', 'h1')}
       <div class="intro">${text(blocks, 'privacy_intro')}</div>
       <article class="qa privacy-card">
         <h2>Analytics and cookies</h2>
@@ -394,5 +449,5 @@ export function privacy(s: Settings, blocks: Blocks): Safe {
 }
 
 export function notFound(): Safe {
-  return html`<section class="page"><div class="wrap narrow center"><h1 class="huge">Lost in the Realm of Time</h1><p>That page is not here. <a href="/">Back to Coffee Time</a>.</p></div></section>`;
+  return html`<section class="page"><div class="wrap narrow center">${secHead('404', 'Lost in the Realm of Time', '', 'h1')}<p>That page is not here. <a href="/">Back to Coffee Time</a>.</p></div></section>`;
 }
