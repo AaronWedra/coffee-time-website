@@ -24,7 +24,6 @@ export const NAV: { href: string; label: string }[] = [
 export const MORE: { href: string; label: string }[] = [
   { href: '/#order', label: 'Order the board game' },
   { href: '/#reviews', label: 'Reviews' },
-  { href: '/#online', label: 'Play online' },
   { href: '/video-tutorials', label: 'Tutorials' },
   { href: '/faq', label: 'FAQ' },
   { href: '/arcade', label: 'Arcade page' },

@@ -124,7 +124,7 @@ function secHead(kicker: string, title: Safe | string, sub: Safe | string = '', 
 
 // Posters sit whole (contain) over a blurred copy of themselves, so no screenshot is ever cropped.
 function gameCard(g: Game, i: number): Safe {
-  const badge = g.kind === 'ar' ? 'AR' : g.kind === 'online' ? 'Online' : g.kind === '3d' ? '3D' : '2D';
+  const badge = g.kind === 'ar' ? 'AR' : g.kind === '3d' ? '3D' : '2D';
   return html`<li class="gcard c${i % 5} k-${g.kind}">
     <a class="gposter" href="${g.url}" ${ext(g.url)} tabindex="-1" aria-hidden="true">
       ${g.image ? img(g.image, '', 'class="gfull" width="1000" height="625"') : html`<b>${initials(g.title)}</b>`}
@@ -144,10 +144,6 @@ export function gamesSections(blocks: Blocks, games: Game[]): Safe {
   const of = (k: string) => games.filter((g) => g.kind === k);
   return html`
   <div class="wrap">
-    ${of('online').length ? html`<div class="arc arc-online" id="online">
-      ${secHead('Play with friends', line(blocks, 'online_title'), '', 'h3')}
-      <ul class="gcards">${of('online').map(gameCard)}</ul>
-    </div>` : ''}
     <div class="arc arc-2d" id="arcade">
       ${secHead('Insert coin', line(blocks, 'arcade_2d_title'), 'Play right in your browser. Free.', 'h3')}
       <ul class="gcards">${of('2d').map(gameCard)}</ul>
@@ -181,7 +177,7 @@ export function home(s: Settings, blocks: Blocks, tracks: Track[], creators: Cre
   <ul class="wrap hud" aria-label="Coffee Time by the numbers">
     <li><b>1,000</b><span>board games made, every one delivered</span></li>
     <li><b>5</b><span>worlds to save from King Tea</span></li>
-    <li><b>3 ways</b><span>to play: 2D, AR and online</span></li>
+    <li><b>3 ways</b><span>to play: 3D, 2D and AR</span></li>
     <li><b>Free</b><span>to play, no sign-up</span></li>
   </ul>
 </section>
@@ -229,7 +225,6 @@ export function home(s: Settings, blocks: Blocks, tracks: Track[], creators: Cre
       ${secHead('Now playing', line(blocks, 'zone_vg_title'), line(blocks, 'zone_vg_sub'), 'h2')}
       <ul class="zone-jump" aria-label="In this section">
         <li><a href="#feature">Coffee Time Adventures</a></li>
-        <li><a href="#online">Play online</a></li>
         <li><a href="#arcade">2D arcade</a></li>
         <li><a href="#ar">AR arcade</a></li>
       </ul>

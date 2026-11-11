@@ -21,9 +21,7 @@
   "r2_buckets": [{ "binding": "MEDIA", "bucket_name": "coffee-time-media" }],
   "send_email": [{ "name": "EMAIL", "remote": true }],
   "triggers": { "crons": ["7 * * * *"] },
-  // Online rooms for the Coffee Time game at /play. SQLite-backed, the kind the Workers Free plan allows.
-  "durable_objects": { "bindings": [{ "name": "ROOMS", "class_name": "Room" }] },
-  "migrations": [{ "tag": "v1", "new_sqlite_classes": ["Room"] }],
+  "migrations": [{ "tag": "v1", "new_sqlite_classes": ["Room"] }, { "tag": "v2", "deleted_classes": ["Room"] }],
   "vars": {
     "APP_ENV": "production",
     "SITE_URL": "https://www.playcoffeetime.com",

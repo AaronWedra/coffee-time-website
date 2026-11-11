@@ -436,7 +436,7 @@ const LISTS: ListDef[] = [
     summary: (r) => `${String(r.title)} (${String(r.kind || '2d').toUpperCase()})`,
     fields: [
       { key: 'title', label: 'Game' },
-      { key: 'kind', label: 'Where it goes', type: 'select', options: [{ v: '2d', l: '2D arcade' }, { v: '3d', l: '3D games' }, { v: 'ar', l: 'AR arcade' }, { v: 'online', l: 'Play online' }] },
+      { key: 'kind', label: 'Where it goes', type: 'select', options: [{ v: '2d', l: '2D arcade' }, { v: '3d', l: '3D games' }, { v: 'ar', l: 'AR arcade' }] },
       { key: 'engine', label: 'Made with', help: 'For example GameMaker or Unreal Engine.' },
       { key: 'blurb', label: 'One-line description', type: 'textarea' },
       { key: 'note', label: 'Small print', help: 'For example "For desktop only."' },

@@ -85,7 +85,6 @@ block("zone_vg_title", "Zone banner: video games heading", "Video Games", kind="
 block("zone_vg_sub", "Zone banner: video games line", "Play free in your browser, on your phone, or on your table in AR.", kind="line")
 block("zone_bg_title", "Zone banner: board game heading", "The Board Game", kind="line")
 block("zone_bg_sub", "Zone banner: board game line", "Own the box? Learn to play, watch the tutorials, read the story, order a copy.", kind="line")
-block("online_title", "Online games: heading", "Play online with friends", kind="line")
 block("games_3d_title", "Games: 3D heading", "The 3D games", kind="line")
 block("hero_title", "Top of the page: headline", "Learn to play like a pro", kind="line")
 block(
@@ -417,8 +416,6 @@ games = [
     ("Star Bugs", "ar", "AR in your browser", "Fire sprinkle donuts from a licorice slingshot and stop the Star Bugs. One or two players at the same table.", "", AR + "star-bugs/", "Play in AR", "/img/game-star-bugs.webp"),
     ("Rapid Refill", "ar", "AR in your browser", "Deliver the coffee across your own table.", "", AR + "rapid-refill/", "Play in AR", "/img/game-rapid-refill-ar.webp"),
     ("Donut Dash", "ar", "AR in your browser", "Feed the pups their donuts, on your table.", "In development.", AR + "donut-dash/", "Play in AR", "/img/game-donut-dash-ar.webp"),
-    ("Overtime", "online", "Online, with friends", "Plan your cards together, watch the fight, find the Roamer hiding on your team. Preview.", "", "/overtime/", "Play online", "/img/game-overtime.webp"),
-    ("Rush Hour", "online", "Online, with friends", "Race King Tea's clock in real time. Preview.", "", "/rush/", "Play online", "/img/game-rush-hour.webp"),
 ]
 for i, (t, k, e, b_, n, u, btn, img) in enumerate(games):
     ins("games", {"title": t, "kind": k, "engine": e, "blurb": b_, "note": n, "url": u, "button": btn, "image": img, "sort": i})

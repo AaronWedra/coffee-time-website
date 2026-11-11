@@ -5,9 +5,7 @@ import { hq } from './hq/routes.ts';
 import { ensureDatabase } from './db/bootstrap.ts';
 import { inject } from './hq/review.ts';
 import { runWatchdog } from './hq/watchdog.ts';
-import { Room } from './play/room.ts';
 
-export { Room };
 
 const SECURITY_HEADERS: Record<string, string> = {
   'x-content-type-options': 'nosniff',
@@ -45,29 +43,6 @@ export default {
       if (url.hostname !== canon.hostname && url.hostname === canon.hostname.replace(/^www\./, '')) {
         return Response.redirect(canon.origin + url.pathname + url.search, 301);
       }
-    }
-
-    // The games: /overtime/ and /rush/ (the 2026 games) are static pages
-    // with their own CSP (they run inline scripts and load two Google fonts); /room/CODE is their
-    // shared WebSocket, one Durable Object per room.
-    const game = url.pathname.match(/^\/(overtime|rush)(\/|\/index\.html)?$/);
-    if (game && !game[2]) return Response.redirect(url.origin + '/' + game[1] + '/' + url.search, 301);
-    if (game) {
-      // Ask the assets layer for the directory path: with html_handling auto-trailing-slash it serves
-      // index.html with a 200, whereas asking for /x/index.html gets a redirect back to /x/ (a loop).
-      const res = await env.ASSETS.fetch(new Request(new URL('/' + game[1] + '/', url), { method: 'GET', headers: request.headers }));
-      if (res.status >= 300 && res.status < 400) return new Response('Game page not found', { status: 404 });
-      const h = new Headers(res.headers);
-      for (const [k, v] of Object.entries(SECURITY_HEADERS)) h.set(k, v);
-      h.set('content-type', 'text/html; charset=utf-8');
-      h.set('cache-control', 'public, max-age=300');
-      h.set('content-security-policy', [`default-src 'self'`, `script-src 'self' 'unsafe-inline'`, `style-src 'self' 'unsafe-inline' https://fonts.googleapis.com`, `font-src 'self' https://fonts.gstatic.com`, `img-src 'self' data: blob:`, `media-src 'self'`, `connect-src 'self' wss://${url.host}`, `manifest-src 'self'`, `worker-src 'self'`, `base-uri 'self'`, `object-src 'none'`, `frame-ancestors 'none'`].join('; '));
-      return new Response(res.body, { status: res.status, headers: h });
-    }
-    const room = url.pathname.match(/^\/room\/([A-Za-z0-9]{4,8})$/);
-    if (room) {
-      if (request.headers.get('Upgrade') !== 'websocket') return new Response('Expected a WebSocket', { status: 426 });
-      return env.ROOMS.get(env.ROOMS.idFromName(room[1].toUpperCase())).fetch(request);
     }
 
     // One URL per page: no trailing slashes.
