@@ -197,7 +197,7 @@ export function home(s: Settings, blocks: Blocks, flags: { joined?: string }, da
 </section>
 
 <section class="hs hs-games" aria-label="Video games">
-  <img class="hs-mascot" src="/img/cubey-gamer.webp" alt="Sir Cubey holding a game controller" width="754" height="673" loading="lazy">
+  <img class="hs-mascot" src="/img/cubey-gamer-2.webp" alt="Sir Cubey holding a game controller" width="754" height="673" loading="lazy">
   <div class="wrap">
     <header class="hs-head"><h2>${line(blocks, 'games_title')}</h2><p>${line(blocks, 'zone_vg_sub')}</p><a class="hs-more" href="/arcade">All games and AR</a></header>
     <ul class="hs-row">${play.map((g) => html`<li><a class="hs-game" href="${g.url}" ${ext(g.url)}>${g.image ? img(g.image, '', 'width="1000" height="625"') : ''}<b>${g.title}${g.kind === 'ar' ? html` <i>AR</i>` : ''}</b><span>${g.blurb}</span><em>${g.button || 'Play now'}</em></a></li>`)}</ul>
