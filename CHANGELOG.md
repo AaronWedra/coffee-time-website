@@ -121,3 +121,4 @@
 - Site split into pages: home is cover, cast and newsletter; Video Games goes straight to /arcade; /board-game, /music, /team are their own pages. Unboxed sections, flat 2D vs 3D pair cards, spinning clock backgrounds (SVG), foam you can part with the cursor, real 2D Star Bugs screenshot, readable body weight.
 - Cast replaced with a faithful transparent 3D render made from the original artwork; frame removed.
 - 2026-11-11: Wider desktop text columns; arcade solo card and AR cubes; Star Bugs 2D landscape thumbnail; cyan links now yellow; home cover shortened to 'Play Coffee Time.' with two on-brand buttons (migrations 0017, 0018).
+- 2026-11-11: Home doors redone: one calm purple surface, real game and box art, no icons or bean texture.

@@ -185,18 +185,12 @@ export function home(s: Settings, blocks: Blocks, flags: { joined?: string }): S
 <nav class="doors" aria-label="Choose: video games or the board game">
   <div class="wrap doors-in">
     <a class="door door-vg" href="/arcade">
-      <span class="door-tag">New</span>
-      <span class="door-ic" aria-hidden="true">${ICON_PAD}</span>
-      <b>${line(blocks, 'zone_vg_title')}</b>
-      <span>${line(blocks, 'zone_vg_sub')}</span>
-      <i class="door-go" aria-hidden="true"></i>
+      <span class="door-copy"><b>${line(blocks, 'zone_vg_title')}</b><span>${line(blocks, 'zone_vg_sub')}</span><em>Play now</em></span>
+      <img class="door-art" src="/img/game-rapid-refill-ar.webp" alt="" width="520" height="390" loading="lazy">
     </a>
     <a class="door door-bg" href="/board-game">
-      <span class="door-tag">Delivered</span>
-      <span class="door-ic" aria-hidden="true">${ICON_D20}</span>
-      <b>${line(blocks, 'zone_bg_title')}</b>
-      <span>${line(blocks, 'zone_bg_sub')}</span>
-      <i class="door-go" aria-hidden="true"></i>
+      <span class="door-copy"><b>${line(blocks, 'zone_bg_title')}</b><span>${line(blocks, 'zone_bg_sub')}</span><em>Rules, tutorials, order</em></span>
+      <img class="door-art door-box" src="/img/box-3d.webp" alt="" width="1500" height="880" loading="lazy">
     </a>
   </div>
 </nav>
