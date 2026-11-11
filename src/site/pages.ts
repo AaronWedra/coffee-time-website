@@ -411,7 +411,7 @@ export function story(s: Settings, blocks: Blocks): Safe {
         <input type="checkbox" id="fl1" class="fl1" aria-label="Turn page 1"><input type="checkbox" id="fl2" class="fl2" aria-label="Turn page 3"><input type="checkbox" id="fl3" class="fl3" aria-label="Turn page 5"><input type="checkbox" id="fl4" class="fl4" aria-label="Turn page 7">
         ${[1, 2, 3, 4].map(leaf)}
       </div>
-      <p class="flip-hint">Click a page to turn it</p>
+      <label class="flip-cta" for="fl1"><span aria-hidden="true">&#128073;</span> Click to turn</label>
     </div>
     <div class="wrap story-pages mobile-only">
       ${pages.map((n) => html`<figure>${img(`/img/story-${n}.webp`, `Coffee Time story, page ${n}`, `width="1400" height="1789" ${n === 1 ? 'loading="eager"' : ''}`)}</figure>`)}

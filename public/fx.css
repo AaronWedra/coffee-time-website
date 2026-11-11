@@ -628,3 +628,34 @@ body { background: transparent !important; }
 .rv-track .review blockquote { font-size: 1rem; line-height: 1.45; display: -webkit-box; -webkit-line-clamp: 6; -webkit-box-orient: vertical; overflow: hidden; }
 .rv-track .review h3 { margin: auto 0 0; font-size: .85rem; } .rv-track .review h3 small { display: inline; margin-left: .5em; font-size: .8rem; opacity: .85; }
 @media (prefers-reduced-motion: reduce) { .rv-track { animation: none; } }
+
+/* story book: a big, obvious first-turn button. It is a label for the first page, so it really turns it,
+   and it goes away once the book has been opened. */
+.flipwrap { position: relative; }
+.flip-cta { position: absolute; z-index: 6; right: max(2%, calc(50% - 520px)); top: 46%; display: inline-flex; align-items: center; gap: .5em; cursor: pointer;
+  font-family: var(--display); text-transform: uppercase; letter-spacing: .06em; font-size: clamp(1.1rem, 1.8vw, 1.5rem); color: var(--purple);
+  background: linear-gradient(180deg, #fff86b, #ffe21f); border: 3px solid var(--purple); border-radius: 999px; padding: .55em 1.1em .55em .8em;
+  box-shadow: 0 7px 0 #b39e00, 0 16px 26px rgba(10, 0, 30, .5), inset 0 2px 0 rgba(255, 255, 255, .8); animation: ctanudge 1.6s ease-in-out infinite; }
+.flip-cta span { font-size: 1.5em; line-height: 1; display: inline-block; transform: scaleX(-1); }
+.flip-cta:hover { animation-play-state: paused; transform: translateY(-3px); }
+.flip-cta:active { transform: translateY(5px); box-shadow: 0 2px 0 #b39e00; }
+@keyframes ctanudge { 0%, 100% { translate: 0 0; } 50% { translate: -12px 0; } }
+.flipwrap:has(.fl1:checked) .flip-cta { display: none; }
+@media (max-width: 860px) { .flip-cta { display: none; } }
+@media (prefers-reduced-motion: reduce) { .flip-cta { animation: none; } }
+
+/* coloring page: its own band, clearly not part of the story above */
+.coloring-band { background: #1a0a38; margin-top: clamp(40px, 6vw, 80px); padding: clamp(36px, 5vw, 64px) 0; border-top: 4px solid var(--yellow); }
+.coloring-band .sec-title { font-size: clamp(1.6rem, 3vw, 2.4rem) !important; }
+.coloring-band .prose26, .coloring-band .prose26 p { font-size: 1.05rem !important; }
+.page.story { padding-bottom: 0 !important; }
+
+/* ---- orbs never sit on content at rest: each one is sized to fit the empty page margin and centred
+   in it. Hover still lets it grow and pop. On screens with no real margin they are not shown. */
+.orb { --gut: calc((100vw - 1180px) / 2); --ow: min(var(--os, 160px), calc(var(--gut) * .74)); width: var(--ow) !important; margin-inline: 0 !important; }
+.music .orb { --gut: calc((100vw - 1280px) / 2); }
+.orb-l { left: calc((var(--gut) - var(--ow)) / 2) !important; right: auto !important; translate: 0 0; }
+.orb-r { right: calc((var(--gut) - var(--ow)) / 2) !important; left: auto !important; translate: 0 0; }
+.orb-l:hover { --hx: 0%; } .orb-r:hover { --hx: 0%; }
+@media (max-width: 1440px) { .orb { display: none !important; } }
+@media (max-width: 1560px) { .music .orb { display: none !important; } }
