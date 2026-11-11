@@ -186,11 +186,7 @@ export function home(s: Settings, blocks: Blocks, flags: { joined?: string }, da
       <p class="cover-note">${line(blocks, 'cover_note')}</p>
       <p class="cover-btns"><a class="btn btn-go" href="${s.demo_url}" target="_blank" rel="noopener">Play the free demo</a><a class="btn btn-go btn-go2" href="/arcade">Open the arcade</a></p>
     </div>
-    <a class="cover-card" href="/arcade" aria-label="Watch the Coffee Time Adventures trailer">
-      <img src="${s.trailer_poster}" alt="" width="1280" height="720" fetchpriority="high">
-      <span class="cc-play" aria-hidden="true"></span>
-      <span class="cc-label">Coffee Time Adventures<small>Watch the trailer</small></span>
-    </a>
+    <figure class="cover-card cover-video">${video(s.trailer_video, s.trailer_poster, 'Coffee Time Adventures trailer')}<figcaption>Coffee Time Adventures <small>Watch the trailer</small></figcaption></figure>
   </div>
   <ul class="wrap hud" aria-label="Coffee Time by the numbers">
     <li><b>1,000</b><span>board games made, every one delivered</span></li>
@@ -201,6 +197,7 @@ export function home(s: Settings, blocks: Blocks, flags: { joined?: string }, da
 </section>
 
 <section class="hs hs-games" aria-label="Video games">
+  <img class="hs-mascot" src="/img/cubey-gamer.webp" alt="Sir Cubey holding a game controller" width="754" height="673" loading="lazy">
   <div class="wrap">
     <header class="hs-head"><h2>${line(blocks, 'games_title')}</h2><p>${line(blocks, 'zone_vg_sub')}</p><a class="hs-more" href="/arcade">All games and AR</a></header>
     <ul class="hs-row">${play.map((g) => html`<li><a class="hs-game" href="${g.url}" ${ext(g.url)}>${g.image ? img(g.image, '', 'width="1000" height="625"') : ''}<b>${g.title}${g.kind === 'ar' ? html` <i>AR</i>` : ''}</b><span>${g.blurb}</span><em>${g.button || 'Play now'}</em></a></li>`)}</ul>

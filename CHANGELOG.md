@@ -142,3 +142,4 @@
 - 2026-11-11: Realm of Time v2 background: clocks melt (turbulence warp), breathe bigger and smaller, ripple rings outward, hands fan into rainbow trails, colours cycle.
 - 2026-11-11: Orders sections (board game page and /order) use the foam effect as their background, purple type on it; foam script handles several canvases and keeps bubble size constant on tall sections.
 - 2026-11-11: Story: white cartoon glove on the Click to turn button; coloring band uses the foam background. Music page has no orbs.
+- 2026-11-11: Home: trailer plays in place on the cover; games strip has the header rainbow bar top and bottom and Sir Cubey holding a controller (his own art, key swapped for a drawn controller) in the right margin on wide screens.
