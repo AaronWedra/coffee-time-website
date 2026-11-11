@@ -43,15 +43,22 @@ const stars = () => raw('<span class="stars" aria-label="Five stars">' + '<svg v
 const ICON_D20 = raw('<svg class="door-svg" viewBox="0 0 100 100" aria-hidden="true"><defs><linearGradient id="d20a" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#d9a8ff"/><stop offset=".55" stop-color="#9a45d8"/><stop offset="1" stop-color="#4b1a86"/></linearGradient></defs><polygon points="50,4 91,27 91,73 50,96 9,73 9,27" fill="url(#d20a)" stroke="#2a0a52" stroke-width="3" stroke-linejoin="round"/><polygon points="50,4 91,27 50,38" fill="#ecd0ff" opacity=".55"/><polygon points="50,4 9,27 50,38" fill="#c488f0" opacity=".5"/><polygon points="9,27 50,38 9,73" fill="#7a2fc0" opacity=".55"/><polygon points="91,27 50,38 91,73" fill="#5a1f9e" opacity=".6"/><polygon points="50,38 91,73 50,96" fill="#6d28b4" opacity=".55"/><polygon points="50,38 9,73 50,96" fill="#8a3ccf" opacity=".5"/><path d="M50 4 50 38 M9 27 50 38 91 27 M9 73 50 38 91 73 M9 73 50 96 91 73" fill="none" stroke="#2a0a52" stroke-width="1.6" opacity=".7"/><text x="50" y="62" text-anchor="middle" font-family="Anton,Impact,sans-serif" font-size="25" fill="#fff" stroke="#2a0a52" stroke-width="1.2" paint-order="stroke">20</text></svg>');
 const ICON_PAD = raw('<svg class="door-svg" viewBox="0 0 120 80" aria-hidden="true"><defs><linearGradient id="pada" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#6ee7ff"/><stop offset=".5" stop-color="#2f7de0"/><stop offset="1" stop-color="#1b2f8f"/></linearGradient></defs><path d="M30 10h60c14 0 21 8 26 28l5 24c2 10-4 16-12 16-7 0-11-4-16-11l-5-8H32l-5 8c-5 7-9 11-16 11-8 0-14-6-12-16l5-24C14 18 16 10 30 10z" fill="url(#pada)" stroke="#0b1650" stroke-width="3.5" stroke-linejoin="round"/><path d="M30 14h60c8 0 12 3 15 11-8-3-18-4-45-4S23 22 15 25c3-8 7-11 15-11z" fill="#fff" opacity=".3"/><rect x="27" y="29" width="22" height="7" rx="3" fill="#0b1650"/><rect x="34.5" y="21.5" width="7" height="22" rx="3" fill="#0b1650"/><circle cx="84" cy="25" r="5" fill="#ffd93a" stroke="#0b1650" stroke-width="2"/><circle cx="94" cy="34" r="5" fill="#ff4f7b" stroke="#0b1650" stroke-width="2"/><circle cx="74" cy="34" r="5" fill="#7ee02f" stroke="#0b1650" stroke-width="2"/><circle cx="84" cy="43" r="5" fill="#fff" stroke="#0b1650" stroke-width="2"/><circle cx="47" cy="51" r="8" fill="#0b1650"/><circle cx="73" cy="51" r="8" fill="#0b1650"/><circle cx="47" cy="49.5" r="4.5" fill="#3a5bd0"/><circle cx="73" cy="49.5" r="4.5" fill="#3a5bd0"/></svg>');
 
+const drip = (tone: '' | 'purple' = ''): Safe => raw(`<div class="drip ${tone}" aria-hidden="true"><i></i><i></i><i></i><i></i></div>`);
+const beans = (n = 12): Safe => raw(`<div class="beanfall" aria-hidden="true">${'<i></i>'.repeat(n)}</div>`);
+const prose = (blocks: Blocks, key: string, cls = ''): Safe => html`<div class="prose26 ${cls}">${richText(b(blocks, key))}</div>`;
+
 export type OrderState = { sent?: boolean; error?: string; values?: Record<string, string> };
 
 
 // The box follows the cursor with no JavaScript: nine invisible hover zones, and :has() tilts the box
 // toward whichever one the pointer is over.
 function boxTilt(): Safe {
-  return html`<div class="boxtilt" aria-hidden="false">
+  return html`<div class="boxtilt" role="img" aria-label="The Coffee Time board game box, first edition. Move your cursor over it to turn it.">
     <div class="boxtilt-zones" aria-hidden="true">${[1, 2, 3, 4, 5, 6, 7, 8, 9].map((n) => html`<i class="bz bz${n}"></i>`)}</div>
-    <div class="boxtilt-stage">${img('/img/box-3d.webp', 'The Coffee Time board game box, first edition', 'class="boxtilt-img" width="1500" height="880"')}<span class="boxtilt-shine" aria-hidden="true"></span></div>
+    <div class="cube-shadow" aria-hidden="true"></div>
+    <div class="cube-sway" aria-hidden="true"><div class="cube">
+      <i class="f-bot"></i><i class="f-back"></i><i class="f-left"></i><i class="f-right"></i><i class="f-front"></i><i class="f-top"></i>
+    </div></div>
   </div>`;
 }
 
@@ -76,11 +83,11 @@ export function orderForm(s: Settings, blocks: Blocks, st: OrderState): Safe {
   const v = st.values || {};
   const max = Math.max(1, parseInt(s.max_quantity || '10', 10));
   if (s.orders_open === '0') return html`<div class="delivered" id="order-form">
-    <span class="dv-conf" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></span>
+    <span class="dv-conf" aria-hidden="true">${raw('<i></i>'.repeat(28))}</span>
     <p class="dv-big">1,000</p>
     <p class="dv-of">first edition games, all delivered</p>
     <h3>${line(blocks, 'delivered_title')}</h3>
-    ${text(blocks, 'delivered_body')}
+    <div class="dv-copy">${text(blocks, 'delivered_body')}</div>
     <p class="dv-cta"><a class="btn btn-go" href="mailto:${s.email}">Say hello</a><a class="btn btn-go btn-go2" href="/#video-games">Play the video games</a></p>
   </div>`;
   if (st.sent) return html`<div class="order-card" id="order-form"><h3>Order request sent</h3><p>Thank you! We will email you shortly to confirm shipping and payment. It's Coffee Time!</p></div>`;
@@ -157,6 +164,7 @@ export function home(s: Settings, blocks: Blocks, tracks: Track[], creators: Cre
   return html`
 <section class="cover" aria-label="Coffee Time">
   <div class="cover-sky" aria-hidden="true"></div>
+  ${beans(10)}
   <div class="wrap cover-in">
     <div class="cover-copy">
       <p class="cover-kicker"><span class="dot" aria-hidden="true"></span>${line(blocks, 'cover_kicker')}</p>
@@ -207,6 +215,7 @@ export function home(s: Settings, blocks: Blocks, tracks: Track[], creators: Cre
     <div class="cast-spk" aria-hidden="true">${[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12].map((n) => html`<i class="p${n}"></i>`)}</div>
     <div class="cast-art">
       ${img('/img/characters-cutout.webp', 'The whole cast: Little Miss Hot Shot, Donette, Thermos, Cup Joe, Sir Cubey, King Tea, the crumpets and friends', 'class="cast-main" width="1374" height="684"')}
+      <span class="cast-shade" aria-hidden="true"></span><span class="cast-gloss" aria-hidden="true"></span>
       ${img('/img/characters-cutout.webp', '', 'class="cast-mirror" width="1374" height="684"')}
     </div>
   </div>
@@ -231,21 +240,22 @@ export function home(s: Settings, blocks: Blocks, tracks: Track[], creators: Cre
     ${secHead('Featured game', line(blocks, 'game_title'), '', 'h3')}
     <div class="vg-grid">
       ${video(s.trailer_video, s.trailer_poster, 'Coffee Time Adventures trailer')}
-      <div class="vg-copy">${text(blocks, 'game_body')}</div>
+      <div class="vg-copy prose26">${text(blocks, 'game_body')}</div>
     </div>
   </div>
 
   <div class="wrap games-head">
-    <div class="games-intro">${text(blocks, 'games_intro')}</div>
+    <div class="games-intro prose26 wide">${text(blocks, 'games_intro')}</div>
   </div>
   ${gamesSections(blocks, games)}
 </section>
 
 <section class="zone zone-bg" id="board-game">
+  ${drip()}
   <div class="wrap">
     <div class="zone-banner">
       <span class="zone-chip">The board game</span>
-      ${secHead('Own the box?', line(blocks, 'zone_bg_title'), line(blocks, 'zone_bg_sub'), 'h2')}
+      ${secHead('Own the board game?', line(blocks, 'zone_bg_title'), line(blocks, 'zone_bg_sub'), 'h2')}
       <ul class="zone-jump" aria-label="In this section">
         <li><a href="#rules">Learn to play</a></li>
         <li><a href="/video-tutorials">Video tutorials</a></li>
@@ -263,7 +273,7 @@ export function home(s: Settings, blocks: Blocks, tracks: Track[], creators: Cre
     <div class="hero-art"><img src="/img/don-floating.webp" alt="Donette, floating" width="440" height="840" fetchpriority="high"></div>
     <div class="hero-copy">
       <h2 class="hero-title sec-title">${line(blocks, 'hero_title')}</h2>
-      ${text(blocks, 'hero_body')}
+      <div class="prose26">${text(blocks, 'hero_body')}</div>
       ${learnLinks(s)}
     </div>
     <div class="hero-ship">${img('/img/deep-space-kruiser.webp', 'The Deep Space Kruiser', 'width="900" height="411"')}</div>
@@ -282,6 +292,7 @@ export function home(s: Settings, blocks: Blocks, tracks: Track[], creators: Cre
 </div>
 
 <div class="orders" id="order">
+  ${drip('purple')}
   ${orb('sugar', 'l', 0, 2, 3)}
   ${orb('fire', 'r', 20, 3, -1)}
   <div class="wrap">
@@ -291,7 +302,7 @@ export function home(s: Settings, blocks: Blocks, tracks: Track[], creators: Cre
     </div>
     ${boxTilt()}
     <h3 class="orders-intro">${line(blocks, 'orders_intro')}</h3>
-    <div class="orders-copy">${text(blocks, 'orders_body')}</div>
+    <div class="orders-copy prose26 cols">${text(blocks, 'orders_body')}</div>
 
     ${purpleTree(s, blocks)}
 
@@ -303,6 +314,7 @@ export function home(s: Settings, blocks: Blocks, tracks: Track[], creators: Cre
 </section>
 
 <section class="newsletter" id="newsletter">
+  ${beans(14)}
   ${orb('warp', 'l', 10, 3, 5)}
   <div class="wrap news-grid">
     <h2>${line(blocks, 'newsletter_title')}</h2>
@@ -316,11 +328,13 @@ export function home(s: Settings, blocks: Blocks, tracks: Track[], creators: Cre
       </form>
     </div>
   </div>
+  <div class="pour" aria-hidden="true"></div><div class="foam" aria-hidden="true"></div>
 </section>
 
 
 
 <section class="music" id="music">
+  ${drip()}
   ${orb('feather', 'r', 10, 3, 1)}
   ${orb('warp', 'l', 40, 4, 3)}
   ${orb('earth', 'r', 80, 3, -1)}
@@ -333,6 +347,7 @@ export function home(s: Settings, blocks: Blocks, tracks: Track[], creators: Cre
 </section>
 
 <section class="team" id="team">
+  ${drip('purple')}
   ${orb('ice', 'r', 0, 4, 5)}
   <div class="wrap">
     ${secHead('Made in Davis, California', line(blocks, 'team_title'))}
@@ -387,19 +402,31 @@ function coloring(s: Settings, blocks: Blocks): Safe {
         <a href="${s.coloring_pdf}" target="_blank" rel="noopener" aria-label="Download the coloring page (PDF)">${img('/img/coloring-bw.webp', 'Thermos on his bike, black and white coloring page', 'width="900" height="900"')}</a>
         <a href="${s.coloring_pdf}" target="_blank" rel="noopener" aria-label="Download the coloring page (PDF)">${img('/img/coloring-color.webp', 'Thermos on his bike, colored in', 'width="900" height="900"')}</a>
       </div>
-      <div class="sponsor-copy small-copy">${text(blocks, 'coloring_body')}</div>
+      <div class="prose26">${text(blocks, 'coloring_body')}</div>
     </div>
   </section>`;
 }
 
 export function story(s: Settings, blocks: Blocks): Safe {
   const pages = [1, 2, 3, 4, 5, 6, 7, 8];
+  const leaf = (n: number) => html`<div class="leaf lf${n}">
+      <label class="pg front" for="fl${n}">${img(`/img/story-${n * 2 - 1}.webp`, `Coffee Time story, page ${n * 2 - 1}`, `width="1400" height="1789" ${n === 1 ? 'loading="eager"' : ''}`)}</label>
+      <label class="pg back" for="fl${n}">${img(`/img/story-${n * 2}.webp`, `Coffee Time story, page ${n * 2}`, 'width="1400" height="1789"')}</label>
+    </div>`;
   return html`<section class="page story">
+    ${orb('fire', 'r', 10, 2, 3)}${orb('ice', 'l', 40, 3, 1)}
     <div class="wrap narrow">
       ${secHead('The board game', line(blocks, 'story_title'), '', 'h1')}
-      <div class="intro">${text(blocks, 'story_intro')}</div>
+      <div class="intro prose26">${text(blocks, 'story_intro')}</div>
     </div>
-    <div class="wrap story-pages">
+    <div class="wrap flipwrap">
+      <div class="book">
+        <input type="checkbox" id="fl1" class="fl1" aria-label="Turn page 1"><input type="checkbox" id="fl2" class="fl2" aria-label="Turn page 3"><input type="checkbox" id="fl3" class="fl3" aria-label="Turn page 5"><input type="checkbox" id="fl4" class="fl4" aria-label="Turn page 7">
+        ${[1, 2, 3, 4].map(leaf)}
+      </div>
+      <p class="flip-hint">Click a page to turn it</p>
+    </div>
+    <div class="wrap story-pages mobile-only">
       ${pages.map((n) => html`<figure>${img(`/img/story-${n}.webp`, `Coffee Time story, page ${n}`, `width="1400" height="1789" ${n === 1 ? 'loading="eager"' : ''}`)}</figure>`)}
     </div>
     ${coloring(s, blocks)}
@@ -412,7 +439,7 @@ export function arcade(s: Settings, blocks: Blocks, games: Game[]): Safe {
     <div class="wrap narrow">
       ${secHead('Video games', line(blocks, 'arcade_title'), '', 'h1')}
       ${video(s.trailer_video, s.trailer_poster, 'Coffee Time Adventures trailer')}
-      <div class="intro">${text(blocks, 'arcade_body')}</div>
+      <div class="intro prose26 cols">${text(blocks, 'arcade_body')}</div>
       <p class="center"><a class="btn" href="${s.demo_url}" target="_blank" rel="noopener">Download the free demo</a></p>
     </div>
     ${gamesSections(blocks, games)}
@@ -422,9 +449,9 @@ export function arcade(s: Settings, blocks: Blocks, games: Game[]): Safe {
 export function news(s: Settings, blocks: Blocks, items: News[]): Safe {
   return html`<section class="page news">
     ${orb('earth', 'l', 5, 2, 3)}
-    <div class="wrap narrow">
+    <div class="wrap wide">
       ${secHead('Latest', line(blocks, 'news_title'), '', 'h1')}
-      ${items.map((n) => {
+      <div class="news-list">${items.map((n) => {
         const imgs = n.images.split(',').map((x) => x.trim()).filter(Boolean);
         const yt = /^[\w-]{11}$/.test(n.video) ? n.video : '';
         return html`<article class="news-item">
@@ -436,25 +463,37 @@ export function news(s: Settings, blocks: Blocks, items: News[]): Safe {
           ${imgs.length ? html`<div class="news-pics n${imgs.length}">${imgs.map((src) => img(src, n.title, 'width="1200" height="1200"'))}</div>` : ''}
           ${n.url ? html`<p><a class="btn" href="${n.url}" target="_blank" rel="noopener">${n.link_label || 'Read more'}</a></p>` : ''}
         </article>`;
-      })}
+      })}</div>
     </div>
   </section>`;
 }
 
 export function tutorials(s: Settings, blocks: Blocks, items: Tutorial[]): Safe {
+  // Chapters: 2-a and 2-b are two parts of chapter 2.
+  const chapters: { n: string; title: string; parts: Tutorial[] }[] = [];
+  for (const t of items) {
+    const n = String(parseInt(t.num, 10) || t.num);
+    const last = chapters[chapters.length - 1];
+    if (last && last.n === n) last.parts.push(t);
+    else chapters.push({ n, title: t.title, parts: [t] });
+  }
   return html`<section class="page tutorials">
-    <div class="wrap narrow">
+    ${orb('ice', 'r', 5, 2, 3)}
+    <div class="wrap wide">
       ${secHead('The board game', line(blocks, 'tutorials_title'), '', 'h1')}
-      <div class="intro">${text(blocks, 'tutorials_intro')}${learnLinks(s, 'tutorials')}</div>
-      <nav class="jump" aria-label="Jump to a tutorial"><ol>${items.map((t) => html`<li><a href="#tutorial-${t.num}">${t.num}</a></li>`)}</ol></nav>
-      ${items.map(
+      <div class="intro prose26">${text(blocks, 'tutorials_intro')}${learnLinks(s, 'tutorials')}</div>
+      <p class="tidx-label">Pick a chapter</p>
+      <ul class="tidx" aria-label="Tutorial chapters">${chapters.map(
+        (c) => html`<li class="tchap"><a href="#tutorial-${c.parts[0].num}"><b>${c.n}</b><span class="ttl">${c.title}</span></a>${c.parts.length > 1 ? html`<span class="tparts">${c.parts.map((p) => html`<a href="#tutorial-${p.num}">${p.num.replace(/^\d+-?/, '') || p.num}</a>`)}</span>` : ''}</li>`,
+      )}</ul>
+      <div class="tut-list">${items.map(
         (t) => html`<article class="tutorial" id="tutorial-${t.num}">
           <p class="kicker">Tutorial ${t.num}</p>
           <h2>${t.title}</h2>
           ${richText(t.body)}
           ${t.youtube_id ? youtube(t.youtube_id, `Tutorial ${t.num}: ${t.title}`) : ''}
         </article>`,
-      )}
+      )}</div>
     </div>
   </section>`;
 }
@@ -462,10 +501,10 @@ export function tutorials(s: Settings, blocks: Blocks, items: Tutorial[]): Safe 
 export function faq(s: Settings, blocks: Blocks, items: Faq[]): Safe {
   return html`<section class="page faq">
     ${orb('sugar', 'r', 5, 2, 1)}
-    <div class="wrap narrow">
+    <div class="wrap wide">
       ${secHead('The board game', line(blocks, 'faq_title'), '', 'h1')}
-      <div class="intro">${text(blocks, 'faq_intro')}${learnLinks(s, 'faq')}</div>
-      ${items.map((f) => html`<article class="qa"><h2><span>Q:</span> ${f.question}</h2><div class="answer">${richText(f.answer)}</div></article>`)}
+      <div class="intro prose26">${text(blocks, 'faq_intro')}${learnLinks(s, 'faq')}</div>
+      <div class="faq-list">${items.map((f) => html`<article class="qa"><h2><span>Q:</span> ${f.question}</h2><div class="answer">${richText(f.answer)}</div></article>`)}</div>
     </div>
   </section>`;
 }

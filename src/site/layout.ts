@@ -74,11 +74,13 @@ export function layout(s: Settings, meta: PageMeta, body: Child, opts: { nonce: 
 <link rel="apple-touch-icon" href="/apple-touch-icon.png">
 <link rel="preload" href="/fonts/anton.woff" as="font" type="font/woff" crossorigin>
 <link rel="preload" href="/fonts/jost.woff" as="font" type="font/woff" crossorigin>
-<link rel="stylesheet" href="/site.css?v=10">
+<link rel="stylesheet" href="/site.css?v=11">
+<link rel="stylesheet" href="/fx.css?v=2">
 ${ga(s.ga4_id, opts.nonce)}
 ${meta.jsonld ? raw(`<script type="application/ld+json" nonce="${opts.nonce}">${JSON.stringify(meta.jsonld).replace(/</g, '\\u003c')}</script>`) : ''}
 </head>
 <body class="${meta.bodyClass || ''}">
+<div class="space" aria-hidden="true"><div class="sp-neb n1"></div><div class="sp-neb n2"></div><div class="sp-neb n3"></div><div class="sp-aur"></div><div class="sp-st a"></div><div class="sp-st b"></div><div class="sp-st c"></div><i class="sp-shoot s1"></i><i class="sp-shoot s2"></i><i class="sp-shoot s3"></i></div>
 <a class="skip" href="#main">Skip to content</a>
 <header class="site-head">
   <div class="wrap head-row">
@@ -114,5 +116,5 @@ export function img(src: string, alt: string, extra = ''): Safe {
 export function orb(name: string, side: 'l' | 'r', y: number, size = 2, dx = 0): Safe {
   const yy = Math.min(90, Math.max(0, Math.round(y / 10) * 10));
   const xx = Math.min(8, Math.max(-8, Math.round(dx)));
-  return raw(`<img class="orb orb-${side} orb-y${yy} orb-s${size} orb-x${xx < 0 ? 'n' + -xx : xx}" src="/img/orb-${esc(name)}.webp" alt="" aria-hidden="true" loading="lazy" decoding="async" width="420" height="420">`);
+  return raw(`<span class="orb orb-${side} orb-y${yy} orb-s${size} orb-x${xx < 0 ? 'n' + -xx : xx} orb-${esc(name)}" aria-hidden="true"><i class="o-aura"></i><i class="o-ring"></i><img src="/img/orb-${esc(name)}.webp" alt="" loading="lazy" decoding="async" width="420" height="420"><i class="o-glint"></i><i class="o-spark s1"></i><i class="o-spark s2"></i></span>`);
 }

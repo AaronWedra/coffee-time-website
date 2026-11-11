@@ -1,5 +1,11 @@
 # Changelog
 
+## 2026-11-11: v5 effects
+- New public/fx.css: coded 2026 space background (nebulae, aurora, three star layers, shooting stars), coffee drips, falling beans, a rising pour in the newsletter, a brand texture library (scripts/make-textures.py), glossy shaded characters, power-orb pickups, nicer typography.
+- The box is now a real CSS 3D cuboid built from the printed dieline, tilting with the cursor.
+- Story is a CSS flipbook. News, FAQ and videos are two columns on desktop; videos get a chapter index. Nick Domke added to the team (placeholder photo). Real 2D Star Bugs thumbnail.
+- Removed the /play app (redirects to /#online). Fixed the nav dropdown line.
+
 ## 2026-11-11: v4 polish
 - "Delivered" replaces "sold" everywhere (migration 0011). Game cards are full-bleed real screenshots on a coffee-bean pattern.
 - Doors use a purple D20 and a glossy controller (hand-drawn SVG). The 3D box tilts with the cursor (CSS only, :has()).

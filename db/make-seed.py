@@ -133,7 +133,7 @@ block(
 )
 block("charity_programs", "Purple Tree: what they do", "**Baked goods with a purpose.** Vegan, wheat-free treats and organic tea, made and sold by Purple Tree's employees at the Davis Farmers Market every Saturday, 8 to 1.\n\n**A bicycle coffee cart** and a café at the UC Davis MIND Institute, Monday to Thursday, 8 to 2.\n\n**Music and art for everyone.** The Davis Hootenanny and Team Davis Singers bring people with and without disabilities together on stage.\n\nPurple Tree is where community truly means everyone.")
 block("delivered_title", "Delivered card: headline", "Thank you for helping every game find a home", kind="line")
-block("delivered_body", "Delivered card: paragraph", "We made 1,000 first edition games and every one has been delivered, many of them given away along the way. They now live on board game shelves and in coffee shops and game shops, waiting for friends to sit down and play. Thank you for playing, playtesting and carrying a copy home.")
+block("delivered_body", "Delivered card: paragraph", "Every one of our 1,000 first edition games has been delivered, many given away along the way. Thank you for playing, playtesting and carrying a copy home.")
 block("box_title", "What's in the box: headline", "What's in the Box?", kind="line")
 block(
     "box_list",
@@ -412,14 +412,13 @@ AR = "https://www.smartzgraphics.com/games/"
 games = [
     ("Rapid Refill", "2d", "GameMaker", "Help Thermos deliver fresh, hot coffee to coffee shops across the Five Worlds!", "For desktop only.", GX + "9kk8k1/rapid-refill/", "Play now", "/img/rapid-refill.webp"),
     ("Donut Dash", "2d", "GameMaker", "Collect enough donuts to feed the hungry pup-pups before they eat you!", "For desktop only.", GX + "fdz4p4/donut-dash/", "Play now", "/img/donut-dash.webp"),
-    ("Star Bugs", "2d", "GDevelop", "Star Bugs have invaded. Bop them before they get away.", "", "https://gd.games/aaronwedra/do-or-donut", "Play now", "/img/game-star-bugs.webp"),
+    ("Star Bugs", "2d", "GDevelop", "Star Bugs have invaded. Bop them before they get away.", "", "https://gd.games/aaronwedra/do-or-donut", "Play now", "/img/game-star-bugs-2d.webp"),
     ("Coffee Time Adventures", "3d", "Unreal Engine", "King Tea and Duchess are scheming. Little Miss Hot Shot must uncover their plot and save the Five Worlds.", "Free demo, in development.", DEMO, "Get the free demo", "/img/trailer-poster.webp"),
     ("Star Bugs", "ar", "AR in your browser", "Fire sprinkle donuts from a licorice slingshot and stop the Star Bugs. One or two players at the same table.", "", AR + "star-bugs/", "Play in AR", "/img/game-star-bugs.webp"),
     ("Rapid Refill", "ar", "AR in your browser", "Deliver the coffee across your own table.", "", AR + "rapid-refill/", "Play in AR", "/img/game-rapid-refill-ar.webp"),
     ("Donut Dash", "ar", "AR in your browser", "Feed the pups their donuts, on your table.", "In development.", AR + "donut-dash/", "Play in AR", "/img/game-donut-dash-ar.webp"),
     ("Overtime", "online", "Online, with friends", "Plan your cards together, watch the fight, find the Roamer hiding on your team. Preview.", "", "/overtime/", "Play online", "/img/game-overtime.webp"),
     ("Rush Hour", "online", "Online, with friends", "Race King Tea's clock in real time. Preview.", "", "/rush/", "Play online", "/img/game-rush-hour.webp"),
-    ("Coffee Time, as printed", "online", "Online, with friends", "The board game itself, on your phone. Make a room, send the code, play together.", "", "/play/", "Play online", "/img/game-coffee-time-online.webp"),
 ]
 for i, (t, k, e, b_, n, u, btn, img) in enumerate(games):
     ins("games", {"title": t, "kind": k, "engine": e, "blurb": b_, "note": n, "url": u, "button": btn, "image": img, "sort": i})
@@ -431,6 +430,7 @@ creators = [
     ("Milly Judd", "Game Editor", "Critiqued the initial prototype, assisted in developing the final game dynamics, wrote the instructions, and edited all text for the Coffee Time brand.", "", "/img/team-milly-judd.webp"),
     ("Sam Lundholm", "Abstract Artist", "Created abstract textures that set Coffee Time apart with its unique and vibrant style. Seen on the background of the game box, cards, and game board.", "", "/img/team-sam-lundholm.webp"),
     ("Matthew Wright", "Game Music Creator", "Created custom 22nd century AI music tracks to listen to as you play Coffee Time with your friends. More about Matthew at [www.enuminousandarchimedes.com](https://www.enuminousandarchimedes.com)", "https://www.enuminousandarchimedes.com", "/img/team-matthew-wright.webp"),
+    ("Nick Domke", "Video Game Lead", "Leads the Da Vinci game club that is building Coffee Time Adventures, our first video game, and brings the Coffee Time universe to life in 3D.", "https://dvgameclub.itch.io/", "/img/team-nick-domke.webp"),
     ("Landon Christensen", "King Tea Artist", "Illustrated the ultimate villain, King Tea, who has infiltrated the Realm of Time and seeks to vanquish coffee forever!", "", "/img/team-landon-christensen.webp"),
 ]
 for i, (n, r, b, u, img) in enumerate(creators):

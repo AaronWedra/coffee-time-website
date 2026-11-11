@@ -14,6 +14,8 @@ export const site = new Router();
 // Facebook, Comic-Con programs and old emails. Covers the Wix site and the 2026 previews.
 const REDIRECTS: Record<string, string> = {
   '/home': '/',
+  '/play': '/#online',
+  '/play/': '/#online',
   '/rules': '/#rules',
   '/how-to-play': '/video-tutorials',
   '/tutorials': '/video-tutorials',
@@ -39,7 +41,7 @@ const REDIRECTS: Record<string, string> = {
   '/newsletter': '/#newsletter',
 };
 
-export const STATIC_PATHS = ['/', '/story', '/arcade', '/play/', '/overtime/', '/rush/', '/news', '/video-tutorials', '/faq', '/in-the-box', '/order', '/privacy'];
+export const STATIC_PATHS = ['/', '/story', '/arcade', '/overtime/', '/rush/', '/news', '/video-tutorials', '/faq', '/in-the-box', '/order', '/privacy'];
 
 const siteUrl = (c: Ctx) => (c.env.SITE_URL || `${c.url.protocol}//${c.url.host}`).replace(/\/$/, '');
 

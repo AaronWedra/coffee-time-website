@@ -47,10 +47,10 @@ export default {
       }
     }
 
-    // The games: /play/ (the faithful port), /overtime/ and /rush/ (the 2026 games) are static pages
+    // The games: /overtime/ and /rush/ (the 2026 games) are static pages
     // with their own CSP (they run inline scripts and load two Google fonts); /room/CODE is their
     // shared WebSocket, one Durable Object per room.
-    const game = url.pathname.match(/^\/(play|overtime|rush)(\/|\/index\.html)?$/);
+    const game = url.pathname.match(/^\/(overtime|rush)(\/|\/index\.html)?$/);
     if (game && !game[2]) return Response.redirect(url.origin + '/' + game[1] + '/' + url.search, 301);
     if (game) {
       // Ask the assets layer for the directory path: with html_handling auto-trailing-slash it serves
