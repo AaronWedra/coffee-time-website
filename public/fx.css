@@ -816,3 +816,8 @@ a:focus:not(:focus-visible), button:focus:not(:focus-visible), label:focus:not(:
 .trio-btns .btn { font-size: .95rem; padding: .5em 1.1em; }
 .trio-note { font-size: .8rem !important; opacity: .7; margin: 0 !important; }
 @media (max-width: 900px) { .trio { grid-template-columns: 1fr; max-width: 520px; margin-inline: auto; } }
+/* small yellow labels: bigger and solid, so they can actually be read */
+.sec-kicker { font-size: clamp(1.05rem, 1.5vw, 1.35rem) !important; letter-spacing: .16em !important; opacity: 1 !important; color: var(--yellow) !important; animation: none !important; text-shadow: 0 2px 0 rgba(30, 0, 60, .6); }
+.cta-vid figcaption { font-size: clamp(1.1rem, 1.5vw, 1.35rem) !important; letter-spacing: .12em; margin-top: .8em !important; color: var(--yellow) !important; opacity: 1 !important; text-shadow: 0 2px 0 rgba(30, 0, 60, .6); }
+.cta-info .gtag { font-size: .95rem !important; }
+.hs-more, .hs-game em { font-size: 1.05rem !important; }
