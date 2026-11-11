@@ -798,3 +798,5 @@ a:focus:not(:focus-visible), button:focus:not(:focus-visible), label:focus:not(:
 }
 /* home board game strip sits in the Realm of Time */
 .hs-board { background: linear-gradient(rgba(26, 10, 56, .55), rgba(20, 6, 46, .62)), url(/img/realm-of-time.svg) #1a0a38 !important; background-size: auto, 900px !important; }
+/* arcade: a thin white rule between Coffee Time Adventures and the game pairs */
+.cta-duo { padding-bottom: clamp(26px, 4vw, 48px); margin-bottom: clamp(26px, 4vw, 48px) !important; border-bottom: 1px solid rgba(255, 255, 255, .7); }
