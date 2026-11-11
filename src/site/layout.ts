@@ -73,7 +73,7 @@ export function layout(s: Settings, meta: PageMeta, body: Child, opts: { nonce: 
 <link rel="preload" href="/fonts/anton.woff" as="font" type="font/woff" crossorigin>
 <link rel="preload" href="/fonts/jost.woff" as="font" type="font/woff" crossorigin>
 <link rel="stylesheet" href="/site.css?v=13">
-<link rel="stylesheet" href="/fx.css?v=92">
+<link rel="stylesheet" href="/fx.css?v=93">
 ${ga(s.ga4_id, opts.nonce)}
 ${meta.jsonld ? raw(`<script type="application/ld+json" nonce="${opts.nonce}">${JSON.stringify(meta.jsonld).replace(/</g, '\\u003c')}</script>`) : ''}
 </head>

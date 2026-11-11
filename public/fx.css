@@ -998,7 +998,7 @@ a:focus:not(:focus-visible), button:focus:not(:focus-visible), label:focus:not(:
 
 /* ---- clocks, take 4: a tunnel. Clocks fly out of the centre toward the viewer (clock-tunnel.svg).
    No sunburst, no rings, no colour wash. A soft dark centre keeps the text readable. */
-.hs-board::before, .music::before, .reviews::before { background: radial-gradient(60% 70% at 50% 50%, rgba(12, 2, 32, .78), rgba(12, 2, 32, .25) 70%, transparent), url(/img/clock-tunnel-2.svg) center / cover no-repeat #0c0220 !important; filter: none !important; animation: none !important; }
+.hs-board::before, .music::before, .reviews::before { background: radial-gradient(60% 70% at 50% 50%, rgba(12, 2, 32, .78), rgba(12, 2, 32, .25) 70%, transparent), url(/img/clock-tunnel-3.svg) center / cover no-repeat #0c0220 !important; filter: none !important; animation: none !important; }
 .hs-board::after, .music::after, .reviews::after { display: none !important; }
 .hs-board .hs-split > div::before { display: none !important; }
 
@@ -1027,3 +1027,6 @@ main > section + section, main > section > div.hero, main > section > .reviews, 
   border-top: 3px solid transparent !important; border-image: linear-gradient(90deg, #8e3cc0, #ff8a3d 40%, #fff245 70%, #78b92f) 1 !important; border-image-slice: 1 !important; }
 .hs-games { border-bottom: 0 !important; }
 .arc-rule > .wrap { border-top: 0 !important; }
+/* clock tunnel on solid black */
+.hs-board, .music, .reviews { background: #000 !important; }
+.hs-board::before, .music::before, .reviews::before { background: radial-gradient(60% 70% at 50% 50%, rgba(0, 0, 0, .75), rgba(0, 0, 0, .2) 70%, transparent), url(/img/clock-tunnel-3.svg) center / cover no-repeat #000 !important; }
