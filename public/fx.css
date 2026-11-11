@@ -718,3 +718,7 @@ a:focus:not(:focus-visible), button:focus:not(:focus-visible), label:focus:not(:
 .newsletter h2, .newsletter p, .newsletter label span { color: #3b0f6e !important; text-shadow: none !important; }
 .newsletter h2 { font-family: var(--quote) !important; font-style: italic; font-weight: 700; text-transform: none !important; letter-spacing: 0 !important; font-size: clamp(2.6rem, 5.5vw, 4.4rem) !important; }
 .hs-game b i { font-style: normal; font-size: .6em; vertical-align: middle; background: var(--yellow); color: var(--purple); border-radius: 6px; padding: .1em .45em; margin-left: .3em; letter-spacing: .08em; }
+
+/* home: the Facebook video, edge to edge, in place of the cast section */
+.reel { background: #000; line-height: 0; }
+.reel iframe { display: block; width: 100%; aspect-ratio: 16 / 9; max-height: 88vh; border: 0; }

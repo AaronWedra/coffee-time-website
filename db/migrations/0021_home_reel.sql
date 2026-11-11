@@ -1,0 +1,1 @@
+INSERT OR IGNORE INTO blocks(key,label,kind,value,page,sort) VALUES('home_reel_url','Home: Facebook video link (full width, leave empty to hide)','line','https://www.facebook.com/reel/1532247461053426','home',30);

@@ -133,3 +133,4 @@
 - 2026-11-11: Arcade top is two small pieces (trailer player, game link). Three Kruisers at different depths on the home cover.
 - 2026-11-11: Cast is Aaron's untouched original art again, with the hole in Thermos's lid repaired; coded shading removed. Home games strip features Coffee Time Adventures then the AR games. Newsletter text purple with a serif heading.
 - 2026-11-11: Fix: migration 0020 used a LIKE pattern over D1's 50 byte limit, which failed on every request and took the site down. Pattern shortened.
+- 2026-11-11: Home: cast section removed; a full-width Facebook video (block home_reel_url, migration 0021) takes its place. CSP frame-src allows www.facebook.com.

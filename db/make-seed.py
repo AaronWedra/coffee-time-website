@@ -85,6 +85,7 @@ block("pair_sub", "Games: paired paragraph", "Play each game right in your brows
 block("pair_2d_label", "Games: 2D column label", "On your screen (2D)", kind="line")
 block("pair_ar_label", "Games: AR column label", "On your table (AR, in 3D)", kind="line")
 block("arcade_ar_body", "Games: AR paragraph", "Same games, on your table. Open one on your phone, point it at a table and the table becomes the level. Nothing to install.")
+block("home_reel_url", "Home: Facebook video link (full width, leave empty to hide)", "https://www.facebook.com/reel/1532247461053426", kind="line")
 block("cast_title", "Cast: heading", "Meet the stars", kind="line")
 block("cast_sub", "Cast: line under heading", "Five worlds. One very big cup of trouble.", kind="line")
 block("zone_vg_title", "Zone banner: video games heading", "Video Games", kind="line")

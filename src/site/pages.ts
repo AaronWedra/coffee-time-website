@@ -196,18 +196,9 @@ export function home(s: Settings, blocks: Blocks, flags: { joined?: string }, da
   </div>
 </section>
 
-<section class="cast" aria-label="The Coffee Time characters">
-  <div class="cast-glow" aria-hidden="true"></div>
-  <div class="wrap">
-    ${secHead('Starring', line(blocks, 'cast_title'), line(blocks, 'cast_sub'), 'h2', 'light')}
-  </div>
-  <div class="cast-stage">
-    <div class="cast-art">
-      ${img('/img/cast-original.webp', 'The whole cast: Little Miss Hot Shot, Donette, Thermos, Cup Joe, Sir Cubey, King Tea, the crumpets and the Mean Girl Crumpets', 'class="cast-main" width="1374" height="684"')}
-      <span class="cast-floor" aria-hidden="true"></span>
-    </div>
-  </div>
-</section>
+${b(blocks, 'home_reel_url') ? html`<section class="reel" aria-label="Coffee Time video">
+  <iframe src="https://www.facebook.com/plugins/video.php?href=${encodeURIComponent(b(blocks, 'home_reel_url'))}&show_text=false&width=1280" title="Coffee Time video on Facebook" loading="lazy" allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share" allowfullscreen scrolling="no"></iframe>
+</section>` : ''}
 
 <section class="hs hs-board" aria-label="The board game">
   <div class="wrap hs-split">
