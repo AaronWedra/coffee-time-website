@@ -28,30 +28,30 @@ body { background: transparent !important; }
 .t-beans { background: linear-gradient(rgba(30, 10, 4, .35), rgba(30, 10, 4, .35)), url(/img/tex-beans-brown.webp) #3b2314; background-size: auto, 300px; }
 .t-beans-p { background: url(/img/tex-beans-purple.webp) #3e186c; background-size: 300px; }
 .t-sprinkles { background: linear-gradient(rgba(30, 6, 60, .55), rgba(30, 6, 60, .55)), url(/img/tex-sprinkles.webp) #3a1464; background-size: auto, 320px; }
-.t-clocks { background: url(/img/tex-clocks.webp) #34105c; background-size: 420px; }
+.t-clocks { background: url(/img/clocks.svg) #34105c; background-size: 420px; }
 .t-marble { background: url(/img/tex-marble-purple.webp) #4c1680; background-size: 560px; }
-.t-latte { background: url(/img/tex-latte.webp) #4a2a18; background-size: 560px; }
+.t-latte { background: url(/img/tex-beans-brown.webp) #4a2a18; background-size: 560px; }
 .t-rings { background: url(/img/tex-rings.webp) #58341f; background-size: 420px; }
 .t-peach { background: url(/img/tex-peach.webp) #f0a468; background-size: 560px; }
 
 .arc-online { background: linear-gradient(rgba(36, 6, 70, .5), rgba(36, 6, 70, .5)), url(/img/tex-sprinkles.webp) #3a1464 !important; background-size: auto, 320px !important; }
-.arc-2d { background: linear-gradient(rgba(30, 6, 60, .35), rgba(30, 6, 60, .35)), url(/img/tex-clocks.webp) #34105c !important; background-size: auto, 420px !important; }
+.arc-2d { background: linear-gradient(rgba(30, 6, 60, .35), rgba(30, 6, 60, .35)), url(/img/clocks.svg) #34105c !important; background-size: auto, 420px !important; }
 .arc-ar { background: linear-gradient(rgba(6, 30, 60, .5), rgba(6, 20, 50, .45)), url(/img/tex-marble-purple.webp) #1a1060 !important; background-size: auto, 560px !important; }
 .gcard { background: linear-gradient(rgba(25, 8, 2, .45), rgba(25, 8, 2, .45)), url(/img/tex-beans-brown.webp) #3b2314 !important; background-size: auto, 260px !important; }
 .door { background: url(/img/tex-marble-purple.webp) #4c1680 !important; background-size: 520px !important; }
-.door-bg { background: url(/img/tex-latte.webp) #4a2a18 !important; background-size: 520px !important; }
+.door-bg { background: url(/img/tex-beans-brown.webp) #4a2a18 !important; background-size: 520px !important; }
 .zone-vg .zone-banner { background: linear-gradient(rgba(30, 4, 60, .45), rgba(30, 4, 60, .45)), url(/img/tex-marble-purple.webp) #3c0a66 !important; background-size: auto, 640px !important; }
-.zone-bg .zone-banner { background: linear-gradient(rgba(30, 12, 4, .35), rgba(30, 12, 4, .35)), url(/img/tex-latte.webp) #4a2a18 !important; background-size: auto, 640px !important; }
+.zone-bg .zone-banner { background: linear-gradient(rgba(30, 12, 4, .35), rgba(30, 12, 4, .35)), url(/img/tex-beans-brown.webp) #4a2a18 !important; background-size: auto, 640px !important; }
 .orders { background: #1a0a22 url(/img/tex-rings.webp) !important; background-size: 460px !important; }
 .orders::before { background: radial-gradient(70% 40% at 50% 0, rgba(142, 60, 192, .35), transparent 70%), rgba(20, 8, 14, .78) !important; }
 .team { background: url(/img/tex-beans-purple.webp) #2c1050 !important; background-size: 320px !important; }
 .team::before { background: linear-gradient(180deg, rgba(20, 4, 40, .75), rgba(20, 4, 40, .55)) !important; }
-.music { background: linear-gradient(180deg, rgba(14, 2, 40, .75), rgba(30, 6, 80, .6)), url(/img/tex-clocks.webp) #1a0640 !important; background-size: auto, 460px !important; }
-.newsletter { position: relative; overflow: hidden; background: linear-gradient(rgba(20, 8, 2, .5), rgba(20, 8, 2, .5)), url(/img/tex-latte.webp) #4a2a18; background-size: auto, 640px; padding-bottom: 90px; }
+.music { background: linear-gradient(180deg, rgba(14, 2, 40, .75), rgba(30, 6, 80, .6)), url(/img/clocks.svg) #1a0640 !important; background-size: auto, 460px !important; }
+.newsletter { position: relative; overflow: hidden; background: linear-gradient(rgba(20, 8, 2, .5), rgba(20, 8, 2, .5)), url(/img/tex-beans-brown.webp) #4a2a18; background-size: auto, 640px; padding-bottom: 90px; }
 .pt, .delivered { background-image: linear-gradient(rgba(30, 6, 60, .4), rgba(30, 6, 60, .4)), url(/img/tex-marble-purple.webp) !important; background-size: auto, 560px !important; }
 .delivered { background-image: radial-gradient(80% 90% at 50% 0, rgba(255, 217, 58, .3), transparent 70%), linear-gradient(rgba(24, 4, 50, .8), rgba(24, 4, 50, .8)), url(/img/tex-sprinkles.webp) !important; background-size: auto, auto, 320px !important; }
 .pt-programs { background: rgba(20, 0, 45, .62); }
-.reviews { background: linear-gradient(rgba(16, 2, 36, .7), rgba(16, 2, 36, .78)), url(/img/tex-clocks.webp) #1c0840 !important; background-size: auto, 460px !important; }
+.reviews { background: linear-gradient(rgba(16, 2, 36, .7), rgba(16, 2, 36, .78)), url(/img/clocks.svg) #1c0840 !important; background-size: auto, 460px !important; }
 .page.story, .page.faq, .page.news, .page.tutorials { background: transparent; }
 
 /* ---------- section positioning ---------- */
@@ -378,7 +378,10 @@ body { background: transparent !important; }
 
 
 /* ---------- latte art: draw foam on the coffee with the cursor ---------- */
-.latte { position: fixed; inset: 0; width: 100vw; height: 100vh; z-index: 60; pointer-events: none; }
+.latte { position: absolute; inset: 0; width: 100%; height: 100%; z-index: 1; pointer-events: none; }
+.newsletter .pour, .newsletter .foam, .newsletter .beanfall { display: none; }
+.newsletter h2, .newsletter p, .newsletter label span { color: #2b1305; text-shadow: 0 1px 0 rgba(255, 240, 214, .6); }
+.newsletter .btn { text-shadow: none; }
 .latte-hint { position: absolute; right: clamp(14px, 3vw, 40px); bottom: 14px; z-index: 4; margin: 0; padding: 7px 14px; border-radius: 999px; background: rgba(255, 243, 220, .92); color: #3a1c0a; font: 700 .78rem/1 Jost, sans-serif; letter-spacing: .06em; text-transform: uppercase; pointer-events: none; box-shadow: 0 3px 0 #b98b5a; }
 @media (hover: none) { .latte-hint { display: none; } }
 
@@ -394,3 +397,30 @@ body { background: transparent !important; }
 @media (min-width: 1100px) {
   .tracks { grid-template-columns: repeat(3, 1fr); max-width: 1280px; gap: 10px 26px; padding: 0 24px; }
 }
+
+/* pairs, simplified: plain headings, no bubbles. 2D is flat and square, AR is a solid 3D slab */
+.pair-heads { grid-template-columns: 1fr 28px 1fr; }
+.ph { background: none !important; box-shadow: none !important; border-radius: 0; padding: 0 0 8px; font-size: clamp(1.2rem, 2.2vw, 1.7rem); }
+.ph2d { color: #fff245; border-bottom: 3px solid #fff245; }
+.phar { color: #7ee8ff; border-bottom: 3px solid #7ee8ff; text-shadow: 0 0 18px rgba(111, 227, 255, .6); }
+.pair-cards { grid-template-columns: 1fr 28px 1fr !important; }
+.pair-link > * { display: none; }
+.pair-cards .k-2d { border-radius: 0 !important; border: 3px solid #fff245 !important; box-shadow: none !important; background: #2a1450 !important; transition: none; transform: none !important; }
+.pair-cards .k-2d .gposter { border-radius: 0; background: #000; }
+.pair-cards .k-2d h3, .pair-cards .k-2d p { font-family: Jost, sans-serif; }
+.pair-cards .k-2d .gplaybtn { border-radius: 0 !important; }
+@media (max-width: 860px) { .pair-heads { grid-template-columns: 1fr 1fr; } .pair-cards { grid-template-columns: 1fr 1fr !important; } }
+@media (max-width: 560px) { .pair-cards { grid-template-columns: 1fr !important; } }
+
+/* unboxed: sections run full bleed on their own backgrounds, no outer frames, no ovals */
+.sec-kicker { border: 0 !important; background: none !important; padding: 0 !important; border-radius: 0 !important; box-shadow: none !important; }
+.sec-kicker::before { display: none; }
+.zone-chip { display: none; }
+.zone-banner, .zone-vg .zone-banner, .zone-bg .zone-banner { border: 0 !important; border-radius: 0 !important; box-shadow: none !important; background: none !important; padding-left: 0; padding-right: 0; }
+.arc { border: 0 !important; border-radius: 0 !important; box-shadow: none !important; background: none !important; padding-left: 0; padding-right: 0; overflow: visible; }
+.pt { border: 0; border-radius: 0; box-shadow: none; max-width: none; }
+.pt-head, .pt-programs { max-width: 1180px; margin-left: auto; margin-right: auto; }
+.cast-art { border-radius: 0; overflow: visible; box-shadow: none; }
+.track { background: none; border: 0; box-shadow: none; padding: 0; }
+.track:hover { box-shadow: none; }
+.zone-jump a { border-radius: 0; }

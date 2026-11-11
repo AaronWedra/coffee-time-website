@@ -712,8 +712,7 @@ h3.sec-title { font-size: clamp(1.9rem, 4.4vw, 3.1rem); }
 .gcard .gbody, .gcard h3 { color: #fff; }
 .gcard h3 { color: #fff; } .gcard .gnote { color: #e8d6c4; }
 .gposter { position: relative; display: block; aspect-ratio: 16 / 10; overflow: hidden; background: #1a0a2e; }
-.gposter .gfull { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; transition: transform .5s; }
-.gcard:hover .gfull { transform: scale(1.06); }
+.gposter .gfull { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: contain; background: #1a0a2e; }
 .door { background-image: url('/img/beans-purple.webp'); background-size: 200px; }
 .door-ic { display: inline-flex; width: clamp(54px, 7vw, 84px); filter: drop-shadow(0 6px 8px rgba(0, 0, 0, .45)); transition: transform .3s; }
 .door-svg { width: 100%; height: auto; display: block; }

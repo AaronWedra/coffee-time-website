@@ -87,7 +87,7 @@ export function orderForm(s: Settings, blocks: Blocks, st: OrderState): Safe {
     <p class="dv-of">first edition games, all delivered</p>
     <h3>${line(blocks, 'delivered_title')}</h3>
     <div class="dv-copy">${text(blocks, 'delivered_body')}</div>
-    <p class="dv-cta"><a class="btn btn-go" href="mailto:${s.email}">Say hello</a><a class="btn btn-go btn-go2" href="/#video-games">Play the video games</a></p>
+    <p class="dv-cta"><a class="btn btn-go" href="mailto:${s.email}">Say hello</a><a class="btn btn-go btn-go2" href="/arcade">Play the video games</a></p>
   </div>`;
   if (st.sent) return html`<div class="order-card" id="order-form"><h3>Order request sent</h3><p>Thank you! We will email you shortly to confirm shipping and payment. It's Coffee Time!</p></div>`;
   return html`<div class="order-card" id="order-form">
@@ -156,7 +156,7 @@ export function gamesSections(blocks: Blocks, games: Game[]): Safe {
   </div>`;
 }
 
-export function home(s: Settings, blocks: Blocks, tracks: Track[], creators: Creator[], reviews: Review[], games: Game[], flags: { joined?: string; order: OrderState }): Safe {
+export function home(s: Settings, blocks: Blocks, flags: { joined?: string }): Safe {
   return html`
 <section class="cover" aria-label="Coffee Time">
   <div class="cover-sky" aria-hidden="true"></div>
@@ -166,9 +166,9 @@ export function home(s: Settings, blocks: Blocks, tracks: Track[], creators: Cre
       <p class="cover-kicker"><span class="dot" aria-hidden="true"></span>${line(blocks, 'cover_kicker')}</p>
       <h1 class="cover-title">${line(blocks, 'cover_tagline')}</h1>
       <p class="cover-note">${line(blocks, 'cover_note')}</p>
-      <p class="cover-btns"><a class="btn btn-go" href="${s.demo_url}" target="_blank" rel="noopener">Play the free demo</a><a class="btn btn-go btn-go2" href="#arcade">Open the arcade</a><a class="btn btn-go btn-go3" href="#ar"><span class="ar-chip" aria-hidden="true">AR</span>Try games in AR</a></p>
+      <p class="cover-btns"><a class="btn btn-go" href="${s.demo_url}" target="_blank" rel="noopener">Play the free demo</a><a class="btn btn-go btn-go2" href="/arcade">Open the arcade</a><a class="btn btn-go btn-go3" href="/arcade#ar"><span class="ar-chip" aria-hidden="true">AR</span>Try games in AR</a></p>
     </div>
-    <a class="cover-card" href="#feature" aria-label="Watch the Coffee Time Adventures trailer">
+    <a class="cover-card" href="/arcade" aria-label="Watch the Coffee Time Adventures trailer">
       <img src="/img/trailer-poster.webp" alt="" width="1280" height="720" fetchpriority="high">
       <span class="cc-play" aria-hidden="true"></span>
       <span class="cc-label">Coffee Time Adventures<small>Watch the trailer</small></span>
@@ -184,14 +184,14 @@ export function home(s: Settings, blocks: Blocks, tracks: Track[], creators: Cre
 
 <nav class="doors" aria-label="Choose: video games or the board game">
   <div class="wrap doors-in">
-    <a class="door door-vg" href="#video-games">
+    <a class="door door-vg" href="/arcade">
       <span class="door-tag">New</span>
       <span class="door-ic" aria-hidden="true">${ICON_PAD}</span>
       <b>${line(blocks, 'zone_vg_title')}</b>
       <span>${line(blocks, 'zone_vg_sub')}</span>
       <i class="door-go" aria-hidden="true"></i>
     </a>
-    <a class="door door-bg" href="#board-game">
+    <a class="door door-bg" href="/board-game">
       <span class="door-tag">Delivered</span>
       <span class="door-ic" aria-hidden="true">${ICON_D20}</span>
       <b>${line(blocks, 'zone_bg_title')}</b>
@@ -217,39 +217,38 @@ export function home(s: Settings, blocks: Blocks, tracks: Track[], creators: Cre
   </div>
 </section>
 
-<section class="zone zone-vg" id="video-games">
-  ${orb('warp', 'r', 12, 3, -1)}
-  <div class="wrap">
-    <div class="zone-banner">
-      <span class="zone-chip">Video games</span>
-      ${secHead('Now playing', line(blocks, 'zone_vg_title'), line(blocks, 'zone_vg_sub'), 'h2')}
-      <ul class="zone-jump" aria-label="In this section">
-        <li><a href="#feature">Coffee Time Adventures</a></li>
-        <li><a href="#arcade">2D arcade</a></li>
-        <li><a href="#ar">AR arcade</a></li>
-      </ul>
+<section class="newsletter" id="newsletter">
+  <canvas class="latte" aria-hidden="true"></canvas>
+  ${beans(14)}
+  ${orb('warp', 'l', 10, 3, 5)}
+  <div class="wrap news-grid">
+    <h2>${line(blocks, 'newsletter_title')}</h2>
+    <div>
+      ${text(blocks, 'newsletter_body')}
+      ${flags.joined === '1' ? html`<p class="form-ok" role="status">You're on the list. Welcome to the Coffee Time universe!</p>` : flags.joined === '0' ? html`<p class="form-error" role="alert">That email address does not look right. Please check it and try again.</p>` : ''}
+      <form method="post" action="/newsletter" class="join">
+        ${t0()}
+        <label><span>Email</span> <input name="email" type="email" required autocomplete="email" placeholder="e.g., email@example.com"></label>
+        <button class="btn">Join</button>
+      </form>
     </div>
   </div>
-
-  <div class="wrap feature" id="feature">
-    ${secHead('Featured game', line(blocks, 'game_title'), '', 'h3')}
-    <div class="vg-grid">
-      ${video(s.trailer_video, s.trailer_poster, 'Coffee Time Adventures trailer')}
-      <div class="vg-copy prose26">${text(blocks, 'game_body')}</div>
-    </div>
-  </div>
-
-  <div class="wrap games-head">
-    <div class="games-intro prose26 wide">${text(blocks, 'games_intro')}</div>
-  </div>
-  ${gamesSections(blocks, games)}
+  <div class="pour" aria-hidden="true"></div><div class="foam" aria-hidden="true"></div>
 </section>
 
+
+
+
+`;
+}
+
+export function boardGame(s: Settings, blocks: Blocks, reviews: Review[], flags: { order: OrderState }): Safe {
+  return html`
 <section class="zone zone-bg" id="board-game">
   <div class="wrap">
     <div class="zone-banner">
       <span class="zone-chip">The board game</span>
-      ${secHead('Own the board game?', line(blocks, 'zone_bg_title'), line(blocks, 'zone_bg_sub'), 'h2')}
+      ${secHead('Own the board game?', line(blocks, 'zone_bg_title'), line(blocks, 'zone_bg_sub'), 'h1')}
       <ul class="zone-jump" aria-label="In this section">
         <li><a href="#rules">Learn to play</a></li>
         <li><a href="/video-tutorials">Video tutorials</a></li>
@@ -309,28 +308,11 @@ export function home(s: Settings, blocks: Blocks, tracks: Track[], creators: Cre
   </div>
 </div>
 </section>
+`;
+}
 
-<section class="newsletter" id="newsletter">
-  <p class="latte-hint" aria-hidden="true">${line(blocks, 'latte_hint')}</p>
-  ${beans(14)}
-  ${orb('warp', 'l', 10, 3, 5)}
-  <div class="wrap news-grid">
-    <h2>${line(blocks, 'newsletter_title')}</h2>
-    <div>
-      ${text(blocks, 'newsletter_body')}
-      ${flags.joined === '1' ? html`<p class="form-ok" role="status">You're on the list. Welcome to the Coffee Time universe!</p>` : flags.joined === '0' ? html`<p class="form-error" role="alert">That email address does not look right. Please check it and try again.</p>` : ''}
-      <form method="post" action="/newsletter" class="join">
-        ${t0()}
-        <label><span>Email</span> <input name="email" type="email" required autocomplete="email" placeholder="e.g., email@example.com"></label>
-        <button class="btn">Join</button>
-      </form>
-    </div>
-  </div>
-  <div class="pour" aria-hidden="true"></div><div class="foam" aria-hidden="true"></div>
-</section>
-
-
-
+export function musicPage(blocks: Blocks, tracks: Track[]): Safe {
+  return html`
 <section class="music" id="music">
   ${orb('feather', 'r', 10, 3, 1)}
   ${orb('warp', 'l', 40, 4, 3)}
@@ -342,7 +324,11 @@ export function home(s: Settings, blocks: Blocks, tracks: Track[], creators: Cre
     <div class="tracks">${tracks.map(soundcloud)}</div>
   </div>
 </section>
+`;
+}
 
+export function teamPage(blocks: Blocks, creators: Creator[]): Safe {
+  return html`
 <section class="team" id="team">
   ${orb('ice', 'r', 0, 4, 5)}
   <div class="wrap">
@@ -360,7 +346,6 @@ export function home(s: Settings, blocks: Blocks, tracks: Track[], creators: Cre
     </ul>
   </div>
 </section>
-
 `;
 }
 
@@ -371,7 +356,7 @@ export function orderPage(s: Settings, blocks: Blocks, st: OrderState): Safe {
       <div class="box-cover">${img('/img/box-3d.webp', 'The Coffee Time board game box, first edition', 'width="1500" height="880"')}</div>
       <div class="orders-copy">${text(blocks, 'orders_body')}</div>
       ${orderForm(s, blocks, st)}
-      <p class="center"><a href="/#order">Back to the game</a></p>
+      <p class="center"><a href="/order">Back to the game</a></p>
     </div>
   </section>`;
 }
@@ -385,7 +370,7 @@ export function inTheBox(s: Settings, blocks: Blocks): Safe {
         <div class="inbox-list">${text(blocks, 'box_list')}</div>
       </div>
       ${learnLinks(s)}
-      <p class="center"><a href="/#board-game">Back to the board game</a></p>
+      <p class="center"><a href="/board-game">Back to the board game</a></p>
     </div>
   </section>`;
 }

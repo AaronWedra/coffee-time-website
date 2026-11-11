@@ -14,14 +14,14 @@ export const site = new Router();
 // Facebook, Comic-Con programs and old emails. Covers the Wix site and the 2026 previews.
 const REDIRECTS: Record<string, string> = {
   '/home': '/',
-  '/play': '/#arcade',
-  '/play/': '/#arcade',
-  '/overtime': '/#arcade',
-  '/overtime/': '/#arcade',
-  '/rush': '/#arcade',
-  '/rush/': '/#arcade',
+  '/play': '/arcade',
+  '/play/': '/arcade',
+  '/overtime': '/arcade',
+  '/overtime/': '/arcade',
+  '/rush': '/arcade',
+  '/rush/': '/arcade',
   '/room': '/',
-  '/rules': '/#rules',
+  '/rules': '/board-game#rules',
   '/how-to-play': '/video-tutorials',
   '/tutorials': '/video-tutorials',
   '/learn-to-play': '/video-tutorials',
@@ -31,12 +31,10 @@ const REDIRECTS: Record<string, string> = {
   '/video-game': '/arcade',
   '/videogame': '/arcade',
   '/coffee-time-adventures': '/arcade',
-  '/music': '/#music',
-  '/warp-world-music': '/#music',
-  '/team': '/#team',
-  '/community': '/#team',
-  '/meet-the-creators': '/#team',
-  '/reviews': '/#reviews',
+  '/warp-world-music': '/music',
+  '/community': '/team',
+  '/meet-the-creators': '/team',
+  '/reviews': '/board-game#reviews',
   '/pre-order': '/order',
   '/preorder': '/order',
   '/orders': '/order',
@@ -46,7 +44,7 @@ const REDIRECTS: Record<string, string> = {
   '/newsletter': '/#newsletter',
 };
 
-export const STATIC_PATHS = ['/', '/story', '/arcade', '/news', '/video-tutorials', '/faq', '/in-the-box', '/order', '/privacy'];
+export const STATIC_PATHS = ['/', '/board-game', '/music', '/team', '/story', '/arcade', '/news', '/video-tutorials', '/faq', '/in-the-box', '/order', '/privacy'];
 
 const siteUrl = (c: Ctx) => (c.env.SITE_URL || `${c.url.protocol}//${c.url.host}`).replace(/\/$/, '');
 
@@ -70,7 +68,6 @@ for (const [from, to] of Object.entries(REDIRECTS)) site.get(from, () => redirec
 
 site.get('/', async (c) => {
   const { s, b } = await base(c);
-  const [tracks, creators, reviews, games] = await Promise.all([db.listTracks(c.env.DB), db.listCreators(c.env.DB), db.listReviews(c.env.DB), db.listGames(c.env.DB)]);
   const url = siteUrl(c);
   const jsonld = {
     '@context': 'https://schema.org',
@@ -80,10 +77,28 @@ site.get('/', async (c) => {
     image: [url + '/img/box-cover.webp', url + '/img/board.webp'],
     brand: { '@type': 'Brand', name: 'Coffee Time' },
     audience: { '@type': 'PeopleAudience', suggestedMinAge: 8 },
-    offers: { '@type': 'Offer', price: s.price, priceCurrency: 'USD', availability: s.orders_open === '0' ? 'https://schema.org/OutOfStock' : 'https://schema.org/InStock', url: url + '/#order' },
+    offers: { '@type': 'Offer', price: s.price, priceCurrency: 'USD', availability: s.orders_open === '0' ? 'https://schema.org/OutOfStock' : 'https://schema.org/InStock', url: url + '/order' },
   };
   const q = c.url.searchParams;
-  return render(c, { title: 'Home', path: '/', bodyClass: 'is-home', jsonld }, P.home(s, b, tracks, creators, reviews, games, { joined: q.get('joined') || undefined, order: { sent: q.get('sent') === '1' } }));
+  return render(c, { title: 'Home', path: '/', bodyClass: 'is-home', jsonld }, P.home(s, b, { joined: q.get('joined') || undefined }));
+});
+
+site.get('/board-game', async (c) => {
+  const { s, b } = await base(c);
+  const reviews = await db.listReviews(c.env.DB);
+  return render(c, { title: 'The Board Game', description: 'Learn to play Coffee Time, read what players say, and order the board game.', path: '/board-game', image: '/img/box-cover.webp' }, P.boardGame(s, b, reviews, { order: { sent: c.url.searchParams.get('sent') === '1' } }));
+});
+
+site.get('/music', async (c) => {
+  const { s, b } = await base(c);
+  const tracks = await db.listTracks(c.env.DB);
+  return render(c, { title: 'Warp World Music', description: 'Music from the Coffee Time worlds, made in collaboration with eNuminous and Archimedes.', path: '/music', image: '/img/og.jpg' }, P.musicPage(b, tracks));
+});
+
+site.get('/team', async (c) => {
+  const { s, b } = await base(c);
+  const creators = await db.listCreators(c.env.DB);
+  return render(c, { title: 'Meet the Creators', description: 'The people who make Coffee Time, in Davis, California.', path: '/team', image: '/img/og.jpg' }, P.teamPage(b, creators));
 });
 
 site.get('/story', async (c) => {

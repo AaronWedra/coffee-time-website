@@ -22,7 +22,7 @@ for (const p of ['/', '/story', '/arcade', '/news', '/video-tutorials', '/faq', 
   }
 }
 ok((await get('/nope')).status === 404, '/nope 404');
-for (const [from, to] of [['/rules', '/#rules'], ['/faqs', '/faq'], ['/how-to-play', '/video-tutorials'], ['/video-game', '/arcade'], ['/reviews', '/#reviews'], ['/pre-order', '/order'], ['/story/', '/story']]) {
+for (const [from, to] of [['/rules', '/board-game#rules'], ['/faqs', '/faq'], ['/how-to-play', '/video-tutorials'], ['/video-game', '/arcade'], ['/reviews', '/board-game#reviews'], ['/pre-order', '/order'], ['/story/', '/story']]) {
   const r = await get(from);
   ok(r.status === 301 && (r.headers.get('location') || '').replace(base, '') === to, `${from} -> ${to}`);
 }
@@ -35,9 +35,10 @@ ok(home.headers.get('content-security-policy')?.includes('nonce-'), 'CSP header 
 ok(home.headers.get('x-robots-tag') === 'noindex, nofollow', 'noindex while site_indexable=0');
 ok((await get('/sitemap.xml')).status === 404, 'sitemap hidden while not indexable');
 const htxt = await (await get('/')).text();
-ok(htxt.includes('$39.99') && htxt.includes('id="rules"') && htxt.includes('id="reviews"'), 'home shows price and the anchored sections');
-ok((htxt.match(/w\.soundcloud\.com\/player/g) || []).length === 12, 'twelve SoundCloud players');
-ok(htxt.includes('Zacharia O.') && htxt.includes('Avery Armstrong Stockert'), 'all reviews on the home page');
+const bgtxt = await (await get('/board-game')).text();
+ok(bgtxt.includes('$39.99') && bgtxt.includes('id="rules"') && bgtxt.includes('id="reviews"'), 'board game page shows price and the anchored sections');
+ok(((await (await get('/music')).text()).match(/w\.soundcloud\.com\/player/g) || []).length === 12, 'twelve SoundCloud players on /music');
+ok(bgtxt.includes('Zacharia O.') && bgtxt.includes('Avery Armstrong Stockert'), 'all reviews on the board game page');
 ok(htxt.includes('/img/logo-purple.webp') && !htxt.includes('<svg class="mark"'), 'real logo in the header');
 ok(!/style="/.test(htxt), 'no inline styles (CSP)');
 // ---- analytics + privacy (migration 0004 seeds the GA4 id, so a fresh DB has analytics on; no consent bar by Aarons decision)
@@ -109,12 +110,12 @@ ok((await (await get('/order')).text()).includes('$44.50'), 'new price shows on 
 const pages = await (await get('/hq/pages', { headers: A })).text();
 ok(pages.includes('Top of the page: headline'), 'page copy editor lists blocks');
 r = await get('/hq/pages', { method: 'POST', headers: { ...H, ...A }, body: form({ csrf, 'b:hero_title': 'Learn to play like a hero' }) });
-ok((await (await get('/')).text()).includes('Learn to play like a hero'), 'page copy edit shows on the site');
+ok((await (await get('/board-game')).text()).includes('Learn to play like a hero'), 'page copy edit shows on the site');
 for (const p of ['/hq/reviews', '/hq/news', '/hq/tutorials', '/hq/faqs', '/hq/tracks', '/hq/games', '/hq/creators', '/hq/settings', '/hq/reviews/1', '/hq/news/new']) {
   ok((await get(p, { headers: A })).status === 200, `${p} 200`);
 }
 r = await get('/hq/reviews/new', { method: 'POST', headers: { ...H, ...A }, body: form({ csrf, quote: 'Best game night ever.', name: 'Smoke Tester', role: 'Playtester', sort: '99', published: '1' }) });
-ok(r.status === 303 && (await (await get('/')).text()).includes('Smoke Tester'), 'new review added in HQ shows on the site');
+ok(r.status === 303 && (await (await get('/board-game')).text()).includes('Smoke Tester'), 'new review added in HQ shows on the site');
 r = await get('/hq/details', { method: 'POST', headers: { ...H, ...A }, body: form({ csrf, price: '39.99', players: '2-6 Players', ages: 'Ages 8+', max_quantity: '10' }) });
 ok((await (await get('/order')).text()).includes('find a home'), 'unticking "order form is open" pauses orders');
 ok((await get('/hq/dashboard')).status === 302, 'HQ needs a login');
