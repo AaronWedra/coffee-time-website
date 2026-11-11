@@ -936,3 +936,40 @@ a:focus:not(:focus-visible), button:focus:not(:focus-visible), label:focus:not(:
 .arc-rule .sec-head { margin-top: 0 !important; }
 .arc-rule .sec-title { font-size: clamp(1.8rem, 3.4vw, 3rem) !important; }
 .pt h3 a { white-space: nowrap; } .pt h3 { text-wrap: balance; }
+
+/* team page: no orbs; a lone last card sits centred */
+.team .orb { display: none !important; }
+@media (min-width: 761px) { .creators > li:last-child:nth-child(odd) { grid-column: 1 / -1; justify-self: center; width: calc(50% - 11px); } }
+
+/* Click to turn: the ChatGPT-drawn glove */
+.flip-cta .glove { width: 3.4em; height: auto; flex: none; filter: none; }
+
+/* coloring band: a thin strip (pictures left, words right) so the foam stays a strip */
+.coloring-band { padding: clamp(20px, 2.6vw, 34px) 0 !important; margin-top: clamp(30px, 4vw, 56px) !important; }
+.coloring-band > .wrap { display: grid; grid-template-columns: auto minmax(0, 1fr); column-gap: clamp(20px, 3vw, 44px); align-items: center; width: min(1100px, 100% - 2 * var(--gutter)) !important; }
+.coloring-band .coloring { grid-column: 1; grid-row: 1 / span 2; display: flex; gap: 12px; margin: 0; }
+.coloring-band .coloring img { width: clamp(110px, 12vw, 170px); height: auto; display: block; }
+.coloring-band .sec-head { grid-column: 2; margin: 0 !important; text-align: left; align-self: end; }
+.coloring-band .sec-head * { text-align: left !important; }
+.coloring-band .sec-kicker { font-size: .95rem !important; margin: 0 0 .2em; }
+.coloring-band .sec-title { font-size: clamp(1.2rem, 2vw, 1.6rem) !important; }
+.coloring-band .prose26 { grid-column: 2; align-self: start; margin: .4em 0 0 !important; text-align: left; }
+.coloring-band .prose26 p { font-size: .95rem !important; line-height: 1.45 !important; margin: 0; text-align: left; }
+@media (max-width: 700px) { .coloring-band > .wrap { grid-template-columns: 1fr; } .coloring-band .coloring, .coloring-band .sec-head, .coloring-band .prose26 { grid-column: 1; grid-row: auto; } }
+
+/* ---- clocks, more acid, in the brand's colours: purple, black, yellow and white, with only faint rainbow.
+   A slow spinning sunburst and pulsing rings sit under the clocks; the colour wash is purple/yellow/white. */
+@property --acid-a { syntax: '<angle>'; inherits: false; initial-value: 0deg; }
+@property --acid-r { syntax: '<length>'; inherits: false; initial-value: 60px; }
+.hs-board, .music, .reviews { background: #0c0220 !important; }
+.hs-board::before, .music::before, .reviews::before {
+  background:
+    url(/img/realm-of-time-2.svg) 0 0 / 900px,
+    repeating-radial-gradient(circle at 50% 50%, rgba(255, 242, 69, .10) 0 3px, transparent 3px var(--acid-r), rgba(170, 80, 255, .16) var(--acid-r) calc(var(--acid-r) + 6px), transparent calc(var(--acid-r) + 6px) calc(var(--acid-r) * 2)),
+    repeating-conic-gradient(from var(--acid-a) at 50% 50%, rgba(140, 50, 230, .34) 0 9deg, rgba(0, 0, 0, .5) 9deg 18deg, rgba(255, 242, 69, .10) 18deg 21deg, rgba(0, 0, 0, .5) 21deg 30deg),
+    radial-gradient(70% 90% at 50% 50%, #3a1080, #0c0220 75%) !important;
+  filter: saturate(1.5) brightness(1.2) !important; animation: acidspin 40s linear infinite, acidpulse 7s ease-in-out infinite alternate !important; }
+.hs-board::after, .music::after, .reviews::after { opacity: .5 !important;
+  background: linear-gradient(115deg, #b14cff, #fff245, #ffffff, #7a1fd6, #fff245, #e9d5ff, #b14cff, #ff7bd5, #fff245, #7a1fd6) 0 0 / 400% 100% !important; }
+@keyframes acidspin { to { --acid-a: 360deg; } }
+@keyframes acidpulse { from { --acid-r: 46px; } to { --acid-r: 96px; } }

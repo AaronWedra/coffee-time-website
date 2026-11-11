@@ -147,3 +147,4 @@
 - 2026-11-11: Home music strip: rainbow notes float up behind the content.
 - 2026-11-11: Home games strip is white with purple type; Sir Cubey's blacks are true black.
 - 2026-11-11: Arcade: Coffee Time Adventures first as two thumbnails (trailer, play), rule, then AR games. Orders foam dropped for deep purple. Reviews and Music titles plain white. Sir Cubey holds a ChatGPT-drawn controller, hand on top. Purple Tree Café never splits across lines.
+- 2026-11-11: Clocks: purple, black, yellow and white with a spinning sunburst and pulsing rings. ChatGPT-drawn glove on Click to turn. Coloring band is a thin strip. Team: no orbs, lone last card centred.

@@ -418,7 +418,7 @@ export function story(s: Settings, blocks: Blocks): Safe {
         <input type="checkbox" id="fl1" class="fl1" aria-label="Turn page 1"><input type="checkbox" id="fl2" class="fl2" aria-label="Turn page 3"><input type="checkbox" id="fl3" class="fl3" aria-label="Turn page 5"><input type="checkbox" id="fl4" class="fl4" aria-label="Turn page 7">
         ${[1, 2, 3, 4].map(leaf)}
       </div>
-      <label class="flip-cta" for="fl1">${raw('<svg class="glove" viewBox="0 0 122 80" aria-hidden="true"><g fill="#fff" stroke="#3b0f6e" stroke-width="3.2" stroke-linejoin="round" stroke-linecap="round"><rect x="46" y="6" width="34" height="16" rx="8" transform="rotate(-10 63 14)"/><rect x="94" y="16" width="24" height="50" rx="9"/><rect x="46" y="16" width="54" height="50" rx="20"/><rect x="38" y="52" width="24" height="12" rx="6"/><rect x="34" y="42" width="28" height="12" rx="6"/><rect x="4" y="22" width="60" height="20" rx="10"/><path d="M82 30v10M90 32v8" fill="none" stroke-width="2.4"/></g></svg>')}Click to turn</label>
+      <label class="flip-cta" for="fl1"><img class="glove" src="/img/glove-point.webp" alt="" width="360" height="222">Click to turn</label>
     </div>
     <div class="wrap story-pages mobile-only">
       ${pages.map((n) => html`<figure>${img(`/img/story-${n}.webp`, `Coffee Time story, page ${n}`, `width="1400" height="1789" ${n === 1 ? 'loading="eager"' : ''}`)}</figure>`)}
