@@ -1047,3 +1047,5 @@ main > section + section, main > section > div.hero, main > section > .reviews, 
 .hs-mascot { bottom: clamp(40px, 5.5vw, 76px) !important; }
 /* on black the box needs a rim light, or its dark edges vanish */
 .hs-board .hs-box > img:first-child { filter: drop-shadow(0 0 1.5px rgba(226, 190, 255, .95)) drop-shadow(0 0 22px rgba(160, 90, 255, .55)) !important; }
+/* board game page: Learn to play on solid purple */
+.hero { background: #3b0f6e !important; }
