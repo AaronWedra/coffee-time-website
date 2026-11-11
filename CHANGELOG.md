@@ -122,3 +122,4 @@
 - Cast replaced with a faithful transparent 3D render made from the original artwork; frame removed.
 - 2026-11-11: Wider desktop text columns; arcade solo card and AR cubes; Star Bugs 2D landscape thumbnail; cyan links now yellow; home cover shortened to 'Play Coffee Time.' with two on-brand buttons (migrations 0017, 0018).
 - 2026-11-11: Home doors redone: one calm purple surface, real game and box art, no icons or bean texture.
+- 2026-11-11: Cast back to Aaron's original art (ChatGPT render removed): purple stage, one soft overhead light, floor shadow, no pedestal, no spotlight beams, narrower.

@@ -202,11 +202,8 @@ export function home(s: Settings, blocks: Blocks, flags: { joined?: string }): S
   </div>
   <div class="cast-stage">
     <div class="cast-art">
-      ${img('/img/cast-3d-cut.webp', 'The whole cast on a purple stage: Little Miss Hot Shot, Donette, Thermos, Cup Joe, Sir Cubey, King Tea, the crumpets and friends', 'class="cast-main" width="1600" height="670"')}
-      <div class="cast-beams" aria-hidden="true"><span></span><span></span><span></span><span></span></div>
-      <span class="cast-pool" aria-hidden="true"></span><span class="cast-sweep" aria-hidden="true"></span>
-      <div class="cast-spk" aria-hidden="true">${[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12].map((n) => html`<i class="p${n}"></i>`)}</div>
-      <div class="cast-flare" aria-hidden="true"><b class="f1"></b><b class="f2"></b><b class="f3"></b><b class="f4"></b></div>
+      ${img('/img/characters-cutout.webp', 'The whole cast: Little Miss Hot Shot, Donette, Thermos, Cup Joe, Sir Cubey, King Tea, the crumpets and the Mean Girl Crumpets', 'class="cast-main" width="1374" height="684"')}
+      <span class="cast-floor" aria-hidden="true"></span>
     </div>
   </div>
 </section>

@@ -475,3 +475,16 @@ body { background: transparent !important; }
 .door { grid-template-columns: 1fr 1fr !important; }
 .door-box { transform: scale(1.4) rotate(-3deg); }
 .door:hover .door-box { transform: scale(1.46) rotate(-1deg); }
+
+/* ---- cast, take 3: Aaron's own art, lit like a stage, no props.
+   One section-wide light from above (a radial gradient on the section itself, so it has no edges),
+   a floor shadow under their feet, and a soft contact shadow on the art. Nothing else moves. */
+.cast { background: radial-gradient(42% 60% at 50% 0%, rgba(255, 236, 170, .22), transparent 70%), radial-gradient(70% 55% at 50% 100%, #5b2a9a 0%, transparent 70%), linear-gradient(180deg, #2a0d5a, #3b1477) !important; color: #fff; padding-bottom: clamp(40px, 6vw, 80px); }
+.cast::before, .cast::after, .cast-glow { display: none !important; }
+.cast .sec-title, .cast .sec-sub { color: #fff !important; }
+.cast .sec-kicker { color: var(--yellow) !important; }
+.cast-stage { width: min(880px, 92%) !important; margin: clamp(10px, 2vw, 24px) auto 0; }
+.cast-art { position: relative; border-radius: 0 !important; box-shadow: none !important; overflow: visible !important; background: none !important; }
+.cast-main { position: relative; z-index: 2; display: block; width: 100%; height: auto;
+  filter: drop-shadow(0 2px 0 rgba(255, 255, 255, .55)) drop-shadow(0 10px 14px rgba(10, 0, 30, .45)) !important; animation: none !important; transform: none !important; }
+.cast-floor { position: absolute; z-index: 1; inset: auto 10% 0 10% !important; top: auto !important; height: 14%; border-radius: 50%; background: radial-gradient(50% 50% at 50% 50%, rgba(10, 0, 30, .55), transparent 70%); pointer-events: none; }
