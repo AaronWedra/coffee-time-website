@@ -1045,3 +1045,5 @@ main > section + section, main > section > div.hero, main > section > .reviews, 
 @media (max-width: 900px) { .page.arcade .trio { grid-template-columns: 1fr; } .trio-wide { grid-column: auto; } }
 .cover-title .nw { white-space: nowrap; } @media (max-width: 520px) { .cover-title .nw { white-space: normal; } }
 .hs-mascot { bottom: clamp(40px, 5.5vw, 76px) !important; }
+/* on black the box needs a rim light, or its dark edges vanish */
+.hs-board .hs-box > img:first-child { filter: drop-shadow(0 0 1.5px rgba(226, 190, 255, .95)) drop-shadow(0 0 22px rgba(160, 90, 255, .55)) !important; }
