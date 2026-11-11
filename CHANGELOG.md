@@ -150,3 +150,4 @@
 - 2026-11-11: Clocks: purple, black, yellow and white with a spinning sunburst and pulsing rings. ChatGPT-drawn glove on Click to turn. Coloring band is a thin strip. Team: no orbs, lone last card centred.
 - 2026-11-11: Board game page: 'Learn to play' is a white band; Purple Tree is a full-width band; 'What is in the box' link removed.
 - 2026-11-11: Board game page top rebuilt: title beside the real game board tilted in 3D; jump buttons replaced with four text links (no Learn to play or Order).
+- 2026-11-11: Clock sections are a tunnel of clocks flying toward the viewer. Footer 'Team login' link removed (HQ is still at /hq).
