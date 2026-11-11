@@ -39,7 +39,7 @@ const REDIRECTS: Record<string, string> = {
   '/newsletter': '/#newsletter',
 };
 
-export const STATIC_PATHS = ['/', '/story', '/arcade', '/play/', '/overtime/', '/rush/', '/news', '/video-tutorials', '/faq', '/order', '/privacy'];
+export const STATIC_PATHS = ['/', '/story', '/arcade', '/play/', '/overtime/', '/rush/', '/news', '/video-tutorials', '/faq', '/in-the-box', '/order', '/privacy'];
 
 const siteUrl = (c: Ctx) => (c.env.SITE_URL || `${c.url.protocol}//${c.url.host}`).replace(/\/$/, '');
 
@@ -82,6 +82,11 @@ site.get('/', async (c) => {
 site.get('/story', async (c) => {
   const { s, b } = await base(c);
   return render(c, { title: 'Story', description: 'The illustrated Coffee Time story from the box: King Tea, the crumpets, the Duchess, Roamer, and the heroes who race the World Clocks.', path: '/story', image: '/img/story-1.webp' }, P.story(s, b));
+});
+
+site.get('/in-the-box', async (c) => {
+  const { s, b } = await base(c);
+  return render(c, { title: "What's in the Box", description: 'Everything inside the Coffee Time board game box: the 20x20 board, cards, player pieces, dice and the instructions.', path: '/in-the-box', image: '/img/board.webp' }, P.inTheBox(s, b));
 });
 
 site.get('/arcade', async (c) => {

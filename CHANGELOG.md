@@ -1,5 +1,11 @@
 # Changelog
 
+## 2026-11-11: v4 polish
+- "Delivered" replaces "sold" everywhere (migration 0011). Game cards are full-bleed real screenshots on a coffee-bean pattern.
+- Doors use a purple D20 and a glossy controller (hand-drawn SVG). The 3D box tilts with the cursor (CSS only, :has()).
+- New Purple Tree section with their programs, a celebratory "1,000 delivered" card, orbs dodge the cursor and sit asymmetrically.
+- What's in the box moved to /in-the-box; HMP removed from home; coloring page moved to /story.
+
 ## 2026-11-03: the two 2026 games, Overtime and Rush Hour
 - The faithful board-game port at /play/ was correct and not fun (the AI resolves instantly, so you read a
   log instead of watching decisions). Two new games replace it in spirit, both at new paths, /play/ untouched.

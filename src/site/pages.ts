@@ -38,12 +38,51 @@ function youtube(id: string, title: string): Safe {
 
 const stars = () => raw('<span class="stars" aria-label="Five stars">' + '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.5l2.9 6.2 6.8.8-5 4.6 1.3 6.7L12 17.5l-6 3.3 1.3-6.7-5-4.6 6.8-.8z"/></svg>'.repeat(5) + '</span>');
 
+
+// Hand-built SVG icons for the two doors: a purple D20 and a glossy controller.
+const ICON_D20 = raw('<svg class="door-svg" viewBox="0 0 100 100" aria-hidden="true"><defs><linearGradient id="d20a" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#d9a8ff"/><stop offset=".55" stop-color="#9a45d8"/><stop offset="1" stop-color="#4b1a86"/></linearGradient></defs><polygon points="50,4 91,27 91,73 50,96 9,73 9,27" fill="url(#d20a)" stroke="#2a0a52" stroke-width="3" stroke-linejoin="round"/><polygon points="50,4 91,27 50,38" fill="#ecd0ff" opacity=".55"/><polygon points="50,4 9,27 50,38" fill="#c488f0" opacity=".5"/><polygon points="9,27 50,38 9,73" fill="#7a2fc0" opacity=".55"/><polygon points="91,27 50,38 91,73" fill="#5a1f9e" opacity=".6"/><polygon points="50,38 91,73 50,96" fill="#6d28b4" opacity=".55"/><polygon points="50,38 9,73 50,96" fill="#8a3ccf" opacity=".5"/><path d="M50 4 50 38 M9 27 50 38 91 27 M9 73 50 38 91 73 M9 73 50 96 91 73" fill="none" stroke="#2a0a52" stroke-width="1.6" opacity=".7"/><text x="50" y="62" text-anchor="middle" font-family="Anton,Impact,sans-serif" font-size="25" fill="#fff" stroke="#2a0a52" stroke-width="1.2" paint-order="stroke">20</text></svg>');
+const ICON_PAD = raw('<svg class="door-svg" viewBox="0 0 120 80" aria-hidden="true"><defs><linearGradient id="pada" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#6ee7ff"/><stop offset=".5" stop-color="#2f7de0"/><stop offset="1" stop-color="#1b2f8f"/></linearGradient></defs><path d="M30 10h60c14 0 21 8 26 28l5 24c2 10-4 16-12 16-7 0-11-4-16-11l-5-8H32l-5 8c-5 7-9 11-16 11-8 0-14-6-12-16l5-24C14 18 16 10 30 10z" fill="url(#pada)" stroke="#0b1650" stroke-width="3.5" stroke-linejoin="round"/><path d="M30 14h60c8 0 12 3 15 11-8-3-18-4-45-4S23 22 15 25c3-8 7-11 15-11z" fill="#fff" opacity=".3"/><rect x="27" y="29" width="22" height="7" rx="3" fill="#0b1650"/><rect x="34.5" y="21.5" width="7" height="22" rx="3" fill="#0b1650"/><circle cx="84" cy="25" r="5" fill="#ffd93a" stroke="#0b1650" stroke-width="2"/><circle cx="94" cy="34" r="5" fill="#ff4f7b" stroke="#0b1650" stroke-width="2"/><circle cx="74" cy="34" r="5" fill="#7ee02f" stroke="#0b1650" stroke-width="2"/><circle cx="84" cy="43" r="5" fill="#fff" stroke="#0b1650" stroke-width="2"/><circle cx="47" cy="51" r="8" fill="#0b1650"/><circle cx="73" cy="51" r="8" fill="#0b1650"/><circle cx="47" cy="49.5" r="4.5" fill="#3a5bd0"/><circle cx="73" cy="49.5" r="4.5" fill="#3a5bd0"/></svg>');
+
 export type OrderState = { sent?: boolean; error?: string; values?: Record<string, string> };
+
+
+// The box follows the cursor with no JavaScript: nine invisible hover zones, and :has() tilts the box
+// toward whichever one the pointer is over.
+function boxTilt(): Safe {
+  return html`<div class="boxtilt" aria-hidden="false">
+    <div class="boxtilt-zones" aria-hidden="true">${[1, 2, 3, 4, 5, 6, 7, 8, 9].map((n) => html`<i class="bz bz${n}"></i>`)}</div>
+    <div class="boxtilt-stage">${img('/img/box-3d.webp', 'The Coffee Time board game box, first edition', 'class="boxtilt-img" width="1500" height="880"')}<span class="boxtilt-shine" aria-hidden="true"></span></div>
+  </div>`;
+}
+
+// Purple Tree Cafe, the nonprofit that received 5% of every sale.
+function purpleTree(s: Settings, blocks: Blocks): Safe {
+  return html`<div class="pt">
+    <div class="pt-head">
+      <a class="pt-logo" href="${s.charity_url}" target="_blank" rel="noopener">${img('/img/purple-tree-logo.webp', 'Purple Tree Café, where community means everyone', 'width="600" height="825"')}</a>
+      <div class="pt-intro">
+        <p class="pt-kicker">Our community partner</p>
+        <h3>${line(blocks, 'charity_title')}</h3>
+        ${text(blocks, 'charity_body')}
+        <p><a class="btn" href="${s.charity_url}" target="_blank" rel="noopener">Visit Purple Tree Café</a></p>
+      </div>
+      <div class="pt-photo">${img('/img/purple-tree-team.webp', 'Members of the Purple Tree Café team', 'width="900" height="1200"')}</div>
+    </div>
+    <div class="pt-programs">${text(blocks, 'charity_programs')}</div>
+  </div>`;
+}
 
 export function orderForm(s: Settings, blocks: Blocks, st: OrderState): Safe {
   const v = st.values || {};
   const max = Math.max(1, parseInt(s.max_quantity || '10', 10));
-  if (s.orders_open === '0') return html`<div class="order-card" id="order-form"><h3>${line(blocks, 'order_form_title')}</h3><p>Thank you for helping 1,000 games find a home. If you would like to say hello, email <a href="mailto:${s.email}">${s.email}</a>.</p></div>`;
+  if (s.orders_open === '0') return html`<div class="delivered" id="order-form">
+    <span class="dv-conf" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></span>
+    <p class="dv-big">1,000</p>
+    <p class="dv-of">first edition games, all delivered</p>
+    <h3>${line(blocks, 'delivered_title')}</h3>
+    ${text(blocks, 'delivered_body')}
+    <p class="dv-cta"><a class="btn btn-go" href="mailto:${s.email}">Say hello</a><a class="btn btn-go btn-go2" href="/#video-games">Play the video games</a></p>
+  </div>`;
   if (st.sent) return html`<div class="order-card" id="order-form"><h3>Order request sent</h3><p>Thank you! We will email you shortly to confirm shipping and payment. It's Coffee Time!</p></div>`;
   return html`<div class="order-card" id="order-form">
     <h3>${line(blocks, 'order_form_title')}</h3>
@@ -81,7 +120,7 @@ function gameCard(g: Game, i: number): Safe {
   const badge = g.kind === 'ar' ? 'AR' : g.kind === 'online' ? 'Online' : g.kind === '3d' ? '3D' : '2D';
   return html`<li class="gcard c${i % 5} k-${g.kind}">
     <a class="gposter" href="${g.url}" ${ext(g.url)} tabindex="-1" aria-hidden="true">
-      ${g.image ? html`${img(g.image, '', 'class="gbg" width="800" height="500"')}${img(g.image, '', 'class="gfg" width="800" height="500"')}` : html`<b>${initials(g.title)}</b>`}
+      ${g.image ? img(g.image, '', 'class="gfull" width="1000" height="625"') : html`<b>${initials(g.title)}</b>`}
       <span class="gbadge">${badge}</span><span class="gplaybtn" aria-hidden="true"></span>
     </a>
     <div class="gbody">
@@ -132,7 +171,7 @@ export function home(s: Settings, blocks: Blocks, tracks: Track[], creators: Cre
     </a>
   </div>
   <ul class="wrap hud" aria-label="Coffee Time by the numbers">
-    <li><b>1,000</b><span>board games made, every one sold</span></li>
+    <li><b>1,000</b><span>board games made, every one delivered</span></li>
     <li><b>5</b><span>worlds to save from King Tea</span></li>
     <li><b>3 ways</b><span>to play: 2D, AR and online</span></li>
     <li><b>Free</b><span>to play, no sign-up</span></li>
@@ -143,14 +182,14 @@ export function home(s: Settings, blocks: Blocks, tracks: Track[], creators: Cre
   <div class="wrap doors-in">
     <a class="door door-vg" href="#video-games">
       <span class="door-tag">New</span>
-      <span class="door-ic" aria-hidden="true">&#127918;</span>
+      <span class="door-ic" aria-hidden="true">${ICON_PAD}</span>
       <b>${line(blocks, 'zone_vg_title')}</b>
       <span>${line(blocks, 'zone_vg_sub')}</span>
       <i class="door-go" aria-hidden="true"></i>
     </a>
     <a class="door door-bg" href="#board-game">
-      <span class="door-tag">Sold out</span>
-      <span class="door-ic" aria-hidden="true">&#127922;</span>
+      <span class="door-tag">Delivered</span>
+      <span class="door-ic" aria-hidden="true">${ICON_D20}</span>
       <b>${line(blocks, 'zone_bg_title')}</b>
       <span>${line(blocks, 'zone_bg_sub')}</span>
       <i class="door-go" aria-hidden="true"></i>
@@ -174,7 +213,7 @@ export function home(s: Settings, blocks: Blocks, tracks: Track[], creators: Cre
 </section>
 
 <section class="zone zone-vg" id="video-games">
-  ${orb('warp', 'r', 12, 3)}
+  ${orb('warp', 'r', 12, 3, -1)}
   <div class="wrap">
     <div class="zone-banner">
       <span class="zone-chip">Video games</span>
@@ -219,7 +258,7 @@ export function home(s: Settings, blocks: Blocks, tracks: Track[], creators: Cre
   </div>
 
 <div class="hero" id="rules">
-  ${orb('fire', 'r', 0, 1)}
+  ${orb('fire', 'r', 0, 1, 3)}
   <div class="wrap hero-grid">
     <div class="hero-art"><img src="/img/don-floating.webp" alt="Donette, floating" width="440" height="840" fetchpriority="high"></div>
     <div class="hero-copy">
@@ -232,8 +271,8 @@ export function home(s: Settings, blocks: Blocks, tracks: Track[], creators: Cre
 </div>
 
 <div class="reviews" id="reviews">
-  ${orb('earth', 'l', 0, 2)}
-  ${orb('sugar', 'r', 50, 3)}
+  ${orb('earth', 'l', 0, 2, 5)}
+  ${orb('sugar', 'r', 50, 3, 1)}
   <div class="wrap">
     ${secHead('What players say', line(blocks, 'reviews_title'))}
     <ul class="review-grid">
@@ -243,33 +282,20 @@ export function home(s: Settings, blocks: Blocks, tracks: Track[], creators: Cre
 </div>
 
 <div class="orders" id="order">
-  ${orb('sugar', 'l', 0, 2)}
-  ${orb('fire', 'r', 20, 3)}
+  ${orb('sugar', 'l', 0, 2, 3)}
+  ${orb('fire', 'r', 20, 3, -1)}
   <div class="wrap">
     <div class="orders-head">
       ${secHead('First edition', line(blocks, 'orders_title'))}
       <p class="badge">${s.players}<br>${s.ages}</p>
     </div>
-    <div class="box-cover">${img('/img/box-3d.webp', 'The Coffee Time board game box, first edition', 'width="1500" height="880"')}</div>
+    ${boxTilt()}
     <h3 class="orders-intro">${line(blocks, 'orders_intro')}</h3>
     <div class="orders-copy">${text(blocks, 'orders_body')}</div>
 
-    <div class="charity">
-      <a class="charity-logo" href="${s.charity_url}" target="_blank" rel="noopener">${img('/img/purple-tree-logo.webp', 'Purple Tree Café, where community means everyone', 'width="600" height="825"')}</a>
-      <div class="charity-copy">
-        <h3>${line(blocks, 'charity_title')}</h3>
-        ${text(blocks, 'charity_body')}
-      </div>
-      <div class="charity-photo">${img('/img/purple-tree-team.webp', 'Members of the Purple Tree Café team', 'width="900" height="1200"')}</div>
-    </div>
+    ${purpleTree(s, blocks)}
 
-    <div class="inbox">
-      <div class="inbox-board">${img('/img/board.webp', 'The Coffee Time game board: five World Clocks across the top and the heroes’ paths winding to the Activation Chamber', 'width="1400" height="1400"')}</div>
-      <div class="inbox-list">
-        <h3>${line(blocks, 'box_title')}</h3>
-        ${text(blocks, 'box_list')}
-      </div>
-    </div>
+    <p class="box-link"><a href="/in-the-box">What is in the box? See the full contents</a></p>
 
     ${orderForm(s, blocks, flags.order)}
   </div>
@@ -277,7 +303,7 @@ export function home(s: Settings, blocks: Blocks, tracks: Track[], creators: Cre
 </section>
 
 <section class="newsletter" id="newsletter">
-  ${orb('warp', 'l', 10, 3)}
+  ${orb('warp', 'l', 10, 3, 5)}
   <div class="wrap news-grid">
     <h2>${line(blocks, 'newsletter_title')}</h2>
     <div>
@@ -292,28 +318,12 @@ export function home(s: Settings, blocks: Blocks, tracks: Track[], creators: Cre
   </div>
 </section>
 
-<section class="sponsor" id="sponsor">
-  ${orb('ice', 'r', 20, 2)}
-  <div class="wrap">
-    ${secHead('Proudly backed by', line(blocks, 'sponsor_title'))}
-    <div class="sponsor-grid">
-      <div class="sponsor-art">${img('/img/hmp-thermos.webp', 'Thermos riding an HMP electric bike', 'width="900" height="1037"')}</div>
-      <a class="sponsor-photo" href="${s.hmp_url}" target="_blank" rel="noopener">${img('/img/hmp-logo.webp', 'HMP Bikes', 'width="1280" height="720"')}</a>
-    </div>
-    <div class="sponsor-copy">${text(blocks, 'sponsor_body')}</div>
-    <h3 class="coloring-title">${line(blocks, 'coloring_title')}</h3>
-    <div class="coloring">
-      <a href="${s.coloring_pdf}" target="_blank" rel="noopener" aria-label="Download the coloring page (PDF)">${img('/img/coloring-bw.webp', 'Thermos on his HMP bike, black and white coloring page', 'width="900" height="900"')}</a>
-      <a href="${s.coloring_pdf}" target="_blank" rel="noopener" aria-label="Download the coloring page (PDF)">${img('/img/coloring-color.webp', 'Thermos on his HMP bike, colored in', 'width="900" height="900"')}</a>
-    </div>
-    <div class="sponsor-copy small-copy">${text(blocks, 'coloring_body')}</div>
-  </div>
-</section>
+
 
 <section class="music" id="music">
-  ${orb('feather', 'r', 10, 3)}
-  ${orb('warp', 'l', 40, 4)}
-  ${orb('earth', 'r', 80, 3)}
+  ${orb('feather', 'r', 10, 3, 1)}
+  ${orb('warp', 'l', 40, 4, 3)}
+  ${orb('earth', 'r', 80, 3, -1)}
   <div class="wrap">
     ${secHead('Press play', line(blocks, 'music_title'))}
     <p class="music-sub">${line(blocks, 'music_sub')}</p>
@@ -323,7 +333,7 @@ export function home(s: Settings, blocks: Blocks, tracks: Track[], creators: Cre
 </section>
 
 <section class="team" id="team">
-  ${orb('ice', 'r', 0, 4)}
+  ${orb('ice', 'r', 0, 4, 5)}
   <div class="wrap">
     ${secHead('Made in Davis, California', line(blocks, 'team_title'))}
     <ul class="creators">
@@ -355,6 +365,33 @@ export function orderPage(s: Settings, blocks: Blocks, st: OrderState): Safe {
   </section>`;
 }
 
+export function inTheBox(s: Settings, blocks: Blocks): Safe {
+  return html`<section class="page inbox-page">
+    <div class="wrap narrow">
+      ${secHead('The board game', line(blocks, 'box_title'), '', 'h1')}
+      <div class="inbox">
+        <div class="inbox-board">${img('/img/board.webp', 'The Coffee Time game board: five World Clocks across the top and the heroes’ paths winding to the Activation Chamber', 'width="1400" height="1400"')}</div>
+        <div class="inbox-list">${text(blocks, 'box_list')}</div>
+      </div>
+      ${learnLinks(s)}
+      <p class="center"><a href="/#board-game">Back to the board game</a></p>
+    </div>
+  </section>`;
+}
+
+function coloring(s: Settings, blocks: Blocks): Safe {
+  return html`<section class="coloring-band">
+    <div class="wrap narrow">
+      ${secHead('For the kids', line(blocks, 'coloring_title'), '', 'h2')}
+      <div class="coloring">
+        <a href="${s.coloring_pdf}" target="_blank" rel="noopener" aria-label="Download the coloring page (PDF)">${img('/img/coloring-bw.webp', 'Thermos on his bike, black and white coloring page', 'width="900" height="900"')}</a>
+        <a href="${s.coloring_pdf}" target="_blank" rel="noopener" aria-label="Download the coloring page (PDF)">${img('/img/coloring-color.webp', 'Thermos on his bike, colored in', 'width="900" height="900"')}</a>
+      </div>
+      <div class="sponsor-copy small-copy">${text(blocks, 'coloring_body')}</div>
+    </div>
+  </section>`;
+}
+
 export function story(s: Settings, blocks: Blocks): Safe {
   const pages = [1, 2, 3, 4, 5, 6, 7, 8];
   return html`<section class="page story">
@@ -365,12 +402,13 @@ export function story(s: Settings, blocks: Blocks): Safe {
     <div class="wrap story-pages">
       ${pages.map((n) => html`<figure>${img(`/img/story-${n}.webp`, `Coffee Time story, page ${n}`, `width="1400" height="1789" ${n === 1 ? 'loading="eager"' : ''}`)}</figure>`)}
     </div>
+    ${coloring(s, blocks)}
   </section>`;
 }
 
 export function arcade(s: Settings, blocks: Blocks, games: Game[]): Safe {
   return html`<section class="page arcade">
-    ${orb('warp', 'r', 10, 3)}
+    ${orb('warp', 'r', 10, 3, 1)}
     <div class="wrap narrow">
       ${secHead('Video games', line(blocks, 'arcade_title'), '', 'h1')}
       ${video(s.trailer_video, s.trailer_poster, 'Coffee Time Adventures trailer')}
@@ -383,7 +421,7 @@ export function arcade(s: Settings, blocks: Blocks, games: Game[]): Safe {
 
 export function news(s: Settings, blocks: Blocks, items: News[]): Safe {
   return html`<section class="page news">
-    ${orb('earth', 'l', 5, 2)}
+    ${orb('earth', 'l', 5, 2, 3)}
     <div class="wrap narrow">
       ${secHead('Latest', line(blocks, 'news_title'), '', 'h1')}
       ${items.map((n) => {
@@ -423,7 +461,7 @@ export function tutorials(s: Settings, blocks: Blocks, items: Tutorial[]): Safe 
 
 export function faq(s: Settings, blocks: Blocks, items: Faq[]): Safe {
   return html`<section class="page faq">
-    ${orb('sugar', 'r', 5, 2)}
+    ${orb('sugar', 'r', 5, 2, 1)}
     <div class="wrap narrow">
       ${secHead('The board game', line(blocks, 'faq_title'), '', 'h1')}
       <div class="intro">${text(blocks, 'faq_intro')}${learnLinks(s, 'faq')}</div>

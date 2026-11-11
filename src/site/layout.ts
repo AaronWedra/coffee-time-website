@@ -74,7 +74,7 @@ export function layout(s: Settings, meta: PageMeta, body: Child, opts: { nonce: 
 <link rel="apple-touch-icon" href="/apple-touch-icon.png">
 <link rel="preload" href="/fonts/anton.woff" as="font" type="font/woff" crossorigin>
 <link rel="preload" href="/fonts/jost.woff" as="font" type="font/woff" crossorigin>
-<link rel="stylesheet" href="/site.css?v=9">
+<link rel="stylesheet" href="/site.css?v=10">
 ${ga(s.ga4_id, opts.nonce)}
 ${meta.jsonld ? raw(`<script type="application/ld+json" nonce="${opts.nonce}">${JSON.stringify(meta.jsonld).replace(/</g, '\\u003c')}</script>`) : ''}
 </head>
@@ -111,7 +111,8 @@ export function img(src: string, alt: string, extra = ''): Safe {
 // A floating orb from the board's item cards, parked at the edge of a section like on the Wix site.
 // side: l | r. y: 0..90 in steps of 10 (percent down the section). size: 1 small .. 4 large.
 // Classes rather than inline styles because the CSP has no 'unsafe-inline' for styles.
-export function orb(name: string, side: 'l' | 'r', y: number, size = 2): Safe {
+export function orb(name: string, side: 'l' | 'r', y: number, size = 2, dx = 0): Safe {
   const yy = Math.min(90, Math.max(0, Math.round(y / 10) * 10));
-  return raw(`<img class="orb orb-${side} orb-y${yy} orb-s${size}" src="/img/orb-${esc(name)}.webp" alt="" aria-hidden="true" loading="lazy" decoding="async" width="420" height="420">`);
+  const xx = Math.min(8, Math.max(-8, Math.round(dx)));
+  return raw(`<img class="orb orb-${side} orb-y${yy} orb-s${size} orb-x${xx < 0 ? 'n' + -xx : xx}" src="/img/orb-${esc(name)}.webp" alt="" aria-hidden="true" loading="lazy" decoding="async" width="420" height="420">`);
 }

@@ -71,9 +71,9 @@ def block(key, label, value, page="home", kind="text"):
     B.append((key, label, kind, value, page))
 
 
-block("cover_kicker", "Cover: small line above the headline", "Sold out. 1,000 of 1,000.", kind="line")
-block("cover_tagline", "Cover: headline", "Our board game sold out. Now we make video games.", kind="line")
-block("cover_note", "Cover: paragraph under the headline", "All 1,000 first-edition copies of the Coffee Time board game found a home, on family shelves and in coffee shops and game shops. Thank you! The story keeps going in video games: play the free Coffee Time Adventures demo, hit the arcade, or try our games in AR.")
+block("cover_kicker", "Cover: small line above the headline", "Delivered. 1,000 of 1,000.", kind="line")
+block("cover_tagline", "Cover: headline", "Our board game is delivered. Now we make video games.", kind="line")
+block("cover_note", "Cover: paragraph under the headline", "All 1,000 first-edition copies of the Coffee Time board game were delivered, to family shelves and in coffee shops and game shops. Thank you! The story keeps going in video games: play the free Coffee Time Adventures demo, hit the arcade, or try our games in AR.")
 block("games_title", "Games: heading", "The Video Games", kind="line")
 block("games_intro", "Games: paragraph", "We are a small team in Davis, California, and we make video games set in the Coffee Time universe. Play them free in your browser, on your phone or on your own table in AR.")
 block("arcade_2d_title", "Games: 2D arcade heading", "2D Arcade", kind="line")
@@ -131,6 +131,9 @@ block(
     "Purple Tree: paragraph",
     "a nonprofit organization in Davis, CA that employs people with disabilities to make and sell vegan baked goods at the Davis Farmers Market and other events, and brings people with and without disabilities together through music and art. Learn more about Purple Tree's work, and meet some of its employees, [here](https://www.youtube.com/watch?v=N3I5WNw7kmk).",
 )
+block("charity_programs", "Purple Tree: what they do", "**Baked goods with a purpose.** Vegan, wheat-free treats and organic tea, made and sold by Purple Tree's employees at the Davis Farmers Market every Saturday, 8 to 1.\n\n**A bicycle coffee cart** and a café at the UC Davis MIND Institute, Monday to Thursday, 8 to 2.\n\n**Music and art for everyone.** The Davis Hootenanny and Team Davis Singers bring people with and without disabilities together on stage.\n\nPurple Tree is where community truly means everyone.")
+block("delivered_title", "Delivered card: headline", "Thank you for helping every game find a home", kind="line")
+block("delivered_body", "Delivered card: paragraph", "We made 1,000 first edition games and every one has been delivered, many of them given away along the way. They now live on board game shelves and in coffee shops and game shops, waiting for friends to sit down and play. Thank you for playing, playtesting and carrying a copy home.")
 block("box_title", "What's in the box: headline", "What's in the Box?", kind="line")
 block(
     "box_list",
@@ -409,14 +412,14 @@ AR = "https://www.smartzgraphics.com/games/"
 games = [
     ("Rapid Refill", "2d", "GameMaker", "Help Thermos deliver fresh, hot coffee to coffee shops across the Five Worlds!", "For desktop only.", GX + "9kk8k1/rapid-refill/", "Play now", "/img/rapid-refill.webp"),
     ("Donut Dash", "2d", "GameMaker", "Collect enough donuts to feed the hungry pup-pups before they eat you!", "For desktop only.", GX + "fdz4p4/donut-dash/", "Play now", "/img/donut-dash.webp"),
-    ("Star Bugs", "2d", "GDevelop", "Star Bugs have invaded. Bop them before they get away.", "", "https://gd.games/aaronwedra/do-or-donut", "Play now", "/img/poster-star-bugs.webp"),
+    ("Star Bugs", "2d", "GDevelop", "Star Bugs have invaded. Bop them before they get away.", "", "https://gd.games/aaronwedra/do-or-donut", "Play now", "/img/game-star-bugs.webp"),
     ("Coffee Time Adventures", "3d", "Unreal Engine", "King Tea and Duchess are scheming. Little Miss Hot Shot must uncover their plot and save the Five Worlds.", "Free demo, in development.", DEMO, "Get the free demo", "/img/trailer-poster.webp"),
-    ("Star Bugs", "ar", "AR in your browser", "Fire sprinkle donuts from a licorice slingshot and stop the Star Bugs. One or two players at the same table.", "", AR + "star-bugs/", "Play in AR", "/img/poster-star-bugs.webp"),
-    ("Rapid Refill", "ar", "AR in your browser", "Deliver the coffee across your own table.", "", AR + "rapid-refill/", "Play in AR", "/img/rapid-refill.webp"),
-    ("Donut Dash", "ar", "AR in your browser", "Feed the pups their donuts, on your table.", "In development.", AR + "donut-dash/", "Play in AR", "/img/donut-dash.webp"),
-    ("Overtime", "online", "Online, with friends", "Plan your cards together, watch the fight, find the Roamer hiding on your team. Preview.", "", "/overtime/", "Play online", "/img/poster-overtime.webp"),
-    ("Rush Hour", "online", "Online, with friends", "Race King Tea's clock in real time. Preview.", "", "/rush/", "Play online", "/img/poster-rush-hour.webp"),
-    ("Coffee Time, as printed", "online", "Online, with friends", "The board game itself, on your phone. Make a room, send the code, play together.", "", "/play/", "Play online", "/img/poster-coffee-time-online.webp"),
+    ("Star Bugs", "ar", "AR in your browser", "Fire sprinkle donuts from a licorice slingshot and stop the Star Bugs. One or two players at the same table.", "", AR + "star-bugs/", "Play in AR", "/img/game-star-bugs.webp"),
+    ("Rapid Refill", "ar", "AR in your browser", "Deliver the coffee across your own table.", "", AR + "rapid-refill/", "Play in AR", "/img/game-rapid-refill-ar.webp"),
+    ("Donut Dash", "ar", "AR in your browser", "Feed the pups their donuts, on your table.", "In development.", AR + "donut-dash/", "Play in AR", "/img/game-donut-dash-ar.webp"),
+    ("Overtime", "online", "Online, with friends", "Plan your cards together, watch the fight, find the Roamer hiding on your team. Preview.", "", "/overtime/", "Play online", "/img/game-overtime.webp"),
+    ("Rush Hour", "online", "Online, with friends", "Race King Tea's clock in real time. Preview.", "", "/rush/", "Play online", "/img/game-rush-hour.webp"),
+    ("Coffee Time, as printed", "online", "Online, with friends", "The board game itself, on your phone. Make a room, send the code, play together.", "", "/play/", "Play online", "/img/game-coffee-time-online.webp"),
 ]
 for i, (t, k, e, b_, n, u, btn, img) in enumerate(games):
     ins("games", {"title": t, "kind": k, "engine": e, "blurb": b_, "note": n, "url": u, "button": btn, "image": img, "sort": i})
