@@ -141,3 +141,4 @@
 - 2026-11-11: Arcade games are three cards across, one per game, AR art leading, Play in AR and Play in 2D buttons. Italic sub-lines replaced with the body face. Shorter pair_sub (0029).
 - 2026-11-11: Realm of Time v2 background: clocks melt (turbulence warp), breathe bigger and smaller, ripple rings outward, hands fan into rainbow trails, colours cycle.
 - 2026-11-11: Orders sections (board game page and /order) use the foam effect as their background, purple type on it; foam script handles several canvases and keeps bubble size constant on tall sections.
+- 2026-11-11: Story: white cartoon glove on the Click to turn button; coloring band uses the foam background. Music page has no orbs.
