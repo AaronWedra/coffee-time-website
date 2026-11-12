@@ -1148,3 +1148,7 @@ main > section + section, main > section > div.hero, main > section > .reviews, 
 @media (max-width: 1500px) { .orb-burst { display: none; } }
 @media (prefers-reduced-motion: reduce) { .orb-burst .orb { transition: none !important; } }
 .orb-burst .orb { --ow: clamp(100px, 7.5vw, 150px); top: calc(var(--i) * 37%) !important; }
+
+/* board game top: out-of-stock notice */
+.soldout { display: inline-flex; align-items: center; gap: .7em; margin: 0 0 1em; font-size: 1rem; color: #fff; scroll-margin-top: 110px; }
+.soldout b { font-family: var(--display); font-weight: 400; text-transform: uppercase; letter-spacing: .12em; font-size: 1.05rem; background: #ff4f7b; color: #fff; border-radius: 999px; padding: .25em .9em; }

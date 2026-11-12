@@ -185,7 +185,7 @@ export function home(s: Settings, blocks: Blocks, flags: { joined?: string }, da
     <div>
       <header class="hs-head"><h2>${line(blocks, 'zone_bg_title')}</h2><p>${line(blocks, 'zone_bg_sub')}</p></header>
       <ul class="hs-quotes">${quotes.map((r) => html`<li>${stars()}<blockquote>${raw(inline(r.quote))}</blockquote><cite>${r.name}</cite></li>`)}</ul>
-      <p class="hs-btns"><a class="btn btn-go" href="/board-game#rules">Learn to play</a><a class="btn btn-go btn-ghost" href="/board-game#order">Order a copy</a><a class="hs-more" href="/board-game#reviews">All reviews</a></p>
+      <p class="hs-btns"><a class="btn btn-go" href="/board-game#rules">Learn to play</a>${s.orders_open === '0' ? '' : html`<a class="btn btn-go btn-ghost" href="/board-game#order">Order a copy</a>`}<a class="hs-more" href="/board-game#reviews">All reviews</a></p>
     </div>
   </div>
 </section>
@@ -229,6 +229,7 @@ export function boardGame(s: Settings, blocks: Blocks, reviews: Review[], flags:
   ${s.orders_open === '0' ? html`<div class="wrap dv-first">${orderForm(s, blocks, flags.order)}</div>` : ''}
   <div class="wrap bg-top">
     <div class="bg-top-copy">
+      ${s.orders_open === '0' ? html`<p class="soldout" id="order"><b>Sold out</b> First edition, all 1,000 delivered</p>` : ''}
       ${secHead('Own the board game?', line(blocks, 'zone_bg_title'), line(blocks, 'zone_bg_sub'), 'h1')}
       <p class="bg-top-links"><a href="/video-tutorials">Video tutorials</a><a href="/faq">FAQ</a><a href="/story">The story</a><a href="#reviews">Reviews</a></p>
     </div>
