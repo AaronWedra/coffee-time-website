@@ -64,7 +64,7 @@ INSERT OR IGNORE INTO blocks(key,label,kind,value,page,sort) VALUES('orders_body
 
 **Price $39.99.** If you would like to order Coffee Time contact our sales team at [playcoffeetime@yahoo.com](mailto:playcoffeetime@yahoo.com), or send us your details with the form below. Provide your first and last name, number of copies desired, address and phone number.','home',36);
 INSERT OR IGNORE INTO blocks(key,label,kind,value,page,sort) VALUES('charity_title','Purple Tree: headline','line','5% of your purchase will go to [Purple Tree Café](https://www.purpletreecafe.org/)','home',37);
-INSERT OR IGNORE INTO blocks(key,label,kind,value,page,sort) VALUES('charity_body','Purple Tree: paragraph','text','A Davis nonprofit that employs people with disabilities to make and sell vegan baked goods. [Meet the team](https://www.youtube.com/watch?v=N3I5WNw7kmk).','home',38);
+INSERT OR IGNORE INTO blocks(key,label,kind,value,page,sort) VALUES('charity_body','Purple Tree: paragraph','text','A Davis nonprofit that employs people with disabilities to make and sell vegan baked goods.','home',38);
 INSERT OR IGNORE INTO blocks(key,label,kind,value,page,sort) VALUES('charity_programs','Purple Tree: what they do','text','**Farmers Market** Vegan baked goods and organic tea. Saturdays, 8 to 1.
 
 **Coffee cart and café** At the UC Davis MIND Institute. Monday to Thursday, 8 to 2.

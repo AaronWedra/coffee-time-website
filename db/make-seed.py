@@ -134,7 +134,7 @@ block("charity_title", "Purple Tree: headline", "5% of your purchase will go to 
 block(
     "charity_body",
     "Purple Tree: paragraph",
-    "A Davis nonprofit that employs people with disabilities to make and sell vegan baked goods. [Meet the team](https://www.youtube.com/watch?v=N3I5WNw7kmk).",
+    "A Davis nonprofit that employs people with disabilities to make and sell vegan baked goods.",
 )
 block("charity_programs", "Purple Tree: what they do", "**Farmers Market** Vegan baked goods and organic tea. Saturdays, 8 to 1.\n\n**Coffee cart and café** At the UC Davis MIND Institute. Monday to Thursday, 8 to 2.\n\n**Music and art** Davis Hootenanny and Team Davis Singers perform together on stage.")
 block("delivered_title", "Delivered card: headline", "Thank you for helping every game find a home", kind="line")
