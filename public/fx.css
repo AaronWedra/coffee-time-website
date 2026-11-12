@@ -1180,3 +1180,6 @@ main > section + section, main > section > div.hero, main > section > .reviews, 
 /* going back in is quick and has no wait */
 .flipwrap:not(:has(.fl1:checked)) .orb-burst .orb { transition-duration: .35s !important; transition-delay: 0s !important; }
 .flipwrap:has(.fl1:checked) .orb-burst .orb { transition: translate 1.5s cubic-bezier(.34, .9, .4, 1.1), scale 1.5s cubic-bezier(.5, 0, .4, 1.1), rotate 1.6s cubic-bezier(.2, .8, .2, 1), opacity .2s, filter 1.3s !important; }
+/* the header already carries the rainbow line: no second one on the first band of a page; the 1,000 band gets its line underneath */
+.dv-first .delivered { border-top: 0 !important; border-bottom: 3px solid transparent !important; border-image: linear-gradient(90deg, #8e3cc0, #ff8a3d 40%, #fff245 70%, #78b92f) 1 !important; }
+main > section:first-child > :first-child:not(.dv-first) { border-top: 0 !important; }
