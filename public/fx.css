@@ -1152,3 +1152,12 @@ main > section + section, main > section > div.hero, main > section > .reviews, 
 /* board game top: out-of-stock notice */
 .soldout { display: inline-flex; align-items: center; gap: .7em; margin: 0 0 1em; font-size: 1rem; color: #fff; scroll-margin-top: 110px; }
 .soldout b { font-family: var(--display); font-weight: 400; text-transform: uppercase; letter-spacing: .12em; font-size: 1.05rem; background: #ff4f7b; color: #fff; border-radius: 999px; padding: .25em .9em; }
+
+/* board game page: Learn to play on white (Aaron, 2026-11-12) */
+.hero { background: #fff !important; }
+.hero .hero-title { color: #3b0f6e !important; -webkit-text-fill-color: #3b0f6e; background: none !important; text-shadow: none !important; }
+.hero .prose26, .hero .prose26 > p:first-child, .hero .prose26 strong { color: #2a1a44 !important; }
+.hero .prose26 a { color: #6a1fb0 !important; }
+.hero .learn a { border-color: #3b0f6e !important; color: #3b0f6e !important; }
+.hero .learn a:hover { background: #3b0f6e !important; color: #fff !important; }
+.hero .hero-ship img { filter: drop-shadow(0 6px 10px rgba(59, 15, 110, .35)); }
