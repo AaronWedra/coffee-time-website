@@ -71,7 +71,7 @@ def block(key, label, value, page="home", kind="text"):
     B.append((key, label, kind, value, page))
 
 
-block("cover_kicker", "Header: small tag beside the menu", "Free right now", kind="line")
+block("cover_kicker", "Header: small tag beside the menu", "Free arcade", kind="line")
 block("cover_tagline", "Cover: headline", "Play Coffee Time.", kind="line")
 block("cover_note", "Cover: paragraph under the headline", "Free video games in your browser, on your phone and on your table in AR.")
 block("games_title", "Games: heading", "The Video Games", kind="line")

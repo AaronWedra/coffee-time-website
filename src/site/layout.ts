@@ -73,7 +73,7 @@ export function layout(s: Settings, meta: PageMeta, body: Child, opts: { nonce: 
 <link rel="preload" href="/fonts/anton.woff" as="font" type="font/woff" crossorigin>
 <link rel="preload" href="/fonts/jost.woff" as="font" type="font/woff" crossorigin>
 <link rel="stylesheet" href="/site.css?v=13">
-<link rel="stylesheet" href="/fx.css?v=118">
+<link rel="stylesheet" href="/fx.css?v=119">
 ${ga(s.ga4_id, opts.nonce)}
 ${meta.jsonld ? raw(`<script type="application/ld+json" nonce="${opts.nonce}">${JSON.stringify(meta.jsonld).replace(/</g, '\\u003c')}</script>`) : ''}
 </head>
@@ -84,7 +84,7 @@ ${meta.jsonld ? raw(`<script type="application/ld+json" nonce="${opts.nonce}">${
   <div class="wrap head-row">
     <a class="brand" href="/" aria-label="${s.site_name}, home"><img src="/img/logo-purple.webp" alt="Coffee Time" width="1200" height="195"></a>
     <nav class="nav" aria-label="Main"><ul>${navItems}</ul></nav>
-    ${opts.kicker ? html`<p class="head-tag"><span class="dot" aria-hidden="true"></span>${opts.kicker}</p>` : ''}
+    ${opts.kicker ? html`<a class="head-tag" href="/arcade"><span class="dot" aria-hidden="true"></span>${opts.kicker}</a>` : ''}
     <details class="nav-m">
       <summary aria-label="Menu"><span></span><span></span><span></span></summary>
       <ul>${navItems}${moreItems}</ul>

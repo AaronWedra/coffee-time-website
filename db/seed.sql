@@ -22,7 +22,7 @@ INSERT OR IGNORE INTO settings(key,value) VALUES('ga4_id','');
 INSERT OR IGNORE INTO settings(key,value) VALUES('notify_enabled','1');
 INSERT OR IGNORE INTO settings(key,value) VALUES('notify_email','playcoffeetime@yahoo.com');
 INSERT OR IGNORE INTO settings(key,value) VALUES('seo_description','Coffee Time is the board game where coffee heroes race King Tea through the Five Worlds. 2 to 6 players, ages 8 and up, made in Davis, California. Rules videos, FAQ, music, the story and how to order.');
-INSERT OR IGNORE INTO blocks(key,label,kind,value,page,sort) VALUES('cover_kicker','Header: small tag beside the menu','line','Free right now','home',0);
+INSERT OR IGNORE INTO blocks(key,label,kind,value,page,sort) VALUES('cover_kicker','Header: small tag beside the menu','line','Free arcade','home',0);
 INSERT OR IGNORE INTO blocks(key,label,kind,value,page,sort) VALUES('cover_tagline','Cover: headline','line','Play Coffee Time.','home',1);
 INSERT OR IGNORE INTO blocks(key,label,kind,value,page,sort) VALUES('cover_note','Cover: paragraph under the headline','text','Free video games in your browser, on your phone and on your table in AR.','home',2);
 INSERT OR IGNORE INTO blocks(key,label,kind,value,page,sort) VALUES('games_title','Games: heading','line','The Video Games','home',3);

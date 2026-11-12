@@ -1183,3 +1183,4 @@ main > section + section, main > section > div.hero, main > section > .reviews, 
 /* the header already carries the rainbow line: no second one on the first band of a page; the 1,000 band gets its line underneath */
 .dv-first .delivered { border-top: 0 !important; border-bottom: 3px solid transparent !important; border-image: linear-gradient(90deg, #8e3cc0, #ff8a3d 40%, #fff245 70%, #78b92f) 1 !important; }
 main > section:first-child > :first-child:not(.dv-first) { border-top: 0 !important; }
+.head-tag { text-decoration: none; } .head-tag:hover { background: var(--purple); color: #fff; }
