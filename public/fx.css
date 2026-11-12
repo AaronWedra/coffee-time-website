@@ -1092,3 +1092,8 @@ main > section + section, main > section > div.hero, main > section > .reviews, 
 /* cover: one quiet button */
 .cover-btns .btn-ghost { background: transparent !important; color: #fff !important; border: 2px solid #fff !important; box-shadow: none !important; padding: .5em 1.5em !important; }
 .cover-btns .btn-ghost:hover { background: rgba(255, 255, 255, .16) !important; }
+/* SoundCloud drops the artwork when its player gets narrow: give the home players more width and the cards less padding */
+.track { padding: 5px 5px 10px !important; }
+.hs-music > .wrap { width: min(1440px, 100% - 2 * var(--gutter)) !important; }
+.hs-music .tracks { gap: 16px !important; grid-template-columns: repeat(3, minmax(0, 1fr)) !important; padding: 0 !important; }
+@media (max-width: 1100px) { .hs-music .tracks { grid-template-columns: 1fr !important; } }
