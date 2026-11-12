@@ -1125,3 +1125,12 @@ main > section + section, main > section > div.hero, main > section > .reviews, 
 .hs-music .hs-head h2 { color: #3b0f6e !important; text-shadow: none !important; }
 .hs-music .hs-head p { color: #2a1a44 !important; text-shadow: none !important; opacity: 1; }
 .hs-music .hs-head p a, .hs-music .hs-more { color: #6a1fb0 !important; }
+
+/* delivered band, middle weight: the number, the headline and the short story. No buttons. */
+.delivered { display: grid !important; grid-template-columns: auto minmax(0, 1fr); justify-content: center; align-items: center; column-gap: clamp(18px, 3vw, 40px); row-gap: 2px; padding-top: clamp(18px, 2.4vw, 30px) !important; padding-bottom: clamp(18px, 2.4vw, 30px) !important; }
+.delivered .dv-big { grid-column: 1 !important; grid-row: 1 / span 2 !important; font-size: clamp(2.8rem, 5.5vw, 4.6rem) !important; }
+.delivered h3 { grid-column: 2 !important; grid-row: 1 !important; align-self: end; font-size: clamp(1.15rem, 1.9vw, 1.6rem) !important; }
+.delivered .dv-copy { display: block !important; grid-column: 2 !important; grid-row: 2 !important; align-self: start; max-width: 80ch !important; font-size: .98rem !important; line-height: 1.5; margin: 0 !important; }
+.delivered .dv-copy p { margin: 0; }
+.delivered .dv-cta { display: none !important; }
+@media (max-width: 700px) { .delivered { grid-template-columns: 1fr; text-align: center !important; } .delivered .dv-big, .delivered h3, .delivered .dv-copy { grid-column: 1 !important; grid-row: auto !important; } }
