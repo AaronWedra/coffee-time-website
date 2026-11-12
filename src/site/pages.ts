@@ -168,7 +168,7 @@ export function home(s: Settings, blocks: Blocks, flags: { joined?: string }, da
 </section>
 
 <section class="hs hs-games" aria-label="Video games">
-  <img class="hs-mascot" src="/img/cubey-gamer-3.webp" alt="Sir Cubey holding a game controller" width="820" height="673" loading="lazy">
+  <img class="hs-mascot" src="/img/cubey-gamer-4.webp" alt="Sir Cubey holding a game controller" width="820" height="762" loading="lazy">
   <div class="wrap">
     <header class="hs-head"><h2>${line(blocks, 'games_title')}</h2><p>${line(blocks, 'zone_vg_sub')}</p><a class="hs-more" href="/arcade">All games and AR</a></header>
     <ul class="hs-row">${play.map((g) => html`<li><a class="hs-game" href="${g.url}" ${ext(g.url)}>${g.image ? img(g.image, '', 'width="1000" height="625"') : ''}<b>${g.title}${g.kind === 'ar' ? html` <i>AR</i>` : ''}</b><span>${g.blurb}</span><em>${g.button || 'Play now'}</em></a></li>`)}</ul>
@@ -232,7 +232,7 @@ export function boardGame(s: Settings, blocks: Blocks, reviews: Review[], flags:
       ${secHead('Own the board game?', line(blocks, 'zone_bg_title'), line(blocks, 'zone_bg_sub'), 'h1')}
       <p class="bg-top-links"><a href="/video-tutorials">Video tutorials</a><a href="/faq">FAQ</a><a href="/story">The story</a><a href="#reviews">Reviews</a></p>
     </div>
-    <div class="bg-top-board">${img('/img/board.webp', 'The Coffee Time game board: five world clocks across the top and the coloured paths of the four heroes', 'width="1400" height="1400" loading="eager" fetchpriority="high"')}</div>
+    <div class="bg-top-box">${boxTilt()}</div>
   </div>
 
 <div class="hero" id="rules">
@@ -248,25 +248,7 @@ export function boardGame(s: Settings, blocks: Blocks, reviews: Review[], flags:
   </div>
 </div>
 
-<div class="orders" id="order">
-  <div class="wrap">
-    <div class="orders-split">
-      <div class="orders-text">
-        <div class="orders-head">
-          ${secHead('First edition', line(blocks, 'orders_title'))}
-          <p class="badge">${s.players} <span aria-hidden="true">&bull;</span> ${s.ages}</p>
-        </div>
-        <h3 class="orders-intro">${line(blocks, 'orders_intro')}</h3>
-        <div class="orders-copy prose26 cols">${text(blocks, 'orders_body')}</div>
-      </div>
-      <div class="orders-box">${boxTilt()}</div>
-    </div>
-
-
-
-    ${s.orders_open === '0' ? '' : orderForm(s, blocks, flags.order)}
-  </div>
-</div>
+${s.orders_open === '0' ? '' : html`<div class="orders" id="order"><div class="wrap">${orderForm(s, blocks, flags.order)}</div></div>`}
 
 <div class="reviews" id="reviews">
   <div class="wrap">
@@ -373,7 +355,7 @@ export function story(s: Settings, blocks: Blocks): Safe {
       <label class="pg back" for="fl${n}">${img(`/img/story-${n * 2}.webp`, `Coffee Time story, page ${n * 2}`, 'width="1400" height="1789"')}</label>
     </div>`;
   return html`<section class="page story">
-    ${orb('earth', 'l', 0, 1, 1)}${orb('ice', 'l', 30, 3, 1)}${orb('sugar', 'l', 70, 2, 3)}${orb('fire', 'r', 10, 2, 3)}${orb('warp', 'r', 40, 1, 1)}${orb('feather', 'r', 70, 3, 1)}
+    ${orb('earth', 'l', 10, 1, 1)}${orb('ice', 'l', 30, 3, 1)}${orb('sugar', 'l', 50, 2, 3)}${orb('fire', 'r', 10, 2, 3)}${orb('warp', 'r', 30, 1, 1)}${orb('feather', 'r', 50, 3, 1)}
     <div class="wrap narrow">
       ${secHead('The board game', line(blocks, 'story_title'), '', 'h1')}
       <div class="intro prose26">${text(blocks, 'story_intro')}</div>

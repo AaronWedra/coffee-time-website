@@ -1097,3 +1097,24 @@ main > section + section, main > section > div.hero, main > section > .reviews, 
 .hs-music > .wrap { width: min(1440px, 100% - 2 * var(--gutter)) !important; }
 .hs-music .tracks { gap: 16px !important; grid-template-columns: repeat(3, minmax(0, 1fr)) !important; padding: 0 !important; }
 @media (max-width: 1100px) { .hs-music .tracks { grid-template-columns: 1fr !important; } }
+
+/* board game top: spinning box on the right again, normal two-column layout */
+.bg-top { min-height: 0 !important; padding: clamp(30px, 4vw, 56px) 0 !important; }
+.bg-top-box .boxtilt { width: 100%; height: clamp(280px, 30vw, 420px); margin: 0; }
+
+/* delivered band: a slim announcement, purple not black */
+.delivered { background: linear-gradient(90deg, #4a148c, #2e0f63) !important; display: flex !important; flex-wrap: wrap; align-items: center; justify-content: center; gap: 6px 26px; padding-top: 14px !important; padding-bottom: 14px !important; text-align: left !important; }
+.delivered .dv-big { font-size: clamp(2rem, 3.4vw, 3rem) !important; margin: 0 !important; line-height: 1; }
+.delivered .dv-of { display: none; }
+.delivered h3 { font-size: clamp(1rem, 1.5vw, 1.3rem) !important; margin: 0 !important; }
+.delivered .dv-copy { display: none; }
+.delivered .dv-cta { margin: 0 !important; gap: 10px; }
+.delivered .dv-cta .btn { font-size: .8rem !important; padding: .35em 1em !important; box-shadow: none !important; }
+.delivered > * { grid-column: auto !important; grid-row: auto !important; }
+
+/* Purple Tree programs: balanced lines and a purple icon per point */
+.pt-programs p { text-wrap: balance; position: relative; padding-left: 3.2em; }
+.pt-programs p::before { position: absolute; left: 0; top: .05em; font-size: 2.1em; line-height: 1; filter: grayscale(1) sepia(1) hue-rotate(220deg) saturate(5) brightness(.75); }
+.pt-programs p:nth-child(1)::before { content: '\1F9C1'; }
+.pt-programs p:nth-child(2)::before { content: '\2615'; }
+.pt-programs p:nth-child(3)::before { content: '\1F3B5'; }
