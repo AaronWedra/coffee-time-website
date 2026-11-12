@@ -1259,3 +1259,48 @@ main > section:first-child > :first-child:not(.dv-first) { border-top: 0 !import
   .pt-programs p::before { font-size: 1.9em; }
 }
 @media (max-width: 860px) { .pt-kicker { font-size: .78rem !important; margin: 4px 0 .4em !important; } }
+
+/* team: place line in orange, not red */
+.creators h3 em { color: #e8771f !important; }
+
+/* ---- phones (2026-11-12 pass). The Board Game page is CENTRED top to bottom on a phone. */
+@media (max-width: 700px) {
+  /* 1,000 band: one column, air between the number, headline and story */
+  .delivered { grid-template-columns: 1fr !important; text-align: center !important; row-gap: 8px !important; padding-top: 22px !important; padding-bottom: 22px !important; }
+  .delivered .dv-big, .delivered h3, .delivered .dv-copy { grid-column: 1 !important; grid-row: auto !important; }
+  .delivered .dv-big { margin: 0 0 4px !important; line-height: 1 !important; }
+  .delivered h3 { line-height: 1.15 !important; margin: 0 0 4px !important; }
+  .delivered .dv-copy { line-height: 1.5 !important; }
+  /* top: sold-out notice, title, links in a 2 x 2 grid, box close underneath */
+  .bg-top { gap: 6px !important; padding: 26px 0 18px !important; }
+  .bg-top-copy { padding: 0 !important; text-align: center; }
+  .soldout { display: flex !important; flex-direction: column; align-items: center; gap: .5em !important; margin: 0 0 1.1em !important; font-size: .92rem !important; }
+  .bg-top .sec-title { font-size: clamp(2.6rem, 13vw, 3.4rem) !important; }
+  .bg-top .sec-sub { margin-inline: auto !important; }
+  .bg-top-links { display: grid !important; grid-template-columns: auto auto; justify-content: center; gap: 12px 30px !important; margin-top: 1.1em !important; }
+  .bg-top-links a { font-size: 1rem !important; text-align: center; }
+  .bg-top-box .boxtilt { height: 200px !important; }
+  /* learn to play: centred, with room under the heading */
+  .hero { padding: 26px 0 30px !important; }
+  .hero .hero-grid { text-align: center !important; gap: 14px !important; }
+  .hero .hero-title { text-align: center !important; white-space: normal !important; margin: 0 0 .45em !important; line-height: 1.05 !important; }
+  .hero .prose26, .hero .prose26 p { text-align: center !important; }
+  .hero .learn { justify-content: center !important; }
+  /* Purple Tree: centred too, each point with its icon on top */
+  .pt-head { text-align: center !important; }
+  .pt-intro .btn { margin-inline: auto; }
+  .pt-programs p { padding-left: 0 !important; text-align: center; }
+  .pt-programs p::before { position: static !important; display: block; margin: 0 auto .15em; }
+  /* arcade + home captions: no single word left alone */
+  .trio-wide h2 { font-size: 1.35rem !important; text-wrap: balance; }
+  .cover-video figcaption { white-space: normal !important; }
+  .cover-video figcaption small { display: block; margin: .2em 0 0 !important; }
+  /* footer index: two balanced columns (Play + Coffee Time | Board game + Say hello) */
+  .foot-index { display: block !important; columns: 2; column-gap: 24px; }
+  .foot-index > div { break-inside: avoid; margin: 0 0 20px; }
+  .foot-index > div:nth-child(3) { break-before: column; }
+  .foot-logo { justify-self: center; } .foot-credit { text-align: center; }
+}
+.nw { white-space: nowrap; }
+.sec-sub, .hero .hero-title, .hs-head p, .cover-note { text-wrap: balance; }
+.hero .hero-title { text-shadow: none !important; filter: none !important; }

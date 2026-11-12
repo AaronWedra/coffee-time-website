@@ -73,7 +73,7 @@ export function layout(s: Settings, meta: PageMeta, body: Child, opts: { nonce: 
 <link rel="preload" href="/fonts/anton.woff" as="font" type="font/woff" crossorigin>
 <link rel="preload" href="/fonts/jost.woff" as="font" type="font/woff" crossorigin>
 <link rel="stylesheet" href="/site.css?v=13">
-<link rel="stylesheet" href="/fx.css?v=130">
+<link rel="stylesheet" href="/fx.css?v=132">
 ${ga(s.ga4_id, opts.nonce)}
 ${meta.jsonld ? raw(`<script type="application/ld+json" nonce="${opts.nonce}">${JSON.stringify(meta.jsonld).replace(/</g, '\\u003c')}</script>`) : ''}
 </head>
@@ -97,8 +97,8 @@ ${meta.jsonld ? raw(`<script type="application/ld+json" nonce="${opts.nonce}">${
     <a class="foot-logo" href="/" aria-label="Coffee Time, home"><img src="/img/logo-white.webp" alt="" width="1200" height="195" loading="lazy"></a>
     <nav class="foot-index" aria-label="Site index">
       <div><h2>Play</h2><ul><li><a href="/arcade">Video games</a></li><li><a href="/arcade#ar">AR games</a></li><li><a href="/music">Music</a></li></ul></div>
-      <div><h2>Board game</h2><ul><li><a href="/board-game">The board game</a></li><li><a href="/board-game#rules">Learn to play</a></li><li><a href="/video-tutorials">Tutorials</a></li><li><a href="/faq">FAQ</a></li><li><a href="/board-game#reviews">Reviews</a></li><li><a href="/story">Story</a></li></ul></div>
       <div><h2>Coffee Time</h2><ul><li><a href="/team">Team</a></li><li><a href="/news">News</a></li><li><a href="/#newsletter">Newsletter</a></li><li><a href="/privacy">Privacy</a></li></ul></div>
+      <div><h2>Board game</h2><ul><li><a href="/board-game">The board game</a></li><li><a href="/board-game#rules">Learn to play</a></li><li><a href="/video-tutorials">Tutorials</a></li><li><a href="/faq">FAQ</a></li><li><a href="/board-game#reviews">Reviews</a></li><li><a href="/story">Story</a></li></ul></div>
       <div><h2>Say hello</h2><ul><li><a href="mailto:${s.email}">${s.email}</a></li><li><a href="${s.facebook}" target="_blank" rel="noopener">Facebook</a></li></ul></div>
     </nav>
     <p class="foot-credit">Website Design by <a href="https://www.smartzgraphics.com" target="_blank" rel="noopener">www.SmartzGraphics.com</a></p>

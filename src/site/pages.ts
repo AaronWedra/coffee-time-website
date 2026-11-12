@@ -388,7 +388,7 @@ export function arcade(s: Settings, blocks: Blocks, games: Game[]): Safe {
       <ul class="trio">
         ${of('3d').map((g) => html`<li class="trio-card trio-wide">
           ${video(s.trailer_video, '/img/trailer-poster-roamer.webp', g.title + ' trailer')}
-          <h2>${g.title}: watch the trailer</h2>
+          <h2>${g.title} <span class="nw">trailer</span></h2>
         </li>
         <li class="trio-card">
           <a class="trio-art" href="${g.url}" ${ext(g.url)} tabindex="-1" aria-hidden="true">${img(s.trailer_poster, '', 'width="1280" height="720"')}</a>
@@ -475,7 +475,7 @@ export function faq(s: Settings, blocks: Blocks, items: Faq[]): Safe {
     <div class="wrap wide">
       ${secHead('The board game', line(blocks, 'faq_title'), '', 'h1')}
       <div class="intro prose26">${text(blocks, 'faq_intro')}${learnLinks(s, 'faq')}</div>
-      <div class="faq-list">${items.map((f) => html`<article class="qa"><h2><span>Q:</span> ${f.question}</h2><div class="answer">${richText(f.answer)}</div></article>`)}</div>
+      <div class="faq-list">${items.map((f) => html`<article class="qa"><h2>${f.question}</h2><div class="answer">${richText(f.answer)}</div></article>`)}</div>
     </div>
   </section>`;
 }
