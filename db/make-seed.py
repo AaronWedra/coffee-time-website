@@ -270,7 +270,7 @@ news = [
         "March 2023",
         "Coffee Time Creators Featured on Twitch by Davis Cards & Games",
         "Playing Coffee Time for the first time? Enjoy watching game creators, Aaron and Milly play the game with game professionals Melissa and Jake.",
-        "", "", "", "",
+        "/img/news-twitch-davis-cards.webp", "", "", "",
     ),
     (
         "March 2023",
