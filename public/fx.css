@@ -1212,3 +1212,6 @@ main > section:first-child > :first-child:not(.dv-first) { border-top: 0 !import
 .cover-video figcaption { margin-top: 16px !important; }
 @media (max-width: 860px) { .cover { padding-top: 34px !important; } .cover-video .video { outline-width: 1px; outline-offset: 3px; box-shadow: 0 12px 24px rgba(20, 0, 45, .5); } .cover-video figcaption { margin-top: 12px !important; } }
 .cover-video { background: none !important; }
+/* coloring band heading: flat purple, no shadow of any kind */
+.coloring-band .sec-title, .coloring-band .sec-kicker { text-shadow: none !important; filter: none !important; -webkit-text-stroke: 0 !important; animation: none !important; background: none !important; -webkit-text-fill-color: currentColor !important; }
+.coloring-band .sec-title { color: #3b0f6e !important; } .coloring-band .sec-kicker { color: #6a1fb0 !important; }
