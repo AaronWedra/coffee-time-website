@@ -1228,3 +1228,16 @@ main > section:first-child > :first-child:not(.dv-first) { border-top: 0 !import
   .coloring-band .prose26 { grid-column: 2 !important; grid-row: 2 !important; margin: 0 !important; }
   .coloring-band .prose26 p { font-size: 1rem !important; line-height: 1.5 !important; }
 }
+
+/* ---- footer: a full site index in four columns */
+.site-foot { padding: clamp(30px, 4vw, 52px) 0 clamp(20px, 3vw, 32px) !important; }
+.foot-row { justify-items: stretch !important; text-align: left !important; gap: clamp(20px, 3vw, 34px) !important; }
+.foot-logo { justify-self: start; }
+.foot-index { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 24px clamp(18px, 3vw, 44px); }
+.foot-index h2 { margin: 0 0 .6em; font-family: var(--display); font-weight: 400; text-transform: uppercase; letter-spacing: .12em; font-size: 1rem; color: var(--yellow); }
+.foot-index ul { list-style: none; margin: 0; padding: 0; display: grid; gap: .45em; }
+.foot-index a { color: #fff; text-decoration: none; font-size: 1rem; overflow-wrap: anywhere; }
+.foot-index a:hover { color: var(--yellow); text-decoration: underline; }
+.foot-credit { font-size: .85rem; opacity: .8; border-top: 1px solid rgba(255, 255, 255, .2); padding-top: 14px; }
+@media (max-width: 700px) { .foot-index { grid-template-columns: 1fr 1fr; } }
+@media (max-width: 700px) { .foot-index a[href^="mailto"] { font-size: .82rem; overflow-wrap: normal; white-space: nowrap; } }
