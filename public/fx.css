@@ -1134,3 +1134,17 @@ main > section + section, main > section > div.hero, main > section > .reviews, 
 .delivered .dv-copy p { margin: 0; }
 .delivered .dv-cta { display: none !important; }
 @media (max-width: 700px) { .delivered { grid-template-columns: 1fr; text-align: center !important; } .delivered .dv-big, .delivered h3, .delivered .dv-copy { grid-column: 1 !important; grid-row: auto !important; } }
+
+/* ---- story: the six orbs are hidden inside the book and burst out to both sides when it is opened.
+   They sit in two even columns in the page margins (three a side, same size, same gaps). */
+.orb-burst { position: absolute; inset: 0; pointer-events: none; }
+.orb-burst .orb { --ow: clamp(110px, 9vw, 170px); width: var(--ow) !important; top: calc(var(--i) * 30% + 6%) !important; opacity: 0; scale: .15; pointer-events: none;
+  transition: translate 1s cubic-bezier(.2, 1.35, .35, 1), scale 1s cubic-bezier(.2, 1.35, .35, 1), opacity .35s, rotate .6s !important; transition-delay: calc(var(--i) * .12s) !important; display: block !important; }
+.orb-burst .orb:nth-child(3n+1) { --i: 0; } .orb-burst .orb:nth-child(3n+2) { --i: 1; } .orb-burst .orb:nth-child(3n) { --i: 2; }
+.orb-burst .orb-l { left: calc(50% - 50vw + (50vw - 590px - var(--ow)) / 2) !important; right: auto !important; translate: 40vw 0; }
+.orb-burst .orb-r { right: calc(50% - 50vw + (50vw - 590px - var(--ow)) / 2) !important; left: auto !important; translate: -40vw 0; }
+.flipwrap:has(.fl1:checked) .orb-burst .orb { opacity: 1; scale: 1; translate: 0 0; pointer-events: auto; }
+.flipwrap:has(.fl1:checked) .orb-burst .orb:hover { scale: 1.25; translate: 0 -18px; transition-delay: 0s !important; }
+@media (max-width: 1500px) { .orb-burst { display: none; } }
+@media (prefers-reduced-motion: reduce) { .orb-burst .orb { transition: none !important; } }
+.orb-burst .orb { --ow: clamp(100px, 7.5vw, 150px); top: calc(var(--i) * 37%) !important; }

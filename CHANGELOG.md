@@ -162,3 +162,4 @@
 - 2026-11-12: Header tag 'Free right now' (block cover_kicker, 0031) where the Play free button was; cover button is a quiet white-outline 'Arcade'.
 - 2026-11-12: Board game page: spinning box in the top section, Orders section removed (order form still appears when orders are open), delivered band is a slim purple announcement, Purple Tree points get icons. Sir Cubey redrawn by ChatGPT holding a controller. Story orbs repositioned.
 - 2026-11-12: Home music strip on white. News: Twitch story shows the Davis Cards & Games stream graphic (0032).
+- 2026-11-12: Story: the six orbs start hidden and burst out to both sides when the book is opened; evenly spaced, same size.

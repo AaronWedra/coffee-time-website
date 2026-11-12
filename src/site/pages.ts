@@ -355,7 +355,7 @@ export function story(s: Settings, blocks: Blocks): Safe {
       <label class="pg back" for="fl${n}">${img(`/img/story-${n * 2}.webp`, `Coffee Time story, page ${n * 2}`, 'width="1400" height="1789"')}</label>
     </div>`;
   return html`<section class="page story">
-    ${orb('earth', 'l', 10, 1, 1)}${orb('ice', 'l', 30, 3, 1)}${orb('sugar', 'l', 50, 2, 3)}${orb('fire', 'r', 10, 2, 3)}${orb('warp', 'r', 30, 1, 1)}${orb('feather', 'r', 50, 3, 1)}
+    
     <div class="wrap narrow">
       ${secHead('The board game', line(blocks, 'story_title'), '', 'h1')}
       <div class="intro prose26">${text(blocks, 'story_intro')}</div>
@@ -365,6 +365,7 @@ export function story(s: Settings, blocks: Blocks): Safe {
         <input type="checkbox" id="fl1" class="fl1" aria-label="Turn page 1"><input type="checkbox" id="fl2" class="fl2" aria-label="Turn page 3"><input type="checkbox" id="fl3" class="fl3" aria-label="Turn page 5"><input type="checkbox" id="fl4" class="fl4" aria-label="Turn page 7">
         ${[1, 2, 3, 4].map(leaf)}
       </div>
+      <div class="orb-burst" aria-hidden="true">${orb('earth', 'l', 10, 2, 1)}${orb('ice', 'l', 30, 2, 1)}${orb('sugar', 'l', 50, 2, 3)}${orb('fire', 'r', 10, 2, 3)}${orb('warp', 'r', 30, 2, 1)}${orb('feather', 'r', 50, 2, 1)}</div>
       <label class="flip-cta" for="fl1"><img class="glove" src="/img/glove-point.webp" alt="" width="360" height="222">Click to turn</label>
     </div>
     <div class="wrap story-pages mobile-only">
