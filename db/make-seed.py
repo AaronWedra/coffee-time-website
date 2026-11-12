@@ -418,7 +418,7 @@ games = [
     ("Rapid Refill", "2d", "GameMaker", "Help Thermos deliver fresh, hot coffee to coffee shops across the Five Worlds!", "For desktop only.", GX + "9kk8k1/rapid-refill/", "Play now", "/img/rapid-refill.webp"),
     ("Donut Dash", "2d", "GameMaker", "Collect enough donuts to feed the hungry pup-pups before they eat you!", "For desktop only.", GX + "fdz4p4/donut-dash/", "Play now", "/img/donut-dash.webp"),
     ("Star Bugs", "2d", "GDevelop", "Star Bugs have invaded. Bop them before they get away.", "", "https://gd.games/aaronwedra/do-or-donut", "Play now", "/img/game-star-bugs-2d-land2.webp"),
-    ("Coffee Time Adventures", "3d", "Unreal Engine", "King Tea and Duchess are scheming. Little Miss Hot Shot must uncover their plot and save the Five Worlds.", "Free demo, in development.", DEMO, "Get the free demo", "/img/trailer-poster.webp"),
+    ("Coffee Time Adventures", "3d", "Unreal Engine", "King Tea and Duchess are scheming. Little Miss Hot Shot must uncover their plot and save the Five Worlds.", "Free demo, in development.", DEMO, "Get the free demo", "/img/game-cta-12.webp"),
     ("Star Bugs", "ar", "AR in your browser", "Fire sprinkle donuts from a licorice slingshot and stop the Star Bugs. One or two players at the same table.", "", AR + "star-bugs/", "Play in AR", "/img/game-star-bugs.webp"),
     ("Rapid Refill", "ar", "AR in your browser", "Deliver the coffee across your own table.", "", AR + "rapid-refill/", "Play in AR", "/img/game-rapid-refill-ar.webp"),
     ("Donut Dash", "ar", "AR in your browser", "Feed the pups their donuts, on your table.", "In development.", AR + "donut-dash/", "Play in AR", "/img/game-donut-dash-ar.webp"),
