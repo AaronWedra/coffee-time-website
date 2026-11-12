@@ -1215,3 +1215,16 @@ main > section:first-child > :first-child:not(.dv-first) { border-top: 0 !import
 /* coloring band heading: flat purple, no shadow of any kind */
 .coloring-band .sec-title, .coloring-band .sec-kicker { text-shadow: none !important; filter: none !important; -webkit-text-stroke: 0 !important; animation: none !important; background: none !important; -webkit-text-fill-color: currentColor !important; }
 .coloring-band .sec-title { color: #3b0f6e !important; } .coloring-band .sec-kicker { color: #6a1fb0 !important; }
+
+/* coloring band on phones: heading across the top, then the two pictures stacked on the left with the text beside them */
+@media (max-width: 700px) {
+  .coloring-band { padding: 22px 0 26px !important; }
+  .coloring-band > .wrap { grid-template-columns: 112px minmax(0, 1fr) !important; column-gap: 16px !important; row-gap: 14px; align-items: start !important; }
+  .coloring-band .sec-head { grid-column: 1 / -1 !important; grid-row: 1 !important; }
+  .coloring-band .sec-kicker { font-size: .8rem !important; letter-spacing: .18em !important; margin: 0 0 .35em !important; }
+  .coloring-band .sec-title { font-size: 1.45rem !important; line-height: 1.12 !important; text-wrap: balance; }
+  .coloring-band .coloring { grid-column: 1 !important; grid-row: 2 !important; flex-direction: column; gap: 10px !important; }
+  .coloring-band .coloring img { width: 112px !important; }
+  .coloring-band .prose26 { grid-column: 2 !important; grid-row: 2 !important; margin: 0 !important; }
+  .coloring-band .prose26 p { font-size: 1rem !important; line-height: 1.5 !important; }
+}
