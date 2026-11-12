@@ -164,3 +164,4 @@
 - 2026-11-12: Home music strip on white. News: Twitch story shows the Davis Cards & Games stream graphic (0032).
 - 2026-11-12: Story: the six orbs start hidden and burst out to both sides when the book is opened; evenly spaced, same size.
 - 2026-11-12: Board game top shows a Sold out notice while orders are closed; home 'Order a copy' button hidden while closed.
+- 2026-11-12: Phone layout of the home cover: one-line headline, centred Arcade button, smaller trailer, stats as a 2 x 2 grid with hairlines; trailer frame goes round the video only.
