@@ -249,17 +249,6 @@ export function boardGame(s: Settings, blocks: Blocks, reviews: Review[], flags:
   </div>
 </div>
 
-<div class="reviews" id="reviews">
-  <div class="wrap">
-    ${secHead('What players say', line(blocks, 'reviews_title'))}
-  </div>
-  <div class="rv-scroll" tabindex="0" aria-label="Reviews, scroll sideways for more">
-    <ul class="rv-track">
-      ${[0, 1].map((copy) => reviews.map((r, i) => html`<li class="review c${(i % 6) + 1}" ${copy ? raw('aria-hidden="true"') : ''}>${stars()}<blockquote>${raw(inline(r.quote))}</blockquote><h3>${r.name}<small>${r.role}</small></h3></li>`))}
-    </ul>
-  </div>
-</div>
-
 <div class="orders" id="order">
   <div class="wrap">
     <div class="orders-split">
@@ -274,12 +263,24 @@ export function boardGame(s: Settings, blocks: Blocks, reviews: Review[], flags:
       <div class="orders-box">${boxTilt()}</div>
     </div>
 
-    ${purpleTree(s, blocks)}
 
 
     ${s.orders_open === '0' ? '' : orderForm(s, blocks, flags.order)}
   </div>
 </div>
+
+<div class="reviews" id="reviews">
+  <div class="wrap">
+    ${secHead('What players say', line(blocks, 'reviews_title'))}
+  </div>
+  <div class="rv-scroll" tabindex="0" aria-label="Reviews, scroll sideways for more">
+    <ul class="rv-track">
+      ${[0, 1].map((copy) => reviews.map((r, i) => html`<li class="review c${(i % 6) + 1}" ${copy ? raw('aria-hidden="true"') : ''}>${stars()}<blockquote>${raw(inline(r.quote))}</blockquote><h3>${r.name}<small>${r.role}</small></h3></li>`))}
+    </ul>
+  </div>
+</div>
+
+<div class="pt-band">${purpleTree(s, blocks)}</div>
 </section>
 `;
 }
@@ -373,7 +374,7 @@ export function story(s: Settings, blocks: Blocks): Safe {
       <label class="pg back" for="fl${n}">${img(`/img/story-${n * 2}.webp`, `Coffee Time story, page ${n * 2}`, 'width="1400" height="1789"')}</label>
     </div>`;
   return html`<section class="page story">
-    ${orb('fire', 'r', 10, 2, 3)}${orb('ice', 'l', 40, 3, 1)}
+    ${orb('earth', 'l', 0, 1, 1)}${orb('ice', 'l', 30, 3, 1)}${orb('sugar', 'l', 70, 2, 3)}${orb('fire', 'r', 10, 2, 3)}${orb('warp', 'r', 40, 1, 1)}${orb('feather', 'r', 70, 3, 1)}
     <div class="wrap narrow">
       ${secHead('The board game', line(blocks, 'story_title'), '', 'h1')}
       <div class="intro prose26">${text(blocks, 'story_intro')}</div>

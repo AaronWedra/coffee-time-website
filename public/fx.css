@@ -1057,3 +1057,28 @@ main > section + section, main > section > div.hero, main > section > .reviews, 
 /* delivered band on black, confetti on top */
 .delivered { background: #000 !important; }
 .dv-first + .bg-top { border-top: 0 !important; } .bg-top-board { border-top: 0; }
+
+/* ---- board game page, section order and colour rhythm (2026-11-12). Order: news, what it is, how to
+   play, the box, what players say, where the money went. Backgrounds alternate so no two neighbours
+   match: black, sunset stars, purple, WHITE, clock purple, LAVENDER, purple footer. */
+.orders { background: #fff !important; }
+.orders .orders-split, .orders .orders-split .sec-title, .orders .orders-intro, .orders .orders-copy, .orders .orders-copy p, .orders .orders-copy strong, .orders .badge { color: #3b0f6e !important; -webkit-text-fill-color: currentColor; text-shadow: none !important; background-image: none !important; }
+.orders .orders-copy, .orders .orders-copy p { color: #2a1a44 !important; }
+.orders .orders-split .sec-kicker, .orders .orders-copy a { color: #6a1fb0 !important; text-shadow: none !important; }
+.orders .cube-shadow { opacity: .35; }
+.orders > .wrap > .center a { color: #6a1fb0; }
+.orders:has(.pt) { padding-bottom: clamp(36px, 5vw, 60px) !important; }
+.pt-band .pt { width: auto !important; margin: 0 !important; background: #f1e7ff !important; color: #2a1a44; }
+.pt-band .pt h3, .pt-band .pt h3 a { color: #3b0f6e !important; }
+.pt-band .pt-kicker { color: #6a1fb0 !important; }
+.pt-band .pt p, .pt-band .pt-intro { color: #2a1a44 !important; }
+.pt-band .pt a:not(.btn) { color: #6a1fb0 !important; }
+.pt-band .pt-programs { background: #e3d3fa !important; color: #2a1a44; }
+.pt-band .pt-programs strong { color: #3b0f6e !important; }
+.pt-band { border-top: 3px solid transparent; border-image: linear-gradient(90deg, #8e3cc0, #ff8a3d 40%, #fff245 70%, #78b92f) 1; }
+.orders::before { display: none !important; }
+/* music players back in cards: a solid card behind each one so they hold up over the busy background */
+.track { background: #1c0745 !important; border: 0 !important; border-radius: 14px !important; padding: 10px 10px 12px !important; box-shadow: 0 12px 24px rgba(8, 0, 26, .5) !important; margin: 0 !important; }
+.track iframe { border-radius: 8px; box-shadow: none; }
+.track figcaption { padding: 4px 6px 0; text-shadow: none !important; }
+.tracks { gap: 22px; }
