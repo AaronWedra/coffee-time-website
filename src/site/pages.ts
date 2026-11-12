@@ -153,7 +153,7 @@ export function home(s: Settings, blocks: Blocks, flags: { joined?: string }, da
   ${beans(10)}
   <div class="wrap cover-in">
     <div class="cover-copy">
-      <h1 class="cover-title">${(() => { const w = b(blocks, 'cover_tagline').split(' '); return w.length > 1 ? html`${w[0]}<br><span class="nw">${w.slice(1).join(' ')}</span>` : w[0]; })()}</h1>
+      <h1 class="cover-title">${(() => { const w = b(blocks, 'cover_tagline').split(' '); return w.length > 1 ? html`${w[0]} <br><span class="nw">${w.slice(1).join(' ')}</span>` : w[0]; })()}</h1>
       <p class="cover-note">${line(blocks, 'cover_note')}</p>
       <p class="cover-btns"><a class="btn btn-go btn-ghost" href="/arcade">Arcade</a></p>
     </div>
