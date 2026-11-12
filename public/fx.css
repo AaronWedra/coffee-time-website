@@ -1241,3 +1241,21 @@ main > section:first-child > :first-child:not(.dv-first) { border-top: 0 !import
 .foot-credit { font-size: .85rem; opacity: .8; border-top: 1px solid rgba(255, 255, 255, .2); padding-top: 14px; }
 @media (max-width: 700px) { .foot-index { grid-template-columns: 1fr 1fr; } }
 @media (max-width: 700px) { .foot-index a[href^="mailto"] { font-size: .82rem; overflow-wrap: normal; white-space: nowrap; } }
+
+/* Purple Tree on phones: logo and photo side by side at the same height, then the words, left aligned */
+@media (max-width: 860px) {
+  .pt-head { grid-template-columns: 1fr 1fr !important; gap: 14px 14px !important; text-align: left !important; padding-top: 24px !important; padding-bottom: 22px !important; align-items: stretch !important; }
+  .pt-logo, .pt-photo { width: auto !important; margin: 0 !important; grid-row: 1; display: block; }
+  .pt-logo { grid-column: 1; } .pt-photo { grid-column: 2; }
+  .pt-logo img, .pt-photo img { width: 100%; height: 100%; aspect-ratio: 3 / 4; object-fit: contain; display: block; border-radius: 14px !important; }
+  .pt-photo img { object-fit: cover; transform: none !important; border-width: 3px !important; box-shadow: 0 8px 16px rgba(42, 13, 90, .25) !important; }
+  .pt-logo img { padding: 10px !important; box-sizing: border-box; }
+  .pt-intro { grid-column: 1 / -1; grid-row: 2; }
+  .pt-intro h3 { font-size: 1.6rem !important; line-height: 1.1 !important; margin: 0 0 .4em !important; }
+  .pt-intro p { font-size: 1rem; line-height: 1.5; margin: 0 0 .9em; }
+  .pt-intro .btn { font-size: .95rem; }
+  .pt-programs { grid-template-columns: 1fr !important; gap: 14px !important; padding-top: 20px !important; padding-bottom: 22px !important; }
+  .pt-programs p { padding-left: 3em; }
+  .pt-programs p::before { font-size: 1.9em; }
+}
+@media (max-width: 860px) { .pt-kicker { font-size: .78rem !important; margin: 4px 0 .4em !important; } }
