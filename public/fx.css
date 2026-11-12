@@ -1082,3 +1082,4 @@ main > section + section, main > section > div.hero, main > section > .reviews, 
 .track iframe { border-radius: 8px; box-shadow: none; }
 .track figcaption { padding: 4px 6px 0; text-shadow: none !important; }
 .tracks { gap: 22px; }
+@media (min-width: 1061px) { .nav { margin-left: auto; } }

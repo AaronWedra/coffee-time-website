@@ -276,7 +276,7 @@ news = [
         "March 2023",
         "Good Day Sacramento Announces the Coffee Time Launch Party",
         "Good Day Sacramento's reporter, Julissa Ortiz, interviews Coffee Time creators and announces the Coffee Time Launch Party.",
-        "", "", "", "",
+        "", "ftsEVmLd7JI", "", "",
     ),
     (
         "March 2023",

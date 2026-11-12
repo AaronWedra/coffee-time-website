@@ -73,7 +73,7 @@ export function layout(s: Settings, meta: PageMeta, body: Child, opts: { nonce: 
 <link rel="preload" href="/fonts/anton.woff" as="font" type="font/woff" crossorigin>
 <link rel="preload" href="/fonts/jost.woff" as="font" type="font/woff" crossorigin>
 <link rel="stylesheet" href="/site.css?v=13">
-<link rel="stylesheet" href="/fx.css?v=104">
+<link rel="stylesheet" href="/fx.css?v=105">
 ${ga(s.ga4_id, opts.nonce)}
 ${meta.jsonld ? raw(`<script type="application/ld+json" nonce="${opts.nonce}">${JSON.stringify(meta.jsonld).replace(/</g, '\\u003c')}</script>`) : ''}
 </head>
@@ -83,11 +83,10 @@ ${meta.jsonld ? raw(`<script type="application/ld+json" nonce="${opts.nonce}">${
 <header class="site-head">
   <div class="wrap head-row">
     <a class="brand" href="/" aria-label="${s.site_name}, home"><img src="/img/logo-purple.webp" alt="Coffee Time" width="1200" height="195"></a>
-    <nav class="nav" aria-label="Main"><ul>${navItems}<li class="more"><details><summary>More</summary><ul>${moreItems}</ul></details></li></ul></nav>
-    <a class="head-cta" href="/arcade">Play free</a>
+    <nav class="nav" aria-label="Main"><ul>${navItems}</ul></nav>
     <details class="nav-m">
       <summary aria-label="Menu"><span></span><span></span><span></span></summary>
-      <ul>${navItems}${moreItems}<li class="m-cta"><a href="/arcade">Play our games free</a></li></ul>
+      <ul>${navItems}${moreItems}</ul>
     </details>
   </div>
 </header>

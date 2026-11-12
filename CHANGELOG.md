@@ -158,3 +158,4 @@
 - 2026-11-11: Home music strip: rainbow notes fly toward the viewer (note-tunnel.svg), replacing the floating notes. Clock tunnel on black.
 - 2026-11-11: Arcade is one three-column grid: trailer (two columns) and the Adventures card on row one, the three AR games on row two; no dividing rule.
 - 2026-11-12: Board game page reordered (delivered, title+board, learn, orders, reviews, Purple Tree) with alternating backgrounds (black, sunset, purple, white, clock purple, lavender). Story page shows all six orbs. Music players back in solid cards.
+- 2026-11-12: Header: More menu and Play free button removed (Reviews, Tutorials, FAQ are linked on the Board Game page and the footer). News: Good Day Sacramento story embeds its YouTube segment (0030).
