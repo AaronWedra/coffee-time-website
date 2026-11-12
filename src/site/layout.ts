@@ -40,7 +40,7 @@ function ga(id: string | undefined, nonce: string) {
 <script nonce="${nonce}">window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','${v}',{anonymize_ip:true,allow_google_signals:false,allow_ad_personalization_signals:false});</script>`);
 }
 
-export function layout(s: Settings, meta: PageMeta, body: Child, opts: { nonce: string; siteUrl: string; indexable: boolean }): string {
+export function layout(s: Settings, meta: PageMeta, body: Child, opts: { nonce: string; siteUrl: string; indexable: boolean; kicker?: string }): string {
   const base = opts.siteUrl.replace(/\/$/, '');
   const fullTitle = meta.path === '/' ? `${s.site_name} | The board game where coffee heroes race King Tea` : `${meta.title} | ${s.site_name}`;
   const canonical = base + meta.path;
@@ -73,7 +73,7 @@ export function layout(s: Settings, meta: PageMeta, body: Child, opts: { nonce: 
 <link rel="preload" href="/fonts/anton.woff" as="font" type="font/woff" crossorigin>
 <link rel="preload" href="/fonts/jost.woff" as="font" type="font/woff" crossorigin>
 <link rel="stylesheet" href="/site.css?v=13">
-<link rel="stylesheet" href="/fx.css?v=105">
+<link rel="stylesheet" href="/fx.css?v=106">
 ${ga(s.ga4_id, opts.nonce)}
 ${meta.jsonld ? raw(`<script type="application/ld+json" nonce="${opts.nonce}">${JSON.stringify(meta.jsonld).replace(/</g, '\\u003c')}</script>`) : ''}
 </head>
@@ -84,6 +84,7 @@ ${meta.jsonld ? raw(`<script type="application/ld+json" nonce="${opts.nonce}">${
   <div class="wrap head-row">
     <a class="brand" href="/" aria-label="${s.site_name}, home"><img src="/img/logo-purple.webp" alt="Coffee Time" width="1200" height="195"></a>
     <nav class="nav" aria-label="Main"><ul>${navItems}</ul></nav>
+    ${opts.kicker ? html`<p class="head-tag"><span class="dot" aria-hidden="true"></span>${opts.kicker}</p>` : ''}
     <details class="nav-m">
       <summary aria-label="Menu"><span></span><span></span><span></span></summary>
       <ul>${navItems}${moreItems}</ul>

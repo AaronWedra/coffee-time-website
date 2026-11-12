@@ -51,7 +51,7 @@ const siteUrl = (c: Ctx) => (c.env.SITE_URL || `${c.url.protocol}//${c.url.host}
 async function render(c: Ctx, meta: MetaIn, body: Safe, status = 200) {
   const s = (c.state.settings as db.Settings) || (await db.getSettings(c.env.DB));
   const indexable = s.site_indexable === '1';
-  const out = layout(s, { ...meta, description: meta.description || s.seo_description }, body, { nonce: c.nonce, siteUrl: siteUrl(c), indexable });
+  const out = layout(s, { ...meta, description: meta.description || s.seo_description }, body, { nonce: c.nonce, siteUrl: siteUrl(c), indexable, kicker: (c.state.kicker as string) || '' });
   const headers: Record<string, string> = {};
   if (!indexable) headers['x-robots-tag'] = 'noindex, nofollow';
   if (c.req.method === 'POST' || /[?&](sent|joined|error)=/.test(c.url.search)) headers['cache-control'] = 'no-store';
@@ -61,6 +61,7 @@ async function render(c: Ctx, meta: MetaIn, body: Safe, status = 200) {
 async function base(c: Ctx) {
   const [s, b] = await Promise.all([db.getSettings(c.env.DB), db.getBlocks(c.env.DB)]);
   c.state.settings = s;
+  c.state.kicker = b.cover_kicker?.value || '';
   return { s, b };
 }
 

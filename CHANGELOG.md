@@ -159,3 +159,4 @@
 - 2026-11-11: Arcade is one three-column grid: trailer (two columns) and the Adventures card on row one, the three AR games on row two; no dividing rule.
 - 2026-11-12: Board game page reordered (delivered, title+board, learn, orders, reviews, Purple Tree) with alternating backgrounds (black, sunset, purple, white, clock purple, lavender). Story page shows all six orbs. Music players back in solid cards.
 - 2026-11-12: Header: More menu and Play free button removed (Reviews, Tutorials, FAQ are linked on the Board Game page and the footer). News: Good Day Sacramento story embeds its YouTube segment (0030).
+- 2026-11-12: Header tag 'Free right now' (block cover_kicker, 0031) where the Play free button was; cover button is a quiet white-outline 'Arcade'.
