@@ -91,6 +91,7 @@ for cropping and isolating pieces of the real files at most. Subtle effects are 
 - Credits (box): designed by Aaron Wedra and Stevie Price; art contributions Landon Christensen and Sam
   Lundholm; edited by Milly Judd; music by Matthew Wright (custom music with eNuminous and Archimedes).
 - Video game: Nick Domke is the music behind ALL the Coffee Time video games (video game music specifically; he does NOT lead the game club and was not present there, Aaron corrected this 2026-11-11); Milly Wedra voices Little Miss Hot Shot. Demo on itch.io.
+- Aaron Wedra is also co-owner, with Jeff Steele, of Xtra Round Games (https://xtra-round-games.com/, AR games, Davis). It is mentioned in his Team bio and in block `arcade_more` under the games; it adds depth, it must not distract from Coffee Time.
 - 5% of every sale goes to Purple Tree Café (Davis nonprofit). HMP Bikes (440 F St, Davis) sponsors.
 - Email: playcoffeetime@yahoo.com. Facebook profile id 100083230971672.
 - The three PDFs (instructions, story, coloring page) and the trailer are in public/files and public/video,

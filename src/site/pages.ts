@@ -413,6 +413,7 @@ export function arcade(s: Settings, blocks: Blocks, games: Game[]): Safe {
         </li>`;
         })}
       </ul>
+      ${b(blocks, 'arcade_more') ? html`<p class="arcade-more">${raw(inline(b(blocks, 'arcade_more')))}</p>` : ''}
     </div>
   </section>`;
 }

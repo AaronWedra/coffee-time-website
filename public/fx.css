@@ -1309,3 +1309,7 @@ main > section:first-child > :first-child:not(.dv-first) { border-top: 0 !import
 .bg-top-box .boxtilt { height: clamp(320px, 32vw, 440px); }
 @media (max-width: 700px) { .bg-top-box .boxtilt { height: 250px !important; } .bg-top { padding-bottom: 6px !important; } }
 @media (max-width: 700px) { .bg-top-box .cube-sway, .bg-top-box .cube-shadow { scale: .46 !important; } .bg-top-box .boxtilt { height: 270px !important; } }
+/* a quiet line under the arcade grid */
+.arcade-more { margin: clamp(30px, 4vw, 52px) 0 0; padding-top: 18px; border-top: 1px solid rgba(255, 255, 255, .25); text-align: center; font-size: 1rem; color: #fff; opacity: .92; }
+.arcade-more a { color: var(--yellow); }
+.creators p a { color: #6a1fb0; }

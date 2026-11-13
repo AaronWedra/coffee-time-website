@@ -81,6 +81,7 @@ block("arcade_ar_title", "Games: AR heading", "AR Arcade", kind="line")
 block("latte_hint", "Newsletter: latte art hint", "Draw in the foam", kind="line")
 block("pair_kicker", "Games: paired kicker", "Same game, two ways to play", kind="line")
 block("pair_title", "Games: paired heading", "Every game, on your screen and on your table", kind="line")
+block("arcade_more", "Video games: small line under the games (leave empty to hide)", "More AR from the same table: Aaron co-owns [Xtra Round Games](https://xtra-round-games.com/) with Jeff Steele.")
 block("pair_sub", "Games: paired paragraph", "Free in your browser in 2D, or on your own table in AR.")
 block("pair_2d_label", "Games: 2D column label", "On your screen (2D)", kind="line")
 block("pair_ar_label", "Games: AR column label", "On your table (AR, in 3D)", kind="line")
@@ -428,7 +429,7 @@ for i, (t, k, e, b_, n, u, btn, img) in enumerate(games):
 
 # ---------------------------------------------------------------- creators (from the Creator Profile Sheet)
 creators = [
-    ("Aaron Wedra", "Game Designer", "Put together a team of creative friends to develop the Coffee Time concept. Five years later, this team has perfected the game for families and friends of all ages!", "", "/img/team-aaron-wedra.webp"),
+    ("Aaron Wedra", "Game Designer", "Put together a team of creative friends to develop the Coffee Time concept. Five years later, this team has perfected the game for families and friends of all ages! Aaron is also co-owner, with Jeff Steele, of [Xtra Round Games](https://xtra-round-games.com/), a Davis studio making AR games you play with friends on your phone.", "", "/img/team-aaron-wedra.webp"),
     ("Stevie Price", "Game Designer", "Came up with the concept of coffee heroes battling King Tea and his army of crumpets. Helped develop the game and held play-testing sessions.", "", "/img/team-stevie-price.webp"),
     ("Milly Judd", "Game Editor", "Critiqued the initial prototype, assisted in developing the final game dynamics, wrote the instructions, and edited all text for the Coffee Time brand.", "", "/img/team-milly-judd.webp"),
     ("Sam Lundholm", "Abstract Artist", "Created abstract textures that set Coffee Time apart with its unique and vibrant style. Seen on the background of the game box, cards, and game board.", "", "/img/team-sam-lundholm.webp"),
