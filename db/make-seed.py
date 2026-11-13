@@ -422,7 +422,7 @@ games = [
     ("Coffee Time Adventures", "3d", "Unreal Engine", "King Tea and Duchess are scheming. Little Miss Hot Shot must uncover their plot and save the Five Worlds.", "Free demo, in development.", DEMO, "Play the free demo", "/img/game-cta-12.webp"),
     ("Star Bugs", "ar", "AR in your browser", "Fire sprinkle donuts from a licorice slingshot and stop the Star Bugs. One or two players at the same table.", "", AR + "star-bugs/", "Play in AR", "/img/game-star-bugs.webp"),
     ("Rapid Refill", "ar", "AR in your browser", "Deliver the coffee across your own table.", "", AR + "rapid-refill/", "Play in AR", "/img/game-rapid-refill-ar.webp"),
-    ("Donut Dash", "ar", "AR in your browser", "Feed the pups their donuts, on your table.", "In development.", AR + "donut-dash/", "Play in AR", "/img/game-donut-dash-ar.webp"),
+    ("Donut Dash", "ar", "AR in your browser", "Help Donette collect donuts through five levels while hungry pup-pups and Star Bugs close in. Find the blue feather, ride the clouds and grab the golden wings.", "", AR + "donut-dash/", "Play in AR", "/img/game-donut-dash-ar-2.webp"),
 ]
 for i, (t, k, e, b_, n, u, btn, img) in enumerate(games):
     ins("games", {"title": t, "kind": k, "engine": e, "blurb": b_, "note": n, "url": u, "button": btn, "image": img, "sort": i})

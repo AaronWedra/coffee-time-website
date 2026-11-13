@@ -1,6 +1,7 @@
 # Changelog
 
 ## 2026-11-11: v6 cast and pairs
+- 2026-11-13: Donut Dash AR card updated for its five levels (new words, new screenshot game-donut-dash-ar-2.webp, no longer marked in development). Migration 0038.
 - Dripping edges removed; section tops now have a latte-foam rim. Newsletter is a cup of coffee you can draw foam on with the cursor (one small nonce script, migration 0014 for the hint).
 - Tutorial chapter index is compact: topics only, no a/b/c dots.
 - Orders section is split: title, intro and copy (smaller, one wide column) on the left, the 3D box on the right; stacks on phones.
