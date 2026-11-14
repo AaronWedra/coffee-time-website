@@ -401,8 +401,10 @@ export function arcade(s: Settings, blocks: Blocks, games: Game[]): Safe {
           const a = of('ar').find((x) => x.title === title);
           const d = of('2d').find((x) => x.title === title);
           const lead = a || d!;
+          // The game's commercial is a small sticker card on the game's own picture (Aaron, 2026-11-14: next to the AR game).
+          const ad = [a, d].find((x) => x && x.commercial);
           return html`<li class="trio-card">
-          <a class="trio-art" href="${lead.url}" ${ext(lead.url)} tabindex="-1" aria-hidden="true">${img(lead.image, '', 'width="1000" height="625"')}</a>
+          <div class="trio-pic ${ad ? 'has-ad' : ''}"><a class="trio-art" href="${lead.url}" ${ext(lead.url)} tabindex="-1" aria-hidden="true">${img(lead.image, '', 'width="1000" height="625"')}</a>${ad ? html`<div class="ad-card"><video controls preload="none" playsinline poster="${ad.commercial_poster}" width="1920" height="1080" aria-label="${title} commercial"><source src="${ad.commercial}" type="video/mp4"></video><span>Watch the commercial</span></div>` : ''}</div>
           <h3>${title}</h3>
           <p>${lead.blurb}</p>
           <p class="trio-btns">

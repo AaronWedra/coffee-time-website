@@ -138,3 +138,8 @@ Rebuilt from scratch against the live site after the first attempt was rejected.
 Screenshots reviewed at desktop and phone width for every page. NOT deployed: this session has no npm
 registry access and no push access to the repo (the Claude GitHub app does not cover it), so the branch
 exists locally in the session and as a bundle; see docs/HANDOFF.md.
+
+## Game commercials (2026-11-14)
+A game's commercial is a small sticker card (`.ad-card`, public/fx.css) on the game's own picture in the Arcade grid. Data: `games.commercial`
+and `games.commercial_poster` (migration 0040, HQ > Arcade games). Rapid Refill AR is first: /video/rapid-refill-commercial-1.mp4 (14 MB).
+A plain `<video controls preload="none">`, no script. A new cut needs a new filename (mp4 is cached for a year).

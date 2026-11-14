@@ -443,6 +443,8 @@ const LISTS: ListDef[] = [
       { key: 'url', label: 'Link', type: 'url' },
       { key: 'button', label: 'Button text', help: 'For example "Play now"' },
       { key: 'image', label: 'Screenshot', help: IMAGE_HELP },
+      { key: 'commercial', label: 'Commercial video', help: 'Optional. A path such as /video/rapid-refill-commercial-1.mp4. It shows as a small card on the game picture.' },
+      { key: 'commercial_poster', label: 'Commercial still picture', help: 'Optional. The picture shown before the video plays.' },
       ORDER, SHOWN,
     ],
   },
