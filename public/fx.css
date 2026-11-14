@@ -1316,7 +1316,7 @@ main > section:first-child > :first-child:not(.dv-first) { border-top: 0 !import
 
 /* A game's commercial: a small sticker card on the game's own picture (2026-11-14). */
 .trio-pic { position: relative; }
-.trio-pic.has-ad { margin-bottom: 84px; }
-.ad-card { position: absolute; left: -8px; top: 72%; z-index: 2; width: clamp(130px, 40%, 200px); padding: 5px 5px 1px; background: #fff; border: 3px solid var(--purple); border-radius: 12px; box-shadow: 0 5px 0 var(--purple), 0 14px 22px rgba(10, 0, 30, .45); transform: rotate(-2deg); text-align: center; }
+.trio-pic.has-ad { margin-bottom: 30%; }
+.ad-card { position: absolute; left: -5%; top: 55%; z-index: 2; width: 66%; padding: 6px 6px 1px; background: #fff; border: 4px solid var(--purple); border-radius: 14px; box-shadow: 0 6px 0 var(--purple), 0 18px 30px rgba(10, 0, 30, .5); transform: rotate(-2deg); text-align: center; }
 .ad-card video { display: block; width: 100%; height: auto; aspect-ratio: 16 / 9; background: #000; border-radius: 8px; }
-.ad-card span { display: block; padding: 5px 0 4px; font-family: var(--display); text-transform: uppercase; font-size: .8rem; letter-spacing: .03em; color: var(--purple); line-height: 1; }
+.ad-card span { display: block; padding: 5px 0 4px; font-family: var(--display); text-transform: uppercase; font-size: 1.05rem; letter-spacing: .03em; color: var(--purple); line-height: 1; }
