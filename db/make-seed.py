@@ -71,9 +71,9 @@ def block(key, label, value, page="home", kind="text"):
     B.append((key, label, kind, value, page))
 
 
-block("cover_kicker", "Header: small tag beside the menu", "Free arcade", kind="line")
+block("cover_kicker", "Header: small tag beside the menu", "Arcade", kind="line")
 block("cover_tagline", "Cover: headline", "Play Coffee Time.", kind="line")
-block("cover_note", "Cover: paragraph under the headline", "Free video games in your browser, on your phone and on your table in AR.")
+block("cover_note", "Cover: paragraph under the headline", "Video games in your browser, on your phone and on your table in AR. Most are free.")
 block("games_title", "Games: heading", "The Video Games", kind="line")
 block("games_intro", "Games: paragraph", "We are a small team in Davis, California, and we make video games set in the Coffee Time universe. Play them free in your browser, on your phone or on your own table in AR.")
 block("arcade_2d_title", "Games: 2D arcade heading", "2D Arcade", kind="line")
@@ -89,7 +89,7 @@ block("arcade_ar_body", "Games: AR paragraph", "Same games, on your table. Open 
 block("cast_title", "Cast: heading", "Meet the stars", kind="line")
 block("cast_sub", "Cast: line under heading", "Five worlds. One very big cup of trouble.", kind="line")
 block("zone_vg_title", "Zone banner: video games heading", "Video Games", kind="line")
-block("zone_vg_sub", "Zone banner: video games line", "Play free in your browser, on your phone, or on your table in AR.", kind="line")
+block("zone_vg_sub", "Zone banner: video games line", "Play in your browser, on your phone, or on your table in AR.", kind="line")
 block("zone_bg_title", "Zone banner: board game heading", "The Board Game", kind="line")
 block("zone_bg_sub", "Zone banner: board game line", "Own the box? Learn to play, watch the tutorials, read the story, order a copy.", kind="line")
 block("games_3d_title", "Games: 3D heading", "The 3D games", kind="line")
@@ -421,8 +421,8 @@ games = [
     ("Star Bugs", "2d", "GDevelop", "Star Bugs have invaded. Bop them before they get away.", "", "https://gd.games/aaronwedra/do-or-donut", "Play now", "/img/game-star-bugs-2d-land2.webp"),
     ("Coffee Time Adventures", "3d", "Unreal Engine", "King Tea and Duchess are scheming. Little Miss Hot Shot must uncover their plot and save the Five Worlds.", "Free demo, in development.", DEMO, "Play the free demo", "/img/game-cta-12.webp"),
     ("Star Bugs", "ar", "AR in your browser", "Fire sprinkle donuts from a licorice slingshot and stop the Star Bugs. One or two players at the same table.", "", AR + "star-bugs/", "Play in AR", "/img/game-star-bugs.webp"),
-    ("Rapid Refill", "ar", "AR in your browser", "Deliver the coffee across your own table.", "", AR + "rapid-refill/", "Play in AR", "/img/game-rapid-refill-ar.webp"),
-    ("Donut Dash", "ar", "AR in your browser", "Help Donette collect donuts through five levels while hungry pup-pups and Star Bugs close in. Find the blue feather, ride the clouds and grab the golden wings.", "", AR + "donut-dash/", "Play in AR", "/img/game-donut-dash-ar-2.webp"),
+    ("Rapid Refill", "ar", "AR in your browser", "Deliver the coffee across your own table. In AR: free on iPhone, $1.99 for the full game on Android.", "", AR + "rapid-refill/", "Play in AR", "/img/game-rapid-refill-ar.webp"),
+    ("Donut Dash", "ar", "AR in your browser", "Help Donette collect donuts through five levels while hungry pup-pups and Star Bugs close in. Find the blue feather, ride the clouds and grab the golden wings. In AR: free on iPhone, $1.99 for the full game on Android.", "", AR + "donut-dash/", "Play in AR", "/img/game-donut-dash-ar-2.webp"),
 ]
 for i, (t, k, e, b_, n, u, btn, img) in enumerate(games):
     ins("games", {"title": t, "kind": k, "engine": e, "blurb": b_, "note": n, "url": u, "button": btn, "image": img, "sort": i})

@@ -1,6 +1,7 @@
 # Changelog
 
 ## 2026-11-11: v6 cast and pairs
+- 2026-11-15 Arcade: Donut Dash and Rapid Refill AR cards say "In AR: free on iPhone, $1.99 for the full game on Android"; the header tag is "Arcade" (was "Free arcade") and the cover and zone lines no longer call every game free (migration 0042).
 - 2026-11-14 Arcade: a game's commercial shows as a small card on its picture (games.commercial, migration 0040). Rapid Refill AR is first.
 - 2026-11-13: Rapid Refill AR card uses a real gameplay shot from Crumpet World (game-rapid-refill-ar-2.webp). Migration 0039.
 - 2026-11-13: Donut Dash AR card updated for its five levels (new words, new screenshot game-donut-dash-ar-2.webp, no longer marked in development). Migration 0038.
