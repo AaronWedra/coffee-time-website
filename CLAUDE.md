@@ -100,6 +100,10 @@ for cropping and isolating pieces of the real files at most. Subtle effects are 
   (user-682869823). The label under each player is the title the Wix site used, which is not always the
   SoundCloud title (Rapid Refill Theme, Crumpet Crusher Theme = Danger Theme, and so on).
 - Tutorials: 46 videos, numbered 1, 2-a, 2-b ... 20-b exactly as on the Wix page.
+  Since 2026-11-16 they live on the Play Coffee Time YouTube channel (@playcoffeetime, playlist "Coffee Time Video Tutorials"),
+  re-uploaded from the Smartz Graphics channel (migrations 0048 + 0049 swapped every youtube_id). The old Smartz copies are Private.
+  YouTube cannot move a video between channels: a move is download + re-upload, and a new channel needs phone verification to
+  upload more than about 10 a day.
 - The HMP Bikes section on Wix had a short video of people riding; the file was not in the media library,
   so the section shows the HMP logo (linked) and Thermos on his bike instead.
 
