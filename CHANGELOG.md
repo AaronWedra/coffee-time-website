@@ -1,5 +1,8 @@
 # Changelog
 
+## 2026-11-16: social links
+- Footer "Say hello" lists Instagram, YouTube and TikTok beside Facebook, each a setting in HQ > Game details (empty hides it; migration 0044).
+
 ## 2026-11-11: v6 cast and pairs
 - 2026-11-15 Arcade: the Donut Dash commercial (/video/donut-dash-commercial-1.mp4) sits on its game picture like Rapid Refill's (migration 0043).
 - 2026-11-15 Arcade: Donut Dash and Rapid Refill AR cards say "In AR: free on iPhone, $1.99 for the full game on Android"; the header tag is "Arcade" (was "Free arcade") and the cover and zone lines no longer call every game free (migration 0042).

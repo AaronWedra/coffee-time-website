@@ -40,6 +40,9 @@ function ga(id: string | undefined, nonce: string) {
 <script nonce="${nonce}">window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','${v}',{anonymize_ip:true,allow_google_signals:false,allow_ad_personalization_signals:false});</script>`);
 }
 
+// The footer's social links, in order. Each is a setting edited in HQ > Game details; empty hides it.
+const SOCIAL: [string, string][] = [['facebook', 'Facebook'], ['instagram', 'Instagram'], ['youtube', 'YouTube'], ['tiktok', 'TikTok']];
+
 export function layout(s: Settings, meta: PageMeta, body: Child, opts: { nonce: string; siteUrl: string; indexable: boolean; kicker?: string }): string {
   const base = opts.siteUrl.replace(/\/$/, '');
   const fullTitle = meta.path === '/' ? `${s.site_name} | The board game where coffee heroes race King Tea` : `${meta.title} | ${s.site_name}`;
@@ -99,7 +102,7 @@ ${meta.jsonld ? raw(`<script type="application/ld+json" nonce="${opts.nonce}">${
       <div><h2>Play</h2><ul><li><a href="/arcade">Video games</a></li><li><a href="/arcade#ar">AR games</a></li><li><a href="/music">Music</a></li></ul></div>
       <div><h2>Coffee Time</h2><ul><li><a href="/team">Team</a></li><li><a href="/news">News</a></li><li><a href="/#newsletter">Newsletter</a></li><li><a href="/privacy">Privacy</a></li></ul></div>
       <div><h2>Board game</h2><ul><li><a href="/board-game">The board game</a></li><li><a href="/board-game#rules">Learn to play</a></li><li><a href="/video-tutorials">Tutorials</a></li><li><a href="/faq">FAQ</a></li><li><a href="/board-game#reviews">Reviews</a></li><li><a href="/story">Story</a></li></ul></div>
-      <div><h2>Say hello</h2><ul><li><a href="mailto:${s.email}">${s.email}</a></li><li><a href="${s.facebook}" target="_blank" rel="noopener">Facebook</a></li></ul></div>
+      <div><h2>Say hello</h2><ul><li><a href="mailto:${s.email}">${s.email}</a></li>${SOCIAL.filter(([k]) => s[k]).map(([k, label]) => html`<li><a href="${s[k]}" target="_blank" rel="noopener">${label}</a></li>`)}</ul></div>
     </nav>
     <p class="foot-credit">Website Design by <a href="https://www.smartzgraphics.com" target="_blank" rel="noopener">www.SmartzGraphics.com</a></p>
   </div>
