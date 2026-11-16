@@ -1,6 +1,7 @@
 # Changelog
 
 ## 2026-11-16: Star Bugs price
+- 2026-11-16: Star Bugs commercial on its Arcade card (migration 0047).
 - Star Bugs AR card says the full game is a one-time $1.99, and the games paragraph no longer says the games are free (migration 0046).
 
 ## 2026-11-16: social links
