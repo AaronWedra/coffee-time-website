@@ -181,3 +181,4 @@
 - 2026-11-12: Footer is a full site index in four columns (Play, Board game, Coffee Time, Say hello). Coloring band phone layout.
 - 2026-11-12: Phone pass on the Board Game page (centred throughout: 1,000 band, sold-out notice, 2 x 2 links, box closer, Learn to play, Purple Tree), balanced footer index on phones, 'Play the free demo' (0036), orange place line on Team, 'Q:' removed from FAQ.
 - 2026-11-13: Xtra Round Games (Aaron co-owns it with Jeff Steele) linked from Aaron's Team bio and a small line under the Video Games grid (block arcade_more, 0037).
+- 2026-11-16: Video tutorials move to the Play Coffee Time YouTube channel (playlist 'Coffee Time Video Tutorials'). Migration 0048 swaps the video ids; first 10 of 46 so far.
