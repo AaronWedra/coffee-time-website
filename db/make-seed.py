@@ -43,7 +43,7 @@ settings = {
     "ages": "Ages 8+",
     "email": EMAIL,
     "facebook": "https://www.facebook.com/profile.php?id=100083230971672",
-    "instagram": "https://www.instagram.com/play_coffee_time/",
+    "instagram": "https://www.instagram.com/playcoffeetime/",
     "youtube": "https://www.youtube.com/@playcoffeetime",
     "tiktok": "https://www.tiktok.com/@playcoffeetime",
     "demo_url": DEMO,

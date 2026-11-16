@@ -1,6 +1,7 @@
 # Changelog
 
 ## 2026-11-16: social links
+- Instagram link follows the rename to @playcoffeetime (migration 0045).
 - Footer "Say hello" lists Instagram, YouTube and TikTok beside Facebook, each a setting in HQ > Game details (empty hides it; migration 0044).
 
 ## 2026-11-11: v6 cast and pairs
