@@ -1,10 +1,10 @@
 # Changelog
 
 ## 2026-11-16: Star Bugs price
-- Star Bugs AR card says the full game is a one-time $1.99, and the games paragraph no longer says the games are free (migration 0045).
+- Star Bugs AR card says the full game is a one-time $1.99, and the games paragraph no longer says the games are free (migration 0046).
 
 ## 2026-11-16: social links
-- Instagram link follows the rename to @playcoffeetime (migration 0045).
+- Instagram link follows the rename to @playcoffeetime (migration 0046).
 - Footer "Say hello" lists Instagram, YouTube and TikTok beside Facebook, each a setting in HQ > Game details (empty hides it; migration 0044).
 
 ## 2026-11-11: v6 cast and pairs
